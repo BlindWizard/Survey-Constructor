@@ -1,4 +1,5 @@
 {
-    "/js/app.js": "/js/app.js?id=df81399f984a50c7330e",
-    "/css/app.css": "/css/app.css?id=de6c5e77db7f835c139a"
+    "/js/admin/app.js": "/js/admin/app.js?id=77b962cfcedbfbf9bb3d",
+    "/css/app.css": "/css/app.css?id=e018ad610f54675c9463",
+    "/js/auth/login.js": "/js/auth/login.js?id=648faa13ade48552de45"
 }

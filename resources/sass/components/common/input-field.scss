@@ -1,0 +1,38 @@
+.input-field {
+    position: relative;
+    padding-top: 20px;
+
+    &__label {
+        position: absolute;
+        top: 25px;
+        color: $white;
+        font-size: 100%;
+        transition: $fast all;
+    }
+
+    &__input {
+        position: relative;
+        z-index: 1;
+        color: $white;
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
+        margin: 0;
+        padding-left: 20px;
+        transition: $fast all;
+        border-bottom: 2px solid $white;
+
+        &:focus {
+            background-color: transparent;
+            box-shadow: none;
+            padding-left: 0 !important;
+            border: none;
+            border-bottom: 2px solid $secondary;
+        }
+    }
+
+    &__input:focus + &__label {
+        top: 0;
+        font-size: 85%;
+    }
+}

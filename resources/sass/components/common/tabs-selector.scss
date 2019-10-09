@@ -1,0 +1,28 @@
+.tabs-selector {
+    &__item {
+        color: rgba($white, 0.5);
+        display: inline-block;
+        cursor: pointer;
+        margin-right: 0.5rem;
+        transition: $fast all;
+        border-bottom: 2px solid transparent;
+
+        &_active {
+            color: $white;
+            border-color: $primary;
+        }
+
+        &:hover:not(&_active) {
+            color: $white;
+            border-color: $secondary;
+        }
+    }
+
+    &_login-form {
+        margin-bottom: 0.4rem;
+
+        .tabs-selector__item {
+            font-size: 175%;
+        }
+    }
+}

@@ -1,22 +1,32 @@
-export class LoginForm {
-    constructor(form) {
-        let tabLogin =  form.querySelector('.tabs-select__item_login');
-        let tabRegister = form.querySelector('.tabs-select__item_register');
+import {bemGetElementMod, bemGetMod} from "../common/bem-helper";
+import {Form} from "../common/form";
 
-        tabLogin.addEventListener('click', () => {
-            tabLogin.classList.add('tabs-selector__item_active');
-            tabRegister.classList.remove('tabs-selector__item_active');
-            
-            form.querySelector('.tab_register').classList.remove('tab_active');
-            form.querySelector('.tab_login').classList.add('tab_active');
+export class LoginForm {
+    constructor(el) {
+        let tabLoginBtn =  el.querySelector('.tabs-select__item_login');
+        let tabRegisterBtn = el.querySelector('.tabs-select__item_register');
+        let tabLogin = el.querySelector('.tab_login');
+        let tabRegister = el.querySelector('.tab_register');
+        let loginForm = tabLogin.querySelector('form');
+        let registerForm = tabRegister.querySelector('form');
+
+        new Form(loginForm);
+        new Form(registerForm);
+
+        tabLoginBtn.addEventListener('click', () => {
+            tabLoginBtn.classList.add(bemGetElementMod('tabs-selector', 'item', 'active'));
+            tabRegisterBtn.classList.remove(bemGetElementMod('tabs-selector', 'item', 'active'));
+
+            tabRegister.classList.remove(bemGetMod('tab', 'active'));
+            tabLogin.classList.add(bemGetMod('tab', 'active'));
         });
 
-        tabRegister.addEventListener('click', () => {
-            tabRegister.classList.add('tabs-selector__item_active');
-            tabLogin.classList.remove('tabs-selector__item_active');
-            
-            form.querySelector('.tab_login').classList.remove('tab_active');
-            form.querySelector('.tab_register').classList.add('tab_active');
+        tabRegisterBtn.addEventListener('click', () => {
+            tabRegisterBtn.classList.add(bemGetElementMod('tabs-selector', 'item', 'active'));
+            tabLoginBtn.classList.remove(bemGetElementMod('tabs-selector', 'item', 'active'));
+
+            tabLogin.classList.remove(bemGetMod('tab', 'active'));
+            tabRegister.classList.add(bemGetMod('tab', 'active'));
         });
     }
 }

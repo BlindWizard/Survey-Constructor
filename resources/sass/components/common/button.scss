@@ -1,8 +1,47 @@
 .button {
     font-weight: bold;
     color: $white !important;
+    margin: 0;
+    padding: 0.25rem 1rem;
+    transition: $animation-medium width ease-in-out;
+
+    .spinner {
+        display: none;
+    }
+
+    .check-icon {
+        display: none;
+    }
 
     &_rounded {
         border-radius: 1.5rem;
+    }
+
+    &_performing, &_success {
+        width: 2.625rem !important;
+        padding-left: 0;
+        padding-right: 0;
+
+        .button__label {
+            display: none;
+        }
+    }
+
+    &_performing {
+        .spinner {
+            display: inline-block;
+        }
+    }
+
+    &_success {
+        .check-icon {
+            display: inline-block;
+        }
+    }
+
+    &__label {
+        line-height: 2rem;
+        vertical-align: top;
+        display: inline-block;
     }
 }

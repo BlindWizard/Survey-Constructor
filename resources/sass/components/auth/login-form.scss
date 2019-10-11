@@ -3,7 +3,7 @@
     padding-right: 4rem;
 
     &__wrapper {
-        background: rgba($dark, 0.6);
+        background: rgba($dark, 0.7);
         min-height: 100%;
     }
 
@@ -15,15 +15,15 @@
     }
 
     &__login-name {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
 
         .input-field__input {
-            padding-left: 100px;
+            padding-left: 87px;
         }
     }
 
     &__login-email {
-        margin-bottom: 1rem;
+        margin-bottom: 1.5rem;
 
         .input-field__input {
             padding-left: 93px;
@@ -31,7 +31,7 @@
     }
 
     &__login-password {
-        margin-bottom: 3rem;
+        margin-bottom: 3.5rem;
 
         .input-field__input {
             padding-left: 120px;

@@ -4,7 +4,7 @@
         display: inline-block;
         cursor: pointer;
         margin-right: 0.5rem;
-        transition: $fast all;
+        transition: $animation-fast color, $animation-fast border-color;
         border-bottom: 2px solid transparent;
 
         &_active {

@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\Landing;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Contracts\Support\Renderable;
 
-class MainPageController extends Controller
+class HomeController extends Controller
 {
     /**
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {

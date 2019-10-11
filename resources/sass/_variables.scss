@@ -1,6 +1,6 @@
 $primary: #fd5b15;
 $secondary: #ed0672;
-$dark: #2D1E45;
+$dark: #2d1e45;
 
 $foundation-palette: (
     primary: $primary,
@@ -10,7 +10,9 @@ $foundation-palette: (
     alert: #cc4b37,
 );
 
-$fast: 0.2s;
+$animation-fast: 0.2s;
+$animation-medium: 0.4s;
+$animation-slow: 0.8s;
 
 $social-brand-facebook: #3b5998;
 $social-brand-twitter: #55acee;

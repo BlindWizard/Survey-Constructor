@@ -7,7 +7,7 @@
         top: 25px;
         color: $white;
         font-size: 100%;
-        transition: $fast all;
+        transition: $animation-fast top, $animation-fast font-size;
     }
 
     &__input {
@@ -19,7 +19,7 @@
         box-shadow: none;
         margin: 0;
         padding-left: 20px;
-        transition: $fast all;
+        transition: $animation-fast color, $animation-fast border-bottom;
         border-bottom: 2px solid $white;
 
         &:focus {
@@ -27,12 +27,30 @@
             box-shadow: none;
             padding-left: 0 !important;
             border: none;
-            border-bottom: 2px solid $secondary;
+            border-bottom: 2px solid $secondary !important;
         }
     }
 
     &__input:focus + &__label {
         top: 0;
         font-size: 85%;
+    }
+
+    &__error {
+        position: absolute;
+        top: 67px;
+        color: $secondary;
+    }
+
+    &_has-value {
+        .input-field__input {
+            border-bottom: 2px solid $primary;
+        }
+    }
+
+    &_has-error {
+        .input-field__input {
+            border-bottom: 2px solid $secondary;
+        }
     }
 }

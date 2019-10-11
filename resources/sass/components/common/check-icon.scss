@@ -1,0 +1,26 @@
+.check-icon {
+    width: 2rem;
+    height: 2rem;
+    display: inline-block;
+    vertical-align: top;
+
+    &_active {
+        .check-icon__check {
+            animation: dash-check $animation-slow ease-in-out forwards;
+        }
+    }
+
+    &__check {
+        stroke-dasharray: 1000;
+        stroke-dashoffset: 900;
+    }
+
+    @keyframes dash-check {
+        0% {
+            stroke-dashoffset: -100;
+        }
+        100% {
+            stroke-dashoffset: 900;
+        }
+    }
+}

@@ -3,16 +3,7 @@
 @section('content')
     <div class="grid-x">
         <div class="top-menu cell">
-            <div class="grid-container">
-                <div class="top-menu__inner top-bar">
-                    <div class="top-bar-left">
-                        <div class="top-menu__title">{{ config('app.name') }}</div>
-                    </div>
-                    <div class="top-bar-right">
-                        <div>Easy</div>
-                    </div>
-                </div>
-            </div>
+            @include('landing.header')
         </div>
         <div class="description cell">
             <div class="grid-container">

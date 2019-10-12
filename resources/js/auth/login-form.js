@@ -19,6 +19,8 @@ export class LoginForm {
 
             tabRegister.classList.remove(bemGetMod('tab', 'active'));
             tabLogin.classList.add(bemGetMod('tab', 'active'));
+
+            window.history.pushState({}, document.title, loginForm.action);
         });
 
         tabRegisterBtn.addEventListener('click', () => {
@@ -27,6 +29,8 @@ export class LoginForm {
 
             tabLogin.classList.remove(bemGetMod('tab', 'active'));
             tabRegister.classList.add(bemGetMod('tab', 'active'));
+
+            window.history.pushState({}, document.title, registerForm.action);
         });
     }
 }

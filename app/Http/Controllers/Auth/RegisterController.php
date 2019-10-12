@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Helpers\AjaxResponse;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
@@ -19,27 +20,6 @@ class RegisterController extends Controller
      * @var string
      */
     protected $redirectTo = '/admin';
-
-    /**
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8'],
-        ]);
-    }
 
     /**
      * @param  array  $data
@@ -68,11 +48,22 @@ class RegisterController extends Controller
      */
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ])->validate();
 
         event(new Registered($user = $this->create($request->all())));
 
         Auth::guard()->login($user);
+
+        if ($request->ajax()) {
+            $result = new AjaxResponse();
+            $result->redirectPath = $this->redirectPath();
+
+            return response()->json($result);
+        }
 
         return redirect($this->redirectPath());
     }

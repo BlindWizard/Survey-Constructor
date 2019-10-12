@@ -3,8 +3,14 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'Landing\HomeController@index');
-Route::get('/admin', 'Admin\HomeController@index');
+Route::group(['namespace' => 'Landing'], function () {
+    Route::get('/', 'HomeController@index');
+});
 
-Auth::routes();
+Route::group(['namespace' => 'Admin'], function () {
+    Route::get('/admin', 'HomeController@index');
+});
 
+Route::group(['middleware' => ['guest']], function () {
+    Auth::routes();
+});

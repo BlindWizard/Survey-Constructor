@@ -48,7 +48,7 @@ export class Form {
                     }
 
                     if (result.redirectPath) {
-                        window.location.href = response.redirectPath;
+                        window.location.href = result.redirectPath;
                     }
                 })
                 .catch((error) => {

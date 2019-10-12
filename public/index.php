@@ -36,6 +36,7 @@ require __DIR__.'/../vendor/autoload.php';
 */
 
 $app = require_once __DIR__.'/../bootstrap/app.php';
+$app->loadEnvironmentFrom('.env-dev');
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +51,6 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 */
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$kernel->getApplication()->loadEnvironmentFrom('.env-dev');
 
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()

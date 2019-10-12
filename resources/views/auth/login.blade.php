@@ -17,28 +17,30 @@
                     <form id="login-panel" action="{{ route('login') }}" method="POST">
                         @csrf
 
-                        <div class="input-field login-form__login-email">
-                            <input class="input-field__input" type="email" name="email" />
-                            <span class="input-field__label">{{ __('Your e-mail') }}</span>
-                            <span class="input-field__error error error_email"></span>
-                        </div>
+                        @component('components.input-field', [
+                            'classes' => 'login-form__login-email',
+                            'type' => 'email',
+                            'name' => 'email',
+                            'label' => __('Your e-mail'),
+                        ])
+                        @endcomponent
 
-                        <div class="input-field login-form__login-password">
-                            <input class="input-field__input" type="password" name="password" />
-                            <span class="input-field__label">{{ __('Your password') }}</span>
-                            <span class="input-field__error error error_password"></span>
-                        </div>
+                        @component('components.input-field', [
+                            'classes' => 'login-form__login-password',
+                            'type' => 'password',
+                            'name' => 'password',
+                            'label' => __('Your password'),
+                        ])
+                        @endcomponent
 
                         <div class="login-form__submit">
-                            <button class="login-form__button button primary button_rounded button_submit">
-                                <span class="check-icon">
-                                    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
-                                        <polyline class="check-icon__check" fill="none" stroke="#fafafa" stroke-width="20" stroke-linecap="round" stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
-                                    </svg>
-                                </span>
-                                <span class="spinner spinner_donut-multi"></span>
-                                <span class="button__label">Sign in</span>
-                            </button>
+                            @component('components.button', [
+                                'classes' => 'login-form__button',
+                                'check' => true,
+                                'spinner' => 'spinner spinner_donut-multi',
+                                'label' => __('Sign in'),
+                            ])
+                            @endcomponent
                         </div>
                     </form>
                 </div>
@@ -47,26 +49,38 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
-                        <div class="input-field login-form__login-name">
-                            <input class="input-field__input" type="text" name="name" />
-                            <span class="input-field__label">{{ __('Your name') }}</span>
-                            <span class="input-field__error error error_name"></span>
-                        </div>
+                        @component('components.input-field', [
+                            'classes' => 'login-form__login-name',
+                            'type' => 'text',
+                            'name' => 'name',
+                            'label' => __('Your name'),
+                        ])
+                        @endcomponent
 
-                        <div class="input-field login-form__login-email">
-                            <input class="input-field__input" type="email" name="email" />
-                            <span class="input-field__label">{{ __('Your e-mail') }}</span>
-                            <span class="input-field__error error error_email"></span>
-                        </div>
+                        @component('components.input-field', [
+                            'classes' => 'login-form__login-email',
+                            'type' => 'email',
+                            'name' => 'email',
+                            'label' => __('Your e-mail'),
+                        ])
+                        @endcomponent
 
-                        <div class="input-field login-form__login-password">
-                            <input class="input-field__input" type="password" name="password" />
-                            <span class="input-field__label">{{ __('Your password') }}</span>
-                            <span class="input-field__error error error_password"></span>
-                        </div>
+                        @component('components.input-field', [
+                            'classes' => 'login-form__login-password',
+                            'type' => 'password',
+                            'name' => 'password',
+                            'label' => __('Your password'),
+                        ])
+                        @endcomponent
 
                         <div class="login-form__submit">
-                            <button class="login-form__button button primary button_rounded button_submit">Sign up</button>
+                            @component('components.button', [
+                                'classes' => 'login-form__button',
+                                'check' => true,
+                                'spinner' => 'spinner spinner_donut-multi',
+                                'label' => __('Sign up'),
+                            ])
+                            @endcomponent
                         </div>
                     </form>
                 </div>

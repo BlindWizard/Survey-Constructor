@@ -5,14 +5,14 @@
         </div>
         <div class="top-bar-right">
             <div>
-                @if (Auth::check())
+                @auth
                     <form action="{{ route('logout') }}" method="post">
                         @csrf
                         <button class="button button_rounded secondary">
-                            <span class="button__label">Logout</span>
+                            <span class="button__label">{{ __('Logout') }}</span>
                         </button>
                     </form>
-                @endif
+                @endauth
             </div>
         </div>
     </div>

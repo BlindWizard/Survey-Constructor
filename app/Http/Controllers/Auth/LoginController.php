@@ -19,14 +19,6 @@ class LoginController extends Controller
     protected $redirectTo = '/admin';
 
     /**
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest')->except('logout');
-    }
-
-    /**
      * @return \Illuminate\Http\Response
      */
     public function showLoginForm()

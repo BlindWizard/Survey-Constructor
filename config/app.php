@@ -170,6 +170,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         App\Providers\LayoutMarkupProvider::class,
+
+        /*
+         * Modules Service Providers...
+         */
+        App\Admin\ServiceProviders\BindingsServiceProvider::class,
     ],
 
     /*

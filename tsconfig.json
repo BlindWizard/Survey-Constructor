@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        "noImplicitAny": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "module": "commonjs",
+        "moduleResolution": "node",
+        "target": "es5",
+        "removeComments": true,
+        "sourceMap": true,
+        "typeRoots": [
+            "node_modules/@types",
+            "resources/typescript/types"
+        ]
+    },
+    "exclude": [
+        "node_modules",
+        "vendor"
+    ]
+}

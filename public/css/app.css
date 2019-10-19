@@ -10975,7 +10975,7 @@ html.is-reveal-open body {
 }
 
 .button__label {
-  line-height: 2rem;
+  line-height: 1.75rem;
   vertical-align: top;
   display: inline-block;
 }

@@ -1,4 +1,4 @@
-class BEM {
+export class BEM {
     constructor(block, element, modifiers = [], nonBemClasses = []) {
         this.block = block;
         this.element = element;

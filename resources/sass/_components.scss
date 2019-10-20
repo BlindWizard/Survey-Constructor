@@ -1,14 +1,18 @@
-@import 'components/common/input-field';
-@import 'components/common/button';
-@import 'components/common/tabs-selector';
-@import 'components/common/tab';
-@import 'components/common/main-logo';
-@import 'components/common/spinner';
-@import 'components/common/check-icon';
+@import 'components/toolkit/input-field';
+@import 'components/toolkit/button';
+@import 'components/toolkit/tabs-selector';
+@import 'components/toolkit/tab';
+@import 'components/toolkit/main-logo';
+@import 'components/toolkit/spinner';
+@import 'components/toolkit/check-icon';
+@import 'components/toolkit/add-block';
+
+@import 'components/common/top-menu';
 
 @import 'components/auth/login-page';
 @import 'components/auth/login-form';
 
-@import 'components/description';
-@import 'components/join-block';
-@import 'components/top-menu';
+@import "components/admin/survey-list";
+
+@import 'components/landing/description';
+@import 'components/landing/join-block';

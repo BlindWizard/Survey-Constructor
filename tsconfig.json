@@ -5,6 +5,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "allowJs": true,
         "module": "commonjs",
         "moduleResolution": "node",
         "target": "es5",

@@ -5,16 +5,19 @@ import {getters} from "../stores/types";
 @Component({
 	template: `
 		<div class="grid-container">
-		    <div class="top-menu__inner top-bar">
+			<div class="top-bar" :class="bem('top-menu').el('inner').toString()">
 				<div class="top-bar-left">
-					<div class="top-menu__title">{{ appName }}</div>
+					<div :class="bem('top-menu').el('logo').toString()">
+						<div :class="bem('main-logo').is('borderless').toString()"/>
+					</div>
+					<div :class="bem('top-menu').el('title').toString()">{{ appName }}</div>
 				</div>
 				<div class="top-bar-right">
 					<div>
 						<form action="/logout" method="post">
-							<button class="button button_rounded secondary">
+							<button :class="bem('button').is('rounded').add('secondary').toString()">
 								<input type="hidden" name="_token" :value="csrf"/>
-								<span class="button__label">Logout</span>
+								<span :class="bem('button').el('label').toString()">Logout</span>
 							</button>
 						</form>
 					</div>

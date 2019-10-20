@@ -4,6 +4,9 @@ import {store} from "./stores/store";
 import {actions} from "./stores/types";
 import {errorHandler} from "./handlers";
 import {settings} from "./settings";
+import {BemMixin} from "../common/vue-bem-mixin";
+
+Vue.mixin(BemMixin);
 
 window.onerror = errorHandler;
 

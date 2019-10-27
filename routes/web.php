@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => 'Landing'], function () {
@@ -9,6 +8,8 @@ Route::group(['namespace' => 'Landing'], function () {
 
 Route::group(['namespace' => 'Admin'], function () {
     Route::get('/admin', 'HomeController@index');
+    Route::get('/admin/survey/create', 'SurveyController@create');
+    Route::get('/admin/template/getAll', 'TemplateController@getAll');
 });
 
 Route::group(['namespace' => 'Auth'], function () {

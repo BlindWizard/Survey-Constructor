@@ -1,4 +1,4 @@
-.add-block {
+.create-block {
     min-height: 24rem;
     border-radius: 1rem;
     background-color: $primary;
@@ -51,9 +51,9 @@
     }
 
     &:hover {
-        .add-block {
-            box-shadow: 0 0 1rem rgba($black, 0.5);
+        box-shadow: 0 0 1rem rgba($black, 0.5);
 
+        .create-block {
             &__button {
                 width: 4.3rem;
                 height: 4.3rem;

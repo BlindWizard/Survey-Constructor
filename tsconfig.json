@@ -5,6 +5,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "strictPropertyInitialization": false,
         "allowJs": true,
         "module": "commonjs",
         "moduleResolution": "node",
@@ -13,7 +14,17 @@
         "sourceMap": true,
         "typeRoots": [
             "node_modules/@types",
+            "node_modules/axios/index.d.ts",
+            "node_modules/vue/types",
+            "node_modules/vuex/types",
+            "node_modules/vue-router/types",
             "resources/typescript/types"
+        ],
+        "lib": [
+            "dom",
+            "es5",
+            "scripthost",
+            "es2015.promise"
         ]
     },
     "exclude": [

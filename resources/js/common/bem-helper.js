@@ -41,7 +41,7 @@ export class BEM {
         });
     }
 
-    toString() {
+    classes() {
         let prefix = typeof this.element !== 'undefined' ? bemGetElement(this.block, this.element) : this.block;
         const classes = [prefix];
         for (let modifier of this.modifiers) {
@@ -52,6 +52,10 @@ export class BEM {
         }
 
         return classes.join(' ');
+    }
+
+    toString() {
+        return this.classes();
     }
 
     clone(newBlock = {}) {

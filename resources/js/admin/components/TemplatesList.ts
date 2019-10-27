@@ -1,17 +1,17 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {AddBlock} from "./common/AddBlock";
+import {SurveyCreate} from "./SurveyCreate";
 
 @Component({
 	template: `
-		<div class="grid-container" :class="bem('survey-list').toString()">
+		<div class="grid-container" :class="bem('survey-list').classes()">
 			<div class="grid-x grid-margin-x">
-				<AddBlock/>
+				<Template/>
 			</div>
 		</div>
 	`,
 	components: {
-		AddBlock,
+		SurveyCreate: SurveyCreate,
 	}
 })
 export class SurveyList extends Vue {}

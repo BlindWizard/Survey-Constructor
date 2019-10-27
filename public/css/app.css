@@ -11569,7 +11569,7 @@ html.is-reveal-open body {
 }
 
 .button__label {
-  line-height: 1.75rem;
+  line-height: 2rem;
   vertical-align: top;
   display: inline-block;
 }
@@ -11849,7 +11849,7 @@ html.is-reveal-open body {
   }
 }
 
-.add-block {
+.create-block {
   min-height: 24rem;
   border-radius: 1rem;
   background-color: #fd5b15;
@@ -11857,19 +11857,19 @@ html.is-reveal-open body {
   transition: box-shadow 0.2s;
 }
 
-.add-block__wrapper {
+.create-block__wrapper {
   width: 100%;
   height: 100%;
   display: table;
 }
 
-.add-block__inner {
+.create-block__inner {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
 
-.add-block__button {
+.create-block__button {
   display: inline-block;
   width: 2.9rem;
   height: 2.9rem;
@@ -11878,7 +11878,7 @@ html.is-reveal-open body {
   border-radius: 100%;
 }
 
-.add-block__label {
+.create-block__label {
   color: #fefefe;
   font-size: 1.3rem;
   font-weight: bold;
@@ -11888,34 +11888,34 @@ html.is-reveal-open body {
   text-transform: uppercase;
 }
 
-.add-block__label_up {
+.create-block__label_up {
   margin-bottom: 0.75rem;
 }
 
-.add-block__label_down {
+.create-block__label_down {
   margin-top: 0.75rem;
 }
 
-.add-block__icon {
+.create-block__icon {
   color: #fd5b15;
   font-size: 2rem;
   transition: font-size 0.2s;
 }
 
-.add-block:hover .add-block {
+.create-block:hover {
   box-shadow: 0 0 1rem rgba(10, 10, 10, 0.5);
 }
 
-.add-block:hover .add-block__button {
+.create-block:hover .create-block__button {
   width: 4.3rem;
   height: 4.3rem;
 }
 
-.add-block:hover .add-block__icon {
+.create-block:hover .create-block__icon {
   font-size: 3rem;
 }
 
-.add-block:hover .add-block__label {
+.create-block:hover .create-block__label {
   opacity: 0;
 }
 

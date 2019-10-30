@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import {actions, getters, mutations} from "./types";
 import {Settings} from "../settings";
 import {TemplateApi} from "../api/template.api";
+import {Template} from "../models/Template";
 
 Vue.use(Vuex);
 
@@ -30,9 +31,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_APPNAME, setting.appName);
 		},
 		async [actions.SHOW_TEMPLATES]({commit}) {
-			let templates = await TemplateApi.getAll();
-
-			commit(mutations.SET_TEMPLATES, templates);
+			commit(mutations.SET_TEMPLATES, await TemplateApi.getAll());
 		}
 	},
 	getters: {
@@ -41,7 +40,10 @@ const store = new Vuex.Store({
 		},
 		[getters.APPNAME](state) {
 			return state.appName;
-		}
+		},
+		[getters.TEMPLATES](state) {
+			return state.templates;
+		},
 	}
 });
 

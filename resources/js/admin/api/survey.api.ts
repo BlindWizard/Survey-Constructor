@@ -1,7 +1,8 @@
 import {axios} from "../../common/axios";
 import {Survey} from "../models/Survey";
 
-export class SurveyApi {
+export class SurveyApi
+{
 	public static createSurvey()
 	{
 		axios.post('/admin/survey/createBlank')
@@ -9,7 +10,7 @@ export class SurveyApi {
 				return response.data as Survey;
 			})
 			.catch((error) => {
-				return Promise.reject(error);
+				throw new Error(error);
 			});
 	}
 }

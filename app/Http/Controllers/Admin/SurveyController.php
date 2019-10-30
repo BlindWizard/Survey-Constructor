@@ -8,11 +8,5 @@ use App\Http\Helpers\AjaxResponse;
 
 class SurveyController extends Controller
 {
-    public function getAll(TemplateRepository $repository)
-    {
-        $response = new AjaxResponse();
-        $response->data = $repository->getPublic();
 
-        return response()->json($response);
-    }
 }

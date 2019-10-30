@@ -5,7 +5,7 @@ import {getters} from "../stores/types";
 @Component({
 	template: `
 		<div class="grid-container">
-			<div class="top-bar" :class="bem('top-menu').el('inner').classes()">
+			<div :class="bem('top-menu').el('inner').add('top-bar).classes()">
 				<div class="top-bar-left">
 					<div :class="bem('top-menu').el('logo').classes()">
 						<div :class="bem('main-logo').is('borderless').classes()"/>
@@ -26,7 +26,8 @@ import {getters} from "../stores/types";
 		</div>
 	`
 })
-export class Header extends Vue {
+export class Header extends Vue
+{
 	get csrf(): string
 	{
 		return this.$store.getters[getters.CSRF];

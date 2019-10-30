@@ -5,7 +5,7 @@ import {Header} from "./Header";
 @Component({
 	template: `
 		<div class="grid-y">
-			<div class="cell" :class="bem('top-menu').classes()">
+			<div :class="bem('top-menu').add('cell')classes()">
 				<Header/>
 			</div>
 			<div class="cell">

@@ -3,7 +3,7 @@ import Vue from "vue";
 
 @Component({
 	template: `
-		<div class="grid-container" :class="bem('new-surway').classes()">
+		<div :class="bem('new-surway').add('grid-container').classes()">
 			<div class="grid-x grid-margin-x">
 				Новый
 			</div>

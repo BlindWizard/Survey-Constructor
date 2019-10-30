@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Active record model for Template table.
+ *
+ * @property int    $id
+ * @property string $title
+ * @property string $public
+ * @property string $created_at
+ * @property string $updated_at
  */
 class Template extends Model
 {

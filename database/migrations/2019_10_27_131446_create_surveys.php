@@ -6,29 +6,28 @@ use Illuminate\Database\Migrations\Migration;
 use Ramsey\Uuid\Uuid;
 
 /**
- * Create table for surveys templates.
+ * Create table for surveys.
  */
-class CreateTemplate extends Migration
+class CreateSurveys extends Migration
 {
     /**
      * @return void
      */
     public function up()
     {
-        Schema::create('template', function (Blueprint $table) {
+        Schema::create('surveys', function (Blueprint $table) {
             $table->uuid('id')->default(Uuid::uuid4()->toString());
             $table->string('title', 256)->nullable()->default(null);
-            $table->boolean('public')->default(false);
             $table->timestamp('created_at')->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
             $table->timestamp('updated_at')->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
         });
-     }
+    }
 
     /**
      * @return void
      */
     public function down()
     {
-        Schema::dropIfExists('template');
+        Schema::dropIfExists('surveys');
     }
 }

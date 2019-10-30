@@ -1,4 +1,7 @@
-export class Survey {
+export class Survey
+{
 	id: number;
-	name: string;
+	title: string;
+	created_at: string;
+	updated_at: string;
 }

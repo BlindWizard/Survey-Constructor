@@ -1,5 +1,8 @@
-export class Template {
+export class Template
+{
 	id: number;
-	name: string;
-	public: true;
+	title: string;
+	public: boolean;
+	created_at: string;
+	updated_at: string;
 }

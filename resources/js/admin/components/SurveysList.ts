@@ -4,7 +4,7 @@ import {SurveyCreate} from "./SurveyCreate";
 
 @Component({
 	template: `
-		<div class="grid-container" :class="bem('survey-list').classes()">
+		<div :class="bem('survey-list').add('grid-container').classes()">
 			<div class="grid-x grid-margin-x">
 				<SurveyCreate/>
 			</div>

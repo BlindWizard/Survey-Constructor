@@ -8,8 +8,14 @@ Route::group(['namespace' => 'Landing'], function () {
 
 Route::group(['namespace' => 'Admin'], function () {
     Route::get('/admin', 'HomeController@index');
-    Route::get('/admin/survey/create', 'SurveyController@create');
+    Route::get('/admin/templates', 'HomeController@index');
+
+    Route::post('/admin/survey/create', 'SurveyController@create');
     Route::get('/admin/template/getAll', 'TemplateController@getAll');
+
+    Route::get('/admin/{any}', function () {
+        return redirect('/admin');
+    });
 });
 
 Route::group(['namespace' => 'Auth'], function () {

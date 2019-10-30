@@ -2,12 +2,13 @@
 
 namespace App\Admin\Database\Repositories;
 
+use App\Admin\Contracts\TemplateRepositoryContract;
 use App\Admin\Database\Models\Template;
 
 /**
  * Templates DB repository.
  */
-class TemplateRepository
+class TemplateRepository implements TemplateRepositoryContract
 {
     /**
      * @return Template[]

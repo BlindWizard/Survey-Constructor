@@ -77,6 +77,17 @@ services:
     command:
       ./docker/webpack/boot.sh
 
+  swagger:
+    image: swaggerapi/swagger-ui
+    networks:
+      - default
+    volumes:
+      - ./docs:/docs
+    environment:
+      - SWAGGER_JSON=/docs/swagger.json
+    ports:
+      - 3000:8080
+
 networks:
   default:
     driver: bridge

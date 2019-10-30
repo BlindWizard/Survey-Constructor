@@ -9,7 +9,7 @@ import {actions} from "../stores/types";
 				<div :class="bem('create-block').el('inner').classes()">
 					<div :class="bem('create-block').el('label').is('up').classes()">create</div>
 					<div :class="bem('create-block').el('button').classes()">
-						<i class="fi-plus" :class="bem('create-block').el('icon').classes()"/>
+						<i :class="bem('create-block').el('icon').add('fi-plus').classes()"/>
 					</div>
 					<div :class="bem('create-block').el('label').is('down').classes()">new survey</div>
 				</div>
@@ -17,8 +17,11 @@ import {actions} from "../stores/types";
 		</div>
 	`,
 })
-export class SurveyCreate extends Vue {
+export class SurveyCreate extends Vue
+{
 	public getTemplates() {
-		this.$store.dispatch(actions.SHOW_TEMPLATES);
+		this.$store.dispatch(actions.SHOW_TEMPLATES).then(() => {
+			this.$router.push({name: 'templates-page'});
+		});
 	}
 }

@@ -78,13 +78,13 @@ services:
       ./docker/webpack/boot.sh
 
   swagger:
-    image: swaggerapi/swagger-ui
+    image: neemuchaordic/swagger-ui
     networks:
       - default
     volumes:
       - ./docs:/docs
     environment:
-      - SWAGGER_JSON=/docs/swagger.json
+      - SWAGGER_JSON=/docs/admin/swagger.yml
     ports:
       - 3000:8080
 

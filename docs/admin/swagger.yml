@@ -1,0 +1,48 @@
+openapi: 3.0.0
+servers:
+  - url: 'http://dev.polls'
+    description: Development
+info:
+  title: Survey Box
+  description: Surveys and polls!
+  contact:
+    name: Administration
+    email: admin@surveybox.com
+  license:
+    name: proprietary
+  version: 1.0.0
+paths:
+  /admin/template/getAll:
+    get:
+      tags:
+        - Admin
+      description: >-
+        Returns the list of available for current user templates. It may be
+        system templates like "Blank", "Simple Voting"m, etc... or created by
+        user ones.
+      responses:
+        '200':
+          description: Array of Template objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: 123e4567-e89b-12d3-a456-426655440000
+                    title:
+                      type: string
+                    public:
+                      type: boolean
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
+components: {}
+tags: []

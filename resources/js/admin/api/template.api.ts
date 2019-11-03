@@ -8,14 +8,18 @@ export class TemplateApi
 	 * @swagger
 	 * /admin/template/getAll:
 	 *   get:
-	 *      description: Returns the list of available templates
-	 *      responses:
-	 *          200:
-	 *              description: templates
-	 *              schema:
-	 *   type: array
-	 *   items:
-	 *      $ref: '#/resources/js/admin/models/Template'
+	 *     tags:
+	 *       - Admin
+	 *     description: Returns the list of available for current user templates. It may be system templates like "Blank", "Simple Voting"m, etc... or created by user ones.
+	 *     responses:
+	 *       200:
+	 *         description: Array of Template objects.
+	 *         content:
+	 *           application/json:
+	 *             schema:
+	 *               type: array
+	 *               items:
+	 *                 $ref: ./resources/js/admin/schema/template.yml
 	 */
 	public static getAll(): Promise<Template[]>
 	{

@@ -23,12 +23,12 @@ class TemplateService implements TemplateServiceContract
         $public = $this->templatesRepository->getPublic();
         $objects = [];
         foreach ($public as $template) {
-            $object             = new TemplateObject();
-            $object->id         = $template->id;
-            $object->title      = $template->title;
-            $object->public     = $template->public;
-            $object->created_at = $template->created_at;
-            $object->updated_at = $template->updated_at;
+            $object            = new TemplateObject();
+            $object->id        = $template->id;
+            $object->title     = $template->title;
+            $object->public    = $template->public;
+            $object->createdAt = $template->created_at;
+            $object->updatedAt = $template->updated_at;
         }
 
         return array_merge(

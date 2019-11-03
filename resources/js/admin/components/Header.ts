@@ -5,7 +5,7 @@ import {getters} from "../stores/types";
 @Component({
 	template: `
 		<div class="grid-container">
-			<div :class="bem('top-menu').el('inner').add('top-bar).classes()">
+			<div :class="bem('top-menu').el('inner').add('top-bar').classes()">
 				<div class="top-bar-left">
 					<div :class="bem('top-menu').el('logo').classes()">
 						<div :class="bem('main-logo').is('borderless').classes()"/>

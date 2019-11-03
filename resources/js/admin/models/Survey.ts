@@ -1,6 +1,6 @@
 export class Survey
 {
-	id: number;
+	id: string;
 	title: string;
 	created_at: string;
 	updated_at: string;

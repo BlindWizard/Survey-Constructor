@@ -1,6 +1,6 @@
 export class Template
 {
-	id: number;
+	id: string;
 	title: string;
 	public: boolean;
 	created_at: string;

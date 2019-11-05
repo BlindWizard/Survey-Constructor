@@ -4,7 +4,7 @@ import {actions} from "../stores/types";
 
 @Component({
 	template: `
-		<div :class="bem('create-block').add('cell medium-3 small-6').classes()" @click="getTemplates()">
+		<div :class="bem('create-block').add('cell medium-3 small-6').is('filled').classes()" @click="getTemplates()">
 			<div :class="bem('create-block').el('wrapper').classes()">
 				<div :class="bem('create-block').el('inner').classes()">
 					<div :class="bem('create-block').el('label').is('up').classes()">create</div>
@@ -17,11 +17,11 @@ import {actions} from "../stores/types";
 		</div>
 	`,
 })
-export class SurveyCreate extends Vue
+export class SurveyCreateButton extends Vue
 {
 	public getTemplates() {
 		this.$store.dispatch(actions.SHOW_TEMPLATES).then(() => {
-			this.$router.push({name: 'templates-page'});
+			this.$router.push({name: 'templates-list'});
 		});
 	}
 }

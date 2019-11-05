@@ -9,6 +9,7 @@ export enum actions
 {
 	LOAD_SETTINGS = 'loadSettings',
 	SHOW_TEMPLATES = 'showTemplates',
+	CREATE_SURVEY = 'createSurvey',
 }
 
 export enum getters

@@ -2,6 +2,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {TemplateBlock} from "./TemplateBlock";
 import {actions, getters} from "../stores/types";
+import {Template} from "../models/Template";
 
 @Component({
 	template: `

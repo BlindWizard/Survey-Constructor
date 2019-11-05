@@ -11852,9 +11852,14 @@ html.is-reveal-open body {
 .create-block {
   min-height: 24rem;
   border-radius: 1rem;
-  background-color: #fd5b15;
   cursor: pointer;
   transition: box-shadow 0.2s;
+  border: 1px #cacaca solid;
+}
+
+.create-block_filled {
+  border-color: #fd5b15;
+  background-color: #fd5b15;
 }
 
 .create-block__wrapper {

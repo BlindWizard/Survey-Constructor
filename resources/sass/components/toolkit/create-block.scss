@@ -1,9 +1,14 @@
 .create-block {
     min-height: 24rem;
     border-radius: 1rem;
-    background-color: $primary;
     cursor: pointer;
     transition: box-shadow $animation-fast;
+    border: 1px $medium-gray solid;
+
+    &_filled {
+        border-color: $primary;
+        background-color: $primary;
+    }
 
     &__wrapper {
         width: 100%;

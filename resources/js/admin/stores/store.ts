@@ -4,6 +4,7 @@ import {actions, getters, mutations} from "./types";
 import {Settings} from "../settings";
 import {TemplateApi} from "../api/template.api";
 import {Template} from "../models/Template";
+import {SurveyApi} from "../api/survey.api";
 
 Vue.use(Vuex);
 
@@ -32,6 +33,9 @@ const store = new Vuex.Store({
 		},
 		async [actions.SHOW_TEMPLATES]({commit}) {
 			commit(mutations.SET_TEMPLATES, await TemplateApi.getAll());
+		},
+		[actions.CREATE_SURVEY]({commit}, template) {
+			SurveyApi.createSurvey(template);
 		}
 	},
 	getters: {

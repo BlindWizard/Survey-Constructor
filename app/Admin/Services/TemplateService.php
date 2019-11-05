@@ -5,17 +5,21 @@ namespace App\Admin\Services;
 
 use App\Admin\Contracts\TemplateRepositoryContract;
 use App\Admin\Contracts\TemplateServiceContract;
+use App\Admin\Contracts\TemplatesFactoryContract;
 use App\Admin\DTO\TemplateObject;
-use Ramsey\Uuid\Uuid;
 
 class TemplateService implements TemplateServiceContract
 {
     /** @var TemplateRepositoryContract */
     private $templatesRepository;
 
-    public function __construct(TemplateRepositoryContract $templatesRepository)
+    /** @var TemplatesFactoryContract */
+    private $templatesFactory;
+
+    public function __construct(TemplateRepositoryContract $templatesRepository, TemplatesFactoryContract $templatesFactory)
     {
         $this->templatesRepository = $templatesRepository;
+        $this->templatesFactory = $templatesFactory;
     }
 
     public function getAvailableTemplates(): array
@@ -32,18 +36,8 @@ class TemplateService implements TemplateServiceContract
         }
 
         return array_merge(
-            [$this->getBlankTemplate()],
+            [$this->templatesFactory->getBlank()],
             $objects
         );
-    }
-
-    public function getBlankTemplate(): TemplateObject
-    {
-        $template = new TemplateObject();
-        $template->id = Uuid::NIL;
-        $template->title = 'Blank';
-        $template->public = true;
-
-        return  $template;
     }
 }

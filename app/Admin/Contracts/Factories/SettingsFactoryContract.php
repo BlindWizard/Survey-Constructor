@@ -7,5 +7,8 @@ use App\Admin\Models\Settings;
 
 interface SettingsFactoryContract
 {
+    /**
+     * @return Settings
+     */
     public function getSettings(): Settings;
 }

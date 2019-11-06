@@ -3,6 +3,7 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Template} from "../models/Template";
 import {actions} from "../stores/types";
+import {CreateSurvey} from "../api/requests/createSurvey";
 
 @Component({
 	template: `
@@ -19,6 +20,10 @@ export class TemplateBlock extends Vue {
 	@Prop(Template) readonly template: Template;
 
 	public createSurvey() {
-		this.$store.dispatch(actions.CREATE_SURVEY, this.template);
+		let request = new CreateSurvey();
+		request.templateId = this.template.id;
+		request.templateName = this.template.title;
+
+		this.$store.dispatch(actions.CREATE_SURVEY, request);
 	}
 }

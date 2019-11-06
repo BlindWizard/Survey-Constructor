@@ -1,12 +1,12 @@
 import {axios} from "../../common/axios";
 import {Survey} from "../models/Survey";
-import {Template} from "../models/Template";
+import {CreateSurvey} from "./requests/createSurvey";
 
 export class SurveyApi
 {
-	public static createSurvey(template: Template)
+	public static createSurvey(request: CreateSurvey)
 	{
-		axios.post('/admin/survey/create', template)
+		axios.post('/admin/survey/create', request)
 			.then((response) => {
 				return response.data as Survey;
 			})

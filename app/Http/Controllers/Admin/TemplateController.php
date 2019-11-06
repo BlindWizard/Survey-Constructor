@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\Contracts\TemplateServiceContract;
+use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 

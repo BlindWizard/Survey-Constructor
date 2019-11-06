@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\Contracts\SurveyServiceContract;
-use App\Admin\DTO\TemplateObject;
+use App\Admin\Commands\CreateSurveyCommand;
+use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
-use Illuminate\Http\Request;
+use App\Http\Requests\CreateSurveyRequest;
 
 class SurveyController extends Controller
 {
@@ -18,10 +18,12 @@ class SurveyController extends Controller
         $this->surveyService = $surveyService;
     }
 
-    public function create(Request $request)
+    public function create(CreateSurveyRequest $request, CreateSurveyCommand $command)
     {
         $response = new AjaxResponse();
-        $template = new TemplateObject();
+
+        $command->request = $request;
+        $command->perform();
 
         return response()->json($response);
     }

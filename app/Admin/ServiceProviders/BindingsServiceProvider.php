@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Admin\ServiceProviders;
 
+use App\Admin\Contracts\Factories\TemplatesFactoryContract;
+use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
+use App\Admin\Contracts\Services\SurveyServiceContract;
+use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
-use App\Admin\Contracts\SurveyServiceContract;
-use App\Admin\Contracts\TemplateRepositoryContract;
-use App\Admin\Contracts\TemplateServiceContract;
-use App\Admin\Contracts\TemplatesFactoryContract;
 use App\Admin\Database\Repositories\TemplateRepository;
 use App\Admin\Factories\SettingsFactory;
 use App\Admin\Factories\TemplatesFactory;

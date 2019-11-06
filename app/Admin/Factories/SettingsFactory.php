@@ -8,6 +8,9 @@ use App\Admin\Models\Settings;
 
 class SettingsFactory implements SettingsFactoryContract
 {
+    /**
+     * @inheritdoc
+     */
     public function getSettings(): Settings
     {
         $settings = new Settings();

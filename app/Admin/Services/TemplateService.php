@@ -3,10 +3,11 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
-use App\Admin\Contracts\TemplateRepositoryContract;
-use App\Admin\Contracts\TemplateServiceContract;
-use App\Admin\Contracts\TemplatesFactoryContract;
+use App\Admin\Contracts\Factories\TemplatesFactoryContract;
+use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
+use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\DTO\TemplateObject;
+use App\Admin\Rules\TemplateRules;
 
 class TemplateService implements TemplateServiceContract
 {

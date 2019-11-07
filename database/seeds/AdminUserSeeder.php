@@ -10,14 +10,15 @@ class AdminUserSeeder extends Seeder
      */
     public function run()
     {
-        if (env('APP_ENV') != 'production') {
-            $password = Hash::make('secret');
-
-            $user = new \Illuminate\Foundation\Auth\User();
-            $user->name = 'Admin';
-            $user->email = 'admin@surveybox.com';
-            $user->password = $password;
-            $user->saveOrFail();
+        if (env('APP_ENV') === 'production') {
+            return;
         }
+        $password = Hash::make('secret');
+
+        $user           = new \Illuminate\Foundation\Auth\User();
+        $user->name     = 'Admin';
+        $user->email    = 'admin@surveybox.com';
+        $user->password = $password;
+        $user->saveOrFail();
     }
 }

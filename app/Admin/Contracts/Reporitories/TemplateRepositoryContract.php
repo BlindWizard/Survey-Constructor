@@ -7,6 +7,7 @@ use App\Admin\Database\Models\Template;
 
 interface TemplateRepositoryContract
 {
+    public function create(string $title): Template;
     /**
      * @return Template[]
      */

@@ -35,8 +35,8 @@ const store = new Vuex.Store({
 		async [actions.SHOW_TEMPLATES]({commit}) {
 			commit(mutations.SET_TEMPLATES, await TemplateApi.getAll());
 		},
-		[actions.CREATE_SURVEY]({commit}, request: CreateSurvey) {
-			SurveyApi.createSurvey(request);
+		async [actions.CREATE_SURVEY]({commit}, request: CreateSurvey) {
+			return SurveyApi.createSurvey(request);
 		}
 	},
 	getters: {

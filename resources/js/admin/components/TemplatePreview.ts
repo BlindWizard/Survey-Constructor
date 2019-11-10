@@ -7,7 +7,7 @@ import {CreateSurvey} from "../api/requests/createSurvey";
 
 @Component({
 	template: `
-		<div class="cell medium-3 small-6" :class="bem('create-block').classes()" @click="createSurvey()">
+		<div :class="bem('create-block').add('cell medium-3 small-6').classes()" @click="createSurvey()">
 			<div :class="bem('create-block').el('wrapper').classes()">
 				<div :class="bem('create-block').el('inner').classes()">
 					{{ template.title }}
@@ -16,14 +16,15 @@ import {CreateSurvey} from "../api/requests/createSurvey";
 		</div>
 	`,
 })
-export class TemplateBlock extends Vue {
+export class TemplatePreview extends Vue {
 	@Prop(Template) readonly template: Template;
 
 	public createSurvey() {
 		let request = new CreateSurvey();
 		request.templateId = this.template.id;
-		request.templateName = this.template.title;
 
-		this.$store.dispatch(actions.CREATE_SURVEY, request);
+		this.$store.dispatch(actions.CREATE_SURVEY, request).then((templateId) => {
+			this.$router.push({name: 'survey-edit', params: {templateId}});
+		});
 	}
 }

@@ -12,6 +12,20 @@ info:
     name: proprietary
   version: 1.0.0
 paths:
+  /admin/survey/create:
+    get:
+      tags:
+        - Admin
+      description: Returns id of created survey.
+      responses:
+        '200':
+          description: Survey id.
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+                example: 123e4567-e89b-12d3-a456-426655440000
   /admin/template/getAll:
     get:
       tags:

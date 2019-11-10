@@ -13,15 +13,11 @@ class AjaxResponse implements \JsonSerializable
     /** @var string[] */
     public $messages = [];
 
+    /** @var string[] */
+    public $errors = [];
+
     /** @var string|null */
     public $redirectPath;
-
-    public function message(string $msg): AjaxResponse
-    {
-        $this->messages[] = $msg;
-
-        return $this;
-    }
 
     public function jsonSerialize(): array
     {

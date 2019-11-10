@@ -2,10 +2,15 @@
 
 namespace App\Admin\Contracts\Services;
 
+use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
-use App\Admin\DTO\SurveyObject;
 
 interface SurveyServiceContract
 {
-    public function createFromTemplate(TemplateContract $template): SurveyObject;
+    /**
+     * @param TemplateContract $template
+     *
+     * @return SurveyContract
+     */
+    public function createFromTemplate(TemplateContract $template): SurveyContract;
 }

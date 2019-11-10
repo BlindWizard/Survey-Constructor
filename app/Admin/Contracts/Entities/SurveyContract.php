@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Entities;
 
-interface TemplateContract {
+interface SurveyContract {
     /**
      * @return string
      */

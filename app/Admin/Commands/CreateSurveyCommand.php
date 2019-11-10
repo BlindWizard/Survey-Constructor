@@ -24,6 +24,9 @@ class CreateSurveyCommand implements Command
     /** @var TemplateRepositoryContract  */
     protected $templateRepository;
 
+    /** @var string */
+    public $surveyId;
+
     /** @var string[] */
     protected $messages = [];
 
@@ -37,25 +40,30 @@ class CreateSurveyCommand implements Command
         $this->templateRepository = $templateRepository;
     }
 
-    public function perform()
+    public function perform(): Command
     {
         try {
-            if (TemplateRules::isSystem($this->request)) {
-                $template = $this->templatesFactory->getSystemTemplate($this->request->getTitle());
+            if (TemplateRules::isSystem($this->request->getId())) {
+                $template = $this->templatesFactory->getSystemTemplate($this->request->getId());
             }
             else {
                 $template = $this->templateRepository->findById($this->request->getId());
             }
 
-            $this->surveyService->createFromTemplate($template);
+            $survey         = $this->surveyService->createFromTemplate($template);
+            $this->surveyId = $survey->getId();
+
+            $this->messages[] = __('Survey was successfully created');
         }
         catch (TemplateNotFoundException $e) {
             $this->errors[] = __('Template not found');
         }
+
+        return $this;
     }
 
     public function getResult(): array
     {
-        return [$this->messages, $this->errors];
+        return [$this->surveyId, $this->messages, $this->errors];
     }
 }

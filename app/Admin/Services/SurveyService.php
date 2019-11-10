@@ -3,28 +3,32 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
+use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
+use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
-use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
-use App\Admin\DTO\SurveyObject;
 
 class SurveyService implements SurveyServiceContract
 {
-    /** @var TemplatesFactoryContract */
-    protected $templatesFactory;
+    /** @var SurveyFactoryContract */
+    public $templateFactory;
 
-    /** @var TemplateRepositoryContract */
-    protected $templateRepository;
+    /** @var SurveyFactoryContract */
+    public $surveyFactory;
 
-    public function __construct(TemplatesFactoryContract $templatesFactory, TemplateRepositoryContract $templateRepository)
+    public function __construct(TemplatesFactoryContract $templateFactory, SurveyFactoryContract $surveyFactory)
     {
-        $this->templatesFactory = $templatesFactory;
-        $this->templateRepository = $templateRepository;
+        $this->templateFactory = $templateFactory;
+        $this->surveyFactory = $surveyFactory;
     }
 
-    public function createFromTemplate(TemplateContract $template): SurveyObject
+    public function createFromTemplate(TemplateContract $template): SurveyContract
     {
-        $this->templateRepository->getPublic();
+        $blocks = $this->templateFactory->getBlocks($template);
+
+        $survey = $this->surveyFactory->build($template, $blocks);
+
+        return $survey;
     }
 }

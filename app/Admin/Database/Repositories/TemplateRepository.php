@@ -24,4 +24,9 @@ class TemplateRepository implements TemplateRepositoryContract
     {
         return Template::query()->find($id)->get()->first();
     }
+
+    public function create(string $title): Template
+    {
+        // TODO: Implement create() method.
+    }
 }

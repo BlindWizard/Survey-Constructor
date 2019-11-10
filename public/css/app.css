@@ -12019,6 +12019,10 @@ html.is-reveal-open body {
   padding-bottom: 1rem;
 }
 
+.viewport {
+  background-color: #e6e6e6;
+}
+
 .description {
   background-color: #2d1e45;
   color: #fefefe;

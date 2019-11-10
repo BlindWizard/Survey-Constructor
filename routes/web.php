@@ -8,10 +8,13 @@ Route::group(['namespace' => 'Landing'], function () {
 
 Route::group(['namespace' => 'Admin'], function () {
     Route::get('/admin', 'HomeController@index');
-    Route::get('/admin/templates', 'HomeController@index');
 
     Route::post('/admin/survey/create', 'SurveyController@create');
     Route::get('/admin/template/getAll', 'TemplateController@getAll');
+
+    // Stubs for refresh
+    Route::get('/admin/templates', 'HomeController@index');
+    Route::get('/admin/survey/{id}/edit', 'HomeController@index');
 
     Route::get('/admin/{any}', function () {
         return redirect('/admin');

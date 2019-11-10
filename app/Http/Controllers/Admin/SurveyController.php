@@ -23,7 +23,15 @@ class SurveyController extends Controller
         $response = new AjaxResponse();
 
         $command->request = $request;
-        $command->perform();
+        [$response->data, $response->messages, $response->errors] = $command->perform()->getResult();
+
+        return response()->json($response);
+    }
+
+    public function get(string $id)
+    {
+        $response = new AjaxResponse();
+        $response->data = $id;
 
         return response()->json($response);
     }

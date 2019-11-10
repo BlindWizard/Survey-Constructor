@@ -1,19 +1,18 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {TemplateBlock} from "./TemplateBlock";
+import {TemplatePreview} from "./TemplatePreview";
 import {actions, getters} from "../stores/types";
-import {Template} from "../models/Template";
 
 @Component({
 	template: `
 		<div v-if="null !== templates" :class="bem('survey-list').add('grid-container').classes()">
 			<div class="grid-x grid-margin-x">
-				<Template :key="i" v-for="(template, i) in templates" :template="template"/>
+				<TemplatePreview :key="i" v-for="(template, i) in templates" :template="template"/>
 			</div>
 		</div>
 	`,
 	components: {
-		Template: TemplateBlock,
+		TemplatePreview: TemplatePreview,
 	}
 })
 export class TemplatesList extends Vue {

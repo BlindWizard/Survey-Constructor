@@ -12,6 +12,9 @@ use App\Http\Requests\CreateSurveyRequest;
 
 class CreateSurveyCommand implements Command
 {
+    /** @var string */
+    public $ownerId;
+
     /** @var CreateSurveyRequest */
     public $request;
 
@@ -50,7 +53,7 @@ class CreateSurveyCommand implements Command
                 $template = $this->templateRepository->findById($this->request->getId());
             }
 
-            $survey         = $this->surveyService->createFromTemplate($template);
+            $survey         = $this->surveyService->createFromTemplate($this->ownerId, $template);
             $this->surveyId = $survey->getId();
 
             $this->messages[] = __('Survey was successfully created');

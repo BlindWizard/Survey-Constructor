@@ -12,18 +12,21 @@ use Ramsey\Uuid\Uuid;
 
 class SurveyFactory implements SurveyFactoryContract
 {
+
     /**
+     * @param string           $ownerId
      * @param TemplateContract $template
      * @param BlockContract[]  $blocks
      *
      * @return SurveyContract
      * @throws \Exception
      */
-    public function build(TemplateContract $template, array $blocks): SurveyContract
+    public function build(string $ownerId, TemplateContract $template, array $blocks): SurveyContract
     {
         $survey = new SurveyObject();
         $survey->id = Uuid::uuid4()->toString();
         $survey->title = __('New survey');
+        $survey->ownerId = $ownerId;
         $survey->blocks = $blocks;
         $survey->createdAt = Carbon::now('UTC');
         $survey->updatedAt = Carbon::now('UTC');

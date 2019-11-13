@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use Ramsey\Uuid\Uuid;
+use App\Admin\Database\Models\Survey;
+use App\Admin\Database\Models\Template;
 
 /**
  * Add owner id to surveys and migrations.
@@ -16,11 +18,11 @@ class AddOwnerId extends Migration
     public function up()
     {
         Schema::table('surveys', function (Blueprint $table) {
-            $table->uuid('owner_id')->nullable()->default(Uuid::NIL)->after('title');
+            $table->uuid(Survey::ATTR_OWNER_ID)->after(Survey::ATTR_TITLE);
         });
 
         Schema::table('templates', function (Blueprint $table) {
-            $table->uuid('owner_id')->nullable()->default(Uuid::NIL)->after('title');
+            $table->uuid(Template::ATTR_OWNER_ID)->nullable()->default(Uuid::NIL)->after(Template::ATTR_TITLE);
         });
     }
 
@@ -30,11 +32,11 @@ class AddOwnerId extends Migration
     public function down()
     {
         Schema::table('surveys', function (Blueprint $table) {
-            $table->dropColumn('owner_id');
+            $table->dropColumn(Survey::ATTR_OWNER_ID);
         });
 
         Schema::table('templates', function (Blueprint $table) {
-            $table->dropColumn('owner_id');
+            $table->dropColumn(Template::ATTR_OWNER_ID);
         });
     }
 }

@@ -12,6 +12,8 @@ class SurveyObject implements SurveyContract
     public $id;
     /** @var string */
     public $title;
+    /** @var string */
+    public $ownerId;
     /** @var BlockContract[] */
     public $blocks;
     /** @var string */
@@ -33,5 +35,37 @@ class SurveyObject implements SurveyContract
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerId(): string
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @return BlockContract[]
+     */
+    public function getBlocks(): array
+    {
+        return $this->blocks;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdatedAt(): string
+    {
+        return $this->updatedAt;
     }
 }

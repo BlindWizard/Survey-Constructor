@@ -7,6 +7,7 @@ use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
+use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 
 class SurveyService implements SurveyServiceContract
@@ -17,17 +18,23 @@ class SurveyService implements SurveyServiceContract
     /** @var SurveyFactoryContract */
     public $surveyFactory;
 
-    public function __construct(TemplatesFactoryContract $templateFactory, SurveyFactoryContract $surveyFactory)
+    /** @var SurveyRepositoryContract */
+    public $surveyRepository;
+
+    public function __construct(TemplatesFactoryContract $templateFactory, SurveyFactoryContract $surveyFactory, SurveyRepositoryContract $surveyRepository)
     {
         $this->templateFactory = $templateFactory;
         $this->surveyFactory = $surveyFactory;
+        $this->surveyRepository = $surveyRepository;
     }
 
-    public function createFromTemplate(TemplateContract $template): SurveyContract
+    public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract
     {
         $blocks = $this->templateFactory->getBlocks($template);
 
-        $survey = $this->surveyFactory->build($template, $blocks);
+        $survey = $this->surveyFactory->build($ownerId, $template, $blocks);
+
+        $this->surveyRepository->save($survey);
 
         return $survey;
     }

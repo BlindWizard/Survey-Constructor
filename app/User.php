@@ -20,6 +20,17 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    public $incrementing = false;
+
+
+    protected static function boot() {
+        parent::boot();
+
+        static::creating(function($model){
+            $model->{$model->getKeyName()} = Uuid::generate()->string;
+        });
+    }
+
     /**
      * @var array
      */

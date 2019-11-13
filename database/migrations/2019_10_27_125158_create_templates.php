@@ -16,7 +16,7 @@ class CreateTemplates extends Migration
     public function up()
     {
         Schema::create('templates', function (Blueprint $table) {
-            $table->uuid('id')->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid('id')->primary()->unique()->default(DB::raw('uuid_generate_v4()'));
             $table->string('title', 256)->nullable()->default(null);
             $table->boolean('public')->default(false);
             $table->timestamp('created_at')->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));

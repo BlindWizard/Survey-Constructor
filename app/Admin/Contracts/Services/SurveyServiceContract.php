@@ -8,9 +8,10 @@ use App\Admin\Contracts\Entities\TemplateContract;
 interface SurveyServiceContract
 {
     /**
+     * @param string           $ownerId
      * @param TemplateContract $template
      *
      * @return SurveyContract
      */
-    public function createFromTemplate(TemplateContract $template): SurveyContract;
+    public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract;
 }

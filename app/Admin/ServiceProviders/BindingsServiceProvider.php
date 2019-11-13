@@ -5,10 +5,12 @@ namespace App\Admin\ServiceProviders;
 
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
+use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Database\Repositories\SurveyRepository;
 use App\Admin\Database\Repositories\TemplateRepository;
 use App\Admin\Factories\SettingsFactory;
 use App\Admin\Factories\SurveyFactory;
@@ -28,6 +30,7 @@ class BindingsServiceProvider extends ServiceProvider
 
         // repositories
         $this->app->singleton(TemplateRepositoryContract::class, TemplateRepository::class);
+        $this->app->singleton(SurveyRepositoryContract::class, SurveyRepository::class);
 
         // services
         $this->app->bind(TemplateServiceContract::class, TemplateService::class);

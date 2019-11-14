@@ -32,8 +32,8 @@ export class TemplateApi
 					template.id = data.id;
 					template.title = data.title;
 					template.public = data.public;
-					template.created_at = data.created_at;
-					template.updated_at = data.updated_at;
+					template.createdAt = data.createdAt;
+					template.updatedAt = data.updatedAt;
 
 					templates.push(template);
 				});

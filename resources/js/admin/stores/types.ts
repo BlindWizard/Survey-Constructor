@@ -11,6 +11,7 @@ export enum actions
 	LOAD_SETTINGS = 'loadSettings',
 	SHOW_TEMPLATES = 'showTemplates',
 	CREATE_SURVEY = 'createSurvey',
+	GET_SURVEY = 'getSurvey',
 }
 
 export enum getters
@@ -18,4 +19,5 @@ export enum getters
 	CSRF = 'csrf',
 	APPNAME = 'appName',
 	TEMPLATES = 'templates',
+	SURVEY = 'survey',
 }

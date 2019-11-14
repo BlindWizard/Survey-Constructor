@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Contracts\Services;
 
@@ -14,4 +15,12 @@ interface SurveyServiceContract
      * @return SurveyContract
      */
     public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract;
+
+    /**
+     * @param SurveyContract $survey
+     * @param string         $userId
+     *
+     * @return bool
+     */
+    public function canOperate(SurveyContract $survey, string $userId): bool;
 }

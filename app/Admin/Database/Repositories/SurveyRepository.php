@@ -18,7 +18,7 @@ class SurveyRepository implements SurveyRepositoryContract
     {
         $survey = Survey::query()->where(['id' => $id])->first();/** @var Survey $survey */
 
-        return  $survey;
+        return $survey;
     }
 
     /**

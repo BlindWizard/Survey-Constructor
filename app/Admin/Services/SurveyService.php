@@ -28,6 +28,9 @@ class SurveyService implements SurveyServiceContract
         $this->surveyRepository = $surveyRepository;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract
     {
         $blocks = $this->templateFactory->getBlocks($template);
@@ -37,5 +40,13 @@ class SurveyService implements SurveyServiceContract
         $this->surveyRepository->save($survey);
 
         return $survey;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function canOperate(SurveyContract $survey, string $userId): bool
+    {
+        return $survey->getOwnerId() === $userId;
     }
 }

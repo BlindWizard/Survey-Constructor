@@ -6,6 +6,7 @@ import {TemplateApi} from "../api/template.api";
 import {Template} from "../models/Template";
 import {SurveyApi} from "../api/survey.api";
 import {CreateSurvey} from "../api/requests/createSurvey";
+import {Survey} from "../models/Survey";
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ const store = new Vuex.Store({
 		csrf: null,
 		appName: null,
 		templates: null,
+		survey: null,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -25,6 +27,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_TEMPLATES](state, templates) {
 			state.templates = templates;
+		},
+		[mutations.SET_ACTIVE_SURVEY](state, survey) {
+			state.survey = survey;
 		}
 	},
 	actions: {
@@ -36,7 +41,15 @@ const store = new Vuex.Store({
 			commit(mutations.SET_TEMPLATES, await TemplateApi.getAll());
 		},
 		async [actions.CREATE_SURVEY]({commit}, request: CreateSurvey) {
-			return SurveyApi.createSurvey(request);
+			let id = await SurveyApi.createSurvey(request);
+			if (!id) {
+				throw new Error('Error during creating survey');
+			}
+
+			return id;
+		},
+		async [actions.GET_SURVEY]({commit}, id: string) {
+			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(id));
 		}
 	},
 	getters: {
@@ -48,6 +61,9 @@ const store = new Vuex.Store({
 		},
 		[getters.TEMPLATES](state) {
 			return state.templates;
+		},
+		[getters.SURVEY](state) {
+			return state.survey;
 		},
 	}
 });

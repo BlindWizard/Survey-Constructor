@@ -11,9 +11,9 @@ interface SurveyRepositoryContract
     /**
      * @param string $id
      *
-     * @return Survey
+     * @return Survey|null
      */
-    public function findById(string $id): Survey;
+    public function findById(string $id): ?Survey;
 
     /**
      * @param SurveyContract $survey

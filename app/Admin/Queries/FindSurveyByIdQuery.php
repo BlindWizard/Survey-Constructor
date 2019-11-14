@@ -5,14 +5,17 @@ namespace App\Admin\Queries;
 use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
+use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\SurveyObject;
-use Carbon\Carbon;
-use Ramsey\Uuid\Uuid;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FindSurveyByIdQuery implements Command
 {
     /** @var string */
     public $surveyId;
+
+    /** @var string */
+    public $userId;
 
     /** @var SurveyContract */
     public $survey;
@@ -20,26 +23,37 @@ class FindSurveyByIdQuery implements Command
     /** @var SurveyRepositoryContract */
     public $surveyRepository;
 
-    public function __construct(SurveyRepositoryContract $surveyRepository)
+    /** @var SurveyRepositoryContract */
+    public $surveyService;
+
+    public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService)
     {
         $this->surveyRepository = $surveyRepository;
+        $this->surveyService = $surveyService;
     }
 
     /**
      * @return Command
-     *
-     * @throws \Exception
      */
     public function perform(): Command
     {
         $survey = $this->surveyRepository->findById($this->surveyId);
 
+        if (null === $survey) {
+            throw new NotFoundHttpException();
+        }
+
+        if (false === $this->surveyService->canOperate($survey, $this->userId)) {
+            throw new AccessDeniedHttpException();
+        }
+
         $surveyObject = new SurveyObject();
-        $surveyObject->id = $survey->id;
-        $surveyObject->title = $survey->title;
+        $surveyObject->id = $survey->getId();
+        $surveyObject->title = $survey->getTitle();
         $surveyObject->blocks = [];
-        $surveyObject->createdAt = $survey->created_at;
-        $surveyObject->updatedAt = $survey->updated_at;
+        $surveyObject->ownerId = $survey->getOwnerId();
+        $surveyObject->createdAt = $survey->getCreatedAt();
+        $surveyObject->updatedAt = $survey->getUpdatedAt();
 
         $this->survey = $surveyObject;
 

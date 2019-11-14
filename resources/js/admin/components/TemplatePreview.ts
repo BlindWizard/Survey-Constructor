@@ -23,8 +23,8 @@ export class TemplatePreview extends Vue {
 		let request = new CreateSurvey();
 		request.templateId = this.template.id;
 
-		this.$store.dispatch(actions.CREATE_SURVEY, request).then((templateId) => {
-			this.$router.push({name: 'survey-edit', params: {templateId}});
+		this.$store.dispatch(actions.CREATE_SURVEY, request).then((surveyId) => {
+			this.$router.push({name: 'survey-edit', params: {surveyId: surveyId}});
 		});
 	}
 }

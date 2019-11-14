@@ -28,8 +28,8 @@ class SurveyFactory implements SurveyFactoryContract
         $survey->title = __('New survey');
         $survey->ownerId = $ownerId;
         $survey->blocks = $blocks;
-        $survey->createdAt = Carbon::now('UTC');
-        $survey->updatedAt = Carbon::now('UTC');
+        $survey->createdAt = (string) Carbon::now('UTC');
+        $survey->updatedAt = (string) Carbon::now('UTC');
 
         return $survey;
     }

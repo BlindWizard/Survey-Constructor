@@ -10,11 +10,11 @@ Route::group(['namespace' => 'Admin'], function () {
     Route::get('/admin', 'HomeController@index');
 
     Route::get('/admin/survey/{id}/edit', 'SurveyController@index');
+    Route::get('/admin/survey/get/{id}', 'SurveyController@get');
     Route::post('/admin/survey/create', 'SurveyController@create');
 
     Route::get('/admin/templates', 'TemplateController@index');
     Route::get('/admin/template/getAll', 'TemplateController@getAll');
-
 
     Route::get('/admin/{any}', function () {
         return redirect('/admin');

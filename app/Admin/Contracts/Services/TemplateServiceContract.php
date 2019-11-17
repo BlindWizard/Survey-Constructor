@@ -7,7 +7,9 @@ use App\Admin\DTO\TemplateObject;
 
 interface TemplateServiceContract {
     /**
+     * @param string $ownerIdId
+     *
      * @return TemplateObject[]
      */
-    public function getAvailableTemplates(): array;
+    public function getAvailableTemplates(string $ownerIdId): array;
 }

@@ -22,7 +22,7 @@ class SurveyObject implements SurveyContract
     public $updatedAt;
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getId(): string
     {
@@ -30,7 +30,7 @@ class SurveyObject implements SurveyContract
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getTitle(): string
     {
@@ -38,7 +38,7 @@ class SurveyObject implements SurveyContract
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getOwnerId(): string
     {
@@ -46,7 +46,7 @@ class SurveyObject implements SurveyContract
     }
 
     /**
-     * @return BlockContract[]
+     * @inheritdoc
      */
     public function getBlocks(): array
     {
@@ -54,7 +54,7 @@ class SurveyObject implements SurveyContract
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getCreatedAt(): string
     {
@@ -62,7 +62,7 @@ class SurveyObject implements SurveyContract
     }
 
     /**
-     * @return string
+     * @inheritdoc
      */
     public function getUpdatedAt(): string
     {

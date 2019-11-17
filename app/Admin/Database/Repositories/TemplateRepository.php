@@ -11,20 +11,30 @@ use App\Admin\Database\Models\Template;
 class TemplateRepository implements TemplateRepositoryContract
 {
     /**
-     * @return Template[]
+     * @inheritdoc
      */
-    public function getPublic(): array
+    public function getPublic(string $ownerId): array
     {
-        $templates = Template::query()->where(Template::ATTR_PUBLIC, '=', true)->get()->all();
+        $templates = Template::query()
+            ->where(Template::ATTR_PUBLIC, '=', true)
+            ->where(Template::ATTR_OWNER_ID, '=', $ownerId)
+            ->get()
+            ->all();
 
         return $templates;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function findById(string $id): Template
     {
         return Template::query()->find($id)->get()->first();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function create(string $title): Template
     {
         // TODO: Implement create() method.

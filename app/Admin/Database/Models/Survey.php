@@ -24,12 +24,14 @@ class Survey extends Model implements SurveyContract
     public const ATTR_UPDATED_AT = 'updated_at';
     public const ATTR_OWNER_ID = 'owner_id';
 
+    public $incrementing = false;
+
     /**
      * @return string
      */
     public function getId(): string
     {
-        return  $this->id;
+        return $this->id;
     }
 
     /**

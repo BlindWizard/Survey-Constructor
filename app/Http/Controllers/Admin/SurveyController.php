@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin\Commands\CreateSurveyCommand;
-use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
-use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyByIdQuery;
+use App\Admin\Queries\GetAllUsersSurveys;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\CreateSurveyRequest;
@@ -36,6 +35,16 @@ class SurveyController extends Controller
         $query->perform();
 
         return view('admin.main', ['settings' => $this->settings->getSettings()->toJson()]);
+    }
+
+    public function getAll(GetAllUsersSurveys $query)
+    {
+        $query->userId = Auth::user()->getAuthIdentifier();
+
+        $response = new AjaxResponse();
+        $response->data = $query->perform()->getResult();
+
+        return response()->json($response);
     }
 
     public function create(CreateSurveyRequest $request, CreateSurveyCommand $command)

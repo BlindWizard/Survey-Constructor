@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
+use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\DTO\TemplateObject;
-use App\Admin\Rules\TemplateRules;
 
 class TemplateService implements TemplateServiceContract
 {
@@ -23,17 +23,21 @@ class TemplateService implements TemplateServiceContract
         $this->templatesFactory = $templatesFactory;
     }
 
-    public function getAvailableTemplates(): array
+    /**
+     * @inheritdoc
+     */
+    public function getAvailableTemplates(string $ownerId): array
     {
-        $public = $this->templatesRepository->getPublic();
+        $public = $this->templatesRepository->getPublic($ownerId);
         $objects = [];
         foreach ($public as $template) {
             $object            = new TemplateObject();
-            $object->id        = $template->id;
-            $object->title     = $template->title;
-            $object->public    = $template->public;
-            $object->createdAt = $template->created_at;
-            $object->updatedAt = $template->updated_at;
+            $object->id        = $template->getId();
+            $object->title     = $template->getTitle();
+            $object->public    = $template->getPublic();
+            $object->ownerId   = $template->getOwnerId();
+            $object->createdAt = $template->getCreatedAt();
+            $object->updatedAt = $template->getUpdatedAt();
         }
 
         return array_merge(

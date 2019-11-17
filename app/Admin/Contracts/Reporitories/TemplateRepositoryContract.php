@@ -13,10 +13,13 @@ interface TemplateRepositoryContract
      * @return Template
      */
     public function create(string $title): Template;
+
     /**
+     * @param string $ownerId
+     *
      * @return Template[]
      */
-    public function getPublic(): array;
+    public function getPublic(string $ownerId): array;
 
     /**
      * @param string $id

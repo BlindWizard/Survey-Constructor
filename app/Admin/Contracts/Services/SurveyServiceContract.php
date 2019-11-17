@@ -23,4 +23,11 @@ interface SurveyServiceContract
      * @return bool
      */
     public function canOperate(SurveyContract $survey, string $userId): bool;
+
+    /**
+     * @param string $ownerId
+     *
+     * @return array
+     */
+    public function getAvailableSurveys(string $ownerId): array;
 }

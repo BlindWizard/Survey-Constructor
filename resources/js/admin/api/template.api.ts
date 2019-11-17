@@ -32,6 +32,7 @@ export class TemplateApi
 					template.id = data.id;
 					template.title = data.title;
 					template.public = data.public;
+					template.ownerId = data.ownerId;
 					template.createdAt = data.createdAt;
 					template.updatedAt = data.updatedAt;
 

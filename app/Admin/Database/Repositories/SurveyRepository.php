@@ -5,26 +5,21 @@ namespace App\Admin\Database\Repositories;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Database\Models\Survey;
-use App\Admin\Database\Models\Template;
 
 class SurveyRepository implements SurveyRepositoryContract
 {
     /**
-     * @param string $id
-     *
-     * @return Template
+     * @inheritdoc
      */
-    public function findById(string $id): Survey
+    public function findById(string $id): SurveyContract
     {
-        $survey = Survey::query()->where(['id' => $id])->first();/** @var Survey $survey */
+        $survey = Survey::query()->where(Survey::ATTR_ID, '=', $id)->first();/** @var Survey $survey */
 
         return $survey;
     }
 
     /**
-     * @param SurveyContract $survey
-     *
-     * @return void
+     * @inheritdoc
      *
      * @throws \Throwable
      */
@@ -38,5 +33,15 @@ class SurveyRepository implements SurveyRepositoryContract
         $model->updated_at = $survey->getUpdatedAt();
 
         $model->saveOrFail();
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAvailableSurveys(string $ownerId): array
+    {
+        $surveys = Survey::query()->where(Survey::ATTR_OWNER_ID, '=', $ownerId)->get()->all();/** @var Survey[] $surveys */
+
+        return $surveys;
     }
 }

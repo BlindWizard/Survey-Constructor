@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\Contracts\Services\SurveyServiceContract;
-use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Queries\GetAllUsersTemplates;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 
@@ -23,10 +22,10 @@ class TemplateController extends Controller
         return view('admin.main', ['settings' => $this->settings->getSettings()->toJson()]);
     }
 
-    public function getAll(TemplateServiceContract $templatesService)
+    public function getAll(GetAllUsersTemplates $query)
     {
         $response = new AjaxResponse();
-        $response->data = $templatesService->getAvailableTemplates();
+        $response->data = $query->perform()->getResult();
 
         return response()->json($response);
     }

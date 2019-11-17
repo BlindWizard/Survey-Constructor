@@ -24,6 +24,8 @@ class Template extends Model implements TemplateContract
     public const ATTR_CREATED_AT = 'created_at';
     public const ATTR_UPDATED_AT = 'updated_at';
 
+    public $incrementing = false;
+
     public function getId(): string
     {
         return $this->id;
@@ -32,5 +34,34 @@ class Template extends Model implements TemplateContract
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getPublic(): bool
+    {
+        return $this->public;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOwnerId(): string
+    {
+        return $this->owner_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedAt(): string
+    {
+        return $this->created_at;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUpdatedAt(): string
+    {
+        return $this->updated_at;
     }
 }

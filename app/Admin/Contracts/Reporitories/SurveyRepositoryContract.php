@@ -13,7 +13,7 @@ interface SurveyRepositoryContract
      *
      * @return Survey|null
      */
-    public function findById(string $id): ?Survey;
+    public function findById(string $id): ?SurveyContract;
 
     /**
      * @param SurveyContract $survey
@@ -21,4 +21,11 @@ interface SurveyRepositoryContract
      * @return void
      */
     public function save(SurveyContract $survey): void;
+
+    /**
+     * @param string $ownerId
+     *
+     * @return SurveyContract[]
+     */
+    public function getAvailableSurveys(string $ownerId): array;
 }

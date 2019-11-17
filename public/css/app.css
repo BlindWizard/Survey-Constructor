@@ -12014,6 +12014,14 @@ html.is-reveal-open body {
   width: 50%;
 }
 
+.login-page {
+  height: 100%;
+}
+
+.login-page__body {
+  height: 100%;
+}
+
 .survey-list {
   padding-top: 1rem;
   padding-bottom: 1rem;

@@ -3,10 +3,9 @@ import Vuex from 'vuex';
 import {actions, getters, mutations} from "./types";
 import {Settings} from "../settings";
 import {TemplateApi} from "../api/template.api";
-import {Template} from "../models/Template";
 import {SurveyApi} from "../api/survey.api";
-import {CreateSurvey} from "../api/requests/createSurvey";
-import {Survey} from "../models/Survey";
+import {CreateSurvey} from "../api/requests/CreateSurvey";
+import {GetSurvey} from "../api/requests/GetSurvey";
 
 Vue.use(Vuex);
 
@@ -15,6 +14,7 @@ const store = new Vuex.Store({
 	state: {
 		csrf: null,
 		appName: null,
+		surveys: null,
 		templates: null,
 		survey: null,
 	},
@@ -24,6 +24,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_APPNAME](state, name) {
 			state.appName = name;
+		},
+		[mutations.SET_SURVEYS](state, surveys) {
+			state.surveys = surveys;
 		},
 		[mutations.SET_TEMPLATES](state, templates) {
 			state.templates = templates;
@@ -37,7 +40,10 @@ const store = new Vuex.Store({
 			commit(mutations.SET_CSRF, setting.csrf);
 			commit(mutations.SET_APPNAME, setting.appName);
 		},
-		async [actions.SHOW_TEMPLATES]({commit}) {
+		async [actions.LOAD_SURVEYS]({commit}) {
+			commit(mutations.SET_SURVEYS, await SurveyApi.getAll());
+		},
+		async [actions.LOAD_TEMPLATES]({commit}) {
 			commit(mutations.SET_TEMPLATES, await TemplateApi.getAll());
 		},
 		async [actions.CREATE_SURVEY]({commit}, request: CreateSurvey) {
@@ -48,8 +54,8 @@ const store = new Vuex.Store({
 
 			return id;
 		},
-		async [actions.GET_SURVEY]({commit}, id: string) {
-			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(id));
+		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
+			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
 		}
 	},
 	getters: {
@@ -58,6 +64,9 @@ const store = new Vuex.Store({
 		},
 		[getters.APPNAME](state) {
 			return state.appName;
+		},
+		[getters.SURVEYS](state) {
+			return state.surveys;
 		},
 		[getters.TEMPLATES](state) {
 			return state.templates;

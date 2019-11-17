@@ -13,17 +13,17 @@ import {Template} from "../models/Template";
 		</div>
 	`,
 	components: {
-		TemplatePreview: TemplatePreview,
+		TemplatePreview,
 	}
 })
 export class TemplatesList extends Vue {
 	public mounted() {
 		if (null === this.templates) {
-			this.$store.dispatch(actions.SHOW_TEMPLATES);
+			this.$store.dispatch(actions.LOAD_TEMPLATES);
 		}
 	}
 
-	get templates(): Template[] {
+	get templates(): Template[]|null {
 		return this.$store.getters[getters.TEMPLATES];
 	}
 }

@@ -4,6 +4,7 @@ import {Prop} from "vue-property-decorator";
 import {Viewport} from "./Viewport";
 import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
+import {GetSurvey} from "../api/requests/GetSurvey";
 
 @Component({
 	template: `
@@ -23,10 +24,15 @@ export class SurveyEdit extends Vue {
 	@Prop(String) readonly surveyId: string;
 
 	public mounted() {
-		this.$store.dispatch(actions.GET_SURVEY, this.surveyId);
+		if (null === this.survey) {
+			let request = new GetSurvey();
+			request.surveyId = this.surveyId;
+
+			this.$store.dispatch(actions.LOAD_SURVEY, request);
+		}
 	}
 
-	get survey(): Survey {
+	get survey(): Survey|null {
 		return this.$store.getters[getters.SURVEY];
 	}
 }

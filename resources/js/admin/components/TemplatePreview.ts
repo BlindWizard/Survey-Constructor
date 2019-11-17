@@ -3,7 +3,7 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Template} from "../models/Template";
 import {actions} from "../stores/types";
-import {CreateSurvey} from "../api/requests/createSurvey";
+import {CreateSurvey} from "../api/requests/CreateSurvey";
 
 @Component({
 	template: `
@@ -24,7 +24,7 @@ export class TemplatePreview extends Vue {
 		request.templateId = this.template.id;
 
 		this.$store.dispatch(actions.CREATE_SURVEY, request).then((surveyId) => {
-			this.$router.push({name: 'survey-edit', params: {surveyId: surveyId}});
+			this.$router.push({name: 'survey', params: {surveyId: surveyId}});
 		});
 	}
 }

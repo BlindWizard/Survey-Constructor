@@ -20,7 +20,7 @@ import {actions} from "../stores/types";
 export class SurveyCreateButton extends Vue
 {
 	public getTemplates() {
-		this.$store.dispatch(actions.SHOW_TEMPLATES).then(() => {
+		this.$store.dispatch(actions.LOAD_TEMPLATES).then(() => {
 			this.$router.push({name: 'templates-list'});
 		});
 	}

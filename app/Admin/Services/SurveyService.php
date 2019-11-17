@@ -9,6 +9,8 @@ use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
+use App\Admin\DTO\SurveyObject;
+use App\Admin\DTO\TemplateObject;
 
 class SurveyService implements SurveyServiceContract
 {
@@ -26,6 +28,27 @@ class SurveyService implements SurveyServiceContract
         $this->templateFactory = $templateFactory;
         $this->surveyFactory = $surveyFactory;
         $this->surveyRepository = $surveyRepository;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAvailableSurveys(string $ownerId): array
+    {
+        $surveys = $this->surveyRepository->getAvailableSurveys($ownerId);
+        $objects = [];
+        foreach ($surveys as $survey) {
+            $object            = new SurveyObject();
+            $object->id        = $survey->getId();
+            $object->title     = $survey->getTitle();
+            $object->ownerId   = $survey->getOwnerId();
+            $object->createdAt = $survey->getCreatedAt();
+            $object->updatedAt = $survey->getUpdatedAt();
+
+            $objects[] = $object;
+        }
+
+        return $objects;
     }
 
     /**

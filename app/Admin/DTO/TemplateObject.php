@@ -35,4 +35,36 @@ class TemplateObject implements TemplateContract
     {
         return $this->title;
     }
+
+    /**
+     * @inheritdoc
+     */
+    public function getOwnerId(): string
+    {
+        return $this->ownerId;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getPublic(): bool
+    {
+        return $this->public;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getCreatedAt(): string
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getUpdatedAt(): string
+    {
+        return $this->updatedAt;
+    }
 }

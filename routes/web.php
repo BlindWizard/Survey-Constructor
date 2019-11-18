@@ -6,7 +6,7 @@ Route::group(['namespace' => 'Landing'], function () {
     Route::get('/', 'HomeController@index');
 });
 
-Route::group(['namespace' => 'Admin'], function () {
+Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin', 'HomeController@index');
 
     Route::get('/admin/survey/{id}/edit', 'SurveyController@index');

@@ -12,6 +12,37 @@ info:
     name: proprietary
   version: 1.0.0
 paths:
+  /admin/survey/getAll:
+    get:
+      tags:
+        - Admin
+      description: Returns the list of user's surveys.
+      responses:
+        '200':
+          description: Array of Survey objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+                      example: 123e4567-e89b-12d3-a456-426655440000
+                    title:
+                      type: string
+                    ownerId:
+                      type: string
+                      format: uuid
+                      example: 123e4567-e89b-12d3-a456-426655440000
+                    createdAt:
+                      type: string
+                      format: date-time
+                    updatedAt:
+                      type: string
+                      format: date-time
   /admin/survey/create:
     get:
       tags:
@@ -50,6 +81,10 @@ paths:
                       example: 123e4567-e89b-12d3-a456-426655440000
                     title:
                       type: string
+                    ownerId:
+                      type: string
+                      format: uuid
+                      example: 123e4567-e89b-12d3-a456-426655440000
                     public:
                       type: boolean
                     createdAt:

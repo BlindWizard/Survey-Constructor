@@ -5,11 +5,13 @@ import {Viewport} from "./Viewport";
 import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
+import {SurveyEditMenu} from "./SurveyEditMenu";
 
 @Component({
 	template: `
-		<div :class="bem('new-surway').add('grid-container').classes()">
-			<div class="grid-x grid-margin-x">
+		<div class="grid-container fluid">
+			<div class="grid-x grid-padding-x">
+				<SurveyEditMenu/>
 				<Viewport v-if="null !== survey">
 					{{ survey.title }}
 				</Viewport>
@@ -17,7 +19,8 @@ import {GetSurvey} from "../api/requests/GetSurvey";
 		</div>
 	`,
 	components: {
-		Viewport
+		Viewport,
+		SurveyEditMenu
 	}
 })
 export class SurveyEdit extends Vue {

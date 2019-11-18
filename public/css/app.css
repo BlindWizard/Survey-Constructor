@@ -12014,11 +12014,11 @@ html.is-reveal-open body {
   width: 50%;
 }
 
-.login-page {
+.admin-page {
   height: 100%;
 }
 
-.login-page__body {
+.admin-page__body {
   height: 100%;
 }
 
@@ -12029,6 +12029,15 @@ html.is-reveal-open body {
 
 .viewport {
   background-color: #e6e6e6;
+}
+
+.survey-edit-menu {
+  min-height: 100vh;
+  background-color: #2d1e45;
+}
+
+.survey-edit-menu__link {
+  color: #fefefe;
 }
 
 .description {

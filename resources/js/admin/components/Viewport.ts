@@ -3,8 +3,10 @@ import Vue from "vue";
 
 @Component({
 	template: `
-		<div :class="bem('viewport').add('cell').classes()">
-			<slot></slot>
+		<div :class="bem('viewport').add('cell medium-8').classes()">
+			<div class="cell">
+				<slot/>
+			</div>
 		</div>
 	`,
 })

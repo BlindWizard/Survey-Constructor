@@ -4,7 +4,7 @@ import {actions} from "../stores/types";
 
 @Component({
 	template: `
-		<div :class="bem('create-block').add('cell medium-3 small-6').is('filled').classes()" @click="getTemplates()">
+		<div :class="bem('create-block').add('cell large-3 medium-6').is('filled').classes()" @click="getTemplates()">
 			<div :class="bem('create-block').el('wrapper').classes()">
 				<div :class="bem('create-block').el('inner').classes()">
 					<div :class="bem('create-block').el('label').is('up').classes()">create</div>

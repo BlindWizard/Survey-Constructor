@@ -12029,10 +12029,11 @@ html.is-reveal-open body {
 
 .viewport {
   background-color: #e6e6e6;
+  min-height: calc(100vh - 4rem);
 }
 
 .survey-edit-menu {
-  min-height: 100vh;
+  min-height: calc(100vh - 4rem);
   background-color: #2d1e45;
 }
 

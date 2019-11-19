@@ -1,5 +1,5 @@
 .survey-edit-menu {
-    min-height: 100vh;
+    min-height: calc(100vh - 4rem);
     background-color: $dark;
 
     &__link {

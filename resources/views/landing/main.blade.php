@@ -7,7 +7,7 @@
         </div>
         <div class="description cell">
             <div class="grid-container">
-                <div class="grid-x grid-margin-x">
+                <div class="grid-x grid-padding-x">
                     <div class="cell">
                         <div class="join-block">
                             <h3>EVERYTHING</h3>
@@ -22,7 +22,7 @@
         </div>
         <div class="cell">
             <div class="grid-container">
-                <div class="grid-x grid-margin-x">
+                <div class="grid-x grid-padding-x">
                     <div class="cell">
                         Metrics
                     </div>
@@ -31,7 +31,11 @@
         </div>
         <div class="cell">
             <div class="grid-container">
-                Footer
+                <div class="grid-x grid-padding-x">
+                    <div class="cell">
+                        Footer
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -7,7 +7,7 @@ import {GetSurvey} from "../api/requests/GetSurvey";
 
 @Component({
 	template: `
-		<div :class="bem('create-block').add('cell medium-3 small-6').classes()" @click="openSurvey()">
+		<div :class="bem('create-block').add('cell large-3 medium-6').classes()" @click="openSurvey()">
 			<div :class="bem('create-block').el('wrapper').classes()">
 				<div :class="bem('create-block').el('inner').classes()">
 					{{ survey.title }}

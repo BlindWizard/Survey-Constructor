@@ -4,7 +4,9 @@ import {getters} from "../stores/types";
 
 @Component({
 	template: `
-		<div class="grid-container">
+		<div class="grid-container fluid">
+		<div class="grid-x grid-padding-x">
+			<div class="cell large-8 large-offset-2 medium-12 medium-offset-0">
 			<div :class="bem('top-menu').el('inner').add('top-bar').classes()">
 				<div class="top-bar-left">
 					<div :class="bem('top-menu').el('logo').classes()">
@@ -23,6 +25,8 @@ import {getters} from "../stores/types";
 					</div>
 				</div>
 			</div>
+			</div>
+		</div>
 		</div>
 	`
 })

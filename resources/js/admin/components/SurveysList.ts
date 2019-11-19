@@ -7,10 +7,16 @@ import {SurveyPreview} from "./SurveyPreview";
 
 @Component({
 	template: `
-		<div v-if="null !== surveys" :class="bem('survey-list').add('grid-container').classes()">
+		<div v-if="null !== surveys" :class="bem('survey-list').add('grid-container full').classes()">
 			<div class="grid-x grid-margin-x">
-				<SurveyPreview :key="i" v-for="(survey, i) in surveys" :survey="survey"/>
-				<SurveyCreateButton/>
+				<div class="cell large-8 large-offset-2 medium-12 medium-offset-0">
+					<div class="grid-container fluid">
+						<div class="grid-x grid-margin-x">
+							<SurveyPreview :key="i" v-for="(survey, i) in surveys" :survey="survey"/>
+							<SurveyCreateButton/>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	`,

@@ -11924,6 +11924,11 @@ html.is-reveal-open body {
   opacity: 0;
 }
 
+.draggable {
+  position: absolute;
+  z-index: 1000;
+}
+
 .top-menu {
   background-color: #2d1e45;
   color: #fefefe;

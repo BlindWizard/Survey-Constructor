@@ -12046,6 +12046,10 @@ html.is-reveal-open body {
   color: #fefefe;
 }
 
+.drag-container {
+  overflow: hidden;
+}
+
 .description {
   background-color: #2d1e45;
   color: #fefefe;

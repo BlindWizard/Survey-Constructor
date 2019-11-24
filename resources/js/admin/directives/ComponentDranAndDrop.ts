@@ -19,16 +19,20 @@ const ComponentDragAndDrop: DirectiveOptions = {
 			return false;
 		};
 
-		document.onmouseup = () => {
-			if (dragState && null !== dragElement) {
+		document.addEventListener('mouseup', () => {
+			if (null !== dragElement) {
 				dragElement.$destroy();
 				dragElement.$el.remove();
+			}
+
+			if (dragState) {
 				dragState = false;
 				dragElement = null;
+				treshhold = 0;
 			}
-		};
+		});
 
-		document.onmousemove = (e: MouseEvent) => {
+		document.addEventListener('mousemove', (e: MouseEvent) => {
 			if (!dragState) {
 				return;
 			}
@@ -39,16 +43,16 @@ const ComponentDragAndDrop: DirectiveOptions = {
 					return;
 				}
 
-				dragElement = componentsDragFactory.create('options-list', vnode);
+				dragElement = componentsDragFactory.create('options-list');
 			}
 			else {
 				treshhold = 0;
-
-				let el = dragElement.$el as HTMLElement;
-				el.style.left = e.x + 'px';
-				el.style.top = e.y + 'px';
 			}
-		}
+
+			let el = dragElement.$el as HTMLElement;
+			el.style.left = e.x + 'px';
+			el.style.top = e.y + 'px';
+		});
 	},
 };
 

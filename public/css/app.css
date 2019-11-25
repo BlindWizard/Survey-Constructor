@@ -12037,6 +12037,10 @@ html.is-reveal-open body {
   min-height: calc(100vh - 4rem);
 }
 
+.viewport__inner {
+  padding: 0.9375rem;
+}
+
 .survey-edit-menu {
   min-height: calc(100vh - 4rem);
   background-color: #2d1e45;
@@ -12060,5 +12064,13 @@ html.is-reveal-open body {
   display: inline-block;
   padding: 2rem;
   border: solid 0.2rem #fefefe;
+}
+
+.survey-block {
+  background-color: #fefefe;
+}
+
+.survey-block__header {
+  text-align: center;
 }
 

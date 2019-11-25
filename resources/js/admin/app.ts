@@ -8,12 +8,14 @@ import {BemMixin} from "../common/vue-bem-mixin";
 import VueRouter from "vue-router";
 import {routes} from "./routes";
 import {axios} from "../common/axios";
-import {ComponentDragAndDrop} from "./directives/ComponentDranAndDrop";
+import {ComponentDrag} from "./directives/ComponentDrag";
+import {ComponentDrop} from "./directives/ComponentDrop";
 
 Vue.mixin(BemMixin);
 Vue.use(VueRouter);
 
-Vue.directive('component-drag-n-drop', ComponentDragAndDrop);
+Vue.directive('component-drag', ComponentDrag);
+Vue.directive('component-drop', ComponentDrop);
 
 window.onerror = errorHandler;
 axios.interceptors.response.use(

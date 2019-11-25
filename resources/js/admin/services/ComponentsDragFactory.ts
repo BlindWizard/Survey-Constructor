@@ -3,6 +3,7 @@ import {OptionsList} from "../components/controls/OptionsList";
 
 class ComponentsDragFactory
 {
+	private dragState: boolean = false;
 	private container: HTMLElement;
 
 	constructor()
@@ -18,6 +19,16 @@ class ComponentsDragFactory
 			default:
 				throw new Error('Undefined component');
 		}
+	}
+
+	public setDragState(state: boolean)
+	{
+		this.dragState = state;
+	}
+
+	public getDragState(): boolean
+	{
+		return  this.dragState;
 	}
 
 	private createOptionsList(): Vue
@@ -43,6 +54,7 @@ class ComponentsDragFactory
 
 		return container;
 	}
+
 }
 
 const componentsDragFactory = new ComponentsDragFactory();

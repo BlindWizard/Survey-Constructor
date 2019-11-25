@@ -19,7 +19,6 @@ import {GetSurvey} from "../api/requests/GetSurvey";
 export class SurveyPreview extends Vue {
 	@Prop(Survey) readonly survey: Survey;
 
-
 	public openSurvey() {
 		let request = new GetSurvey();
 		request.surveyId = this.survey.id;

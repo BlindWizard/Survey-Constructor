@@ -1,23 +1,30 @@
 import Vue, {DirectiveOptions} from 'vue'
 import {componentsDragFactory} from "../services/ComponentsDragFactory";
 
-let dragState = false;
 let dragElement: Vue|null = null;
 let treshhold = 0;
 
-const ComponentDragAndDrop: DirectiveOptions = {
+const ComponentDrag: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
 		el.onmousedown = (e: MouseEvent) => {
 			if (e.which !== 1) {
 				return;
 			}
 
-			dragState = true;
+			componentsDragFactory.setDragState(true);
 		};
 
-		el.ondragstart = () => {
-			return false;
+		el.ondragstart = (e: Event) => {
+			if (componentsDragFactory.getDragState()) {
+				e.preventDefault();
+			}
 		};
+
+		document.addEventListener('selectstart', (e: Event) => {
+			if (componentsDragFactory.getDragState()) {
+				e.preventDefault();
+			}
+		});
 
 		document.addEventListener('mouseup', () => {
 			if (null !== dragElement) {
@@ -25,15 +32,15 @@ const ComponentDragAndDrop: DirectiveOptions = {
 				dragElement.$el.remove();
 			}
 
-			if (dragState) {
-				dragState = false;
+			if (componentsDragFactory.getDragState()) {
+				componentsDragFactory.setDragState(false);
 				dragElement = null;
 				treshhold = 0;
 			}
 		});
 
 		document.addEventListener('mousemove', (e: MouseEvent) => {
-			if (!dragState) {
+			if (!componentsDragFactory.getDragState()) {
 				return;
 			}
 
@@ -56,4 +63,4 @@ const ComponentDragAndDrop: DirectiveOptions = {
 	},
 };
 
-export {ComponentDragAndDrop};
+export {ComponentDrag};

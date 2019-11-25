@@ -1,4 +1,8 @@
 .viewport {
     background-color: $light-gray;
     min-height: calc(100vh - 4rem);
+
+    &__inner {
+        padding: 0.9375rem;
+    }
 }

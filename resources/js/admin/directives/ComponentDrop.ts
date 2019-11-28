@@ -1,11 +1,14 @@
-import Vue, {DirectiveOptions} from 'vue'
-import {componentsDragFactory} from "../services/ComponentsDragFactory";
+import {DirectiveOptions} from 'vue'
+import {dragDropService} from "../services/DragDropService";
 
-let placeholder = null;
-let dropTarget = null;
 const ComponentDrop: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
-		componentsDragFactory.setTarget(el);
+		let rows: HTMLElement[] = [];
+		Array.from(el.getElementsByClassName('block')).forEach((el: Element) => {
+			rows.push(el as HTMLElement);
+		});
+
+		dragDropService.handleTarget(el, rows);
 	},
 };
 

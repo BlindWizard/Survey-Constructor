@@ -1,10 +1,10 @@
 class DragDropService
 {
 	private dragState: boolean = false;
-	private dragElement: HTMLElement|null;
+	private dragElement: HTMLElement|null = null;
 	private container: HTMLElement;
 	private target: HTMLElement;
-	private placeholder: HTMLElement|null;
+	private placeholder: HTMLElement|null = null;
 
 	constructor()
 	{
@@ -15,7 +15,7 @@ class DragDropService
 	{
 		this.target = target;
 
-		rows.forEach((row) => {
+		rows.forEach((row: HTMLElement) => {
 			row.addEventListener('mouseover', (e: MouseEvent) => {
 				if (!this.getDragState()) {
 					return;
@@ -38,6 +38,8 @@ class DragDropService
 	{
 		this.dragElement = dragElement;
 
+		this.createPlaceholder();
+
 		document.addEventListener('mousemove', (e: MouseEvent) => {
 			if (!this.getDragState()) {
 				return;
@@ -52,20 +54,15 @@ class DragDropService
 	{
 		this.dragState = state;
 
-		if (this.dragState) {
-			if (!this.placeholder) {
-				this.placeholder = this.createPlaceholder();
-			}
-
-			this.target.insertBefore(this.placeholder, this.target.lastChild.nextSibling);
-		}
-		else {
-			if (this.placeholder) {
+		if (!this.dragState) {
+			if (null !== this.placeholder) {
 				this.placeholder.remove();
+				this.placeholder = null;
 			}
 
-			if (this.dragElement) {
+			if (null !== this.dragElement) {
 				this.dragElement.remove();
+				this.dragElement = null;
 			}
 		}
 	}
@@ -93,14 +90,20 @@ class DragDropService
 		return container;
 	}
 
-	private createPlaceholder(): HTMLElement
+	private createPlaceholder()
 	{
+		if (null !== this.placeholder) {
+			return;
+		}
+
 		let placeholder = document.createElement('div');
 		placeholder.classList.add('placeholder');
 		placeholder.style.background = 'yellow';
 		placeholder.style.height = '20px';
 
-		return placeholder;
+		this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);
+
+		this.placeholder = placeholder;
 	}
 }
 

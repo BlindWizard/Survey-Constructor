@@ -50,7 +50,9 @@ const ComponentDrag: DirectiveOptions = {
 					return;
 				}
 
-				dragElement = ComponentsFactory.create('options-list', dragDropService.getContainer(), {x: e.x, y: e.y});
+				dragElement = ComponentsFactory.create('options-list', dragDropService.getContainer());
+				(dragElement.$el as HTMLElement).style.left = e.x + 'px';
+				(dragElement.$el as HTMLElement).style.top = e.y + 'px';
 			}
 			else {
 				treshhold = 0;

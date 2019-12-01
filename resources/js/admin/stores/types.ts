@@ -14,6 +14,7 @@ export enum actions
 	LOAD_TEMPLATES = 'loadTemplates',
 	CREATE_SURVEY = 'createSurvey',
 	LOAD_SURVEY = 'getSurvey',
+	ADD_ELEMENT = 'addElement',
 }
 
 export enum getters

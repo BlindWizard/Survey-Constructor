@@ -5,6 +5,7 @@ class DragDropService
 	private container: HTMLElement;
 	private target: HTMLElement;
 	private placeholder: HTMLElement|null = null;
+	private dropPlace: HTMLElement|null = null;
 
 	constructor()
 	{
@@ -15,22 +16,33 @@ class DragDropService
 	{
 		this.target = target;
 
-		rows.forEach((row: HTMLElement) => {
-			row.addEventListener('mouseover', (e: MouseEvent) => {
-				if (!this.getDragState()) {
-					return;
-				}
+		console.log(rows);
 
-				let dropTarget = row;
-				var rect = dropTarget.getBoundingClientRect();
+		this.target.addEventListener('mousemove', (e: MouseEvent) => {
+			if (!this.getDragState()) {
+				return;
+			}
 
-				if (e.y < rect.top + dropTarget.offsetHeight / 2) {
-					dropTarget.parentElement.insertBefore(this.placeholder, dropTarget);
-				}
-				else {
-					dropTarget.parentElement.insertBefore(this.placeholder, dropTarget.nextSibling);
-				}
-			});
+			let row = document.elementFromPoint(e.x, e.y) as HTMLElement;
+
+			if (-1 === rows.indexOf(row) || row === this.placeholder) {
+				return;
+			}
+
+			var rect = row.getBoundingClientRect();
+
+			if (e.y < rect.top + row.offsetHeight / 2) {
+				this.dropPlace = row;
+			}
+			else {
+				this.dropPlace = row.nextElementSibling as HTMLElement;
+			}
+
+			if (this.dropPlace === this.placeholder) {
+				return;
+			}
+
+			this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
 		});
 	}
 
@@ -77,6 +89,11 @@ class DragDropService
 		return this.container;
 	}
 
+	public getLastTarget(): HTMLElement|null
+	{
+		return this.dropPlace;
+	}
+
 	private createContainer(): HTMLElement
 	{
 		let container: HTMLElement|null = document.getElementById('drag-container');
@@ -101,7 +118,9 @@ class DragDropService
 		placeholder.style.background = 'yellow';
 		placeholder.style.height = '20px';
 
-		this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);
+		if (this.target.lastChild) {
+			this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);
+		}
 
 		this.placeholder = placeholder;
 	}

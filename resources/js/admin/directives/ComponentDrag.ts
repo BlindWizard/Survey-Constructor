@@ -30,6 +30,8 @@ const ComponentDrag: DirectiveOptions = {
 		document.addEventListener('mouseup', () => {
 			if (dragDropService.getDragState()) {
 				dragDropService.setDragState(false);
+
+				console.log(dragDropService.getLastTarget());
 				if (null !== dragElement) {
 					dragElement.$destroy();
 					dragElement = null;

@@ -6,6 +6,7 @@ import {TemplateApi} from "../api/template.api";
 import {SurveyApi} from "../api/survey.api";
 import {CreateSurvey} from "../api/requests/CreateSurvey";
 import {GetSurvey} from "../api/requests/GetSurvey";
+import {AddElement} from "../api/requests/AddElement";
 
 Vue.use(Vuex);
 
@@ -56,6 +57,9 @@ const store = new Vuex.Store({
 		},
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
 			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
+		},
+		[actions.ADD_ELEMENT]({commit}, request: AddElement) {
+
 		}
 	},
 	getters: {

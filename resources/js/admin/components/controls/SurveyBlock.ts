@@ -2,6 +2,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Survey} from "../../models/Survey";
+import {OptionsList} from "./OptionsList";
 
 @Component({
 	template: `
@@ -9,10 +10,12 @@ import {Survey} from "../../models/Survey";
 			<div :class="bem('survey-block').el('header').classes()">
 				{{ survey.title }}
 			</div>
-			<div class="block">Блок 1</div>
-			<div class="block">Блок 2</div>
+			<OptionsList />
 		</div>
 	`,
+	components: {
+		OptionsList
+	}
 })
 export class SurveyBlock extends Vue {
 	@Prop(Survey) readonly survey: Survey;

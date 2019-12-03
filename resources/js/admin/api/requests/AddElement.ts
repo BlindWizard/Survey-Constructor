@@ -1,3 +1,4 @@
 export class AddElement {
-	after: HTMLElement
+	surveyId: string;
+	position: number;
 }

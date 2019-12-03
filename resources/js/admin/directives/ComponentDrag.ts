@@ -1,6 +1,8 @@
 import Vue, {DirectiveOptions} from 'vue'
 import {dragDropService} from "../services/DragDropService";
 import {ComponentsFactory} from "../services/ComponentsFactory";
+import {actions, getters} from "../stores/types";
+import {AddElement} from "../api/requests/AddElement";
 
 let dragElement: Vue|null = null;
 let treshhold = 0;
@@ -31,6 +33,14 @@ const ComponentDrag: DirectiveOptions = {
 			if (dragDropService.getDragState()) {
 				dragDropService.setDragState(false);
 
+				let $store = (vnode.context as Vue).$store;
+				let request = new AddElement();
+				request.surveyId = $store.getters[getters.SURVEY].id;
+
+				let drop = dragDropService.getLastTarget();
+				request.position = (null !== drop ? Array.from(drop.parentElement.children).indexOf(drop) : 0);
+
+				(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
 				console.log(dragDropService.getLastTarget());
 				if (null !== dragElement) {
 					dragElement.$destroy();
@@ -52,7 +62,7 @@ const ComponentDrag: DirectiveOptions = {
 					return;
 				}
 
-				dragElement = ComponentsFactory.create('options-list', dragDropService.getContainer());
+				dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
 				(dragElement.$el as HTMLElement).style.left = e.x + 'px';
 				(dragElement.$el as HTMLElement).style.top = e.y + 'px';
 			}

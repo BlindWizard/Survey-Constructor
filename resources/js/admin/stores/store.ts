@@ -59,7 +59,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
 		},
 		[actions.ADD_ELEMENT]({commit}, request: AddElement) {
-
+			console.log(request);
 		}
 	},
 	getters: {

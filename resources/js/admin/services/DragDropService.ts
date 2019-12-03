@@ -16,8 +16,6 @@ class DragDropService
 	{
 		this.target = target;
 
-		console.log(rows);
-
 		this.target.addEventListener('mousemove', (e: MouseEvent) => {
 			if (!this.getDragState()) {
 				return;

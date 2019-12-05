@@ -58,8 +58,8 @@ const store = new Vuex.Store({
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
 			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
 		},
-		[actions.ADD_ELEMENT]({commit}, request: AddElement) {
-			console.log(request);
+		async [actions.ADD_ELEMENT]({commit}, request: AddElement) {
+			await SurveyApi.addElement(request);
 		}
 	},
 	getters: {

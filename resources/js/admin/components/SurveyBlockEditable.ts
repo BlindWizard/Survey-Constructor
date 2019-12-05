@@ -6,7 +6,7 @@ import {Survey} from "../models/Survey";
 
 @Component({
 	template: `
-		<SurveyBlock :survey="survey" v-component-drop />
+		<SurveyBlock :survey="survey" v-component-drop="bem('survey-block').el('body').classes()" />
 	`,
 	components: {
 		SurveyBlock

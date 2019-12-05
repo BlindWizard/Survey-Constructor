@@ -1,4 +1,4 @@
 export class AddElement {
 	surveyId: string;
-	position: number;
+	position: number|null;
 }

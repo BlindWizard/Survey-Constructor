@@ -3,6 +3,7 @@ import {dragDropService} from "../services/DragDropService";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {actions, getters} from "../stores/types";
 import {AddElement} from "../api/requests/AddElement";
+import {bem} from "../../common/bem-helper";
 
 let dragElement: Vue|null = null;
 let treshhold = 0;
@@ -38,10 +39,11 @@ const ComponentDrag: DirectiveOptions = {
 				request.surveyId = $store.getters[getters.SURVEY].id;
 
 				let drop = dragDropService.getLastTarget();
-				request.position = (null !== drop ? Array.from(drop.parentElement.children).indexOf(drop) : 0);
+
+				request.position = (null !== drop && null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
 
 				(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
-				console.log(dragDropService.getLastTarget());
+
 				if (null !== dragElement) {
 					dragElement.$destroy();
 					dragElement = null;
@@ -63,6 +65,7 @@ const ComponentDrag: DirectiveOptions = {
 				}
 
 				dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
+				dragElement.$el.classList.add(bem('draggable').classes());
 				(dragElement.$el as HTMLElement).style.left = e.x + 'px';
 				(dragElement.$el as HTMLElement).style.top = e.y + 'px';
 			}

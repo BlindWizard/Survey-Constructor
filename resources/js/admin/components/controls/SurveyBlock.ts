@@ -10,7 +10,10 @@ import {OptionsList} from "./OptionsList";
 			<div :class="bem('survey-block').el('header').classes()">
 				{{ survey.title }}
 			</div>
-			<OptionsList />
+			<div :class="bem('survey-block').el('body').classes()">
+				<OptionsList />
+				<OptionsList />
+			</div>
 		</div>
 	`,
 	components: {

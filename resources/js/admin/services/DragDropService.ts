@@ -21,9 +21,18 @@ class DragDropService
 				return;
 			}
 
-			let row = document.elementFromPoint(e.x, e.y) as HTMLElement;
+			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
+			let row: HTMLElement|null = null;
+			for(let i = 0; i < possibleTargets.length - 1; i++) {
+				let el: HTMLElement = possibleTargets[i];
 
-			if (-1 === rows.indexOf(row) || row === this.placeholder) {
+				if (-1 !== rows.indexOf(el)) {
+					row = el;
+					break;
+				}
+			}
+
+			if (null === row || row === this.placeholder) {
 				return;
 			}
 

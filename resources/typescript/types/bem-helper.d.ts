@@ -7,6 +7,7 @@ declare module 'bem-helper' {
 		add(className: string): BEM;
 		toString(): string;
 		clone(newBlock: object): BEM;
+		classes(): string;
 	}
 
 	export function bem(ctx: BEM|string): BEM;

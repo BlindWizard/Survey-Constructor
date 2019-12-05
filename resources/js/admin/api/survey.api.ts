@@ -3,6 +3,7 @@ import {CreateSurvey} from "./requests/CreateSurvey";
 import {AjaxHelper} from "../contracts/AjaxHelper";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "./requests/GetSurvey";
+import {AddElement} from "./requests/AddElement";
 
 export class SurveyApi
 {
@@ -41,9 +42,6 @@ export class SurveyApi
 				});
 
 				return surveys;
-			})
-			.catch((error) => {
-				throw new Error(error);
 			});
 	}
 
@@ -64,20 +62,22 @@ export class SurveyApi
 	 *               format: uuid
 	 *               example: 123e4567-e89b-12d3-a456-426655440000
 	 */
-	public static createSurvey(request: CreateSurvey)
+	public static createSurvey(request: CreateSurvey): Promise<string>
 	{
 		return axios.post('/admin/survey/create', request)
 			.then((response) => {
-				let result:AjaxHelper = response.data as AjaxHelper;
+				let result: AjaxHelper = response.data as AjaxHelper;
 
-				return result.data;
-			})
-			.catch((error) => {
-				throw new Error(error);
+				return result.data as string;
 			});
 	}
 
-	public static getSurvey(request: GetSurvey)
+	/**
+	 * @@TODO-06.12.2019-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
+	public static getSurvey(request: GetSurvey): Promise<Survey>
 	{
 		return axios.get('/admin/survey/get/' + request.surveyId)
 			.then((response) => {
@@ -90,9 +90,15 @@ export class SurveyApi
 				survey.updatedAt = result.data.updatedAt;
 
 				return survey;
-			})
-			.catch((error) => {
-				throw new Error(error);
+			});
+	}
+
+	public static addElement(request: AddElement)
+	{
+		return axios.post('/admin/survey/allElement', request)
+			.then((response) => {
+				let result:AjaxHelper = response.data as AjaxHelper;
+				console.log(result);
 			});
 	}
 }

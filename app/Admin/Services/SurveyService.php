@@ -10,7 +10,6 @@ use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\SurveyObject;
-use App\Admin\DTO\TemplateObject;
 
 class SurveyService implements SurveyServiceContract
 {

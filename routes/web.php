@@ -13,6 +13,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin/survey/getAll', 'SurveyController@getAll');
     Route::get('/admin/survey/get/{id}', 'SurveyController@get');
     Route::post('/admin/survey/create', 'SurveyController@create');
+    Route::post('/admin/survey/addElement', 'SurveyController@addElement');
 
     Route::get('/admin/templates', 'TemplateController@index');
     Route::get('/admin/template/getAll', 'TemplateController@getAll');

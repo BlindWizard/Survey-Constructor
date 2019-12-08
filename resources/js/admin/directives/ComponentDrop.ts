@@ -7,8 +7,6 @@ const ComponentDrop: DirectiveOptions = {
 		let rows: HTMLElement[] = [];
 		let drop = el.querySelector('.' + binding.value) as HTMLElement|null;
 
-		console.log(drop);
-
 		if (null === drop) {
 			throw new Error('Wrong drop target');
 		}

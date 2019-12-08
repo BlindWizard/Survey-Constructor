@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Admin\Commands\AddElementCommand;
 use App\Admin\Commands\CreateSurveyCommand;
 use App\Admin\Contracts\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyByIdQuery;
 use App\Admin\Queries\GetAllUsersSurveys;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
+use App\Http\Requests\AddElementRequest;
 use App\Http\Requests\CreateSurveyRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -65,6 +67,18 @@ class SurveyController extends Controller
 
         $result = new AjaxResponse();
         $result->data = $query->perform()->getResult();
+
+        return response()->json($result);
+    }
+
+    public function addElement(AddElementRequest $request, AddElementCommand $command)
+    {
+        $result = new AjaxResponse();
+
+        $command->userId = Auth::user()->getAuthIdentifier();
+        $command->request = $request;
+
+        $command->perform();
 
         return response()->json($result);
     }

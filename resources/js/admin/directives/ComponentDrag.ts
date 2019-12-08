@@ -37,6 +37,7 @@ const ComponentDrag: DirectiveOptions = {
 				let $store = (vnode.context as Vue).$store;
 				let request = new AddElement();
 				request.surveyId = $store.getters[getters.SURVEY].id;
+				request.type = binding.value;
 
 				let drop = dragDropService.getLastTarget();
 

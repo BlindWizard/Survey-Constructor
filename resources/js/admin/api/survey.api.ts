@@ -93,9 +93,14 @@ export class SurveyApi
 			});
 	}
 
+	/**
+	 * @@TODO-09.12.2019-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
 	public static addElement(request: AddElement)
 	{
-		return axios.post('/admin/survey/allElement', request)
+		return axios.post('/admin/survey/addElement', request)
 			.then((response) => {
 				let result:AjaxHelper = response.data as AjaxHelper;
 				console.log(result);

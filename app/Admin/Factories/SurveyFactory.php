@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Factories;
 
@@ -12,7 +13,6 @@ use Ramsey\Uuid\Uuid;
 
 class SurveyFactory implements SurveyFactoryContract
 {
-
     /**
      * @param string           $ownerId
      * @param TemplateContract $template

@@ -30,30 +30,6 @@ const ComponentDrag: DirectiveOptions = {
 			}
 		});
 
-		document.addEventListener('mouseup', () => {
-			if (dragDropService.getDragState()) {
-				dragDropService.setDragState(false);
-
-				let $store = (vnode.context as Vue).$store;
-				let request = new AddElement();
-				request.surveyId = $store.getters[getters.SURVEY].id;
-				request.type = binding.value;
-
-				let drop = dragDropService.getLastTarget();
-
-				request.position = (null !== drop && null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
-
-				(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
-
-				if (null !== dragElement) {
-					dragElement.$destroy();
-					dragElement = null;
-				}
-
-				treshhold = 0;
-			}
-		});
-
 		document.addEventListener('mousemove', (e: MouseEvent) => {
 			if (!dragDropService.getDragState()) {
 				return;
@@ -75,6 +51,31 @@ const ComponentDrag: DirectiveOptions = {
 			}
 
 			dragDropService.handleDrag(dragElement.$el as HTMLElement);
+		});
+
+		document.addEventListener('mouseup', () => {
+			if (dragDropService.getDragState()) {
+				dragDropService.setDragState(false);
+
+				let $store = (vnode.context as Vue).$store;
+				let request = new AddElement();
+				request.surveyId = $store.getters[getters.SURVEY].id;
+				request.type = binding.value;
+
+				let drop = dragDropService.getLastTarget();
+				console.log(drop);
+				if (null !== drop) {
+					request.position = (null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
+					(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
+				}
+
+				if (null !== dragElement) {
+					dragElement.$destroy();
+					dragElement = null;
+				}
+
+				treshhold = 0;
+			}
 		});
 	},
 };

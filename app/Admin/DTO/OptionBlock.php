@@ -3,6 +3,7 @@
 namespace App\Admin\DTO;
 
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\Exceptions\BlockTypeException;
 
 class OptionBlock implements BlockContract
 {
@@ -23,6 +24,14 @@ class OptionBlock implements BlockContract
     public function getType(): string
     {
         return static::TYPE_OPTION;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setType(string $type)
+    {
+        throw new BlockTypeException('Can\'t change existing block type');
     }
 
     /**
@@ -55,5 +64,13 @@ class OptionBlock implements BlockContract
     public function setPosition(int $position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSurveyId(): string
+    {
+        return $this->surveyId;
     }
 }

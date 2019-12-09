@@ -61,6 +61,14 @@ class Block extends Model implements BlockContract
     /**
      * @inheritdoc
      */
+    public function setType(string $type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getPosition(): int
     {
         return $this->position;

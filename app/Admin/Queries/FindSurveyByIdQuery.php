@@ -5,6 +5,7 @@ namespace App\Admin\Queries;
 
 use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\SurveyContract;
+use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\SurveyObject;
@@ -27,10 +28,14 @@ class FindSurveyByIdQuery implements Command
     /** @var SurveyRepositoryContract */
     public $surveyService;
 
-    public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService)
+    /** @var BlockRepositoryContract */
+    public $blockRepository;
+
+    public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService, BlockRepositoryContract $blockRepository)
     {
         $this->surveyRepository = $surveyRepository;
         $this->surveyService = $surveyService;
+        $this->blockRepository = $blockRepository;
     }
 
     /**
@@ -48,15 +53,13 @@ class FindSurveyByIdQuery implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $surveyObject = new SurveyObject();
-        $surveyObject->id = $survey->getId();
-        $surveyObject->title = $survey->getTitle();
-        $surveyObject->blocks = [];
-        $surveyObject->ownerId = $survey->getOwnerId();
-        $surveyObject->createdAt = $survey->getCreatedAt();
-        $surveyObject->updatedAt = $survey->getUpdatedAt();
-
-        $this->survey = $surveyObject;
+        $this->survey = new SurveyObject();
+        $this->survey->id = $survey->getId();
+        $this->survey->title = $survey->getTitle();
+        $this->survey->blocks = $this->blockRepository->getSurveyBlocks($survey->getId());
+        $this->survey->ownerId = $survey->getOwnerId();
+        $this->survey->createdAt = $survey->getCreatedAt();
+        $this->survey->updatedAt = $survey->getUpdatedAt();
 
         return $this;
     }

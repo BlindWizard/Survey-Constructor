@@ -11,8 +11,7 @@ import {OptionsList} from "./OptionsList";
 				{{ survey.title }}
 			</div>
 			<div :class="bem('survey-block').el('body').classes()">
-				<OptionsList />
-				<OptionsList />
+				
 			</div>
 		</div>
 	`,

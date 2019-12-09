@@ -6,6 +6,7 @@ namespace App\Admin\Factories;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\DTO\OptionsListBlock;
+use App\Admin\Exceptions\BlockTypeException;
 use App\Admin\Exceptions\TemplateNotFoundException;
 use Ramsey\Uuid\Uuid;
 
@@ -20,7 +21,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_OPTIONS_LIST:
                 return $this->getOptionList();
             default:
-                throw new TemplateNotFoundException();
+                throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
     }
 

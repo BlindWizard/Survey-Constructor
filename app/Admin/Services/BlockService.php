@@ -1,11 +1,11 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Services;
 
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
-use App\Admin\Database\Repositories\BlockRepository;
 use Throwable;
 
 class BlockService implements BlockServiceContract
@@ -16,22 +16,28 @@ class BlockService implements BlockServiceContract
     /** @var BlockRepositoryContract */
     protected $blockRepository;
 
-    public function __construct(BlockFactoryContract $blockFactory, BlockRepository $blockRepository)
+    public function __construct(BlockFactoryContract $blockFactory, BlockRepositoryContract $blockRepository)
     {
         $this->blockFactory = $blockFactory;
         $this->blockRepository = $blockRepository;
     }
 
     /**
-     * @param int    $surveyId
-     * @param string $type
-     * @param int    $position
+     * @param string   $surveyId
+     * @param string   $type
+     * @param int|null $position
      *
      * @throws Throwable
      */
-    public function addEmptyElement(int $surveyId, string $type, int $position): void
+    public function addEmptyElement(string $surveyId, string $type, ?int $position): void
     {
         $element = $this->blockFactory->getEmptyBlock($type);
+
+        if (null === $position) {
+            $lastBlock = $this->blockRepository->findLastBlock($surveyId);
+            $position = (null !== $lastBlock ? $lastBlock->getPosition() : 0);
+        }
+
         $element->setSurveyId($surveyId);
         $element->setPosition($position);
 

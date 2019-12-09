@@ -3,12 +3,14 @@
 
 namespace App\Admin\Contracts\Entities;
 
+use App\Admin\Exceptions\BlockTypeException;
+
 interface BlockContract
 {
     public const TYPES = [self::TYPE_OPTION, self::TYPE_OPTIONS_LIST];
 
     public const TYPE_OPTION = 'option';
-    public const TYPE_OPTIONS_LIST = 'options_list';
+    public const TYPE_OPTIONS_LIST = 'options-list';
 
     /**
      * @return string
@@ -29,6 +31,13 @@ interface BlockContract
      * @return string
      */
     public function getType(): string;
+
+    /**
+     * @var string $type
+     *
+     * @throws BlockTypeException
+     */
+    public function setType(string $type);
 
     /**
      * @return int

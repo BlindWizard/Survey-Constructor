@@ -8,11 +8,11 @@ use Throwable;
 interface BlockServiceContract
 {
     /**
-     * @param int    $surveyId
+     * @param string $surveyId
      * @param string $type
      * @param int    $position
      *
      * @throws Throwable
      */
-    public function addEmptyElement(int $surveyId, string $type, int $position): void;
+    public function addEmptyElement(string $surveyId, string $type, int $position): void;
 }

@@ -30,33 +30,41 @@ class DragDropService
 					row = el;
 					break;
 				}
+
+				if (el === this.placeholder) {
+					row = this.placeholder as HTMLElement;
+					break;
+				}
 			}
 
-			if (null === row || row === this.placeholder) {
+			if (null === row) {
 				return;
 			}
 
-			var rect = row.getBoundingClientRect();
+			if (this.placeholder !== row) {
+				var rect = row.getBoundingClientRect();
 
-			if (e.y < rect.top + row.offsetHeight / 2) {
-				this.dropPlace = row;
+				if (e.y < rect.top + row.offsetHeight / 2) {
+					this.dropPlace = row;
+				} else {
+					this.dropPlace = row.nextElementSibling as HTMLElement;
+				}
+
+				if (this.dropPlace === this.placeholder) {
+					return;
+				}
+
+				this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
 			}
 			else {
-				this.dropPlace = row.nextElementSibling as HTMLElement;
+				this.dropPlace = row;
 			}
-
-			if (this.dropPlace === this.placeholder) {
-				return;
-			}
-
-			this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
 		});
 	}
 
 	public handleDrag(dragElement: HTMLElement)
 	{
 		this.dragElement = dragElement;
-
 		this.createPlaceholder();
 
 		document.addEventListener('mousemove', (e: MouseEvent) => {
@@ -127,6 +135,9 @@ class DragDropService
 
 		if (this.target.lastChild) {
 			this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);
+		}
+		else {
+			this.target.insertBefore(placeholder, this.target.firstChild);
 		}
 
 		this.placeholder = placeholder;

@@ -1,5 +1,7 @@
 import Component from "vue-class-component";
 import Vue from "vue";
+import {Prop} from "vue-property-decorator";
+import {OptionsList} from "../../models/OptionsList";
 
 @Component({
 	template: `
@@ -10,4 +12,6 @@ import Vue from "vue";
 		</div>
 	`,
 })
-export class OptionsList extends Vue {}
+export class OptionsListBlock extends Vue {
+	@Prop(OptionsList) readonly block: OptionsList;
+}

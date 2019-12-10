@@ -5,7 +5,7 @@ namespace App\Admin\Database\Repositories;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
 use App\Admin\Database\Models\Block;
-use App\Admin\DTO\OptionsListBlock;
+use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
 use Ramsey\Uuid\Uuid;
 
@@ -35,7 +35,7 @@ class BlockRepository implements BlockRepositoryContract
         foreach ($models as $model) {
             switch ($model->type) {
                 case BlockContract::TYPE_OPTIONS_LIST:
-                    $optionsList = new OptionsListBlock();
+                    $optionsList = new OptionsList();
                     $optionsList->id = $model->id;
                     $optionsList->surveyId = $model->getSurveyId();
                     $optionsList->position = $model->getPosition();

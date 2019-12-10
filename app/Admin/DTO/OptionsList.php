@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Exceptions\BlockTypeException;
 
-class OptionsListBlock implements BlockContract
+class OptionsList implements BlockContract
 {
     /** @var string */
     public $id;
@@ -13,7 +14,7 @@ class OptionsListBlock implements BlockContract
     public $surveyId;
     /** @var int */
     public $position;
-    /** @var OptionBlock */
+    /** @var Option */
     public $options = [];
     /** @var bool */
     public $multiple = false;

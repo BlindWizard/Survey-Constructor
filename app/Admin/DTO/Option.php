@@ -1,11 +1,12 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Exceptions\BlockTypeException;
 
-class OptionBlock implements BlockContract
+class Option implements BlockContract
 {
     /** @var string */
     public $id;

@@ -4,6 +4,10 @@ import {AjaxHelper} from "../contracts/AjaxHelper";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "./requests/GetSurvey";
 import {AddElement} from "./requests/AddElement";
+import {BlockContract} from "../contracts/BlockContract";
+import {BlockWrapper} from "../models/BlockWrapper";
+import {BlockTypes} from "../contracts/BlockTypes";
+import {OptionsList} from "../models/OptionsList";
 
 export class SurveyApi
 {
@@ -88,6 +92,24 @@ export class SurveyApi
 				survey.ownerId = result.data.public;
 				survey.createdAt = result.data.createdAt;
 				survey.updatedAt = result.data.updatedAt;
+
+				let blocks: BlockContract[] = [];
+				result.data.blocks.forEach((wrapper: any) => {
+					let blockData: BlockWrapper = wrapper as BlockWrapper;
+					switch (blockData.type) {
+						case BlockTypes.OPTIONS_LIST:
+							let block: OptionsList = new OptionsList();
+							block.id = blockData.data.id;
+							block.position  = blockData.data.position;
+
+							blocks.push(block);
+							break;
+						default:
+							throw new Error('Undefined block type');
+					}
+				});
+
+				survey.blocks = blocks;
 
 				return survey;
 			});

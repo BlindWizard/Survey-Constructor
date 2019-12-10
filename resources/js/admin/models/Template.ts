@@ -1,9 +1,9 @@
 export class Template
 {
-	id: string;
-	title: string;
-	public: boolean;
-	ownerId: string;
-	createdAt: string;
-	updatedAt: string;
+	public id: string;
+	public title: string;
+	public public: boolean;
+	public ownerId: string;
+	public createdAt: string;
+	public updatedAt: string;
 }

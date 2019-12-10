@@ -5,9 +5,8 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
-use App\Admin\DTO\OptionsListBlock;
+use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
-use App\Admin\Exceptions\TemplateNotFoundException;
 use Ramsey\Uuid\Uuid;
 
 class BlockFactory implements BlockFactoryContract
@@ -26,13 +25,13 @@ class BlockFactory implements BlockFactoryContract
     }
 
     /**
-     * @return OptionsListBlock
+     * @return OptionsList
      *
      * @throws \Throwable
      */
-    public function getOptionList(): OptionsListBlock
+    public function getOptionList(): OptionsList
     {
-        $block = new OptionsListBlock();
+        $block = new OptionsList();
         $block->id = Uuid::uuid4()->toString();
         $block->position = 0;
 

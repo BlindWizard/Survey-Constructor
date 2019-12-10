@@ -1,8 +1,11 @@
+import {BlockContract} from "../contracts/BlockContract";
+
 export class Survey
 {
-	id: string;
-	title: string;
-	ownerId: string;
-	createdAt: string;
-	updatedAt: string;
+	public id: string;
+	public title: string;
+	public ownerId: string;
+	public blocks: BlockContract[] = [];
+	public createdAt: string;
+	public updatedAt: string;
 }

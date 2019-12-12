@@ -10,6 +10,12 @@ class DragDropService
 	constructor()
 	{
 		this.container = this.createContainer();
+
+		document.addEventListener('selectstart', (e: Event) => {
+			if (this.getDragState()) {
+				e.preventDefault();
+			}
+		});
 	}
 
 	public handleTarget(target: HTMLElement, rows: HTMLElement[])
@@ -38,6 +44,7 @@ class DragDropService
 			}
 
 			if (null === row) {
+				this.dropPlace = null;
 				return;
 			}
 

@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import {OptionsListBlock} from "../components/controls/OptionsListBlock";
+import {OptionsListBlockEditable} from "../components/editables/OptionsListBlockEditable";
 
 export class ComponentsFactory
 {
@@ -15,7 +16,7 @@ export class ComponentsFactory
 
 	private static createOptionsList(container: HTMLElement): Vue
 	{
-		let ComponentClass = Vue.extend(OptionsListBlock);
+		let ComponentClass = Vue.extend(OptionsListBlockEditable);
 		let instance = new ComponentClass();
 		instance.$mount();
 

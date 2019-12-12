@@ -6,7 +6,7 @@ import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {SurveyEditMenu} from "./SurveyEditMenu";
-import {SurveyBlockEditable} from "./SurveyBlockEditable";
+import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
 
 @Component({
 	template: `

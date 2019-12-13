@@ -67,6 +67,15 @@ class DragDropService
 				this.dropPlace = row;
 			}
 		});
+
+		this.target.addEventListener('mouseleave', (e: MouseEvent) => {
+			if (!this.getDragState()) {
+				return;
+			}
+
+			this.dropPlace = null;
+			console.log('out', this.target, this.dropPlace);
+		});
 	}
 
 	public handleDrag(dragElement: HTMLElement)
@@ -98,6 +107,8 @@ class DragDropService
 				this.dragElement.remove();
 				this.dragElement = null;
 			}
+
+			this.dropPlace = null;
 		}
 	}
 

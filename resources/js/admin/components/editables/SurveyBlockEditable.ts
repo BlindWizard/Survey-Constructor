@@ -18,6 +18,6 @@ export class SurveyBlockEditable extends Vue {
 
 	get resolver(): ComponentsResolver
 	{
-		return new ComponentsResolver();
+		return (new ComponentsResolver()).setEditable(true);
 	}
 }

@@ -11926,6 +11926,7 @@ html.is-reveal-open body {
 
 .draggable {
   position: absolute;
+  pointer-events: none;
   z-index: 1000;
 }
 

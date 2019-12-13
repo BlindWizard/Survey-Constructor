@@ -10,7 +10,6 @@ let threshold = 0;
 
 const ComponentDrag: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
-		console.log(binding);
 		el.onmousedown = (e: MouseEvent) => {
 			if (e.which !== 1) {
 				return;
@@ -44,21 +43,22 @@ const ComponentDrag: DirectiveOptions = {
 
 					dragDropService.handleDrag(dragElement.$el as HTMLElement);
 				}
+
+				threshold = 0;
+			}
+			else {
+
 			}
 		});
 
 		document.addEventListener('mouseup', () => {
-			console.log(threshold);
 			if (dragDropService.getDragState()) {
-				dragDropService.setDragState(false);
-
 				let $store = (vnode.context as Vue).$store;
 				let request = new AddElement();
 				request.surveyId = $store.getters[getters.SURVEY].id;
 				request.type = binding.value;
 
 				let drop = dragDropService.getLastTarget();
-				console.log(drop);
 				if (null !== drop) {
 					request.position = (null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
 					(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
@@ -69,6 +69,7 @@ const ComponentDrag: DirectiveOptions = {
 					dragElement = null;
 				}
 
+				dragDropService.setDragState(false);
 				threshold = 0;
 			}
 		});

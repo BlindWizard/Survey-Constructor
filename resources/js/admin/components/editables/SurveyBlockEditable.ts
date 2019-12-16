@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <SurveyBlock :survey="survey" v-component-drop="bem('survey-block').el('body').classes()" :resolver="resolver"/>
+		<SurveyBlock :survey="survey" v-component-drop="bem('survey-block').el('body').classes()" :resolver="resolver"/>
 	`,
 	components: {
 		SurveyBlock

@@ -1,13 +1,13 @@
 import Vue from 'vue'
-import {OptionsListBlock} from "../components/controls/OptionsListBlock";
 import {OptionsListBlockEditable} from "../components/editables/OptionsListBlockEditable";
+import {BlockTypes} from "../contracts/BlockTypes";
 
 export class ComponentsFactory
 {
 	public static create(type: string, container: HTMLElement): Vue
 	{
 		switch (type) {
-			case 'options-list':
+			case BlockTypes.OPTIONS_LIST:
 				return this.createOptionsList(container);
 			default:
 				throw new Error('Undefined component');

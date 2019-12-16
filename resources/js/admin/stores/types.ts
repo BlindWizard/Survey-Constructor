@@ -15,6 +15,7 @@ export enum actions
 	CREATE_SURVEY = 'createSurvey',
 	LOAD_SURVEY = 'getSurvey',
 	ADD_ELEMENT = 'addElement',
+	REORDER_ELEMENT = 'reorderElement',
 }
 
 export enum getters

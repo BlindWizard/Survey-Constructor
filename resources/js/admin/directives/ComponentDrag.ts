@@ -6,6 +6,7 @@ import {AddElement} from "../api/requests/AddElement";
 import {bem} from "../../common/bem-helper";
 
 let dragElement: Vue|null = null;
+let newElement = false;
 let threshold = 0;
 
 const ComponentDrag: DirectiveOptions = {
@@ -16,6 +17,13 @@ const ComponentDrag: DirectiveOptions = {
 			}
 
 			dragDropService.setDragState(true);
+			if (!binding.modifiers['create']) {
+				dragElement = vnode.componentInstance as Vue;
+				newElement = false;
+			}
+			else {
+				newElement = true;
+			}
 		};
 
 		el.ondragstart = (e: Event) => {
@@ -24,7 +32,7 @@ const ComponentDrag: DirectiveOptions = {
 			}
 		};
 
-		document.addEventListener('mousemove', (e: MouseEvent) => {
+		el.onmousemove = (e: MouseEvent) => {
 			if (!dragDropService.getDragState()) {
 				return;
 			}
@@ -34,44 +42,68 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			if (binding.modifiers['create']) {
+			if (newElement) {
 				if (null === dragElement) {
 					dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
-					dragElement.$el.classList.add(bem('draggable').classes());
-					(dragElement.$el as HTMLElement).style.left = e.x + 'px';
-					(dragElement.$el as HTMLElement).style.top = e.y + 'px';
-
-					dragDropService.handleDrag(dragElement.$el as HTMLElement);
 				}
-
-				threshold = 0;
 			}
-			else {
 
+			threshold = 0;
+
+			if (null === dragElement || !("$el" in dragElement)) {
+				return;
 			}
-		});
+
+			dragElement.$el.classList.add(bem('draggable').classes());
+			(dragElement.$el as HTMLElement).style.left = e.x + 'px';
+			(dragElement.$el as HTMLElement).style.top = e.y + 'px';
+
+			dragDropService.handleDrag(dragElement.$el as HTMLElement);
+		};
 
 		document.addEventListener('mouseup', () => {
-			if (dragDropService.getDragState()) {
-				let $store = (vnode.context as Vue).$store;
-				let request = new AddElement();
-				request.surveyId = $store.getters[getters.SURVEY].id;
-				request.type = binding.value;
-
-				let drop = dragDropService.getLastTarget();
-				if (null !== drop) {
-					request.position = (null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
-					(vnode.context as Vue).$store.dispatch(actions.ADD_ELEMENT, request);
-				}
-
-				if (null !== dragElement) {
-					dragElement.$destroy();
-					dragElement = null;
-				}
-
-				dragDropService.setDragState(false);
-				threshold = 0;
+			if (!dragDropService.getDragState()) {
+				return;
 			}
+
+			if (null === dragElement || !("$el" in dragElement)) {
+				dragDropService.setDragState(false);
+				return;
+			}
+
+			let drop = dragDropService.getLastTarget();
+			let position = null;
+			if (null !== drop) {
+				position = (null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
+			}
+
+			if (newElement) {
+				if (null !== position) {
+					let $store = (vnode.context as Vue).$store;
+
+					let request = new AddElement();
+					request.surveyId = $store.getters[getters.SURVEY].id;
+					request.type = binding.value;
+					request.position = position;
+
+					$store.dispatch(actions.ADD_ELEMENT, request);
+				}
+
+				dragElement.$destroy();
+				dragElement.$el.remove();
+				dragElement = null;
+			}
+			else {
+				let $store = (vnode.context as Vue).$store;
+				$store.dispatch(actions.REORDER_ELEMENT);
+
+				dragElement.$el.classList.remove(bem('draggable').classes());
+				(dragElement.$el as HTMLElement).style.left = 'none';
+				(dragElement.$el as HTMLElement).style.top = 'none';
+			}
+
+			dragDropService.setDragState(false);
+			threshold = 0;
 		});
 	},
 };

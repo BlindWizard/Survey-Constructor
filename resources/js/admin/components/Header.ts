@@ -39,6 +39,6 @@ export class Header extends Vue
 
 	get appName(): string
 	{
-		return this.$store.getters[getters.APPNAME];
+		return this.$store.getters[getters.LOCALE].appName;
 	}
 }

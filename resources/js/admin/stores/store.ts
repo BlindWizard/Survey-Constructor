@@ -7,6 +7,7 @@ import {SurveyApi} from "../api/survey.api";
 import {CreateSurvey} from "../api/requests/CreateSurvey";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {AddElement} from "../api/requests/AddElement";
+import {Locale} from "../models/Locale";
 
 Vue.use(Vuex);
 
@@ -14,7 +15,7 @@ const store = new Vuex.Store({
 	strict: process.env.NODE_ENV !== 'production',
 	state: {
 		csrf: null,
-		appName: null,
+		locale: new Locale(),
 		surveys: null,
 		templates: null,
 		survey: null,
@@ -23,8 +24,8 @@ const store = new Vuex.Store({
 		[mutations.SET_CSRF](state, token) {
 			state.csrf = token;
 		},
-		[mutations.SET_APPNAME](state, name) {
-			state.appName = name;
+		[mutations.SET_LOCALE](state, locale: Locale) {
+			state.locale = locale;
 		},
 		[mutations.SET_SURVEYS](state, surveys) {
 			state.surveys = surveys;
@@ -39,7 +40,7 @@ const store = new Vuex.Store({
 	actions: {
 		[actions.LOAD_SETTINGS]({commit}, setting: Settings) {
 			commit(mutations.SET_CSRF, setting.csrf);
-			commit(mutations.SET_APPNAME, setting.appName);
+			commit(mutations.SET_LOCALE, setting.locale);
 		},
 		async [actions.LOAD_SURVEYS]({commit}) {
 			commit(mutations.SET_SURVEYS, await SurveyApi.getAll());
@@ -69,8 +70,8 @@ const store = new Vuex.Store({
 		[getters.CSRF](state) {
 			return state.csrf;
 		},
-		[getters.APPNAME](state) {
-			return state.appName;
+		[getters.LOCALE](state): Locale {
+			return state.locale;
 		},
 		[getters.SURVEYS](state) {
 			return state.surveys;

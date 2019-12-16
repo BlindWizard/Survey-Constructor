@@ -1,7 +1,7 @@
 export enum mutations
 {
 	SET_CSRF = 'setCsrf',
-	SET_APPNAME = 'setAppName',
+	SET_LOCALE = 'setLocale',
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
@@ -21,7 +21,7 @@ export enum actions
 export enum getters
 {
 	CSRF = 'csrf',
-	APPNAME = 'appName',
+	LOCALE = 'locale',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
 	SURVEY = 'survey',

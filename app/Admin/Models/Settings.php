@@ -8,8 +8,10 @@ namespace App\Admin\Models;
  */
 class Settings implements \JsonSerializable
 {
+    /** @var string */
     public $csrf;
-    public $appName;
+    /** @var Locale */
+    public $locale;
 
     /**
      * @return mixed[]
@@ -18,7 +20,7 @@ class Settings implements \JsonSerializable
     {
         return [
             'csrf' => $this->csrf,
-            'appName' => $this->appName,
+            'locale' => $this->locale,
         ];
     }
 

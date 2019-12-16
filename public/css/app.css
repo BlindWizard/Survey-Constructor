@@ -12042,17 +12042,21 @@ html.is-reveal-open body {
   padding: 0.9375rem;
 }
 
-.survey-edit-menu {
+.components-menu {
   min-height: calc(100vh - 4rem);
   background-color: #2d1e45;
 }
 
-.survey-edit-menu__link {
+.components-menu__link {
   color: #fefefe;
 }
 
 .drag-container {
   overflow: hidden;
+}
+
+.block-edit-menu {
+  display: inline-block;
 }
 
 .description {
@@ -12073,5 +12077,20 @@ html.is-reveal-open body {
 
 .survey-block__header {
   text-align: center;
+}
+
+.options-list-wrapper {
+  position: relative;
+}
+
+.options-list-wrapper .block-edit-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.options-list-wrapper:hover .block-edit-menu {
+  display: inline-block;
 }
 

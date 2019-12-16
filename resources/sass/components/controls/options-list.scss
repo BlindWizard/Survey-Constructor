@@ -1,0 +1,18 @@
+.options-list-wrapper {
+    position: relative;
+
+    .block-edit-menu {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    &:hover {
+        .block-edit-menu {
+            display: inline-block;
+        }
+    }
+}
+
+.options-list {}

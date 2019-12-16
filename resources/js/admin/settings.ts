@@ -1,6 +1,8 @@
+import {Locale} from "./models/Locale";
+
 export interface Settings {
 	csrf: string;
-	appName: string;
+	locale: Locale;
 }
 
 let data = (<any> window).settings || null;

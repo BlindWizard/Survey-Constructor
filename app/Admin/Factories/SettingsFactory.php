@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Factories;
 
 use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Models\Locale;
 use App\Admin\Models\Settings;
 
 class SettingsFactory implements SettingsFactoryContract
@@ -15,7 +16,11 @@ class SettingsFactory implements SettingsFactoryContract
     {
         $settings = new Settings();
         $settings->csrf = csrf_token();
-        $settings->appName = config('app.name');
+
+        $locale = new Locale();
+        $locale->appName = config('app.name');
+        $locale->editLabel = __('Edit');
+        $settings->locale = $locale;
 
         return $settings;
     }

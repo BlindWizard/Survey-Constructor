@@ -5,7 +5,7 @@ import {Viewport} from "./Viewport";
 import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
-import {SurveyEditMenu} from "./SurveyEditMenu";
+import {ComponentsMenu} from "./ComponentsMenu";
 import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
 
 @Component({
@@ -21,7 +21,7 @@ import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
 	`,
 	components: {
 		Viewport,
-		SurveyEditMenu,
+		SurveyEditMenu: ComponentsMenu,
 		SurveyBlockEditable
 	}
 })

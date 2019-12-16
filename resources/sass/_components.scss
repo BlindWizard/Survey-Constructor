@@ -16,10 +16,12 @@
 @import "components/admin/admin-page";
 @import "components/admin/survey-list";
 @import "components/admin/viewport";
-@import "components/admin/survey-edit-menu";
+@import "components/admin/components-menu";
 @import "components/admin/drag-container";
+@import "components/admin/block-edit-menu";
 
 @import 'components/landing/description';
 @import 'components/landing/join-block';
 
 @import 'components/controls/survey-block';
+@import 'components/controls/options-list';

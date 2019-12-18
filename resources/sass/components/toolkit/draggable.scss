@@ -1,5 +1,5 @@
 .draggable {
-    position: absolute;
+    position: absolute !important;
     pointer-events: none;
     z-index: 1000;
 }

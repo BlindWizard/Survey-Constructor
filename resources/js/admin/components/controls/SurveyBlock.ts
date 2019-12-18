@@ -3,7 +3,7 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Survey} from "../../models/Survey";
 import {OptionsListBlock} from "./OptionsListBlock";
-import {OptionsListBlockEditable} from "../editables/OptionsListBlockEditable";
+import {OptionsListBlockWrapper} from "../editables/OptionsListBlockWrapper";
 import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
@@ -19,7 +19,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 	`,
 	components: {
 		OptionsListBlock: OptionsListBlock,
-		OptionsListBlockEditable: OptionsListBlockEditable
+		OptionsListBlockWrapper: OptionsListBlockWrapper
 	}
 })
 export class SurveyBlock extends Vue {

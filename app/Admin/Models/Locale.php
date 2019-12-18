@@ -8,4 +8,6 @@ class Locale
     public $appName;
     /** @var string */
     public $editLabel;
+    /** @var string */
+    public $saveLabel;
 }

@@ -12,7 +12,7 @@ const ComponentDrop: DirectiveOptions = {
 		}
 
 		Array.from(drop.children).forEach((el: Element) => {
-			if (el.classList.contains(bem('options-list').classes())) {
+			if (el.classList.contains(bem('options-list-wrapper').classes())) {
 				rows.push(el as HTMLElement);
 			}
 		});

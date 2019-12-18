@@ -16,6 +16,8 @@ class DragDropService
 				e.preventDefault();
 			}
 		});
+
+		this.move = this.move.bind(this);
 	}
 
 	public handleTarget(target: HTMLElement, rows: HTMLElement[])
@@ -82,14 +84,17 @@ class DragDropService
 		this.dragElement = dragElement;
 		this.createPlaceholder();
 
-		document.addEventListener('mousemove', (e: MouseEvent) => {
-			if (!this.getDragState()) {
-				return;
-			}
+		document.addEventListener('mousemove', this.move);
+	}
 
-			dragElement.style.left = e.x + 'px';
-			dragElement.style.top = e.y + 'px';
-		});
+	public move(e: MouseEvent)
+	{
+		if (null === this.dragElement) {
+			return;
+		}
+
+		this.dragElement.style.left = e.x + 'px';
+		this.dragElement.style.top = e.y + 'px';
 	}
 
 	public setDragState(state: boolean)
@@ -104,6 +109,7 @@ class DragDropService
 
 			if (null !== this.dragElement) {
 				this.dragElement = null;
+				document.removeEventListener('mousemove', this.move);
 			}
 
 			this.dropPlace = null;

@@ -6,6 +6,7 @@ import {AddElement} from "../api/requests/AddElement";
 import {bem} from "../../common/bem-helper";
 
 let dragElement: Vue|null = null;
+let spawned = false;
 let newElement = false;
 let threshold = 0;
 
@@ -18,7 +19,7 @@ const ComponentDrag: DirectiveOptions = {
 
 			dragDropService.setDragState(true);
 			if (!binding.modifiers['create']) {
-				dragElement = vnode.componentInstance as Vue;
+				dragElement = vnode.context as Vue;
 				newElement = false;
 			}
 			else {
@@ -37,20 +38,20 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			threshold += e.movementX + e.movementY;
+			threshold += Math.abs(e.movementX) + Math.abs(e.movementY);
 			if (threshold < 10) {
 				return;
 			}
 
-			if (newElement) {
-				if (null === dragElement) {
-					dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
-				}
+			if (newElement && !spawned) {
+				dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
+				dragElement.$el.classList.add(bem('draggable').classes());
+				spawned = true;
 			}
 
 			threshold = 0;
 
-			if (null === dragElement || !("$el" in dragElement)) {
+			if (!dragElement) {
 				return;
 			}
 
@@ -66,7 +67,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			if (null === dragElement || !("$el" in dragElement)) {
+			if (!dragElement) {
 				dragDropService.setDragState(false);
 				return;
 			}
@@ -92,14 +93,14 @@ const ComponentDrag: DirectiveOptions = {
 				dragElement.$destroy();
 				dragElement.$el.remove();
 				dragElement = null;
+				spawned = false;
 			}
 			else {
 				let $store = (vnode.context as Vue).$store;
 				$store.dispatch(actions.REORDER_ELEMENT);
-
 				dragElement.$el.classList.remove(bem('draggable').classes());
-				(dragElement.$el as HTMLElement).style.left = 'none';
-				(dragElement.$el as HTMLElement).style.top = 'none';
+				(dragElement.$el as HTMLElement).style.left = 'auto';
+				(dragElement.$el as HTMLElement).style.top = 'auto';
 			}
 
 			dragDropService.setDragState(false);

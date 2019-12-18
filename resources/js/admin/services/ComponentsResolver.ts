@@ -8,7 +8,7 @@ export class ComponentsResolver {
 	{
 		switch (block.getType()) {
 			case BlockTypes.OPTIONS_LIST:
-				return 'OptionsListBlock' + (this.editable ? 'Editable' : '');
+				return 'OptionsListBlock' + (this.editable ? 'Wrapper' : '');
 			default:
 				throw new Error('Undefined block type');
 		}

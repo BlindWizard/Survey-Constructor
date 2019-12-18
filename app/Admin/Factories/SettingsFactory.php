@@ -20,6 +20,7 @@ class SettingsFactory implements SettingsFactoryContract
         $locale = new Locale();
         $locale->appName = config('app.name');
         $locale->editLabel = __('Edit');
+        $locale->saveLabel = __('Save');
         $settings->locale = $locale;
 
         return $settings;

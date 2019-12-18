@@ -63,7 +63,7 @@ const store = new Vuex.Store({
 			await SurveyApi.addElement(request);
 		},
 		async [actions.REORDER_ELEMENT]({commit}) {
-
+			console.log('reorder');
 		}
 	},
 	getters: {

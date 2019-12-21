@@ -1,10 +1,10 @@
 import {DirectiveOptions} from 'vue'
 import {dragDropService} from "../services/DragDropService";
 
-const ComponentDrop: DirectiveOptions = {
+const ComponentDropTarget: DirectiveOptions = {
 	inserted: (el, binding, vnode) => {
-		dragDropService.handleTarget(el);
+		dragDropService.handleDropTarget(el);
 	},
 };
 
-export {ComponentDrop};
+export {ComponentDropTarget};

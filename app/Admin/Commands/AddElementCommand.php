@@ -46,7 +46,7 @@ class AddElementCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        //$this->blockService->addEmptyElement($survey->getId(), $this->request->getType(), $this->request->getPosition());
+        $this->blockService->addEmptyElement($survey->getId(), $this->request->getType(), $this->request->getPosition());
 
         return $this;
     }

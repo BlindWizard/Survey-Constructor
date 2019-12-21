@@ -9,6 +9,8 @@ interface SettingsFactoryContract
 {
     /**
      * @return Settings
+     *
+     * @throws \Throwable
      */
     public function getSettings(): Settings;
 }

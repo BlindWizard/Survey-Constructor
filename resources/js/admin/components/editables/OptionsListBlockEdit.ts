@@ -5,11 +5,9 @@ import {OptionsList} from "../../models/OptionsList";
 
 @Component({
 	template: `
-		<div :class="bem('options-list').classes()">
-			<p><input name="dzen" type="radio" value="1"><input/></p>
-			<p><input name="dzen" type="radio" value="2"><input/></p>
-			<p><input name="dzen" type="radio" value="3"><input/></p>
-		</div>
+        <div :class="bem('options-list').classes()" v-component-drop-target>
+            <p :key="id" v-for="(option, id) in block.options"><input :value="id" type="text">{{ option.name }}</p>
+        </div>
 	`,
 })
 export class OptionsListBlockEdit extends Vue {

@@ -5,6 +5,7 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
+use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
 use Ramsey\Uuid\Uuid;
@@ -19,6 +20,8 @@ class BlockFactory implements BlockFactoryContract
         switch ($type) {
             case BlockContract::TYPE_OPTIONS_LIST:
                 return $this->getOptionList();
+            case BlockContract::TYPE_OPTION:
+                return $this->getOption();
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -32,6 +35,30 @@ class BlockFactory implements BlockFactoryContract
     public function getOptionList(): OptionsList
     {
         $block = new OptionsList();
+        $block->id = Uuid::uuid4()->toString();
+        $block->position = 0;
+
+        $option = new Option();
+        $option->id = Uuid::uuid4()->toString();
+        $option->text = __('First option');
+        $block->options[] = $option;
+
+        $option = new Option();
+        $option->id = Uuid::uuid4()->toString();
+        $option->text = __('Second option');
+        $block->options[] = $option;
+
+        return $block;
+    }
+
+    /**
+     * @return Option
+     *
+     * @throws \Throwable
+     */
+    public function getOption(): Option
+    {
+        $block = new Option();
         $block->id = Uuid::uuid4()->toString();
         $block->position = 0;
 

@@ -9,13 +9,8 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 @Component({
 	template: `
 		<div :class="bem('survey-block').classes()">
-			<div :class="bem('survey-block').el('header').classes()">
-				{{ survey.title }}
-			</div>
-			<div :class="bem('survey-block').el('body').classes()">
-				<component :key="block.getPosition()" v-for="block in survey.blocks" :is="resolver.resolveComponent(block)" :block="block"/>
-			</div>
-		</div>
+            <component :key="block.getId()" v-for="block in survey.blocks" :is="resolver.resolveComponentClass(block.getType()).name" :block="block"/>
+        </div>
 	`,
 	components: {
 		OptionsListBlock: OptionsListBlock,

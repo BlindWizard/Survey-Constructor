@@ -9,7 +9,7 @@ import {EditingModes} from '../../contracts/EditingModes';
 
 @Component({
 	template: `
-        <div :class="bem('options-list-wrapper').classes()" v-component-drag>
+        <div :class="bem('options-list-wrapper').classes()" v-component-drag v-component-drop-target>
             <OptionsListBlock v-if="!editing" :block="block" />
             <OptionsListBlockEdit v-if="editing" :block="block" />
             <BlockEditMenu :onEdit="toggleEdit" :mode="getMenuMode()"/>
@@ -23,7 +23,6 @@ import {EditingModes} from '../../contracts/EditingModes';
 })
 export class OptionsListBlockWrapper extends Vue {
 	@Prop(OptionsList) readonly block: OptionsList;
-
 	private editing: boolean = false;
 
 	public toggleEdit()
@@ -31,7 +30,7 @@ export class OptionsListBlockWrapper extends Vue {
 		this.editing = !this.editing;
 	}
 
-	public getMenuMode()
+	public getMenuMode(): string
 	{
 		return this.editing ? EditingModes.SAVE : EditingModes.EDIT;
 	}

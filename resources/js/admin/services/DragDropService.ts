@@ -4,6 +4,7 @@ class DragDropService
 	private dragElement: HTMLElement|null = null;
 	private container: HTMLElement;
 	private target: HTMLElement;
+	private dropTargets: HTMLElement[] = [];
 	private placeholder: HTMLElement|null = null;
 	private dropPlace: HTMLElement|null = null;
 
@@ -17,60 +18,60 @@ class DragDropService
 			}
 		});
 
-		this.move = this.move.bind(this);
+		this.drag = this.drag.bind(this);
 	}
 
-	public handleTarget(target: HTMLElement, rows: HTMLElement[])
+	public handleTarget(target: HTMLElement)
 	{
 		this.target = target;
 
 		this.target.addEventListener('mousemove', (e: MouseEvent) => {
-			if (!this.getDragState() || null === this.placeholder) {
+			if (!this.getDragState()) {
 				return;
 			}
 
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
-			let row: HTMLElement|null = null;
+			let target: HTMLElement|null = null;
 			for(let i = 0; i < possibleTargets.length - 1; i++) {
 				let el: HTMLElement = possibleTargets[i];
 
-				if (-1 !== rows.indexOf(el)) {
-					row = el;
+				if (-1 !== this.dropTargets.indexOf(el)) {
+					target = el;
 					break;
 				}
 
 				if (el === this.placeholder) {
-					row = this.placeholder as HTMLElement;
+					target = this.placeholder as HTMLElement;
 					break;
 				}
 			}
 
-			if (null === row) {
+			if (null === target) {
 				this.dropPlace = null;
 				return;
 			}
 
-			if (this.placeholder !== row) {
-				var rect = row.getBoundingClientRect();
-
-				if (e.y < rect.top + row.offsetHeight / 2) {
-					this.dropPlace = row;
-				} else {
-					this.dropPlace = row.nextElementSibling as HTMLElement;
-				}
-
-				if (this.dropPlace === this.placeholder) {
-					return;
-				}
-
-				this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
+			if (this.placeholder === target) {
+				this.dropPlace = target;
+				return;
 			}
-			else {
-				this.dropPlace = row;
+
+			var rect = target.getBoundingClientRect();
+
+			if (e.y < rect.top + target.offsetHeight / 2) {
+				this.dropPlace = target;
+			} else {
+				this.dropPlace = target.nextElementSibling as HTMLElement;
 			}
+
+			if (this.dropPlace === this.placeholder) {
+				return;
+			}
+
+			this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
 		});
 
-		this.target.addEventListener('mouseleave', (e: MouseEvent) => {
+		this.target.addEventListener('mouseleave', () => {
 			if (!this.getDragState()) {
 				return;
 			}
@@ -79,15 +80,22 @@ class DragDropService
 		});
 	}
 
+	public handleDropTarget(el: HTMLElement)
+	{
+		if (-1 === this.dropTargets.indexOf(el)) {
+			this.dropTargets.push(el);
+		}
+	}
+
 	public handleDrag(dragElement: HTMLElement)
 	{
 		this.dragElement = dragElement;
 		this.createPlaceholder();
 
-		document.addEventListener('mousemove', this.move);
+		document.addEventListener('mousemove', this.drag);
 	}
 
-	public move(e: MouseEvent)
+	public drag(e: MouseEvent)
 	{
 		if (null === this.dragElement) {
 			return;
@@ -109,7 +117,7 @@ class DragDropService
 
 			if (null !== this.dragElement) {
 				this.dragElement = null;
-				document.removeEventListener('mousemove', this.move);
+				document.removeEventListener('mousemove', this.drag);
 			}
 
 			this.dropPlace = null;

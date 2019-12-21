@@ -32,5 +32,7 @@ export class BlockEditMenu extends Vue {
 		if (EditingModes.SAVE === this.mode) {
 			return ['save'];
 		}
+
+		return [];
 	}
 }

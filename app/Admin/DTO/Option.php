@@ -11,13 +11,11 @@ class Option implements BlockContract
     /** @var string */
     public $id;
     /** @var string */
+    public $text;
+    /** @var string */
     public $surveyId;
     /** @var int */
     public $position;
-    /** @var string */
-    public $text;
-    /** @var string */
-    public $type;
 
     /**
      * @return string

@@ -6,9 +6,10 @@ import {OptionsList} from "../../models/OptionsList";
 @Component({
 	template: `
 		<div :class="bem('options-list').classes()">
-			<p><input name="dzen" type="radio" value="1">Раз</p>
-			<p><input name="dzen" type="radio" value="2">Два</p>
-			<p><input name="dzen" type="radio" value="3">Три</p>
+			<p :key="id" v-for="(option, id) in block.options">
+				<input :value="id" type="radio">{{ option.name }}
+                <label :for="id">{{ option.text }}</label>
+            </p>
 		</div>
 	`,
 })

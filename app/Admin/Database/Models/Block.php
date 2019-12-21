@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Active record model for Blocks table.
  *
- * @property string $id
- * @property string $survey_id
- * @property string $type
- * @property int    $position
- * @property string $created_at
- * @property string $updated_at
+ * @property        string         $id
+ * @property        string         $survey_id
+ * @property        string         $type
+ * @property        int            $position
+ * @property        string         $created_at
+ * @property        string         $updated_at
+ * @property-read   BlockData|null $data
  */
 class Block extends Model implements BlockContract
 {
@@ -25,6 +26,11 @@ class Block extends Model implements BlockContract
     public const ATTR_UPDATED_AT = 'updated_at';
 
     public $incrementing = false;
+
+    public function data()
+    {
+        return $this->hasOne(BlockData::class);
+    }
 
     /**
      * @inheritdoc

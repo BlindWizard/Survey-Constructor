@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Models;
 
+use App\Admin\Contracts\Entities\BlockContract;
+
 /**
  * Application settings.
  */
@@ -12,6 +14,8 @@ class Settings implements \JsonSerializable
     public $csrf;
     /** @var Locale */
     public $locale;
+    /** @var BlockContract[] */
+    public $defaultBlockData;
 
     /**
      * @return mixed[]
@@ -19,8 +23,9 @@ class Settings implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return [
-            'csrf' => $this->csrf,
-            'locale' => $this->locale,
+            'csrf'             => $this->csrf,
+            'locale'           => $this->locale,
+            'defaultBlockData' => $this->defaultBlockData,
         ];
     }
 

@@ -11,6 +11,8 @@ class OptionsList implements BlockContract
     /** @var string */
     public $id;
     /** @var string */
+    public $text;
+    /** @var string */
     public $surveyId;
     /** @var int */
     public $position;

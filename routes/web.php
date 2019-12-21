@@ -18,6 +18,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin/templates', 'TemplateController@index');
     Route::get('/admin/template/getAll', 'TemplateController@getAll');
 
+    Route::post('/admin/block/saveData', 'BlockController@saveData');
+
     Route::get('/admin/{any}', function () {
         return redirect('/admin');
     });

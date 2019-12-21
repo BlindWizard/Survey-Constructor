@@ -7,17 +7,17 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-		<SurveyBlock :survey="survey" v-component-drop="bem('survey-block').el('body').classes()" :resolver="resolver"/>
+		<SurveyBlock :survey="survey" v-component-drop :resolver="resolver"/>
 	`,
 	components: {
 		SurveyBlock
 	}
 })
-export class SurveyBlockEditable extends Vue {
+export class SurveyBlockWrapper extends Vue {
 	@Prop(Survey) readonly survey: Survey;
 
 	get resolver(): ComponentsResolver
 	{
-		return (new ComponentsResolver()).setEditable(true);
+		return (new ComponentsResolver()).setEditable();
 	}
 }

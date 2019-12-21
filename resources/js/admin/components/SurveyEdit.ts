@@ -6,7 +6,7 @@ import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {ComponentsMenu} from "./ComponentsMenu";
-import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
+import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
 
 @Component({
 	template: `
@@ -14,7 +14,7 @@ import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
 			<div class="grid-x grid-padding-x">
 				<SurveyEditMenu/>
 				<Viewport v-if="null !== survey">
-					<SurveyBlockEditable :survey="survey"/>
+					<SurveyBlockWrapper :survey="survey"/>
 				</Viewport>
 			</div>
 		</div>
@@ -22,7 +22,7 @@ import {SurveyBlockEditable} from "./editables/SurveyBlockEditable";
 	components: {
 		Viewport,
 		SurveyEditMenu: ComponentsMenu,
-		SurveyBlockEditable
+		SurveyBlockWrapper: SurveyBlockWrapper
 	}
 })
 export class SurveyEdit extends Vue {

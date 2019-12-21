@@ -5,6 +5,7 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
+        "suppressImplicitAnyIndexErrors": true,
         "strictPropertyInitialization": false,
         "allowJs": true,
         "module": "commonjs",

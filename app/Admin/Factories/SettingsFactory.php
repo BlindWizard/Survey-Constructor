@@ -20,7 +20,7 @@ class SettingsFactory implements SettingsFactoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getSettings(): Settings
     {

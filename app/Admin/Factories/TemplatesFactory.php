@@ -11,7 +11,7 @@ use App\Admin\Exceptions\TemplateNotFoundException;
 class TemplatesFactory implements TemplatesFactoryContract
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getSystemTemplate(string $id): TemplateContract
     {
@@ -24,7 +24,7 @@ class TemplatesFactory implements TemplatesFactoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getBlank(): TemplateContract
     {

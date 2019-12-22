@@ -27,13 +27,8 @@ class Block extends Model implements BlockContract
 
     public $incrementing = false;
 
-    public function data()
-    {
-        return $this->hasOne(BlockData::class);
-    }
-
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getId(): string
     {
@@ -49,7 +44,7 @@ class Block extends Model implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setSurveyId(string $surveyId): void
     {
@@ -57,7 +52,7 @@ class Block extends Model implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getType(): string
     {
@@ -65,7 +60,7 @@ class Block extends Model implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setType(string $type)
     {
@@ -73,7 +68,7 @@ class Block extends Model implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getPosition(): int
     {
@@ -81,10 +76,27 @@ class Block extends Model implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setPosition(int $position): void
     {
         $this->position = $position;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getData(): array
+    {
+        if (null === $this->data) {
+            return [];
+        }
+
+        return \GuzzleHttp\json_decode($this->data->data, true);
+    }
+
+    public function data()
+    {
+        return $this->hasOne(BlockData::class, BlockData::ATTR_ID, static::ATTR_ID);
     }
 }

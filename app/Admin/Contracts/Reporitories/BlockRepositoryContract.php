@@ -14,7 +14,7 @@ interface BlockRepositoryContract
      *
      * @throws Throwable
      */
-    public function save(BlockContract $block): void;
+    public function save(BlockContract $block): BlockContract;
 
     /**
      * @param string $surveyId

@@ -15,4 +15,5 @@ class BlockData extends Model
     public const ATTR_DATA = 'data';
 
     public $incrementing = false;
+    public $timestamps = false;
 }

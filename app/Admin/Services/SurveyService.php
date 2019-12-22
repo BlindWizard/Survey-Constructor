@@ -30,7 +30,7 @@ class SurveyService implements SurveyServiceContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getAvailableSurveys(string $ownerId): array
     {
@@ -51,7 +51,7 @@ class SurveyService implements SurveyServiceContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract
     {
@@ -65,7 +65,7 @@ class SurveyService implements SurveyServiceContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function canOperate(SurveyContract $survey, string $userId): bool
     {

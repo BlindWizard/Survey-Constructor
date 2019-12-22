@@ -7,7 +7,7 @@ import {Template} from "../models/Template";
 @Component({
 	template: `
 		<div v-if="null !== templates" :class="bem('survey-list').add('grid-container full').classes()">
-			<div class="grid-x grid-margin-x">
+			<div class="grid-x">
 				<div class="cell large-8 large-offset-2 medium-12 medium-offset-0">
 					<div class="grid-container fluid">
 						<div class="grid-x grid-margin-x">

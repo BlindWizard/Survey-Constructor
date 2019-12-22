@@ -6,7 +6,7 @@ import {OptionsList} from "../../models/OptionsList";
 @Component({
 	template: `
         <div :class="bem('options-list').classes()" v-component-drop-target>
-            <p :key="id" v-for="(option, id) in block.options"><input :value="id" type="text">{{ option.name }}</p>
+            <p :key="option.id" v-for="option in block.options"><input :value="option.text" type="text" /></p>
         </div>
 	`,
 })

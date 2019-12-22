@@ -9,7 +9,7 @@ use App\Admin\Database\Models\Survey;
 class SurveyRepository implements SurveyRepositoryContract
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function findById(string $id): SurveyContract
     {
@@ -19,7 +19,7 @@ class SurveyRepository implements SurveyRepositoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      *
      * @throws \Throwable
      */
@@ -36,7 +36,7 @@ class SurveyRepository implements SurveyRepositoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getAvailableSurveys(string $ownerId): array
     {

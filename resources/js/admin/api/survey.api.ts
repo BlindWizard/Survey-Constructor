@@ -3,11 +3,11 @@ import {CreateSurvey} from "./requests/CreateSurvey";
 import {AjaxHelper} from "../contracts/AjaxHelper";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "./requests/GetSurvey";
-import {AddElement} from "./requests/AddElement";
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockWrapper} from "../models/BlockWrapper";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {OptionsList} from "../models/OptionsList";
+import {Option} from "../models/Option";
 
 export class SurveyApi
 {
@@ -98,11 +98,24 @@ export class SurveyApi
 					let blockData: BlockWrapper = wrapper as BlockWrapper;
 					switch (blockData.type) {
 						case BlockTypes.OPTIONS_LIST:
-							let block: OptionsList = new OptionsList();
-							block.id = blockData.data.id;
-							block.position  = blockData.data.position;
+							let data = blockData.data as OptionsList;
 
-							blocks.push(block);
+							let optionsList: OptionsList = new OptionsList();
+							optionsList.id = data.id;
+							optionsList.surveyId = data.surveyId;
+							optionsList.position  = data.position;
+							optionsList.multiple = data.multiple;
+
+							data.options.forEach((data: Option) => {
+								let option = new Option();
+								option.id = data.id;
+								option.position = data.position;
+								option.text = data.text;
+
+								optionsList.options.push(option);
+							});
+
+							blocks.push(optionsList);
 							break;
 						default:
 							throw new Error('Undefined block type');
@@ -112,20 +125,6 @@ export class SurveyApi
 				survey.blocks = blocks;
 
 				return survey;
-			});
-	}
-
-	/**
-	 * @@TODO-09.12.2019-Чучманский Aндрей
-	 *
-	 * @param request
-	 */
-	public static addElement(request: AddElement)
-	{
-		return axios.post('/admin/survey/addElement', request)
-			.then((response) => {
-				let result:AjaxHelper = response.data as AjaxHelper;
-				console.log(result);
 			});
 	}
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
+use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
@@ -29,7 +30,7 @@ class BlockService implements BlockServiceContract
      *
      * @throws Throwable
      */
-    public function addEmptyElement(string $surveyId, string $type, ?int $position): void
+    public function addEmptyElement(string $surveyId, string $type, ?int $position): BlockContract
     {
         $element = $this->blockFactory->getEmptyBlock($type);
 
@@ -42,5 +43,7 @@ class BlockService implements BlockServiceContract
         $element->setPosition($position);
 
         $this->blockRepository->save($element);
+
+        return $element;
     }
 }

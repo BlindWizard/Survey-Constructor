@@ -6,7 +6,7 @@ import {TemplateApi} from "../api/template.api";
 import {SurveyApi} from "../api/survey.api";
 import {CreateSurvey} from "../api/requests/CreateSurvey";
 import {GetSurvey} from "../api/requests/GetSurvey";
-import {AddElement} from "../api/requests/AddElement";
+import {CreateElement} from "../api/requests/CreateElement";
 import {Locale} from "../models/Locale";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {Survey} from "../models/Survey";
@@ -14,6 +14,7 @@ import {Template} from "../models/Template";
 import {BlockContract} from "../contracts/BlockContract";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {dragDropService} from "../services/DragDropService";
+import {BlockApi} from "../api/block.api";
 
 Vue.use(Vuex);
 
@@ -21,11 +22,11 @@ const store = new Vuex.Store({
 	strict: process.env.NODE_ENV !== 'production',
 	state: {
 		csrf: '',
-		locale: new Locale(),
+		locale: null as any,
 		defaultBlockData: [],
-		survey: new Survey(),
-		surveys: null,
-		templates: null,
+		survey: null as any,
+		surveys: null as any,
+		templates: null as any,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -43,11 +44,15 @@ const store = new Vuex.Store({
 		[mutations.SET_TEMPLATES](state, templates) {
 			state.templates = templates;
 		},
-		[mutations.SET_ACTIVE_SURVEY](state, survey) {
+		[mutations.SET_ACTIVE_SURVEY](state, survey: Survey) {
 			state.survey = survey;
 		},
 		[mutations.ADD_ELEMENT](state, block: BlockContract) {
-			let blocks: BlockContract[] = (state.survey as Survey).blocks;
+			if (null === state.survey) {
+				throw new Error('Survey can\'t be modified');
+			}
+
+			let blocks: BlockContract[] = state.survey.blocks;
 			blocks.splice(block.getPosition(), 0, block);
 			Vue.set(state.survey, 'blocks', blocks);
 		}
@@ -75,12 +80,13 @@ const store = new Vuex.Store({
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
 			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
 		},
-		async [actions.ADD_ELEMENT]({commit, state}, request: AddElement) {
+		async [actions.ADD_ELEMENT]({commit, state}, request: CreateElement) {
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
 			block.setPosition(request.position || 0);
 
 			commit(mutations.ADD_ELEMENT, block);
-			//await SurveyApi.addElement(request);
+			block = await BlockApi.createElement(request);
+			console.log(block);
 		},
 		async [actions.REORDER_ELEMENT]({commit}) {
 			console.log('reorder');

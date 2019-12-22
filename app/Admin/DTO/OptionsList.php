@@ -16,7 +16,7 @@ class OptionsList implements BlockContract
     public $surveyId;
     /** @var int */
     public $position;
-    /** @var Option */
+    /** @var Option[] */
     public $options = [];
     /** @var bool */
     public $multiple = false;
@@ -46,15 +46,18 @@ class OptionsList implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setSurveyId(string $surveyId): void
     {
         $this->surveyId = $surveyId;
+        foreach ($this->options as $option) {
+            $option->setSurveyId($surveyId);
+        }
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getPosition(): int
     {
@@ -70,10 +73,26 @@ class OptionsList implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setType(string $type)
     {
         throw new BlockTypeException('Can\'t change existing block type');
+    }
+
+    public function getData(): array
+    {
+        $optionsData = [];
+        foreach ($this->options as $option) {
+            $optionsData[] = $option->getData();
+        }
+
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'position' => $this->position,
+            'options' => $optionsData,
+            'multiple' => $this->multiple,
+        ];
     }
 }

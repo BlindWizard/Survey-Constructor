@@ -26,7 +26,7 @@ class DragDropService
 		this.target = target;
 
 		this.target.addEventListener('mousemove', (e: MouseEvent) => {
-			if (!this.getDragState()) {
+			if (!this.getDragState() || null === this.placeholder) {
 				return;
 			}
 

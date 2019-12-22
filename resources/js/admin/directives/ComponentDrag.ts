@@ -2,7 +2,7 @@ import Vue, {DirectiveOptions} from 'vue'
 import {dragDropService} from "../services/DragDropService";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {actions, getters} from "../stores/types";
-import {AddElement} from "../api/requests/AddElement";
+import {CreateElement} from "../api/requests/CreateElement";
 import {bem} from "../../common/bem-helper";
 
 let dragElement: Vue|null = null;
@@ -82,7 +82,7 @@ const ComponentDrag: DirectiveOptions = {
 				if (null !== position) {
 					let $store = (vnode.context as Vue).$store;
 
-					let request = new AddElement();
+					let request = new CreateElement();
 					request.surveyId = $store.getters[getters.SURVEY].id;
 					request.type = binding.value;
 					request.position = position;

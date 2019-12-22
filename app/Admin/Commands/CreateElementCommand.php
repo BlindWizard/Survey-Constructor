@@ -7,11 +7,10 @@ use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
-use App\Admin\Services\SurveyService;
 use App\Http\Requests\AddElementRequest;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class AddElementCommand implements Command
+class CreateElementCommand implements Command
 {
     /** @var AddElementRequest */
     public $request;
@@ -27,6 +26,9 @@ class AddElementCommand implements Command
 
     /** @var BlockServiceContract */
     protected $blockService;
+
+    /** @var BlockContract */
+    protected $block;
 
     public function __construct(SurveyServiceContract $surveyService, SurveyRepositoryContract $surveyRepository, BlockServiceContract $blockService)
     {
@@ -46,8 +48,13 @@ class AddElementCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $this->blockService->addEmptyElement($survey->getId(), $this->request->getType(), $this->request->getPosition());
+        $this->block = $this->blockService->addEmptyElement($survey->getId(), $this->request->getType(), $this->request->getPosition());
 
         return $this;
+    }
+
+    public function getResult(): BlockContract
+    {
+        return $this->block;
     }
 }

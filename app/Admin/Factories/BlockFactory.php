@@ -13,7 +13,7 @@ use Ramsey\Uuid\Uuid;
 class BlockFactory implements BlockFactoryContract
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getEmptyBlock(string $type): BlockContract
     {
@@ -41,11 +41,13 @@ class BlockFactory implements BlockFactoryContract
         $option = new Option();
         $option->id = Uuid::uuid4()->toString();
         $option->text = __('First option');
+        $option->position = 0;
         $block->options[] = $option;
 
         $option = new Option();
         $option->id = Uuid::uuid4()->toString();
         $option->text = __('Second option');
+        $option->position = 1;
         $block->options[] = $option;
 
         return $block;

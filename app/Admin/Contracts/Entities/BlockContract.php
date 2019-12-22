@@ -48,4 +48,9 @@ interface BlockContract
      * @param int $position
      */
     public function setPosition(int $position): void;
+
+    /**
+     * @return mixed[]
+     */
+    public function getData(): array;
 }

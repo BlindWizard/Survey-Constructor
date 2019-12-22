@@ -11,7 +11,7 @@ use App\Admin\Database\Models\Template;
 class TemplateRepository implements TemplateRepositoryContract
 {
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getPublic(string $ownerId): array
     {
@@ -25,7 +25,7 @@ class TemplateRepository implements TemplateRepositoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function findById(string $id): Template
     {
@@ -33,7 +33,7 @@ class TemplateRepository implements TemplateRepositoryContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function create(string $title): Template
     {

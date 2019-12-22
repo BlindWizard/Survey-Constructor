@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Services;
 
+use App\Admin\Contracts\Entities\BlockContract;
 use Throwable;
 
 interface BlockServiceContract
@@ -14,5 +15,5 @@ interface BlockServiceContract
      *
      * @throws Throwable
      */
-    public function addEmptyElement(string $surveyId, string $type, int $position): void;
+    public function addEmptyElement(string $surveyId, string $type, int $position): BlockContract;
 }

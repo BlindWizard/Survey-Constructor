@@ -26,7 +26,7 @@ class Option implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setType(string $type)
     {
@@ -34,7 +34,7 @@ class Option implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setSurveyId(string $surveyId): void
     {
@@ -42,7 +42,7 @@ class Option implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getId(): string
     {
@@ -50,7 +50,7 @@ class Option implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getPosition(): int
     {
@@ -58,7 +58,7 @@ class Option implements BlockContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function setPosition(int $position): void
     {
@@ -71,5 +71,17 @@ class Option implements BlockContract
     public function getSurveyId(): string
     {
         return $this->surveyId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getData(): array
+    {
+        return [
+            'id' => $this->id,
+            'text' => $this->text,
+            'position' => $this->position,
+        ];
     }
 }

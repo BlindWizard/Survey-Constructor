@@ -24,7 +24,7 @@ class TemplateService implements TemplateServiceContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getAvailableTemplates(string $ownerId): array
     {

@@ -21,7 +21,7 @@ class TemplateObject implements TemplateContract
     public $updatedAt;
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getId(): string
     {
@@ -29,7 +29,7 @@ class TemplateObject implements TemplateContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getTitle(): string
     {
@@ -37,7 +37,7 @@ class TemplateObject implements TemplateContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getOwnerId(): string
     {
@@ -45,7 +45,7 @@ class TemplateObject implements TemplateContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getPublic(): bool
     {
@@ -53,7 +53,7 @@ class TemplateObject implements TemplateContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getCreatedAt(): string
     {
@@ -61,7 +61,7 @@ class TemplateObject implements TemplateContract
     }
 
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public function getUpdatedAt(): string
     {

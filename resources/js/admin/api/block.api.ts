@@ -3,11 +3,12 @@ import {AjaxHelper} from "../contracts/AjaxHelper";
 import {BlockContract} from "../contracts/BlockContract";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {CreateElement} from "./requests/CreateElement";
+import {ReorderElement} from "./requests/ReorderElement";
 
 export class BlockApi
 {
 	/**
-	 * @@TODO-09.12.2019-Чучманский Aндрей
+	 * @TODO-09.12.2019-Чучманский Aндрей
 	 *
 	 * @param request
 	 */
@@ -22,7 +23,22 @@ export class BlockApi
 	}
 
 	/**
+	 * @TODO-24.12.2019-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
+	public static reoderElement(request: ReorderElement)
+	{
+		return axios.post('/admin/block/reorderElement', request)
+			.then((response) => {
+				console.log(response);
+			});
+	}
+
+	/**
 	 * @TODO-19.12.2019-Чучманский Aндрей
+	 *
+	 * @param request
 	 */
 	public static saveData(request: CreateElement): Promise<any>
 	{

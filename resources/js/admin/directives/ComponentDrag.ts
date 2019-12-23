@@ -4,6 +4,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {actions, getters} from "../stores/types";
 import {CreateElement} from "../api/requests/CreateElement";
 import {bem} from "../../common/bem-helper";
+import {ReorderElement} from "../api/requests/ReorderElement";
 
 let dragElement: Vue|null = null;
 let spawned = false;
@@ -96,11 +97,20 @@ const ComponentDrag: DirectiveOptions = {
 				spawned = false;
 			}
 			else {
-				let $store = (vnode.context as Vue).$store;
-				$store.dispatch(actions.REORDER_ELEMENT);
-				dragElement.$el.classList.remove(bem('draggable').classes());
-				(dragElement.$el as HTMLElement).style.left = 'auto';
-				(dragElement.$el as HTMLElement).style.top = 'auto';
+				if (null !== position) {
+					let $store = (vnode.context as Vue).$store;
+
+					let request = new ReorderElement();
+					request.blockId = dragElement.$props.block.id;
+					request.position = position - 1;
+
+					$store.dispatch(actions.REORDER_ELEMENT, request);
+					dragElement.$el.classList.remove(bem('draggable').classes());
+					(dragElement.$el as HTMLElement).style.left = 'auto';
+					(dragElement.$el as HTMLElement).style.top = 'auto';
+				}
+
+				dragElement = null;
 			}
 
 			dragDropService.setDragState(false);

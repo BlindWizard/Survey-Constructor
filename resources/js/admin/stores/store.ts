@@ -15,6 +15,7 @@ import {BlockContract} from "../contracts/BlockContract";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {dragDropService} from "../services/DragDropService";
 import {BlockApi} from "../api/block.api";
+import {ReorderElement} from "../api/requests/ReorderElement";
 
 Vue.use(Vuex);
 
@@ -48,12 +49,25 @@ const store = new Vuex.Store({
 			state.survey = survey;
 		},
 		[mutations.ADD_ELEMENT](state, block: BlockContract) {
-			if (null === state.survey) {
-				throw new Error('Survey can\'t be modified');
-			}
-
 			let blocks: BlockContract[] = state.survey.blocks;
 			blocks.splice(block.getPosition(), 0, block);
+
+			for(let i = 0; i < blocks.length; i++) {
+				blocks[i].setPosition(i);
+			}
+
+			Vue.set(state.survey, 'blocks', blocks);
+		},
+		[mutations.CHANGE_ELEMENT_POSITION](state, block: BlockContract) {
+			let blocks: BlockContract[] = state.survey.blocks;
+			let oldPosition = blocks.indexOf(block);
+			blocks.splice(oldPosition, 1);
+			blocks.splice(block.getPosition(), 0, block);
+
+			for(let i = 0; i < blocks.length; i++) {
+				blocks[i].setPosition(i);
+			}
+
 			Vue.set(state.survey, 'blocks', blocks);
 		}
 	},
@@ -81,15 +95,39 @@ const store = new Vuex.Store({
 			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
 		},
 		async [actions.ADD_ELEMENT]({commit, state}, request: CreateElement) {
+			if (null === state.survey) {
+				throw new Error('Survey can\'t be modified');
+			}
+
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
 			block.setPosition(request.position || 0);
 
 			commit(mutations.ADD_ELEMENT, block);
 			block = await BlockApi.createElement(request);
-			console.log(block);
 		},
-		async [actions.REORDER_ELEMENT]({commit}) {
-			console.log('reorder');
+		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {
+			if (null === state.survey) {
+				throw new Error('Survey can\'t be modified');
+			}
+
+			let targetBlock: BlockContract|null = null;
+			let blocks: BlockContract[] = state.survey.blocks;
+			for (let i = 0; i < blocks.length; i++) {
+				if (blocks[i].getId() === request.blockId) {
+					targetBlock = blocks[i];
+					break;
+				}
+			}
+
+			if (null === targetBlock) {
+				throw new Error('Wrong block id');
+			}
+
+			targetBlock.setPosition(request.position);
+
+			commit(mutations.CHANGE_ELEMENT_POSITION, targetBlock);
+
+			console.log(request);
 		}
 	},
 	getters: {

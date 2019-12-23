@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin\Commands\CreateElementCommand;
+use App\Admin\Commands\ReorderElementCommand;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\AddElementRequest;
@@ -22,7 +23,20 @@ class BlockController extends Controller
         return response()->json($result);
     }
 
-    public function saveData() {
+    public function reoderElement(ReorderElementRequest $request, ReorderElementCommand $command)
+    {
+        $result = new AjaxResponse();
+
+        $command->userId = Auth::user()->getAuthIdentifier();
+        $command->request = $request;
+
+        $result->data = $command->perform()->getResult();
+
+        return response()->json($result);
+    }
+
+    public function saveData()
+    {
 
     }
 }

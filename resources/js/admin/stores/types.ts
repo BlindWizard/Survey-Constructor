@@ -7,6 +7,7 @@ export enum mutations
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
 	ADD_ELEMENT = 'addElement',
+	CHANGE_ELEMENT_POSITION = 'setElementsOrder',
 }
 
 export enum actions

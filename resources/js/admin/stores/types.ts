@@ -7,7 +7,9 @@ export enum mutations
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
 	ADD_ELEMENT = 'addElement',
-	CHANGE_ELEMENT_POSITION = 'setElementsOrder',
+	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
+	SAVE_ELEMENT_DATA = 'saveElementData',
+	DELETE_ELEMENT = 'deleteElement',
 }
 
 export enum actions
@@ -19,6 +21,8 @@ export enum actions
 	LOAD_SURVEY = 'getSurvey',
 	ADD_ELEMENT = 'addElement',
 	REORDER_ELEMENT = 'reorderElement',
+	SAVE_ELEMENT_DATA = 'saveElementData',
+	DELETE_ELEMENT = 'deleteElement',
 }
 
 export enum getters

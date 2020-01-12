@@ -3,4 +3,6 @@ export interface BlockContract {
 	getType(): string;
 	getPosition(): number;
 	setPosition(position: number): void;
+	getData(): Object;
+	setData(data: Object): void;
 }

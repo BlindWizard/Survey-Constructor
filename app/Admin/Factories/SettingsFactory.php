@@ -31,6 +31,7 @@ class SettingsFactory implements SettingsFactoryContract
         $locale->appName = config('app.name');
         $locale->editLabel = __('Edit');
         $locale->saveLabel = __('Save');
+        $locale->deleteLabel = __('Delete');
         $settings->locale = $locale;
 
         foreach (BlockContract::TYPES as $type) {

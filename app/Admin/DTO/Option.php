@@ -81,7 +81,6 @@ class Option implements BlockContract
         return [
             'id' => $this->id,
             'text' => $this->text,
-            'position' => $this->position,
         ];
     }
 }

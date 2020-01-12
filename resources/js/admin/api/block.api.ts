@@ -4,6 +4,7 @@ import {BlockContract} from "../contracts/BlockContract";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {CreateElement} from "./requests/CreateElement";
 import {ReorderElement} from "./requests/ReorderElement";
+import {SaveBlockData} from "./requests/SaveBlockData";
 
 export class BlockApi
 {
@@ -40,8 +41,24 @@ export class BlockApi
 	 *
 	 * @param request
 	 */
-	public static saveData(request: CreateElement): Promise<any>
+	public static saveData(request: SaveBlockData): Promise<any>
 	{
-		return axios.post('/admin/block/saveData', request);
+		return axios.post('/admin/block/saveData', request)
+			.then((response) => {
+				console.log(response);
+			});
+	}
+
+	/**
+	 * @TODO-19.12.2019-Чучманский Aндрей
+	 *
+	 * @param blockId
+	 */
+	public static deleteElement(blockId: string): Promise<any>
+	{
+		return axios.post('/admin/block/deleteElement', blockId)
+			.then((response) => {
+				console.log(response);
+			});
 	}
 }

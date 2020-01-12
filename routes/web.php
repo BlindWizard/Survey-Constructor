@@ -19,6 +19,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
 
     Route::post('/admin/block/createElement', 'BlockController@createElement');
     Route::post('/admin/block/saveData', 'BlockController@saveData');
+    Route::post('/admin/block/deleteElement', 'BlockController@deleteElement');
 
     Route::get('/admin/{any}', function () {
         return redirect('/admin');

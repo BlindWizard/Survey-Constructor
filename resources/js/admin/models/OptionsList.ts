@@ -7,21 +7,53 @@ export class OptionsList implements BlockContract {
 	public surveyId: string;
 	public position: number;
 	public options: Option[] = [];
+	public text: string;
 	public multiple: boolean = false;
 
-	getType(): string {
+	getType(): string
+	{
 		return BlockTypes.OPTIONS_LIST
 	}
 
-	getId(): string {
+	getId(): string
+	{
 		return this.id;
 	}
 
-	getPosition(): number {
+	getPosition(): number
+	{
 		return this.position;
 	}
 
-	setPosition(position: number) {
+	setPosition(position: number)
+	{
 		this.position = position;
+	}
+
+	getData(): Object
+	{
+		let optionsData: Array<Object> = [];
+		this.options.forEach((option: Option) => {
+			optionsData.push({
+				...option.getData(),
+				'position': option.getPosition(),
+			});
+		});
+
+		return {
+			'id': this.getId(),
+			'text': this.text,
+			'options': optionsData,
+			'multiple': this.multiple,
+		};
+	}
+
+	setData(data: Object): void
+	{
+		this.text = data['text'];
+		this.multiple = data['multiple'];
+		this.options.forEach((option: Option, i: number) => {
+			option.setData(data['options'][i]);
+		});
 	}
 }

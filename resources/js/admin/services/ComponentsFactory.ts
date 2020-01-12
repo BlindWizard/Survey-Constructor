@@ -43,7 +43,10 @@ export class ComponentsFactory
 				block.id = blockData.id;
 				block.surveyId = blockData.surveyId;
 				block.position = blockData.position;
-				block.options = blockData.options;
+				block.options = [];
+				blockData.options.forEach((optionData: Object) => {
+					block.options.push(this.createElementFromData(BlockTypes.OPTION, optionData));
+				});
 				block.multiple = blockData.multiple;
 
 				break;

@@ -13,9 +13,9 @@ import {Survey} from "../models/Survey";
 import {Template} from "../models/Template";
 import {BlockContract} from "../contracts/BlockContract";
 import {ComponentsFactory} from "../services/ComponentsFactory";
-import {dragDropService} from "../services/DragDropService";
 import {BlockApi} from "../api/block.api";
 import {ReorderElement} from "../api/requests/ReorderElement";
+import {SaveBlockData} from "../api/requests/SaveBlockData";
 
 Vue.use(Vuex);
 
@@ -48,27 +48,68 @@ const store = new Vuex.Store({
 		[mutations.SET_ACTIVE_SURVEY](state, survey: Survey) {
 			state.survey = survey;
 		},
-		[mutations.ADD_ELEMENT](state, block: BlockContract) {
+		[mutations.ADD_ELEMENT](state, actionData: any) {
 			let blocks: BlockContract[] = state.survey.blocks;
-			blocks.splice(block.getPosition(), 0, block);
+			blocks.splice(actionData.position, 0, actionData.block);
 
-			for(let i = 0; i < blocks.length; i++) {
+			for (let i = 0; i < blocks.length; i++) {
 				blocks[i].setPosition(i);
 			}
 
 			Vue.set(state.survey, 'blocks', blocks);
 		},
-		[mutations.CHANGE_ELEMENT_POSITION](state, block: BlockContract) {
+		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
+			let targetBlock: BlockContract | null = null;
 			let blocks: BlockContract[] = state.survey.blocks;
-			let oldPosition = blocks.indexOf(block);
-			blocks.splice(oldPosition, 1);
-			blocks.splice(block.getPosition(), 0, block);
+			for (let i = 0; i < blocks.length; i++) {
+				if (blocks[i].getId() === request.blockId) {
+					targetBlock = blocks[i];
+					break;
+				}
+			}
 
-			for(let i = 0; i < blocks.length; i++) {
+			if (null === targetBlock) {
+				throw new Error('Wrong block id');
+			}
+
+			let oldPosition = blocks.indexOf(targetBlock);
+			blocks.splice(oldPosition, 1);
+			blocks.splice(request.position, 0, targetBlock);
+
+			for (let i = 0; i < blocks.length; i++) {
 				blocks[i].setPosition(i);
 			}
 
 			Vue.set(state.survey, 'blocks', blocks);
+		},
+		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
+			let targetBlock: BlockContract | null = null;
+			let blocks: BlockContract[] = state.survey.blocks;
+			for (let i = 0; i < blocks.length; i++) {
+				if (blocks[i].getId() === request.blockId) {
+					targetBlock = blocks[i];
+					break;
+				}
+			}
+
+			if (null === targetBlock) {
+				throw new Error('Wrong block id');
+			}
+
+			targetBlock.setData(request.data);
+			Vue.set(state.survey, 'blocks', blocks);
+		},
+		[mutations.DELETE_ELEMENT](state, blockId: string) {
+			let blocks: BlockContract[] = state.survey.blocks;
+			for (let i = 0; i < blocks.length; i++) {
+				if (blocks[i].getId() === blockId) {
+					blocks.splice(i, 1);
+					Vue.set(state.survey, 'blocks', blocks);
+					return;
+				}
+			}
+
+			throw new Error('Wrong block id');
 		}
 	},
 	actions: {
@@ -100,9 +141,8 @@ const store = new Vuex.Store({
 			}
 
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
-			block.setPosition(request.position || 0);
 
-			commit(mutations.ADD_ELEMENT, block);
+			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0});
 			block = await BlockApi.createElement(request);
 		},
 		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {
@@ -110,24 +150,15 @@ const store = new Vuex.Store({
 				throw new Error('Survey can\'t be modified');
 			}
 
-			let targetBlock: BlockContract|null = null;
-			let blocks: BlockContract[] = state.survey.blocks;
-			for (let i = 0; i < blocks.length; i++) {
-				if (blocks[i].getId() === request.blockId) {
-					targetBlock = blocks[i];
-					break;
-				}
-			}
-
-			if (null === targetBlock) {
-				throw new Error('Wrong block id');
-			}
-
-			targetBlock.setPosition(request.position);
-
-			commit(mutations.CHANGE_ELEMENT_POSITION, targetBlock);
-
-			console.log(request);
+			commit(mutations.CHANGE_ELEMENT_POSITION, request);
+		},
+		async [actions.SAVE_ELEMENT_DATA]({commit, state}, request: SaveBlockData) {
+			await BlockApi.saveData(request);
+			commit(mutations.SAVE_ELEMENT_DATA, request);
+		},
+		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
+			await BlockApi.deleteElement(blockId);
+			commit(mutations.DELETE_ELEMENT, blockId);
 		}
 	},
 	getters: {

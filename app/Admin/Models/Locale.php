@@ -10,4 +10,6 @@ class Locale
     public $editLabel;
     /** @var string */
     public $saveLabel;
+    /** @var string */
+    public $deleteLabel;
 }

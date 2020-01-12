@@ -6,7 +6,7 @@ use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Http\Requests\ReorderElementRequest;
 
-class ReorderElementCommand implements Command
+class SaveElementDataCommand implements Command
 {
     /** @var ReorderElementRequest */
     public $request;

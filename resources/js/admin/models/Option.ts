@@ -6,19 +6,36 @@ export class Option implements BlockContract {
 	public position: number;
 	public text: string;
 
-	getType(): string {
+	getType(): string
+	{
 		return BlockTypes.OPTION
 	}
 
-	getId(): string {
+	getId(): string
+	{
 		return this.id;
 	}
 
-	getPosition(): number {
+	getPosition(): number
+	{
 		return this.position;
 	}
 
-	setPosition(position: number) {
+	setPosition(position: number)
+	{
 		this.position = position;
+	}
+
+	getData(): Object
+	{
+		return {
+			'id': this.getId(),
+			'text': this.text,
+		};
+	}
+
+	setData(data: Object): void
+	{
+		this.text = data['text'];
 	}
 }

@@ -31,4 +31,19 @@ interface BlockRepositoryContract
      * @return BlockContract|null
      */
     public function findLastBlock(string $surveyId): ?BlockContract;
+
+    /**
+     * @param string $blockId
+     * @param array  $data
+     *
+     * @return BlockContract
+     */
+    public function setElementData(string $blockId, array $data): BlockContract;
+
+    /**
+     * @param string $blockId
+     *
+     * @throws Throwable
+     */
+    public function deleteElement(string $blockId);
 }

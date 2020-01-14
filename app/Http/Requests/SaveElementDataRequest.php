@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SaveDataRequest extends FormRequest
+class SaveElementDataRequest extends FormRequest
 {
     public function rules()
     {
@@ -19,7 +19,7 @@ class SaveDataRequest extends FormRequest
         return (string) $this->json('blockId');
     }
 
-    public function getData(): int
+    public function getData(): array
     {
         return $this->json('data');
     }

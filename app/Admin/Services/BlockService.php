@@ -28,6 +28,8 @@ class BlockService implements BlockServiceContract
      * @param string   $type
      * @param int|null $position
      *
+     * @return BlockContract
+     *
      * @throws Throwable
      */
     public function addEmptyElement(string $surveyId, string $type, ?int $position): BlockContract
@@ -45,5 +47,21 @@ class BlockService implements BlockServiceContract
         $this->blockRepository->save($element);
 
         return $element;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setElementData(string $blockId, array $data): BlockContract
+    {
+        return $this->blockRepository->setElementData($blockId, $data);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteElement(string $blockId): void
+    {
+        $this->blockRepository->deleteElement($blockId);
     }
 }

@@ -88,4 +88,37 @@ class BlockRepository implements BlockRepositoryContract
 
         return $block;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function setElementData(string $blockId, array $data): BlockContract
+    {
+        $blockData = BlockData::query()->find($blockId)->first();/** @var BlockData $blockData */
+        $blockData->data = \GuzzleHttp\json_encode($data);
+        $blockData->save();
+
+        $block = Block::query()->where(Block::ATTR_ID, '=', $blockId)->first();/** @var Block $block */
+
+        return $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deleteElement(string $blockId)
+    {
+        DB::beginTransaction();
+        try {
+            Block::query()->find($blockId)->delete();
+            BlockData::query()->find($blockId)->delete();
+
+            DB::commit();
+        }
+        catch (\Throwable $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+    }
 }

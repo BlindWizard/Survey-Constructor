@@ -84,11 +84,10 @@ class OptionsList implements BlockContract
     {
         $optionsData = [];
         foreach ($this->options as $option) {
-            $optionsData[] = array_merge($option->getData(), ['position' => $option->getPosition()]);
+            $optionsData[] = array_merge(['id' => $option->getId()], $option->getData(), ['position' => $option->getPosition()]);
         }
 
         return [
-            'id' => $this->id,
             'text' => $this->text,
             'options' => $optionsData,
             'multiple' => $this->multiple,

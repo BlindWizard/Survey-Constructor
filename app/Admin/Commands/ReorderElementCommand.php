@@ -14,6 +14,7 @@ class ReorderElementCommand implements Command
     /** @var string */
     public $userId;
 
+    /** @var BlockContract */
     protected $block;
 
     public function perform(): Command

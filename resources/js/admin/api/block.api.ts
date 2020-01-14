@@ -56,7 +56,7 @@ export class BlockApi
 	 */
 	public static deleteElement(blockId: string): Promise<any>
 	{
-		return axios.post('/admin/block/deleteElement', blockId)
+		return axios.post('/admin/block/deleteElement', {blockId})
 			.then((response) => {
 				console.log(response);
 			});

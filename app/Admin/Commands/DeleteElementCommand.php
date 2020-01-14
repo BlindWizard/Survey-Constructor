@@ -8,10 +8,10 @@ use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Http\Requests\ReorderElementRequest;
 use App\Http\Requests\SaveElementDataRequest;
 
-class SaveElementDataCommand implements Command
+class DeleteElementCommand implements Command
 {
-    /** @var SaveElementDataRequest */
-    public $request;
+    /** @var string */
+    public $blockId;
 
     /** @var string */
     public $userId;
@@ -29,13 +29,13 @@ class SaveElementDataCommand implements Command
 
     public function perform(): Command
     {
-        $this->block = $this->blockService->setElementData($this->request->getId(), $this->request->getData());
+        $this->block = $this->blockService->deleteElement($this->blockId);
 
         return $this;
     }
 
-    public function getResult(): BlockContract
+    public function getResult(): bool
     {
-        return $this->block;
+        return true;
     }
 }

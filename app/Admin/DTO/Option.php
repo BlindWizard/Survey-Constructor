@@ -79,7 +79,6 @@ class Option implements BlockContract
     public function getData(): array
     {
         return [
-            'id' => $this->id,
             'text' => $this->text,
         ];
     }

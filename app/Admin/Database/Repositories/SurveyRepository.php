@@ -4,6 +4,7 @@ namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
+use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\Survey;
 
 class SurveyRepository implements SurveyRepositoryContract
@@ -43,5 +44,19 @@ class SurveyRepository implements SurveyRepositoryContract
         $surveys = Survey::query()->where(Survey::ATTR_OWNER_ID, '=', $ownerId)->get()->all();/** @var Survey[] $surveys */
 
         return $surveys;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getSurveyByBlockId(string $blockId): ?SurveyContract
+    {
+        $block = Block::query()
+            ->with(Block::REL_SURVEY)
+            ->where(Block::ATTR_ID, '=', $blockId)
+            ->get()
+            ->first();/** @var Block $block */
+
+        return $block->survey;
     }
 }

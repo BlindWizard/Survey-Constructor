@@ -9,6 +9,14 @@ use Throwable;
 
 interface BlockRepositoryContract
 {
+
+    /**
+     * @param string $blockId
+     *
+     * @return BlockContract|null
+     */
+    public function findById(string $blockId): ?BlockContract;
+
     /**
      * @param BlockContract $block
      *
@@ -39,6 +47,17 @@ interface BlockRepositoryContract
      * @return BlockContract
      */
     public function setElementData(string $blockId, array $data): BlockContract;
+
+    /**
+     * @param array $blockPosition
+     */
+    public function setElementsPositions(array $blockPosition): void;
+
+    /**
+     * @param string $blockId
+     * @param int    $position
+     */
+    public function setElementPosition(string $blockId, int $position): void;
 
     /**
      * @param string $blockId

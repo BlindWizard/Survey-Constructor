@@ -35,13 +35,13 @@ export class OptionsList implements BlockContract {
 		let optionsData: Array<Object> = [];
 		this.options.forEach((option: Option) => {
 			optionsData.push({
+				'id': option.getId(),
 				...option.getData(),
 				'position': option.getPosition(),
 			});
 		});
 
 		return {
-			'id': this.getId(),
 			'text': this.text,
 			'options': optionsData,
 			'multiple': this.multiple,

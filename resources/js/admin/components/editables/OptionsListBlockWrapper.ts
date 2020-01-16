@@ -42,7 +42,7 @@ export class OptionsListBlockWrapper extends Vue {
 	public saveData()
 	{
 		let request = new SaveBlockData();
-		request.blockId = this.blockData.getId();
+		request.blockId = this.block.getId();
 		request.data = this.blockData.getData();
 
 		this.$store.dispatch(actions.SAVE_ELEMENT_DATA, request);

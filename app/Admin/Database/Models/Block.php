@@ -14,7 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  * @property        int            $position
  * @property        string         $created_at
  * @property        string         $updated_at
+ *
  * @property-read   BlockData|null $data
+ * @property-read   Survey|null    $survey
  */
 class Block extends Model implements BlockContract
 {
@@ -99,4 +101,11 @@ class Block extends Model implements BlockContract
     {
         return $this->hasOne(BlockData::class, BlockData::ATTR_ID, static::ATTR_ID);
     }
+    public const REL_DATA = 'data';
+
+    public function survey()
+    {
+        return $this->hasOne(Survey::class, Survey::ATTR_ID, Block::ATTR_SURVEY_ID);
+    }
+    public const REL_SURVEY = 'survey';
 }

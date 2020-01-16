@@ -16,7 +16,7 @@ class ReorderElementRequest extends FormRequest
 
     public function getId(): string
     {
-        return (string) $this->json('surveyId');
+        return (string) $this->json('blockId');
     }
 
     public function getPosition(): int

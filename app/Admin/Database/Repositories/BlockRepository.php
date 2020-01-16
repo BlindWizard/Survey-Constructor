@@ -14,6 +14,13 @@ use Ramsey\Uuid\Uuid;
 
 class BlockRepository implements BlockRepositoryContract
 {
+    public function findById(string $blockId): ?BlockContract
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        return  $block;
+    }
+
     /**
      * @inheritDoc
      */
@@ -94,13 +101,43 @@ class BlockRepository implements BlockRepositoryContract
      */
     public function setElementData(string $blockId, array $data): BlockContract
     {
-        $blockData = BlockData::query()->find($blockId)->first();/** @var BlockData $blockData */
+        $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
         $blockData->data = \GuzzleHttp\json_encode($data);
         $blockData->save();
 
-        $block = Block::query()->where(Block::ATTR_ID, '=', $blockId)->first();/** @var Block $block */
+        $block = Block::query()->find($blockId);/** @var Block $block */
 
         return $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setElementsPositions(array $blockPosition): void
+    {
+        DB::beginTransaction();
+        try {
+            foreach ($blockPosition as $blockId => $position) {
+                $this->setElementPosition($blockId, $position);
+            }
+
+            DB::commit();
+        }
+        catch (\Throwable $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setElementPosition(string $blockId, int $position): void
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+        $block->position = $position;
+        $block->save();
     }
 
     /**

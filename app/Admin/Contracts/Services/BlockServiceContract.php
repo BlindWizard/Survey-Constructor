@@ -22,6 +22,14 @@ interface BlockServiceContract
 
     /**
      * @param string $blockId
+     * @param int    $position
+     *
+     * @return mixed
+     */
+    public function reorderElement(string $blockId, int $position): void;
+
+    /**
+     * @param string $blockId
      * @param array  $data
      *
      * @return BlockContract

@@ -27,7 +27,7 @@ class BlockController extends Controller
         return response()->json($result);
     }
 
-    public function reoderElement(ReorderElementRequest $request, ReorderElementCommand $command)
+    public function reorderElement(ReorderElementRequest $request, ReorderElementCommand $command)
     {
         $result = new AjaxResponse();
 

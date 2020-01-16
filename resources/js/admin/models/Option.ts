@@ -29,7 +29,6 @@ export class Option implements BlockContract {
 	getData(): Object
 	{
 		return {
-			'id': this.getId(),
 			'text': this.text,
 		};
 	}

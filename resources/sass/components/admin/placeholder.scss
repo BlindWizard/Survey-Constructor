@@ -1,0 +1,13 @@
+.placeholder {
+    background-color: $white;
+    border: 0.18rem $primary dashed;
+    text-align: center;
+
+    &__label {
+        font-size: 1rem;
+        font-weight: bolder;
+        color: $primary;
+        padding: 0.5rem 0;
+        display: inline-block;
+    }
+}

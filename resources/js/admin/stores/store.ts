@@ -150,17 +150,16 @@ const store = new Vuex.Store({
 				throw new Error('Survey can\'t be modified');
 			}
 
-			await BlockApi.reoderElement(request);
-
 			commit(mutations.CHANGE_ELEMENT_POSITION, request);
+			await BlockApi.reoderElement(request);
 		},
 		async [actions.SAVE_ELEMENT_DATA]({commit, state}, request: SaveBlockData) {
-			await BlockApi.saveData(request);
 			commit(mutations.SAVE_ELEMENT_DATA, request);
+			await BlockApi.saveData(request);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
-			await BlockApi.deleteElement(blockId);
 			commit(mutations.DELETE_ELEMENT, blockId);
+			await BlockApi.deleteElement(blockId);
 		}
 	},
 	getters: {

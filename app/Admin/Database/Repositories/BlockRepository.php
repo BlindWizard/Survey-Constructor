@@ -78,6 +78,14 @@ class BlockRepository implements BlockRepositoryContract
 
                     $result[] = $optionsList;
                     break;
+                case BlockContract::TYPE_OPTION:
+                    $option = new Option();
+                    $option->id = $model->id;
+                    $option->surveyId = $model->getSurveyId();
+                    $option->text = $model->getData()['text'];
+
+                    $result[] = $option;
+                    break;
                 default:
                     throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));
             }

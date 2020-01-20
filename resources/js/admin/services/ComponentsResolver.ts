@@ -1,8 +1,8 @@
-import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
-import {OptionsListBlockWrapper} from "../components/editables/OptionsListBlockWrapper";
+import {OptionsListBlockWrapper} from "../components/editables/options-list/OptionsListBlockWrapper";
 import {OptionsListBlock} from "../components/controls/OptionsListBlock";
-import Vue, {VueConstructor} from "vue";
+import {VueConstructor} from "vue";
+import {OptionBlockWrapper} from "../components/editables/option/OptionBlockWrapper";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -12,6 +12,8 @@ export class ComponentsResolver {
 		switch (type) {
 			case BlockTypes.OPTIONS_LIST:
 				return 'OptionsListBlock' + (this.editable ? 'Wrapper' : '');
+			case BlockTypes.OPTION:
+				return 'OptionBlock' + (this.editable ? 'Wrapper' : '');
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -22,6 +24,8 @@ export class ComponentsResolver {
 		switch (type) {
 			case BlockTypes.OPTIONS_LIST:
 				return this.editable ? OptionsListBlockWrapper : OptionsListBlock;
+			case BlockTypes.OPTION:
+				return this.editable ? OptionBlockWrapper : OptionsListBlock;
 			default:
 				throw new Error('Undefined block type');
 		}

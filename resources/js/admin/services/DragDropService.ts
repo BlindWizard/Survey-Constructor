@@ -1,3 +1,7 @@
+import {store} from "../stores/store";
+import {getters} from "../stores/types";
+import {bem} from "../../common/bem-helper";
+
 class DragDropService
 {
 	private dragState: boolean = false;
@@ -159,9 +163,8 @@ class DragDropService
 		}
 
 		let placeholder = document.createElement('div');
-		placeholder.classList.add('placeholder');
-		placeholder.style.background = 'yellow';
-		placeholder.style.height = '20px';
+		placeholder.classList.add(bem('placeholder').classes());
+		placeholder.innerHTML = '<span class="' + bem('placeholder').el('label').classes() + '">' + store.getters[getters.LOCALE].dropPlaceholderLabel + '</span>';
 
 		if (this.target.lastChild) {
 			this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);

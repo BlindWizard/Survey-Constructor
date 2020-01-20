@@ -96,9 +96,11 @@ export class SurveyApi
 				let blocks: BlockContract[] = [];
 				result.data.blocks.forEach((wrapper: any) => {
 					let blockData: BlockWrapper = wrapper as BlockWrapper;
+					let data = null;
+
 					switch (blockData.type) {
 						case BlockTypes.OPTIONS_LIST:
-							let data = blockData.data as OptionsList;
+							data = blockData.data as OptionsList;
 
 							let optionsList: OptionsList = new OptionsList();
 							optionsList.id = data.id;
@@ -116,6 +118,16 @@ export class SurveyApi
 							});
 
 							blocks.push(optionsList);
+							break;
+
+						case BlockTypes.OPTION:
+							data = blockData.data as Option;
+							let option: Option = new Option();
+							option.id = data.id;
+							option.text = data.text;
+
+							blocks.push(option);
+
 							break;
 						default:
 							throw new Error('Undefined block type');

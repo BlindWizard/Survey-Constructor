@@ -3,11 +3,12 @@ import Vue from "vue";
 
 @Component({
 	template: `
-		<ul :class="bem('components-menu').add('medium-2 vertical menu').classes()">
-			<li :class="bem('components-menu').el('item').classes()">
-				<a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'options-list'">Radio List</a>
-			</li>
-		</ul>
+        <ul :class="bem('components-menu').add('medium-2 vertical menu').classes()">
+            <li :class="bem('components-menu').el('item').classes()">
+                <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'options-list'">Options List</a>
+                <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'option'">Single option</a>
+            </li>
+        </ul>
 	`,
 })
 export class ComponentsMenu extends Vue {}

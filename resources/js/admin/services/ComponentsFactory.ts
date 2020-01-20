@@ -6,11 +6,12 @@ import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {OptionsList} from "../models/OptionsList";
 import {Option} from "../models/Option";
+import {BaseComponent} from "../components/editables/BaseComponent";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
 {
-	public static create(type: string, container: HTMLElement): Vue
+	public static create(type: string, container: HTMLElement): BaseComponent
 	{
 		const resolver = new ComponentsResolver().setEditable();
 
@@ -21,7 +22,7 @@ export class ComponentsFactory
 
 		container.appendChild(instance.$el);
 
-		return instance;
+		return instance as BaseComponent;
 	}
 
 	public static getDefaultData(type: string): BlockContract

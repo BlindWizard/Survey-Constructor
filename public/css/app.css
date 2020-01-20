@@ -12059,6 +12059,20 @@ html.is-reveal-open body {
   display: inline-block;
 }
 
+.placeholder {
+  background-color: #fefefe;
+  border: 0.18rem #fd5b15 dashed;
+  text-align: center;
+}
+
+.placeholder__label {
+  font-size: 1rem;
+  font-weight: bolder;
+  color: #fd5b15;
+  padding: 0.5rem 0;
+  display: inline-block;
+}
+
 .description {
   background-color: #2d1e45;
   color: #fefefe;

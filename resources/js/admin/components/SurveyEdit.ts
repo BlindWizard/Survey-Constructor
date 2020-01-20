@@ -10,14 +10,14 @@ import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
 
 @Component({
 	template: `
-		<div class="grid-container fluid">
-			<div class="grid-x grid-padding-x">
-				<SurveyEditMenu/>
-				<Viewport v-if="null !== survey">
-					<SurveyBlockWrapper :survey="survey"/>
-				</Viewport>
-			</div>
-		</div>
+        <div class="grid-container fluid">
+            <div class="grid-x grid-padding-x">
+                <SurveyEditMenu />
+                <Viewport v-if="null !== survey">
+                    <SurveyBlockWrapper :survey="survey" />
+                </Viewport>
+            </div>
+        </div>
 	`,
 	components: {
 		Viewport,

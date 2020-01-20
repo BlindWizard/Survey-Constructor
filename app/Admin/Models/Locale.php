@@ -12,4 +12,6 @@ class Locale
     public $saveLabel;
     /** @var string */
     public $deleteLabel;
+    /** @var string */
+    public $dropPlaceholderLabel;
 }

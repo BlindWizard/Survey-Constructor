@@ -5,8 +5,9 @@ import {actions, getters} from "../stores/types";
 import {CreateElement} from "../api/requests/CreateElement";
 import {bem} from "../../common/bem-helper";
 import {ReorderElement} from "../api/requests/ReorderElement";
+import {BaseComponent} from "../components/editables/BaseComponent";
 
-let dragElement: Vue|null = null;
+let dragElement: BaseComponent|null = null;
 let spawned = false;
 let newElement = false;
 let threshold = 0;
@@ -18,13 +19,17 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			dragDropService.setDragState(true);
 			if (!binding.modifiers['create']) {
-				dragElement = vnode.context as Vue;
+				dragElement = vnode.context as BaseComponent;
 				newElement = false;
+
+				if (dragElement.draggable()) {
+					dragDropService.setDragState(true);
+				}
 			}
 			else {
 				newElement = true;
+				dragDropService.setDragState(true);
 			}
 		};
 
@@ -85,7 +90,7 @@ const ComponentDrag: DirectiveOptions = {
 
 					let request = new CreateElement();
 					request.surveyId = $store.getters[getters.SURVEY].id;
-					request.type = binding.value;
+					request.type = dragElement.getType();
 					request.position = position;
 
 					$store.dispatch(actions.ADD_ELEMENT, request);
@@ -105,10 +110,10 @@ const ComponentDrag: DirectiveOptions = {
 					request.position = position - 1;
 
 					$store.dispatch(actions.REORDER_ELEMENT, request);
-					dragElement.$el.classList.remove(bem('draggable').classes());
-					(dragElement.$el as HTMLElement).style.left = 'auto';
-					(dragElement.$el as HTMLElement).style.top = 'auto';
 				}
+
+				dragElement.$el.classList.remove(bem('draggable').classes());
+				(dragElement.$el as HTMLElement).removeAttribute('style');
 
 				dragElement = null;
 			}

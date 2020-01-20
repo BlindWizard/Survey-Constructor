@@ -7,8 +7,8 @@ import {EditingModes} from "../contracts/EditingModes";
 
 @Component({
 	template: `
-		<div :class="bem('block-edit-menu').classes()">
-			<button v-if="-1 !== activeButtons().indexOf('edit')" :class="bem('button').is('rounded').classes()" v-on:click="onEdit">{{ locale.editLabel }}</button>
+        <div :class="bem('block-edit-menu').classes()">
+            <button v-if="-1 !== activeButtons().indexOf('edit')" :class="bem('button').is('rounded').classes()" v-on:click="onEdit">{{ locale.editLabel }}</button>
             <button v-if="-1 !== activeButtons().indexOf('save')" :class="bem('button').is('rounded').classes()" v-on:click="onSave">{{ locale.saveLabel }}</button>
             <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" v-on:click="onDelete">{{ locale.deleteLabel }}</button>
         </div>

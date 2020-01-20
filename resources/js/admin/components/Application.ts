@@ -4,14 +4,14 @@ import {Header} from "./Header";
 
 @Component({
 	template: `
-		<div class="grid-y">
-			<div :class="bem('top-menu').add('cell').classes()">
-				<Header/>
-			</div>
-			<div class="cell">
-				<router-view/>
-			</div>
-		</div>
+        <div class="grid-y">
+            <div :class="bem('top-menu').add('cell').classes()">
+                <Header />
+            </div>
+            <div class="cell">
+                <router-view />
+            </div>
+        </div>
 	`,
 	components: {
 		Header,

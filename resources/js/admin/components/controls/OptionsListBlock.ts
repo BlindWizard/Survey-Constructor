@@ -5,12 +5,12 @@ import {OptionsList} from "../../models/OptionsList";
 
 @Component({
 	template: `
-		<div :class="bem('options-list').classes()">
-			<p :key="option.id" v-for="option in block.options">
-				<input :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio">{{ option.name }}
+        <div :class="bem('options-list').classes()">
+            <p :key="option.id" v-for="option in block.options">
+                <input :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio"/>
                 <label :for="option.id">{{ option.text }}</label>
             </p>
-		</div>
+        </div>
 	`,
 })
 export class OptionsListBlock extends Vue {

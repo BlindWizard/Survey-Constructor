@@ -10,7 +10,6 @@ class DragDropService
 	private target: HTMLElement;
 	private dropTargets: HTMLElement[] = [];
 	private placeholder: HTMLElement|null = null;
-	private dropPlace: HTMLElement|null = null;
 
 	constructor()
 	{
@@ -34,6 +33,7 @@ class DragDropService
 				return;
 			}
 
+			var dropPlace: HTMLElement|null = null;
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
 			let target: HTMLElement|null = null;
 			for(let i = 0; i < possibleTargets.length - 1; i++) {
@@ -51,36 +51,32 @@ class DragDropService
 			}
 
 			if (null === target) {
-				this.dropPlace = null;
 				return;
 			}
 
 			if (this.placeholder === target) {
-				this.dropPlace = target;
 				return;
 			}
 
 			var rect = target.getBoundingClientRect();
 
 			if (e.y < rect.top + target.offsetHeight / 2) {
-				this.dropPlace = target;
+				dropPlace = target;
 			} else {
-				this.dropPlace = target.nextElementSibling as HTMLElement;
+				dropPlace = target.nextElementSibling as HTMLElement;
 			}
 
-			if (this.dropPlace === this.placeholder) {
+			if (dropPlace === this.placeholder) {
 				return;
 			}
 
-			this.target.insertBefore(this.placeholder as Node, this.dropPlace as Node);
+			this.target.insertBefore(this.placeholder as Node, dropPlace as Node);
 		});
 
 		this.target.addEventListener('mouseleave', () => {
 			if (!this.getDragState()) {
 				return;
 			}
-
-			this.dropPlace = null;
 		});
 	}
 
@@ -123,8 +119,6 @@ class DragDropService
 				this.dragElement = null;
 				document.removeEventListener('mousemove', this.drag);
 			}
-
-			this.dropPlace = null;
 		}
 	}
 
@@ -138,9 +132,20 @@ class DragDropService
 		return this.container;
 	}
 
-	public getLastTarget(): HTMLElement|null
+	public getDropPosition(): number|null
 	{
-		return this.dropPlace;
+		if (null === this.placeholder) {
+			return null;
+		}
+
+		let elements:HTMLElement[] = Array.from(this.target.children) as HTMLElement[];
+		if (null !== this.dragElement) {
+			elements = elements.filter((element: HTMLElement) => {
+				return element !== this.dragElement;
+			});
+		}
+
+		return elements.indexOf(this.placeholder);
 	}
 
 	private createContainer(): HTMLElement

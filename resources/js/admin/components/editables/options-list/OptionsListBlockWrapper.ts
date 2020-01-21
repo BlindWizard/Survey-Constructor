@@ -1,5 +1,4 @@
 import Component from "vue-class-component";
-import {Prop} from "vue-property-decorator";
 import {OptionsList} from "../../../models/OptionsList";
 import {OptionsListBlock} from "../../controls/OptionsListBlock";
 import {BlockEditMenu} from "../../BlockEditMenu";
@@ -25,9 +24,6 @@ import {BaseComponent} from "../BaseComponent";
 	}
 })
 export class OptionsListBlockWrapper extends BaseComponent implements Draggable {
-	private blockData: OptionsList;
-	private editing: boolean = false;
-
 	public created()
 	{
 		this.blockData = ComponentsFactory.createElementFromData(this.block.getType(), this.block.getData());
@@ -58,8 +54,8 @@ export class OptionsListBlockWrapper extends BaseComponent implements Draggable 
 		return this.editing ? EditingModes.SAVE : EditingModes.EDIT;
 	}
 
-	public draggable(): boolean
+	public getType(): string
 	{
-		return !this.editing;
+		return this.block.getType();
 	}
 }

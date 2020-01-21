@@ -1,16 +1,19 @@
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
-import {OptionsList} from "../../models/OptionsList";
+import {BlockContract} from "../../contracts/BlockContract";
+import {Option} from "../../models/Option";
 
 export class BaseComponent extends Vue implements Draggable {
-	@Prop(OptionsList) readonly block: OptionsList;
+	@Prop(Object) readonly block: BlockContract;
+	protected editing: boolean = false;
+	protected blockData: Option;
 
-	draggable(): boolean
+	public draggable(): boolean
 	{
-		return false;
+		return !this.editing;
 	}
 
-	getType(): string
+	public getType(): string
 	{
 		return this.block.getType();
 	}

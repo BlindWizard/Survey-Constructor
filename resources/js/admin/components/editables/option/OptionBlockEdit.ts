@@ -6,7 +6,7 @@ import {Option} from "../../../models/Option";
 @Component({
 	template: `
         <div :class="bem('option').classes()" v-component-drop-target>
-            <input v-model="option.text" type="text" />
+            <input v-model="block.text" type="text" />
         </div>
 	`,
 })

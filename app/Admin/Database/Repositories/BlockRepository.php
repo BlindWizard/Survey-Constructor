@@ -83,6 +83,7 @@ class BlockRepository implements BlockRepositoryContract
                     $option->id = $model->id;
                     $option->surveyId = $model->getSurveyId();
                     $option->text = $model->getData()['text'];
+                    $option->position = $model->getPosition();
 
                     $result[] = $option;
                     break;

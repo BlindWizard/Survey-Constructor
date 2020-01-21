@@ -78,11 +78,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			let drop = dragDropService.getLastTarget();
-			let position = null;
-			if (null !== drop) {
-				position = (null !== drop.parentElement ? Array.from(drop.parentElement.children).indexOf(drop) : null);
-			}
+			let position = dragDropService.getDropPosition();
 
 			if (newElement) {
 				if (null !== position) {
@@ -107,7 +103,7 @@ const ComponentDrag: DirectiveOptions = {
 
 					let request = new ReorderElement();
 					request.blockId = dragElement.$props.block.id;
-					request.position = position - 1;
+					request.position = position;
 
 					$store.dispatch(actions.REORDER_ELEMENT, request);
 				}

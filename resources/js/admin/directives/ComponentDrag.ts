@@ -68,7 +68,7 @@ const ComponentDrag: DirectiveOptions = {
 			dragDropService.handleDrag(dragElement.$el as HTMLElement);
 		};
 
-		document.addEventListener('mouseup', () => {
+		document.addEventListener('mouseup', (e: MouseEvent) => {
 			if (!dragDropService.getDragState()) {
 				return;
 			}
@@ -78,7 +78,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			let position = dragDropService.getDropPosition();
+			let position = dragDropService.getDropPosition(e);
 
 			if (newElement) {
 				if (null !== position) {

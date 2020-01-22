@@ -141,9 +141,14 @@ const store = new Vuex.Store({
 			}
 
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
-
 			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0});
+			request.blockId = block.getId();
 			block = await BlockApi.createElement(request);
+
+			let newData: SaveBlockData = new SaveBlockData();
+			newData.blockId = block.getId();
+			newData.data = block.getData();
+			commit(mutations.SAVE_ELEMENT_DATA, newData);
 		},
 		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {
 			if (null === state.survey) {

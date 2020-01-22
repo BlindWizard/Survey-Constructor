@@ -30,31 +30,30 @@ class BlockService implements BlockServiceContract
     }
 
     /**
-     * @param string   $surveyId
-     * @param string   $type
-     * @param int|null $position
-     *
-     * @return BlockContract
-     *
-     * @throws Throwable
+     * @inheritDoc
      */
-    public function addEmptyElement(string $surveyId, string $type, ?int $position): BlockContract
+    public function addEmptyElement(string $surveyId, string $blockId, string $type, ?int $position): BlockContract
     {
-        $element = $this->blockFactory->getEmptyBlock($type);
+        $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
-        if (null === $position) {
-            $lastBlock = $this->blockRepository->findLastBlock($surveyId);
-            $position = (null !== $lastBlock ? $lastBlock->getPosition() : 0);
-        }
+        $lastBlock = $this->blockRepository->findLastBlock($surveyId);
+        $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() : 0);
 
         $element->setSurveyId($surveyId);
-        $element->setPosition($position);
+        $element->setPosition($lastBlockPosition + 1);
 
-        $this->blockRepository->save($element);
+        $element = $this->blockRepository->save($element);
+
+        if (null !== $position) {
+            $this->reorderElement($element->getId(), $position);
+        }
 
         return $element;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function reorderElement(string $blockId, int $position): void
     {
         $survey = $this->surveyRepository->getSurveyByBlockId($blockId);

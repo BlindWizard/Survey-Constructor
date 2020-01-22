@@ -11,6 +11,7 @@ interface BlockServiceContract
 
     /**
      * @param string $surveyId
+     * @param string $blockId
      * @param string $type
      * @param int    $position
      *
@@ -18,13 +19,15 @@ interface BlockServiceContract
      *
      * @throws Throwable
      */
-    public function addEmptyElement(string $surveyId, string $type, int $position): BlockContract;
+    public function addEmptyElement(string $surveyId, string $blockId, string $type, int $position): BlockContract;
 
     /**
      * @param string $blockId
      * @param int    $position
      *
-     * @return mixed
+     * @return void
+     *
+     * @throws Throwable
      */
     public function reorderElement(string $blockId, int $position): void;
 

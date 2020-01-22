@@ -29,7 +29,7 @@ class BlockRepository implements BlockRepositoryContract
         DB::beginTransaction();
         try {
             $model            = new Block();
-            $model->id        = Uuid::uuid4()->toString();
+            $model->id        = $element->getId();
             $model->survey_id = $element->getSurveyId();
             $model->position  = $element->getPosition();
             $model->type      = $element->getType();

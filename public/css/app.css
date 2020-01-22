@@ -12044,6 +12044,10 @@ html.is-reveal-open body {
 
 .components-menu {
   min-height: calc(100vh - 4rem);
+  background-color: #fefefe;
+}
+
+.components-menu__item {
   background-color: #2d1e45;
 }
 

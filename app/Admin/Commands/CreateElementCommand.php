@@ -50,7 +50,7 @@ class CreateElementCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $block = $this->blockService->addEmptyElement($survey->getId(), $this->request->getType(), $this->request->getPosition());
+        $block = $this->blockService->addEmptyElement($survey->getId(), $this->request->getBlockId(), $this->request->getType(), $this->request->getPosition());
         $this->block = new BlockWrapper($block);
 
         return $this;

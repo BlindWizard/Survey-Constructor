@@ -15,27 +15,29 @@ class BlockFactory implements BlockFactoryContract
     /**
      * @inheritDoc
      */
-    public function getEmptyBlock(string $type): BlockContract
+    public function getEmptyBlock(string $type, string $blockId = null): BlockContract
     {
         switch ($type) {
             case BlockContract::TYPE_OPTIONS_LIST:
-                return $this->getOptionList();
+                return $this->getOptionList($blockId);
             case BlockContract::TYPE_OPTION:
-                return $this->getOption();
+                return $this->getOption($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
     }
 
     /**
+     * @param string|null $blockId
+     *
      * @return OptionsList
      *
      * @throws \Throwable
      */
-    public function getOptionList(): OptionsList
+    public function getOptionList(string $blockId = null): OptionsList
     {
         $block = new OptionsList();
-        $block->id = Uuid::uuid4()->toString();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
 
         $option = new Option();
@@ -54,14 +56,16 @@ class BlockFactory implements BlockFactoryContract
     }
 
     /**
+     * @param string|null $blockId
+     *
      * @return Option
      *
      * @throws \Throwable
      */
-    public function getOption(): Option
+    public function getOption(string $blockId = null): Option
     {
         $block = new Option();
-        $block->id = Uuid::uuid4()->toString();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
 
         return $block;

@@ -1,6 +1,10 @@
 .components-menu {
     min-height: calc(100vh - 4rem);
-    background-color: $dark;
+    background-color: $white;
+
+    &__item {
+        background-color: $dark;
+    }
 
     &__link {
         color: $white;

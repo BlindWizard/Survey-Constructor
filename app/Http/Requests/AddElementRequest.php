@@ -10,6 +10,7 @@ class AddElementRequest extends FormRequest
     {
         return [
             'surveyId' => 'required|uuid',
+            'blockId'  => 'required|uuid',
             'type'     => 'required',
             'position' => 'numeric|nullable',
         ];
@@ -18,6 +19,11 @@ class AddElementRequest extends FormRequest
     public function getId(): string
     {
         return (string) $this->json('surveyId');
+    }
+
+    public function getBlockId(): string
+    {
+        return (string) $this->json('blockId');
     }
 
     public function getType(): string

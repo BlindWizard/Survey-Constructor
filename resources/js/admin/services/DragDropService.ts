@@ -77,6 +77,8 @@ class DragDropService
 			if (!this.getDragState()) {
 				return;
 			}
+
+
 		});
 	}
 
@@ -132,9 +134,15 @@ class DragDropService
 		return this.container;
 	}
 
-	public getDropPosition(): number|null
+	public getDropPosition(e: MouseEvent): number|null
 	{
 		if (null === this.placeholder) {
+			return null;
+		}
+
+		var containerBounds = this.target.getBoundingClientRect();
+		var isDropInContainer = (e.x >= containerBounds.left && e.x <= containerBounds.right && e.y >=containerBounds.top && e.y <= containerBounds.bottom);
+		if (!isDropInContainer) {
 			return null;
 		}
 

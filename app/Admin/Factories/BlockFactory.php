@@ -5,6 +5,7 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
+use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
@@ -22,6 +23,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getOptionList($blockId);
             case BlockContract::TYPE_OPTION:
                 return $this->getOption($blockId);
+            case BlockContract::TYPE_HEADER:
+                return $this->getHeader($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -67,6 +70,23 @@ class BlockFactory implements BlockFactoryContract
         $block = new Option();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return Header
+     *
+     * @throws \Throwable
+     */
+    public function getHeader(string $blockId = null): Header
+    {
+        $block = new Header();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+        $block->text = config('app.name');
 
         return $block;
     }

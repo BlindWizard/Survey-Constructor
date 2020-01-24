@@ -5,9 +5,9 @@ import {EditingModes} from '../../../contracts/EditingModes';
 import {actions} from "../../../stores/types";
 import {SaveBlockData} from "../../../api/requests/SaveBlockData";
 import {ComponentsFactory} from "../../../services/ComponentsFactory";
-import {BaseComponent} from "../BaseComponent";
-import {Option} from "../../../models/Option";
+import {BaseBlock} from "../BaseBlock";
 import {OptionBlock} from "../../controls/OptionBlock";
+import {Draggable} from "../../../contracts/Draggable";
 
 @Component({
 	template: `
@@ -23,7 +23,7 @@ import {OptionBlock} from "../../controls/OptionBlock";
 		BlockEditMenu,
 	}
 })
-export class OptionBlockWrapper extends BaseComponent implements Draggable {
+export class OptionBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
 		this.blockData = ComponentsFactory.createElementFromData(this.block.getType(), this.block.getData());

@@ -3,6 +3,9 @@ import {OptionsListBlockWrapper} from "../components/editables/options-list/Opti
 import {OptionsListBlock} from "../components/controls/OptionsListBlock";
 import {VueConstructor} from "vue";
 import {OptionBlockWrapper} from "../components/editables/option/OptionBlockWrapper";
+import {HeaderBlock} from "../components/controls/HeaderBlock";
+import {HeaderBlockWrapper} from "../components/editables/header/HeaderBlockWrapper";
+import {OptionBlock} from "../components/controls/OptionBlock";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -14,6 +17,8 @@ export class ComponentsResolver {
 				return 'OptionsListBlock' + (this.editable ? 'Wrapper' : '');
 			case BlockTypes.OPTION:
 				return 'OptionBlock' + (this.editable ? 'Wrapper' : '');
+			case BlockTypes.HEADER:
+				return 'HeaderBlock' + (this.editable ? 'Wrapper' : '');
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -25,7 +30,9 @@ export class ComponentsResolver {
 			case BlockTypes.OPTIONS_LIST:
 				return this.editable ? OptionsListBlockWrapper : OptionsListBlock;
 			case BlockTypes.OPTION:
-				return this.editable ? OptionBlockWrapper : OptionsListBlock;
+				return this.editable ? OptionBlockWrapper : OptionBlock;
+			case BlockTypes.HEADER:
+				return this.editable ? HeaderBlockWrapper : HeaderBlock;
 			default:
 				throw new Error('Undefined block type');
 		}

@@ -30,7 +30,7 @@ import {getters} from "../stores/types";
         </div>
 	`
 })
-export class Header extends Vue
+export class AppHeader extends Vue
 {
 	get csrf(): string
 	{

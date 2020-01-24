@@ -5,9 +5,9 @@ import {actions, getters} from "../stores/types";
 import {CreateElement} from "../api/requests/CreateElement";
 import {bem} from "../../common/bem-helper";
 import {ReorderElement} from "../api/requests/ReorderElement";
-import {BaseComponent} from "../components/editables/BaseComponent";
+import {BaseBlock} from "../components/editables/BaseBlock";
 
-let dragElement: BaseComponent|null = null;
+let dragElement: BaseBlock|null = null;
 let spawned = false;
 let newElement = false;
 let threshold = 0;
@@ -20,7 +20,7 @@ const ComponentDrag: DirectiveOptions = {
 			}
 
 			if (!binding.modifiers['create']) {
-				dragElement = vnode.context as BaseComponent;
+				dragElement = vnode.context as BaseBlock;
 				newElement = false;
 
 				if (dragElement.draggable()) {

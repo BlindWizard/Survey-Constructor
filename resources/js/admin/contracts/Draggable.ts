@@ -1,4 +1,4 @@
-interface Draggable {
+export interface Draggable {
 	draggable(): boolean;
 	getType(): string;
 }

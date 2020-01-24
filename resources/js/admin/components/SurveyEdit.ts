@@ -12,7 +12,7 @@ import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
 	template: `
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
-                <SurveyEditMenu />
+                <ComponentsMenu />
                 <Viewport v-if="null !== survey">
                     <SurveyBlockWrapper :survey="survey" />
                 </Viewport>
@@ -21,8 +21,8 @@ import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
 	`,
 	components: {
 		Viewport,
-		SurveyEditMenu: ComponentsMenu,
-		SurveyBlockWrapper: SurveyBlockWrapper
+		ComponentsMenu,
+		SurveyBlockWrapper
 	}
 })
 export class SurveyEdit extends Vue {

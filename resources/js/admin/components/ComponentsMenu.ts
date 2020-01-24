@@ -7,10 +7,13 @@ import Vue from "vue";
 	        <span :class="bem('components-menu').el('header').classes()">Elements</span>
             <ul :class="bem('vertical menu').classes()">
                 <li :class="bem('components-menu').el('item').classes()">
+                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'header'">Header</a>
+                </li>
+                <li :class="bem('components-menu').el('item').classes()">
                     <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'options-list'">Options List</a>
                 </li>
                 <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'option'">Single option</a>
+                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'option'">Single check mark</a>
                 </li>
             </ul>
         </div>

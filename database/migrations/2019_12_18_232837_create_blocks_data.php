@@ -5,6 +5,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Create table for blocks data.
+ */
 class CreateBlocksData extends Migration
 {
     /**

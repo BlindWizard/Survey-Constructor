@@ -8,6 +8,7 @@ import {BlockWrapper} from "../models/BlockWrapper";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {OptionsList} from "../models/OptionsList";
 import {Option} from "../models/Option";
+import {ComponentsFactory} from "../services/ComponentsFactory";
 
 export class SurveyApi
 {
@@ -96,42 +97,8 @@ export class SurveyApi
 				let blocks: BlockContract[] = [];
 				result.data.blocks.forEach((wrapper: any) => {
 					let blockData: BlockWrapper = wrapper as BlockWrapper;
-					let data = null;
 
-					switch (blockData.type) {
-						case BlockTypes.OPTIONS_LIST:
-							data = blockData.data as OptionsList;
-
-							let optionsList: OptionsList = new OptionsList();
-							optionsList.id = data.id;
-							optionsList.surveyId = data.surveyId;
-							optionsList.position  = data.position;
-							optionsList.multiple = data.multiple;
-
-							data.options.forEach((data: Option) => {
-								let option = new Option();
-								option.id = data.id;
-								option.position = data.position;
-								option.text = data.text;
-
-								optionsList.options.push(option);
-							});
-
-							blocks.push(optionsList);
-							break;
-
-						case BlockTypes.OPTION:
-							data = blockData.data as Option;
-							let option: Option = new Option();
-							option.id = data.id;
-							option.text = data.text;
-
-							blocks.push(option);
-
-							break;
-						default:
-							throw new Error('Undefined block type');
-					}
+					blocks.push(ComponentsFactory.createElementFromData(blockData.type, blockData.data));
 				});
 
 				survey.blocks = blocks;

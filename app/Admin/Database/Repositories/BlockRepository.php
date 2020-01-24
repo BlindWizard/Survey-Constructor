@@ -6,6 +6,7 @@ use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
 use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\BlockData;
+use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
@@ -80,6 +81,15 @@ class BlockRepository implements BlockRepositoryContract
                     break;
                 case BlockContract::TYPE_OPTION:
                     $option = new Option();
+                    $option->id = $model->id;
+                    $option->surveyId = $model->getSurveyId();
+                    $option->text = $model->getData()['text'];
+                    $option->position = $model->getPosition();
+
+                    $result[] = $option;
+                    break;
+                case BlockContract::TYPE_HEADER:
+                    $option = new Header();
                     $option->id = $model->id;
                     $option->surveyId = $model->getSurveyId();
                     $option->text = $model->getData()['text'];

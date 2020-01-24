@@ -1,12 +1,12 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {Header} from "./Header";
+import {AppHeader} from "./AppHeader";
 
 @Component({
 	template: `
         <div class="grid-y">
             <div :class="bem('top-menu').add('cell').classes()">
-                <Header />
+                <AppHeader />
             </div>
             <div class="cell">
                 <router-view />
@@ -14,7 +14,7 @@ import {Header} from "./Header";
         </div>
 	`,
 	components: {
-		Header,
+		AppHeader,
 	}
 })
 export class Application extends Vue {}

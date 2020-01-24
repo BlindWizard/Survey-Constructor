@@ -37,24 +37,24 @@ class BlockService implements BlockServiceContract
         $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
         $lastBlock = $this->blockRepository->findLastBlock($surveyId);
-        $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() : 0);
+        $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() + 1 : 0);
 
         $element->setSurveyId($surveyId);
-        $element->setPosition($lastBlockPosition + 1);
+        $element->setPosition($lastBlockPosition);
 
         $element = $this->blockRepository->save($element);
 
         if (null !== $position) {
-            $this->reorderElement($element->getId(), $position);
+            $element = $this->reorderElement($element->getId(), $position);
         }
 
-        return $element;
+        return $this->blockFactory->getDTO($element);
     }
 
     /**
      * @inheritDoc
      */
-    public function reorderElement(string $blockId, int $position): void
+    public function reorderElement(string $blockId, int $position): BlockContract
     {
         $survey = $this->surveyRepository->getSurveyByBlockId($blockId);
         $reorderBlock = $this->blockRepository->findById($blockId);
@@ -65,6 +65,9 @@ class BlockService implements BlockServiceContract
         array_splice($positions, $position, 0, $reorderBlock->getId());
 
         $this->blockRepository->setElementsPositions(array_flip($positions));
+        $reorderBlock->setPosition($position);
+
+        return $reorderBlock;
     }
 
     /**

@@ -5,6 +5,7 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
+use App\Admin\Database\Models\Block;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
@@ -28,6 +29,55 @@ class BlockFactory implements BlockFactoryContract
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getDTO(BlockContract $model): BlockContract
+    {
+        switch ($model->getType()) {
+            case BlockContract::TYPE_OPTIONS_LIST:
+                $dto = new OptionsList();
+                $dto->id = $model->getId();
+                $dto->surveyId = $model->getSurveyId();
+                $dto->position = $model->getPosition();
+
+                foreach ($model->getData()['options'] as $optionData) {
+                    $option = new Option();
+                    $option->id = $optionData['id'];
+                    $option->text = $optionData['text'];
+                    $option->surveyId = $dto->surveyId;
+                    $option->position = $optionData['position'];
+
+                    $dto->options[] = $option;
+                }
+
+                $result[] = $dto;
+                break;
+            case BlockContract::TYPE_OPTION:
+                $dto = new Option();
+                $dto->id = $model->getId();
+                $dto->surveyId = $model->getSurveyId();
+                $dto->text = $model->getData()['text'];
+                $dto->position = $model->getPosition();
+
+                $result[] = $dto;
+                break;
+            case BlockContract::TYPE_HEADER:
+                $dto = new Header();
+                $dto->id = $model->getId();
+                $dto->surveyId = $model->getSurveyId();
+                $dto->text = $model->getData()['text'];
+                $dto->position = $model->getPosition();
+
+                $result[] = $dto;
+                break;
+            default:
+                throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));
+        }
+
+        return $dto;
     }
 
     /**

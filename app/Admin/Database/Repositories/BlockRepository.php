@@ -10,11 +10,20 @@ use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\Exceptions\BlockTypeException;
+use App\Admin\Factories\BlockFactory;
 use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class BlockRepository implements BlockRepositoryContract
 {
+    /** @var BlockFactory */
+    protected $factory;
+
+    public function __construct(BlockFactory $factory)
+    {
+        $this->factory = $factory;
+    }
+
     public function findById(string $blockId): ?BlockContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
@@ -60,46 +69,7 @@ class BlockRepository implements BlockRepositoryContract
         $models = Block::query()->where(Block::ATTR_SURVEY_ID, '=', $surveyId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
         $result = [];
         foreach ($models as $model) {
-            switch ($model->type) {
-                case BlockContract::TYPE_OPTIONS_LIST:
-                    $optionsList = new OptionsList();
-                    $optionsList->id = $model->id;
-                    $optionsList->surveyId = $model->getSurveyId();
-                    $optionsList->position = $model->getPosition();
-
-                    foreach ($model->getData()['options'] as $optionData) {
-                        $option = new Option();
-                        $option->id = $optionData['id'];
-                        $option->text = $optionData['text'];
-                        $option->surveyId = $optionsList->surveyId;
-                        $option->position = $optionData['position'];
-
-                        $optionsList->options[] = $option;
-                    }
-
-                    $result[] = $optionsList;
-                    break;
-                case BlockContract::TYPE_OPTION:
-                    $option = new Option();
-                    $option->id = $model->id;
-                    $option->surveyId = $model->getSurveyId();
-                    $option->text = $model->getData()['text'];
-                    $option->position = $model->getPosition();
-
-                    $result[] = $option;
-                    break;
-                case BlockContract::TYPE_HEADER:
-                    $option = new Header();
-                    $option->id = $model->id;
-                    $option->surveyId = $model->getSurveyId();
-                    $option->text = $model->getData()['text'];
-                    $option->position = $model->getPosition();
-
-                    $result[] = $option;
-                    break;
-                default:
-                    throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));
-            }
+            $result[] = $this->factory->getDTO($model);
         }
 
         return $result;

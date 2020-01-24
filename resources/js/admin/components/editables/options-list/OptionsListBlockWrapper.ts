@@ -26,6 +26,7 @@ import {Draggable} from "../../../contracts/Draggable";
 export class OptionsListBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
+		console.log('1', this.block.getData());
 		this.blockData = ComponentsFactory.createElementFromData(this.block.getType(), this.block.getData());
 	}
 

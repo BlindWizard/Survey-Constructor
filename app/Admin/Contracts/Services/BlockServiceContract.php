@@ -25,11 +25,11 @@ interface BlockServiceContract
      * @param string $blockId
      * @param int    $position
      *
-     * @return void
+     * @return BlockContract
      *
      * @throws Throwable
      */
-    public function reorderElement(string $blockId, int $position): void;
+    public function reorderElement(string $blockId, int $position): BlockContract;
 
     /**
      * @param string $blockId

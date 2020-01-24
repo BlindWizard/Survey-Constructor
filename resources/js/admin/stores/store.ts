@@ -149,6 +149,11 @@ const store = new Vuex.Store({
 			newData.blockId = block.getId();
 			newData.data = block.getData();
 			commit(mutations.SAVE_ELEMENT_DATA, newData);
+
+			let reorderData: ReorderElement = new ReorderElement();
+			reorderData.blockId = block.getId();
+			reorderData.position = block.getPosition();
+			commit(mutations.CHANGE_ELEMENT_POSITION, reorderData);
 		},
 		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {
 			if (null === state.survey) {

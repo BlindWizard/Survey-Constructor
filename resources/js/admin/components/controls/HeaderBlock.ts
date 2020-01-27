@@ -6,7 +6,10 @@ import {Header} from "../../models/Header";
 @Component({
 	template: `
         <div :class="bem('header').classes()">
-            <h1>{{ block.text }}</h1>            
+            <div :class="bem('header').el('image').classes()">
+                <div :class="bem('main-logo').classes()"></div>
+            </div>
+            <h1 :class="bem('header').el('label').classes()">{{ block.text }}</h1>
         </div>
 	`,
 })

@@ -12108,3 +12108,121 @@ html.is-reveal-open body {
   display: inline-block;
 }
 
+.options-list {
+  background-color: #fefefe;
+  overflow: hidden;
+}
+
+.options-list__option {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  line-height: 1.25rem;
+  font-size: 1rem;
+  margin: 1rem;
+}
+
+.options-list__option:hover .options-list__radio:after {
+  transform: scale(3.6);
+}
+
+.options-list__radio {
+  position: relative;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #fd5b15;
+  border-radius: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.options-list__radio:after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  background: #fd5b15;
+  transform: scale(0);
+  transition: all 0.2s ease;
+  opacity: 0.08;
+  pointer-events: none;
+}
+
+.options-list__label {
+  display: inline-block;
+}
+
+.options-list__control {
+  display: none;
+}
+
+.options-list__control:checked + .options-list__radio {
+  border-color: #fd5b15;
+}
+
+.options-list__control:checked + .options-list__radio:after {
+  transform: scale(1);
+  transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
+  opacity: 1;
+}
+
+.option-wrapper {
+  position: relative;
+}
+
+.option-wrapper .block-edit-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.option-wrapper:hover .block-edit-menu {
+  display: inline-block;
+}
+
+.option {
+  background-color: #fefefe;
+}
+
+.header-wrapper {
+  position: relative;
+}
+
+.header-wrapper .block-edit-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.header-wrapper:hover .block-edit-menu {
+  display: inline-block;
+}
+
+.header {
+  background-color: #2d1e45;
+}
+
+.header__image {
+  width: 3rem;
+  height: 3rem;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.header__label {
+  display: inline-block;
+  color: #fefefe;
+  font-weight: bold;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  vertical-align: top;
+  margin: 0;
+}
+

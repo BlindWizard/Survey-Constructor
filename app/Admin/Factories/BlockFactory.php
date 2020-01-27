@@ -105,6 +105,12 @@ class BlockFactory implements BlockFactoryContract
         $option->position = 1;
         $block->options[] = $option;
 
+        $option = new Option();
+        $option->id = Uuid::uuid4()->toString();
+        $option->text = __('Third option');
+        $option->position = 2;
+        $block->options[] = $option;
+
         return $block;
     }
 
@@ -119,6 +125,7 @@ class BlockFactory implements BlockFactoryContract
     {
         $block = new Option();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->text = __('Single option');
         $block->position = 0;
 
         return $block;

@@ -1,6 +1,12 @@
 .components-menu {
     min-height: calc(100vh - 4rem);
-    background-color: $white;
+    background-color: $dark;
+
+    &__header {
+        color: $white;
+        padding: 0.7rem 1rem;
+        font-weight: bold;
+    }
 
     &__item {
         background-color: $dark;
@@ -8,5 +14,9 @@
 
     &__link {
         color: $white;
+    }
+
+    &__icon {
+        float: right;
     }
 }

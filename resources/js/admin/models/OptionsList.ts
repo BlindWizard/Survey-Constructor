@@ -12,7 +12,7 @@ export class OptionsList implements BlockContract {
 
 	getType(): string
 	{
-		return BlockTypes.OPTIONS_LIST
+		return BlockTypes.OPTIONS_LIST;
 	}
 
 	getId(): string

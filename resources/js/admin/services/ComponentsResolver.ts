@@ -6,6 +6,8 @@ import {OptionBlockWrapper} from "../components/editables/option/OptionBlockWrap
 import {HeaderBlock} from "../components/controls/HeaderBlock";
 import {HeaderBlockWrapper} from "../components/editables/header/HeaderBlockWrapper";
 import {OptionBlock} from "../components/controls/OptionBlock";
+import {TextBlock} from "../components/controls/TextBlock";
+import {TextBlockWrapper} from "../components/editables/text/TextBlockWrapper";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -19,6 +21,8 @@ export class ComponentsResolver {
 				return 'OptionBlock' + (this.editable ? 'Wrapper' : '');
 			case BlockTypes.HEADER:
 				return 'HeaderBlock' + (this.editable ? 'Wrapper' : '');
+			case BlockTypes.TEXT:
+				return 'TextBlock' + (this.editable ? 'Wrapper' : '');
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -33,6 +37,8 @@ export class ComponentsResolver {
 				return this.editable ? OptionBlockWrapper : OptionBlock;
 			case BlockTypes.HEADER:
 				return this.editable ? HeaderBlockWrapper : HeaderBlock;
+			case BlockTypes.TEXT:
+				return this.editable ? TextBlockWrapper : TextBlock;
 			default:
 				throw new Error('Undefined block type');
 		}

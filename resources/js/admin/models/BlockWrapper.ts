@@ -1,8 +1,6 @@
-import {OptionsList} from "./OptionsList";
-import {Option} from "./Option";
-import {Header} from "./Header";
+import {BlockContract} from "../contracts/BlockContract";
 
 export class BlockWrapper {
-	public data: OptionsList|Option|Header;
+	public data: BlockContract;
 	public type: string;
 }

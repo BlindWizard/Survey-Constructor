@@ -8,6 +8,7 @@ import {OptionsList} from "../models/OptionsList";
 import {Option} from "../models/Option";
 import {BaseBlock} from "../components/editables/BaseBlock";
 import {Header} from "../models/Header";
+import {Text} from "../models/Text";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -61,6 +62,13 @@ export class ComponentsFactory
 				break;
 			case BlockTypes.HEADER:
 				block = new Header();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.text = blockData.text;
+
+				break;
+			case BlockTypes.TEXT:
+				block = new Text();
 				block.id = blockData.id;
 				block.position = blockData.position;
 				block.text = blockData.text;

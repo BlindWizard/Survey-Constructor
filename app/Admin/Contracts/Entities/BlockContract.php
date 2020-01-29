@@ -7,11 +7,12 @@ use App\Admin\Exceptions\BlockTypeException;
 
 interface BlockContract
 {
-    public const TYPES = [self::TYPE_HEADER, self::TYPE_OPTION, self::TYPE_OPTIONS_LIST];
+    public const TYPES = [self::TYPE_HEADER, self::TYPE_OPTION, self::TYPE_OPTIONS_LIST, self::TYPE_TEXT];
 
     public const TYPE_HEADER = 'header';
     public const TYPE_OPTION = 'option';
     public const TYPE_OPTIONS_LIST = 'options-list';
+    public const TYPE_TEXT = 'text';
 
     /**
      * @return string

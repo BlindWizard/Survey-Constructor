@@ -9,6 +9,7 @@ use App\Admin\Database\Models\Block;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
+use App\Admin\DTO\Text;
 use App\Admin\Exceptions\BlockTypeException;
 use Ramsey\Uuid\Uuid;
 
@@ -26,6 +27,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getOption($blockId);
             case BlockContract::TYPE_HEADER:
                 return $this->getHeader($blockId);
+            case BlockContract::TYPE_TEXT:
+                return $this->getText($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -66,6 +69,15 @@ class BlockFactory implements BlockFactoryContract
                 break;
             case BlockContract::TYPE_HEADER:
                 $dto = new Header();
+                $dto->id = $model->getId();
+                $dto->surveyId = $model->getSurveyId();
+                $dto->text = $model->getData()['text'];
+                $dto->position = $model->getPosition();
+
+                $result[] = $dto;
+                break;
+            case BlockContract::TYPE_TEXT:
+                $dto = new Text();
                 $dto->id = $model->getId();
                 $dto->surveyId = $model->getSurveyId();
                 $dto->text = $model->getData()['text'];
@@ -144,6 +156,23 @@ class BlockFactory implements BlockFactoryContract
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
         $block->text = config('app.name');
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return Text
+     *
+     * @throws \Throwable
+     */
+    public function getText(string $blockId = null): Text
+    {
+        $block = new Text();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+        $block->text = __('Default text');
 
         return $block;
     }

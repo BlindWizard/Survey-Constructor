@@ -12051,6 +12051,7 @@ html.is-reveal-open body {
   color: #fefefe;
   padding: 0.7rem 1rem;
   font-weight: bold;
+  display: block;
 }
 
 .components-menu__item {
@@ -12353,5 +12354,32 @@ html.is-reveal-open body {
   line-height: 3rem;
   vertical-align: top;
   margin: 0;
+}
+
+.text-wrapper {
+  position: relative;
+}
+
+.text-wrapper .block-edit-menu {
+  display: none;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.text-wrapper:hover .block-edit-menu {
+  display: inline-block;
+}
+
+.text {
+  background-color: #fefefe;
+}
+
+.text__value {
+  display: inline-block;
+  color: #0a0a0a;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  margin: 1rem;
 }
 

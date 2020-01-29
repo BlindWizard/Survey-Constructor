@@ -194,6 +194,11 @@ const store = new Vuex.Store({
 					throw new Error('Undefined block type');
 				}
 
+				let data:any = state.defaultBlockData[type] || null;
+				if (null === data) {
+					throw new Error('No default data for block ' + type);
+				}
+
 				return state.defaultBlockData[type] as BlockContract;
 			};
 		},

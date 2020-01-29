@@ -8,7 +8,7 @@ export class Header implements BlockContract {
 
 	getType(): string
 	{
-		return BlockTypes.HEADER
+		return BlockTypes.HEADER;
 	}
 
 	getId(): string

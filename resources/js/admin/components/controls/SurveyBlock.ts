@@ -9,6 +9,8 @@ import {OptionBlock} from "./OptionBlock";
 import {OptionBlockWrapper} from "../editables/option/OptionBlockWrapper";
 import {HeaderBlockWrapper} from "../editables/header/HeaderBlockWrapper";
 import {HeaderBlock} from "./HeaderBlock";
+import {TextBlock} from "./TextBlock";
+import {TextBlockWrapper} from "../editables/text/TextBlockWrapper";
 
 @Component({
 	template: `
@@ -22,7 +24,9 @@ import {HeaderBlock} from "./HeaderBlock";
 		OptionBlock,
 		OptionBlockWrapper,
 		HeaderBlock,
-		HeaderBlockWrapper
+		HeaderBlockWrapper,
+		TextBlock,
+		TextBlockWrapper,
 	}
 })
 export class SurveyBlock extends Vue {

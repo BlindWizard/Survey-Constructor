@@ -12039,7 +12039,7 @@ html.is-reveal-open body {
 }
 
 .viewport__inner {
-  padding: 0.9375rem;
+  padding: 0 0.9375rem;
 }
 
 .components-menu {
@@ -12085,6 +12085,18 @@ html.is-reveal-open body {
   font-weight: bolder;
   color: #fd5b15;
   padding: 0.5rem 0;
+  display: inline-block;
+}
+
+.screens-pager {
+  background-color: #e6e6e6;
+  padding: 0.9375rem;
+  text-align: center;
+}
+
+.screens-pager__inner {
+  margin: 0;
+  background-color: #fefefe;
   display: inline-block;
 }
 

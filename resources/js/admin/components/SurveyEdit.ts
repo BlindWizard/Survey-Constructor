@@ -7,22 +7,27 @@ import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {ComponentsMenu} from "./ComponentsMenu";
 import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
+import {ScreensPager} from "./ScreensPager";
 
 @Component({
 	template: `
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
                 <ComponentsMenu />
-                <Viewport v-if="null !== survey">
-                    <SurveyBlockWrapper :survey="survey" />
-                </Viewport>
+                <div class="grid-y grid-padding-y medium-8">
+	                <ScreensPager/>
+	                <Viewport v-if="null !== survey">
+	                    <SurveyBlockWrapper :survey="survey" />
+	                </Viewport>
+                </div>
             </div>
         </div>
 	`,
 	components: {
 		Viewport,
 		ComponentsMenu,
-		SurveyBlockWrapper
+		SurveyBlockWrapper,
+		ScreensPager
 	}
 })
 export class SurveyEdit extends Vue {

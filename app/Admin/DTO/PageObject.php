@@ -1,26 +1,24 @@
 <?php
-declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
+use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\PageContract;
-use App\Admin\Contracts\Entities\SurveyContract;
 
-class SurveyObject implements SurveyContract
+class PageObject implements PageContract
 {
     /** @var string */
     public $id;
     /** @var string */
-    public $title;
-    /** @var string */
-    public $ownerId;
-    /** @var PageContract[] */
-    public $pages = [];
+    public $surveyId;
+    /** @var int */
+    public $step;
+    /** @var BlockContract[] */
+    public $blocks = [];
     /** @var string */
     public $createdAt;
     /** @var string */
     public $updatedAt;
-
     /**
      * @inheritDoc
      */
@@ -32,25 +30,25 @@ class SurveyObject implements SurveyContract
     /**
      * @inheritDoc
      */
-    public function getTitle(): string
+    public function getSurveyId(): string
     {
-        return $this->title;
+        return $this->surveyId;
     }
 
     /**
      * @inheritDoc
      */
-    public function getOwnerId(): string
+    public function getStep(): int
     {
-        return $this->ownerId;
+        return $this->step;
     }
 
     /**
      * @inheritDoc
      */
-    public function getPages(): array
+    public function getBlocks(): array
     {
-        return $this->pages;
+        return $this->blocks;
     }
 
     /**

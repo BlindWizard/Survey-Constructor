@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Admin\Contracts\Reporitories;
+namespace App\Admin\Contracts\Repositories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Database\Models\Block;
@@ -9,7 +10,6 @@ use Throwable;
 
 interface BlockRepositoryContract
 {
-
     /**
      * @param string $blockId
      *
@@ -25,20 +25,20 @@ interface BlockRepositoryContract
     public function save(BlockContract $block): BlockContract;
 
     /**
-     * @param string $surveyId
+     * @param string $pageId
      *
      * @return BlockContract[]
      *
      * @throws BlockTypeException
      */
-    public function getSurveyBlocks(string $surveyId): array;
+    public function getSurveyBlocks(string $pageId): array;
 
     /**
-     * @param string $surveyId
+     * @param string $pageId
      *
      * @return BlockContract|null
      */
-    public function findLastBlock(string $surveyId): ?BlockContract;
+    public function findLastBlock(string $pageId): ?BlockContract;
 
     /**
      * @param string $blockId
@@ -49,7 +49,9 @@ interface BlockRepositoryContract
     public function setElementData(string $blockId, array $data): BlockContract;
 
     /**
-     * @param array $blockPosition
+     * @param int[] $blockPosition
+     *
+     * @throws Throwable
      */
     public function setElementsPositions(array $blockPosition): void;
 

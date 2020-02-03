@@ -43,14 +43,14 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_OPTIONS_LIST:
                 $dto = new OptionsList();
                 $dto->id = $model->getId();
-                $dto->surveyId = $model->getSurveyId();
+                $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
 
                 foreach ($model->getData()['options'] as $optionData) {
                     $option = new Option();
                     $option->id = $optionData['id'];
                     $option->text = $optionData['text'];
-                    $option->surveyId = $dto->surveyId;
+                    $option->pageId = $dto->pageId;
                     $option->position = $optionData['position'];
 
                     $dto->options[] = $option;
@@ -61,7 +61,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_OPTION:
                 $dto = new Option();
                 $dto->id = $model->getId();
-                $dto->surveyId = $model->getSurveyId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -70,7 +70,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_HEADER:
                 $dto = new Header();
                 $dto->id = $model->getId();
-                $dto->surveyId = $model->getSurveyId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -79,7 +79,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_TEXT:
                 $dto = new Text();
                 $dto->id = $model->getId();
-                $dto->surveyId = $model->getSurveyId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 

@@ -6,11 +6,14 @@ namespace App\Admin\Queries;
 use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\SurveyContract;
-use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\BlockWrapper;
+use App\Admin\DTO\PageObject;
 use App\Admin\DTO\SurveyObject;
+use App\Admin\Factories\BlockFactory;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FindSurveyByIdQuery implements Command
@@ -31,13 +34,13 @@ class FindSurveyByIdQuery implements Command
     public $surveyService;
 
     /** @var BlockRepositoryContract */
-    public $blockRepository;
+    public $blockFactory;
 
-    public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService, BlockRepositoryContract $blockRepository)
+    public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService, BlockFactory $blockFactory)
     {
         $this->surveyRepository = $surveyRepository;
         $this->surveyService = $surveyService;
-        $this->blockRepository = $blockRepository;
+        $this->blockFactory = $blockFactory;
     }
 
     /**
@@ -55,23 +58,33 @@ class FindSurveyByIdQuery implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $this->survey = new SurveyObject();
-        $this->survey->id = $survey->getId();
-        $this->survey->title = $survey->getTitle();
-        $this->survey->ownerId = $survey->getOwnerId();
-        $this->survey->createdAt = $survey->getCreatedAt();
-        $this->survey->updatedAt = $survey->getUpdatedAt();
+        $surveyObject = new SurveyObject();
+        $surveyObject->id = $survey->getId();
+        $surveyObject->title = $survey->getTitle();
+        $surveyObject->ownerId = $survey->getOwnerId();
+        $surveyObject->createdAt = $survey->getCreatedAt();
+        $surveyObject->updatedAt = $survey->getUpdatedAt();
 
-        $blocks = $this->blockRepository->getSurveyBlocks($survey->getId());
-        $this->survey->blocks = array_map(function (BlockContract $block) {
-            return new BlockWrapper($block);
-        }, $blocks);
+        foreach ($survey->getPages() as $page) {
+            $pageObject = new PageObject();
+            $pageObject->id = $page->getId();
+            $pageObject->step = $page->getStep();
+            $pageObject->surveyId = $page->getSurveyId();
+
+            $surveyObject->pages[] = $pageObject;
+
+            foreach ($page->getBlocks() as $block) {
+                $pageObject->blocks[] = $this->blockFactory->getDTO($block);
+            }
+        }
+
+        $this->survey = $surveyObject;
 
         return $this;
     }
 
     public function getResult(): SurveyContract
     {
-        return  $this->survey;
+        return $this->survey;
     }
 }

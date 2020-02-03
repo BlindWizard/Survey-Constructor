@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Database\Models;
 
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Active record model for Blocks table.
  *
  * @property        string         $id
- * @property        string         $survey_id
+ * @property        string         $page_id
  * @property        string         $type
  * @property        int            $position
  * @property        string         $created_at
@@ -20,9 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Block extends Model implements BlockContract
 {
-    public const ATTR_ID = 'id';
-    public const ATTR_SURVEY_ID = 'survey_id';
-    public const ATTR_TYPE = 'type';
+    public const ATTR_ID      = 'id';
+    public const ATTR_PAGE_ID = 'page_id';
+    public const ATTR_TYPE    = 'type';
     public const ATTR_POSITION = 'position';
     public const ATTR_CREATED_AT = 'created_at';
     public const ATTR_UPDATED_AT = 'updated_at';
@@ -40,17 +41,17 @@ class Block extends Model implements BlockContract
     /**
      * @return string
      */
-    public function getSurveyId(): string
+    public function getPageId(): string
     {
-        return $this->survey_id;
+        return $this->page_id;
     }
 
     /**
      * @inheritDoc
      */
-    public function setSurveyId(string $surveyId): void
+    public function setPageId(string $pageId): void
     {
-        $this->survey_id = $surveyId;
+        $this->page_id = $pageId;
     }
 
     /**
@@ -105,7 +106,7 @@ class Block extends Model implements BlockContract
 
     public function survey()
     {
-        return $this->hasOne(Survey::class, Survey::ATTR_ID, Block::ATTR_SURVEY_ID);
+        return $this->hasOne(Survey::class, Survey::ATTR_ID, Block::ATTR_PAGE_ID);
     }
     public const REL_SURVEY = 'survey';
 }

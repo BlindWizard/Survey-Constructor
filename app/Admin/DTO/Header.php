@@ -13,7 +13,7 @@ class Header implements BlockContract
     /** @var string */
     public $text;
     /** @var string */
-    public $surveyId;
+    public $pageId;
     /** @var int */
     public $position;
 
@@ -28,17 +28,17 @@ class Header implements BlockContract
     /**
      * @inheritDoc
      */
-    public function getSurveyId(): string
+    public function getPageId(): string
     {
-        return $this->surveyId;
+        return $this->pageId;
     }
 
     /**
      * @inheritDoc
      */
-    public function setSurveyId(string $surveyId): void
+    public function setPageId(string $pageId): void
     {
-        $this->surveyId = $surveyId;
+        $this->pageId = $pageId;
     }
 
     /**

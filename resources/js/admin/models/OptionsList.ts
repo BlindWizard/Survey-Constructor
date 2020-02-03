@@ -4,7 +4,6 @@ import {Option} from "./Option";
 
 export class OptionsList implements BlockContract {
 	public id: string;
-	public surveyId: string;
 	public position: number;
 	public options: Option[] = [];
 	public text: string;

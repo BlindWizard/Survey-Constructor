@@ -9,16 +9,16 @@ class AddElementRequest extends FormRequest
     public function rules()
     {
         return [
-            'surveyId' => 'required|uuid',
+            'pageId' => 'required|uuid',
             'blockId'  => 'required|uuid',
             'type'     => 'required',
             'position' => 'numeric|nullable',
         ];
     }
 
-    public function getId(): string
+    public function getPageId(): string
     {
-        return (string) $this->json('surveyId');
+        return (string) $this->json('pageId');
     }
 
     public function getBlockId(): string

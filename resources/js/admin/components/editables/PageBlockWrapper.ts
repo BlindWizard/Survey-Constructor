@@ -1,20 +1,20 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
-import {SurveyBlock} from "../controls/SurveyBlock";
-import {Survey} from "../../models/Survey";
+import {PageBlock} from "../controls/page-block.component";
 import {ComponentsResolver} from "../../services/ComponentsResolver";
+import {Page} from "../../models/Page";
 
 @Component({
 	template: `
-		<SurveyBlock :survey="survey" v-component-drop :resolver="resolver"/>
+		<PageBlock :page="page" v-component-drop :resolver="resolver"/>
 	`,
 	components: {
-		SurveyBlock
+		PageBlock
 	}
 })
-export class SurveyBlockWrapper extends Vue {
-	@Prop(Survey) readonly survey: Survey;
+export class PageBlockWrapper extends Vue {
+	@Prop(Page) readonly page: Page;
 
 	get resolver(): ComponentsResolver
 	{

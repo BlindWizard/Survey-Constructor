@@ -10,7 +10,7 @@ interface BlockServiceContract
 {
 
     /**
-     * @param string $surveyId
+     * @param string $pageId
      * @param string $blockId
      * @param string $type
      * @param int    $position
@@ -19,7 +19,7 @@ interface BlockServiceContract
      *
      * @throws Throwable
      */
-    public function addEmptyElement(string $surveyId, string $blockId, string $type, int $position): BlockContract;
+    public function addEmptyElement(string $pageId, string $blockId, string $type, int $position): BlockContract;
 
     /**
      * @param string $blockId

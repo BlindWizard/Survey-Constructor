@@ -1,9 +1,10 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Entities\BlockContract;
-use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\BlockData;
 use App\Admin\DTO\Header;
@@ -38,11 +39,11 @@ class BlockRepository implements BlockRepositoryContract
     {
         DB::beginTransaction();
         try {
-            $model            = new Block();
-            $model->id        = $element->getId();
-            $model->survey_id = $element->getSurveyId();
-            $model->position  = $element->getPosition();
-            $model->type      = $element->getType();
+            $model           = new Block();
+            $model->id       = $element->getId();
+            $model->page_id  = $element->getPageId();
+            $model->position = $element->getPosition();
+            $model->type     = $element->getType();
             $model->saveOrFail();
 
             $data = new BlockData();
@@ -64,9 +65,9 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
-    public function getSurveyBlocks(string $surveyId): array
+    public function getSurveyBlocks(string $pageId): array
     {
-        $models = Block::query()->where(Block::ATTR_SURVEY_ID, '=', $surveyId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
+        $models = Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
         $result = [];
         foreach ($models as $model) {
             $result[] = $this->factory->getDTO($model);
@@ -78,9 +79,9 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findLastBlock(string $surveyId): ?BlockContract
+    public function findLastBlock(string $pageId): ?BlockContract
     {
-        $block = Block::query()->where(Block::ATTR_SURVEY_ID, '=', $surveyId)->orderBy(Block::ATTR_POSITION, 'DESC')->first();/** @var BlockContract $block */
+        $block = Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION, 'DESC')->first();/** @var BlockContract $block */
 
         return $block;
     }

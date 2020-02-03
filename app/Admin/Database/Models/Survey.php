@@ -1,20 +1,25 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Database\Models;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\SurveyContract;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Active record model for Survey table.
  *
- * @property int    $id
+ * @property string $id
  * @property string $title
  * @property string $public
  * @property string $owner_id
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property-read Page[] $pages
  */
 class Survey extends Model implements SurveyContract
 {
@@ -53,10 +58,11 @@ class Survey extends Model implements SurveyContract
     /**
      * @return BlockContract[]
      */
-    public function getBlocks(): array
+    public function getPages(): array
     {
-        //@TODO-14.11.2019-Чучманский Aндрей
-        return [];
+        $pages = $this->pages; /** @var Collection $pages */
+
+        return $pages->all();
     }
 
     /**
@@ -64,7 +70,7 @@ class Survey extends Model implements SurveyContract
      */
     public function getCreatedAt(): string
     {
-        return $this->created_at;
+        return Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $this->created_at)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
     }
 
     /**
@@ -72,6 +78,12 @@ class Survey extends Model implements SurveyContract
      */
     public function getUpdatedAt(): string
     {
-        return $this->updated_at;
+        return Carbon::createFromFormat(Carbon::DEFAULT_TO_STRING_FORMAT, $this->updated_at)->format(Carbon::DEFAULT_TO_STRING_FORMAT);
     }
+
+    public function pages()
+    {
+        return $this->hasMany(Page::class, Page::ATTR_SURVEY_ID, static::ATTR_ID);
+    }
+    public const REL_PAGES = 'pages';
 }

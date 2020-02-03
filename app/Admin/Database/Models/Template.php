@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Database\Models;
 
@@ -8,10 +9,10 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Active record model for Template table.
  *
- * @property int         $id
+ * @property string      $id
  * @property string      $title
  * @property string|null $owner_id
- * @property string      $public
+ * @property bool        $public
  * @property string      $created_at
  * @property string      $updated_at
  */
@@ -63,5 +64,13 @@ class Template extends Model implements TemplateContract
     public function getUpdatedAt(): string
     {
         return $this->updated_at;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPages(): array
+    {
+        return [];//@TODO-31.01.2020-Чучманский Aндрей Implement
     }
 }

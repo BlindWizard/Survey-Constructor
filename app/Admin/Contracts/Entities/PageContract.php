@@ -3,7 +3,8 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Entities;
 
-interface SurveyContract {
+interface PageContract
+{
     /**
      * @return string
      */
@@ -12,17 +13,17 @@ interface SurveyContract {
     /**
      * @return string
      */
-    public function getTitle(): string;
+    public function getSurveyId(): string;
 
     /**
-     * @return string
+     * @return int
      */
-    public function getOwnerId(): string;
+    public function getStep(): int;
 
     /**
-     * @return PageContract[]
+     * @return BlockContract[]
      */
-    public function getPages(): array;
+    public function getBlocks(): array;
 
     /**
      * @return string

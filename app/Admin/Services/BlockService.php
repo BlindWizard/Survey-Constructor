@@ -5,7 +5,7 @@ namespace App\Admin\Services;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
-use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Database\Models\Block;
@@ -32,14 +32,14 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function addEmptyElement(string $surveyId, string $blockId, string $type, ?int $position): BlockContract
+    public function addEmptyElement(string $pageId, string $blockId, string $type, ?int $position): BlockContract
     {
         $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
-        $lastBlock = $this->blockRepository->findLastBlock($surveyId);
+        $lastBlock = $this->blockRepository->findLastBlock($pageId);
         $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() + 1 : 0);
 
-        $element->setSurveyId($surveyId);
+        $element->setPageId($pageId);
         $element->setPosition($lastBlockPosition);
 
         $element = $this->blockRepository->save($element);

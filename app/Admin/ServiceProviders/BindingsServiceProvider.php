@@ -6,7 +6,8 @@ namespace App\Admin\ServiceProviders;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
-use App\Admin\Contracts\Reporitories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
@@ -14,6 +15,7 @@ use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
 use App\Admin\Database\Repositories\BlockRepository;
+use App\Admin\Database\Repositories\PageRepository;
 use App\Admin\Database\Repositories\SurveyRepository;
 use App\Admin\Database\Repositories\TemplateRepository;
 use App\Admin\Factories\BlockFactory;
@@ -39,6 +41,7 @@ class BindingsServiceProvider extends ServiceProvider
         $this->app->singleton(TemplateRepositoryContract::class, TemplateRepository::class);
         $this->app->singleton(SurveyRepositoryContract::class, SurveyRepository::class);
         $this->app->singleton(BlockRepositoryContract::class, BlockRepository::class);
+        $this->app->singleton(PageRepositoryContract::class, PageRepository::class);
 
         // services
         $this->app->bind(TemplateServiceContract::class, TemplateService::class);

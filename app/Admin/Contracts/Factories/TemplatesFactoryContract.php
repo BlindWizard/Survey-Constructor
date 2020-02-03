@@ -18,18 +18,14 @@ interface TemplatesFactoryContract
      * @return TemplateObject
      *
      * @throws TemplateNotFoundException
+     * @throws \Throwable
      */
     public function getSystemTemplate(string $title): TemplateContract;
 
     /**
      * @return TemplateObject
+     *
+     * @throws \Throwable
      */
     public function getBlank(): TemplateContract;
-
-    /**
-     * @param TemplateContract $template
-     *
-     * @return BlockContract[]
-     */
-    public function getBlocks(TemplateContract $template): array;
 }

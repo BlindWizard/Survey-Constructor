@@ -12,9 +12,8 @@ interface SurveyFactoryContract
     /**
      * @param string           $ownerId
      * @param TemplateContract $template
-     * @param BlockContract[]  $blocks
      *
      * @return SurveyContract
      */
-    public function build(string $ownerId, TemplateContract $template, array $blocks): SurveyContract;
+    public function build(string $ownerId, TemplateContract $template): SurveyContract;
 }

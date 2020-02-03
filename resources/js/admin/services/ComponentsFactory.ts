@@ -44,7 +44,6 @@ export class ComponentsFactory
 			case BlockTypes.OPTIONS_LIST:
 				block = new OptionsList();
 				block.id = blockData.id;
-				block.surveyId = blockData.surveyId;
 				block.position = blockData.position;
 				block.options = [];
 				blockData.options.forEach((optionData: Object) => {

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
+use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 
 class TemplateObject implements TemplateContract
@@ -11,6 +12,8 @@ class TemplateObject implements TemplateContract
     public $id;
     /** @var string */
     public $title;
+    /** @var PageContract[] */
+    public $pages = [];
     /** @var bool */
     public $public;
     /** @var string */
@@ -66,5 +69,13 @@ class TemplateObject implements TemplateContract
     public function getUpdatedAt(): string
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPages(): array
+    {
+        return $this->pages;
     }
 }

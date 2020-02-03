@@ -32,17 +32,17 @@ class BlockWrapper implements BlockContract
     /**
      * @inheritDoc
      */
-    public function getSurveyId(): string
+    public function getPageId(): string
     {
-        return $this->data->getSurveyId();
+        return $this->data->getPageId();
     }
 
     /**
      * @inheritDoc
      */
-    public function setSurveyId(string $surveyId): void
+    public function setPageId(string $pageId): void
     {
-        $this->data->setSurveyId($surveyId);
+        $this->data->setPageId($pageId);
     }
 
     /**

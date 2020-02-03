@@ -3,11 +3,11 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Viewport} from "./Viewport";
 import {actions, getters} from "../stores/types";
-import {Survey} from "../models/Survey";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {ComponentsMenu} from "./ComponentsMenu";
-import {SurveyBlockWrapper} from "./editables/SurveyBlockWrapper";
+import {PageBlockWrapper} from "./editables/PageBlockWrapper";
 import {ScreensPager} from "./ScreensPager";
+import {Page} from "../models/Page";
 
 @Component({
 	template: `
@@ -16,8 +16,8 @@ import {ScreensPager} from "./ScreensPager";
                 <ComponentsMenu />
                 <div class="grid-y grid-padding-y medium-8">
 	                <ScreensPager/>
-	                <Viewport v-if="null !== survey">
-	                    <SurveyBlockWrapper :survey="survey" />
+	                <Viewport v-if="null !== page">
+	                    <PageBlockWrapper :page="page" />
 	                </Viewport>
                 </div>
             </div>
@@ -26,7 +26,7 @@ import {ScreensPager} from "./ScreensPager";
 	components: {
 		Viewport,
 		ComponentsMenu,
-		SurveyBlockWrapper,
+		PageBlockWrapper,
 		ScreensPager
 	}
 })
@@ -34,7 +34,7 @@ export class SurveyEdit extends Vue {
 	@Prop(String) readonly surveyId: string;
 
 	public mounted() {
-		if (null === this.survey) {
+		if (null === this.page) {
 			let request = new GetSurvey();
 			request.surveyId = this.surveyId;
 
@@ -42,7 +42,7 @@ export class SurveyEdit extends Vue {
 		}
 	}
 
-	get survey(): Survey|null {
-		return this.$store.getters[getters.SURVEY];
+	get page(): Page|null {
+		return this.$store.getters[getters.PAGE];
 	}
 }

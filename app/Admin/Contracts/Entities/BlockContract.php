@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types=1);
 
 namespace App\Admin\Contracts\Entities;
 
@@ -22,12 +22,12 @@ interface BlockContract
     /**
      * @return string
      */
-    public function getSurveyId(): string;
+    public function getPageId(): string;
 
     /**
-     * @param string $surveyId
+     * @param string $pageId
      */
-    public function setSurveyId(string $surveyId): void;
+    public function setPageId(string $pageId): void;
 
     /**
      * @return string

@@ -13,7 +13,7 @@ class OptionsList implements BlockContract
     /** @var string */
     public $text;
     /** @var string */
-    public $surveyId;
+    public $pageId;
     /** @var int */
     public $position;
     /** @var Option[] */
@@ -40,19 +40,19 @@ class OptionsList implements BlockContract
     /**
      * @return string
      */
-    public function getSurveyId(): string
+    public function getPageId(): string
     {
-        return $this->surveyId;
+        return $this->pageId;
     }
 
     /**
      * @inheritDoc
      */
-    public function setSurveyId(string $surveyId): void
+    public function setPageId(string $pageId): void
     {
-        $this->surveyId = $surveyId;
+        $this->pageId = $pageId;
         foreach ($this->options as $option) {
-            $option->setSurveyId($surveyId);
+            $option->setPageId($pageId);
         }
     }
 

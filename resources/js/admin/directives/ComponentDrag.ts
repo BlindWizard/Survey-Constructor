@@ -85,7 +85,7 @@ const ComponentDrag: DirectiveOptions = {
 					let $store = (vnode.context as Vue).$store;
 
 					let request = new CreateElement();
-					request.surveyId = $store.getters[getters.SURVEY].id;
+					request.pageId = $store.getters[getters.PAGE].id;
 					request.type = dragElement.getType();
 					request.position = position;
 

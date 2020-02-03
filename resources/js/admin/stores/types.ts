@@ -6,6 +6,7 @@ export enum mutations
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
+	SET_ACTIVE_PAGE = 'setActivePage',
 	ADD_ELEMENT = 'addElement',
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
@@ -33,4 +34,5 @@ export enum getters
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
 	SURVEY = 'survey',
+	PAGE = 'page',
 }

@@ -16,6 +16,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {BlockApi} from "../api/block.api";
 import {ReorderElement} from "../api/requests/ReorderElement";
 import {SaveBlockData} from "../api/requests/SaveBlockData";
+import {Page} from "../models/Page";
 
 Vue.use(Vuex);
 
@@ -26,6 +27,7 @@ const store = new Vuex.Store({
 		locale: null as any,
 		defaultBlockData: [],
 		survey: null as any,
+		page: null as any,
 		surveys: null as any,
 		templates: null as any,
 	},
@@ -47,6 +49,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_ACTIVE_SURVEY](state, survey: Survey) {
 			state.survey = survey;
+		},
+		[mutations.SET_ACTIVE_PAGE](state, page: Page) {
+			state.page = page;
 		},
 		[mutations.ADD_ELEMENT](state, actionData: any) {
 			let blocks: BlockContract[] = state.survey.blocks;
@@ -133,7 +138,10 @@ const store = new Vuex.Store({
 			return id;
 		},
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
-			commit(mutations.SET_ACTIVE_SURVEY, await SurveyApi.getSurvey(request));
+			let survey: Survey = await SurveyApi.getSurvey(request);
+
+			commit(mutations.SET_ACTIVE_SURVEY, survey);
+			commit(mutations.SET_ACTIVE_PAGE, survey.pages[0]);
 		},
 		async [actions.ADD_ELEMENT]({commit, state}, request: CreateElement) {
 			if (null === state.survey) {
@@ -187,6 +195,9 @@ const store = new Vuex.Store({
 		},
 		[getters.SURVEY](state): Survey|null {
 			return state.survey;
+		},
+		[getters.PAGE](state):Page|null {
+			return state.page;
 		},
 		[getters.ELEMENT_DEFAULT_DATA](state): Function {
 			return (type: string): BlockContract => {

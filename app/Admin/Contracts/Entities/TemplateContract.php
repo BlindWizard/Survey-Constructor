@@ -14,7 +14,10 @@ interface TemplateContract {
      */
     public function getTitle(): string;
 
-
+    /**
+     * @return PageContract[]
+     */
+    public function getPages(): array;
     /**
      * @return string
      */

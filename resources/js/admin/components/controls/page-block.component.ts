@@ -1,7 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
-import {Survey} from "../../models/Survey";
 import {OptionsListBlock} from "./OptionsListBlock";
 import {OptionsListBlockWrapper} from "../editables/options-list/OptionsListBlockWrapper";
 import {ComponentsResolver} from "../../services/ComponentsResolver";
@@ -11,11 +10,12 @@ import {HeaderBlockWrapper} from "../editables/header/HeaderBlockWrapper";
 import {HeaderBlock} from "./HeaderBlock";
 import {TextBlock} from "./TextBlock";
 import {TextBlockWrapper} from "../editables/text/TextBlockWrapper";
+import {Page} from "../../models/Page";
 
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
-            <component :key="block.getId()" v-for="block in survey.blocks" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
+            <component :key="block.getId()" v-for="block in page.blocks" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
         </div>
 	`,
 	components: {
@@ -29,7 +29,7 @@ import {TextBlockWrapper} from "../editables/text/TextBlockWrapper";
 		TextBlockWrapper,
 	}
 })
-export class SurveyBlock extends Vue {
-	@Prop(Survey) readonly survey: Survey;
+export class PageBlock extends Vue {
+	@Prop(Page) readonly page: Page;
 	@Prop(ComponentsResolver) readonly  resolver: ComponentsResolver;
 }

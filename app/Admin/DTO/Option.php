@@ -13,7 +13,7 @@ class Option implements BlockContract
     /** @var string */
     public $text;
     /** @var string */
-    public $surveyId;
+    public $pageId;
     /** @var int */
     public $position;
 
@@ -36,9 +36,9 @@ class Option implements BlockContract
     /**
      * @inheritDoc
      */
-    public function setSurveyId(string $surveyId): void
+    public function setPageId(string $pageId): void
     {
-        $this->surveyId = $surveyId;
+        $this->pageId = $pageId;
     }
 
     /**
@@ -68,9 +68,9 @@ class Option implements BlockContract
     /**
      * @inheritDoc
      */
-    public function getSurveyId(): string
+    public function getPageId(): string
     {
-        return $this->surveyId;
+        return $this->pageId;
     }
 
     /**

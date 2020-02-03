@@ -41,7 +41,7 @@ class CreateElementCommand implements Command
 
     public function perform(): Command
     {
-        $survey = $this->surveyRepository->findById($this->request->getId());
+        $survey = $this->surveyRepository->findById($this->request->getPageId());
         if (null === $survey) {
             throw new NotFoundHttpException();
         }

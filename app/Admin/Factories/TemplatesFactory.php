@@ -5,8 +5,10 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
+use App\Admin\DTO\PageObject;
 use App\Admin\DTO\TemplateObject;
 use App\Admin\Exceptions\TemplateNotFoundException;
+use Ramsey\Uuid\Uuid;
 
 class TemplatesFactory implements TemplatesFactoryContract
 {
@@ -33,23 +35,14 @@ class TemplatesFactory implements TemplatesFactoryContract
         $blank->title = __('blank');
         $blank->public = true;
 
-        return $blank;
-    }
+        $mainPage = new PageObject();
+        $mainPage->id = Uuid::uuid4()->toString();
+        $mainPage->step = 0;
+        $mainPage->surveyId = $blank->id;
+        $mainPage->blocks = [];
 
-    /**
-     * @param TemplateContract $template
-     *
-     * @return BlockContract[]
-     *
-     * @throws TemplateNotFoundException
-     */
-    public function getBlocks(TemplateContract $template): array
-    {
-        switch ($template->getId()) {
-            case static::BLANK_UUID:
-                return  [];
-            default:
-                throw new TemplateNotFoundException();
-        }
+        $blank->pages[] = $mainPage;
+
+        return $blank;
     }
 }

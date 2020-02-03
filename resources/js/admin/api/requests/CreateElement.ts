@@ -1,5 +1,5 @@
 export class CreateElement {
-	surveyId: string;
+	pageId: string;
 	blockId: string;
 	type: string;
 	position: number|null;

@@ -62,6 +62,9 @@ class CreateSurveyCommand implements Command
         catch (TemplateNotFoundException $e) {
             $this->errors[] = __('Template not found');
         }
+        catch (\Throwable $e) {
+            $this->errors[] = $e->getMessage();
+        }
 
         return $this;
     }

@@ -9,6 +9,8 @@ import {BlockTypes} from "../contracts/BlockTypes";
 import {OptionsList} from "../models/OptionsList";
 import {Option} from "../models/Option";
 import {ComponentsFactory} from "../services/ComponentsFactory";
+import {PageContract} from "../contracts/PageContract";
+import {Page} from "../models/Page";
 
 export class SurveyApi
 {
@@ -94,14 +96,19 @@ export class SurveyApi
 				survey.createdAt = result.data.createdAt;
 				survey.updatedAt = result.data.updatedAt;
 
-				let blocks: BlockContract[] = [];
-				result.data.blocks.forEach((wrapper: any) => {
-					let blockData: BlockWrapper = wrapper as BlockWrapper;
+				result.data.pages.forEach((pageData: any) => {
+					let page = new Page();
+					page.id = pageData.id;
+					page.step = pageData.step;
+					page.createdAt = pageData.createdAt;
+					page.updatedAt = pageData.updatedAt;
+					survey.pages.push(page);
 
-					blocks.push(ComponentsFactory.createElementFromData(blockData.type, blockData.data));
+					pageData.blocks.forEach((wrapper: any) => {
+						let blockData: BlockWrapper = wrapper as BlockWrapper;
+						page.blocks.push(ComponentsFactory.createElementFromData(blockData.type, blockData.data));
+					});
 				});
-
-				survey.blocks = blocks;
 
 				return survey;
 			});

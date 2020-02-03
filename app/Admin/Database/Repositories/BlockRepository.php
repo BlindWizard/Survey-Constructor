@@ -65,7 +65,7 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
-    public function getSurveyBlocks(string $pageId): array
+    public function getPageBlocks(string $pageId): array
     {
         $models = Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
         $result = [];

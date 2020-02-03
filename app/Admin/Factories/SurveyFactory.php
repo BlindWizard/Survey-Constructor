@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Admin\Factories;
 
-use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
@@ -19,6 +18,7 @@ class SurveyFactory implements SurveyFactoryContract
      * @param TemplateContract $template
      *
      * @return SurveyContract
+     *
      * @throws \Exception
      */
     public function build(string $ownerId, TemplateContract $template): SurveyContract

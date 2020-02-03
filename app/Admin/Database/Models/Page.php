@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Database\Models;
 use App\Admin\Contracts\Entities\PageContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Collection;
 
 /**
  * Active record model for Pages table.
@@ -13,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property int    $step
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property-read Block[] $blocks
  */
 class Page extends Model implements PageContract
 {
@@ -53,8 +56,9 @@ class Page extends Model implements PageContract
      */
     public function getBlocks(): array
     {
-        // TODO: Implement getBlocks() method.
-        return [];
+        $blocks = $this->blocks; /** @var Collection $blocks */
+
+        return $blocks->all();
     }
 
     /**
@@ -72,4 +76,10 @@ class Page extends Model implements PageContract
     {
         return $this->updated_at;
     }
+
+    public function blocks()
+    {
+        return $this->hasMany(Block::class, Block::ATTR_PAGE_ID, static::ATTR_ID);
+    }
+    public const REL_BLOCKS = 'blocks';
 }

@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Admin\Queries;
 
 use App\Admin\Contracts\Command;
-use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
@@ -13,7 +12,6 @@ use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\PageObject;
 use App\Admin\DTO\SurveyObject;
 use App\Admin\Factories\BlockFactory;
-use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FindSurveyByIdQuery implements Command
@@ -74,7 +72,7 @@ class FindSurveyByIdQuery implements Command
             $surveyObject->pages[] = $pageObject;
 
             foreach ($page->getBlocks() as $block) {
-                $pageObject->blocks[] = $this->blockFactory->getDTO($block);
+                $pageObject->blocks[] = new BlockWrapper($this->blockFactory->getDTO($block));
             }
         }
 

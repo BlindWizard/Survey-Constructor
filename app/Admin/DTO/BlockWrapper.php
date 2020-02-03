@@ -5,6 +5,7 @@ namespace App\Admin\DTO;
 
 use App\Admin\Contracts\Entities\BlockContract;
 
+//@TODO-04.02.2020-Чучманский Aндрей Remove entity
 class BlockWrapper implements BlockContract
 {
     /** @var BlockContract */

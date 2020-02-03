@@ -28,11 +28,4 @@ interface SurveyRepositoryContract
      * @return SurveyContract[]
      */
     public function getAvailableSurveys(string $ownerId): array;
-
-    /**
-     * @param string $block
-     *
-     * @return SurveyContract
-     */
-    public function getSurveyByBlockId(string $block): ?SurveyContract;
 }

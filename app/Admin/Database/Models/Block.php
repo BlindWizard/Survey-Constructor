@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property        string         $updated_at
  *
  * @property-read   BlockData|null $data
- * @property-read   Survey|null    $survey
+ * @property-read   Page|null      $page
  */
 class Block extends Model implements BlockContract
 {
@@ -104,9 +104,9 @@ class Block extends Model implements BlockContract
     }
     public const REL_DATA = 'data';
 
-    public function survey()
+    public function page()
     {
-        return $this->hasOne(Survey::class, Survey::ATTR_ID, Block::ATTR_PAGE_ID);
+        return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PAGE_ID);
     }
-    public const REL_SURVEY = 'survey';
+    public const REL_PAGE = 'page';
 }

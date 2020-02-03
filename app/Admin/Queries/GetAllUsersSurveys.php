@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Queries;
 
 use App\Admin\Contracts\Command;
-use App\Admin\Contracts\Entities\SurveyContract;
+use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 
 class GetAllUsersSurveys implements Command
@@ -12,7 +12,7 @@ class GetAllUsersSurveys implements Command
     /** @var string */
     public $userId;
 
-    /** @var SurveyContract[] */
+    /** @var PageContract[] */
     public $surveys;
 
     /** @var SurveyServiceContract */

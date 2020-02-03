@@ -5,7 +5,7 @@ import Vue from "vue";
 	template: `
         <div :class="bem('viewport').classes()">
             <div :class="bem('viewport').el('inner').classes()">
-                <slot />
+                <slot/>
             </div>
         </div>
 	`,

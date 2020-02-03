@@ -31,7 +31,7 @@ interface BlockRepositoryContract
      *
      * @throws BlockTypeException
      */
-    public function getSurveyBlocks(string $pageId): array;
+    public function getPageBlocks(string $pageId): array;
 
     /**
      * @param string $pageId

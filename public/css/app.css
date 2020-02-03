@@ -12039,7 +12039,7 @@ html.is-reveal-open body {
 }
 
 .viewport__inner {
-  padding: 0 0.9375rem;
+  padding: 0.9375rem;
 }
 
 .components-menu {
@@ -12089,7 +12089,6 @@ html.is-reveal-open body {
 }
 
 .screens-pager {
-  background-color: #e6e6e6;
   padding: 0.9375rem;
   text-align: center;
 }

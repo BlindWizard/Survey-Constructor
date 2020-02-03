@@ -6,26 +6,26 @@ namespace App\Admin\Services;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Database\Models\Block;
-use Throwable;
 
 class BlockService implements BlockServiceContract
 {
     /** @var BlockFactoryContract */
     protected $blockFactory;
 
-    /** @var SurveyRepositoryContract */
-    protected $surveyRepository;
+    /** @var PageRepositoryContract */
+    protected $pageRepository;
 
     /** @var BlockRepositoryContract */
     protected $blockRepository;
 
-    public function __construct(BlockFactoryContract $blockFactory, SurveyRepositoryContract $surveyRepository, BlockRepositoryContract $blockRepository)
+    public function __construct(BlockFactoryContract $blockFactory, PageRepositoryContract $pageRepository, BlockRepositoryContract $blockRepository)
     {
-        $this->blockFactory = $blockFactory;
-        $this->surveyRepository = $surveyRepository;
+        $this->blockFactory    = $blockFactory;
+        $this->pageRepository  = $pageRepository;
         $this->blockRepository = $blockRepository;
     }
 
@@ -56,9 +56,9 @@ class BlockService implements BlockServiceContract
      */
     public function reorderElement(string $blockId, int $position): BlockContract
     {
-        $survey = $this->surveyRepository->getSurveyByBlockId($blockId);
+        $page = $this->pageRepository->getPageByBlockId($blockId);
         $reorderBlock = $this->blockRepository->findById($blockId);
-        $blocks = $this->blockRepository->getSurveyBlocks($survey->getId());
+        $blocks = $this->blockRepository->getPageBlocks($page->getId());
 
         $positions = array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION);
         array_splice($positions, $reorderBlock->getPosition(), 1);

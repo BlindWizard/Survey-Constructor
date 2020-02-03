@@ -54,18 +54,18 @@ const store = new Vuex.Store({
 			state.page = page;
 		},
 		[mutations.ADD_ELEMENT](state, actionData: any) {
-			let blocks: BlockContract[] = state.survey.blocks;
+			let blocks: BlockContract[] = state.page.blocks;
 			blocks.splice(actionData.position, 0, actionData.block);
 
 			for (let i = 0; i < blocks.length; i++) {
 				blocks[i].setPosition(i);
 			}
 
-			Vue.set(state.survey, 'blocks', blocks);
+			Vue.set(state.page, 'blocks', blocks);
 		},
 		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
 			let targetBlock: BlockContract | null = null;
-			let blocks: BlockContract[] = state.survey.blocks;
+			let blocks: BlockContract[] = state.page.blocks;
 			for (let i = 0; i < blocks.length; i++) {
 				if (blocks[i].getId() === request.blockId) {
 					targetBlock = blocks[i];
@@ -85,11 +85,11 @@ const store = new Vuex.Store({
 				blocks[i].setPosition(i);
 			}
 
-			Vue.set(state.survey, 'blocks', blocks);
+			Vue.set(state.page, 'blocks', blocks);
 		},
 		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
 			let targetBlock: BlockContract | null = null;
-			let blocks: BlockContract[] = state.survey.blocks;
+			let blocks: BlockContract[] = state.page.blocks;
 			for (let i = 0; i < blocks.length; i++) {
 				if (blocks[i].getId() === request.blockId) {
 					targetBlock = blocks[i];
@@ -102,14 +102,14 @@ const store = new Vuex.Store({
 			}
 
 			targetBlock.setData(request.data);
-			Vue.set(state.survey, 'blocks', blocks);
+			Vue.set(state.page, 'blocks', blocks);
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
-			let blocks: BlockContract[] = state.survey.blocks;
+			let blocks: BlockContract[] = state.page.blocks;
 			for (let i = 0; i < blocks.length; i++) {
 				if (blocks[i].getId() === blockId) {
 					blocks.splice(i, 1);
-					Vue.set(state.survey, 'blocks', blocks);
+					Vue.set(state.page, 'blocks', blocks);
 					return;
 				}
 			}

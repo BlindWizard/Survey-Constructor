@@ -88,18 +88,4 @@ class SurveyRepository implements SurveyRepositoryContract
 
         return $surveys;
     }
-
-    /**
-     * @inheritDoc
-     */
-    public function getSurveyByBlockId(string $blockId): ?SurveyContract
-    {
-        $block = Block::query()
-            ->with(Block::REL_SURVEY)
-            ->where(Block::ATTR_ID, '=', $blockId)
-            ->get()
-            ->first();/** @var Block $block */
-
-        return $block->survey;
-    }
 }

@@ -79,7 +79,7 @@ class Page extends Model implements PageContract
 
     public function blocks()
     {
-        return $this->hasMany(Block::class, Block::ATTR_PAGE_ID, static::ATTR_ID);
+        return $this->hasMany(Block::class, Block::ATTR_PAGE_ID, static::ATTR_ID)->orderBy(Block::ATTR_POSITION);
     }
     public const REL_BLOCKS = 'blocks';
 }

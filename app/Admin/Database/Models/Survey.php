@@ -83,7 +83,7 @@ class Survey extends Model implements SurveyContract
 
     public function pages()
     {
-        return $this->hasMany(Page::class, Page::ATTR_SURVEY_ID, static::ATTR_ID);
+        return $this->hasMany(Page::class, Page::ATTR_SURVEY_ID, static::ATTR_ID)->orderBy(Page::ATTR_STEP);
     }
     public const REL_PAGES = 'pages';
 }

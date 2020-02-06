@@ -60,8 +60,8 @@ class BlockService implements BlockServiceContract
         $reorderBlock = $this->blockRepository->findById($blockId);
         $blocks = $this->blockRepository->getPageBlocks($page->getId());
 
-        $positions = array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION);
-        array_splice($positions, $reorderBlock->getPosition(), 1);
+        $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+        array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
         array_splice($positions, $position, 0, $reorderBlock->getId());
 
         $this->blockRepository->setElementsPositions(array_flip($positions));

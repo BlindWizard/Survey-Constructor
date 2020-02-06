@@ -61,6 +61,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			dragElement.toggleSelect(false);
 			dragElement.$el.classList.add(bem('draggable').classes());
 			(dragElement.$el as HTMLElement).style.left = e.x + 'px';
 			(dragElement.$el as HTMLElement).style.top = e.y + 'px';

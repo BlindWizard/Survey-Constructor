@@ -30,7 +30,7 @@ class TemplateRepository implements TemplateRepositoryContract
      */
     public function findById(string $id): Template
     {
-        return Template::query()->find($id)->get()->first();
+        return Template::query()->find($id)->first();
     }
 
     /**

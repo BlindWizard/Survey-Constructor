@@ -11,6 +11,7 @@ export enum mutations
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	DELETE_ELEMENT = 'deleteElement',
+	ADD_PAGE = 'addPage',
 }
 
 export enum actions
@@ -24,6 +25,7 @@ export enum actions
 	REORDER_ELEMENT = 'reorderElement',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	DELETE_ELEMENT = 'deleteElement',
+	ADD_PAGE = 'addPage',
 }
 
 export enum getters
@@ -35,4 +37,5 @@ export enum getters
 	TEMPLATES = 'templates',
 	SURVEY = 'survey',
 	PAGE = 'page',
+	PAGES = 'pages',
 }

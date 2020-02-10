@@ -11,6 +11,7 @@ use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
+use App\Admin\Contracts\Services\PageServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Contracts\SettingsFactoryContract;
@@ -23,6 +24,7 @@ use App\Admin\Factories\SettingsFactory;
 use App\Admin\Factories\SurveyFactory;
 use App\Admin\Factories\TemplatesFactory;
 use App\Admin\Services\BlockService;
+use App\Admin\Services\PageService;
 use App\Admin\Services\SurveyService;
 use App\Admin\Services\TemplateService;
 use Illuminate\Support\ServiceProvider;
@@ -46,6 +48,7 @@ class BindingsServiceProvider extends ServiceProvider
         // services
         $this->app->bind(TemplateServiceContract::class, TemplateService::class);
         $this->app->bind(SurveyServiceContract::class, SurveyService::class);
+        $this->app->bind(PageServiceContract::class, PageService::class);
         $this->app->bind(BlockServiceContract::class, BlockService::class);
     }
 }

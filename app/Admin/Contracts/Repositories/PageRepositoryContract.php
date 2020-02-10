@@ -15,9 +15,26 @@ interface PageRepositoryContract
     public function findById(string $id): ?PageContract;
 
     /**
+     * @param string $surveyId
+     * @param int    $step
+     *
+     * @return PageContract
+     *
+     * @throws \Throwable
+     */
+    public function addPage(string $surveyId, int $step): PageContract;
+
+    /**
      * @param string $block
      *
      * @return PageContract
      */
     public function getPageByBlockId(string $block): ?PageContract;
+
+    /**
+     * @param string $surveyId
+     *
+     * @return PageContract
+     */
+    public function getLastPage(string $surveyId): PageContract;
 }

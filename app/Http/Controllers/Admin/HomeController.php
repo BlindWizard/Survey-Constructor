@@ -21,6 +21,7 @@ class HomeController extends Controller
 
     /**
      * @return Renderable
+     * @throws \Throwable
      */
     public function index()
     {

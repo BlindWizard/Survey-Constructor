@@ -17,6 +17,7 @@ import {BlockApi} from "../api/block.api";
 import {ReorderElement} from "../api/requests/ReorderElement";
 import {SaveBlockData} from "../api/requests/SaveBlockData";
 import {Page} from "../models/Page";
+import {PageApi} from "../api/page.api";
 
 Vue.use(Vuex);
 
@@ -115,6 +116,12 @@ const store = new Vuex.Store({
 			}
 
 			throw new Error('Wrong block id');
+		},
+		[mutations.ADD_PAGE](state, page: Page) {
+			let pages: Page[] = state.survey.pages;
+			pages.push(page);
+
+			Vue.set(state.survey, 'pages', pages);
 		}
 	},
 	actions: {
@@ -178,6 +185,10 @@ const store = new Vuex.Store({
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);
 			await BlockApi.deleteElement(blockId);
+		},
+		async [actions.ADD_PAGE]({commit, state}) {
+			let page = await PageApi.add(state.survey.id);
+			commit(mutations.ADD_PAGE, page);
 		}
 	},
 	getters: {
@@ -198,6 +209,9 @@ const store = new Vuex.Store({
 		},
 		[getters.PAGE](state):Page|null {
 			return state.page;
+		},
+		[getters.PAGES](state):Page[]|null {
+			return state.survey.pages;
 		},
 		[getters.ELEMENT_DEFAULT_DATA](state): Function {
 			return (type: string): BlockContract => {

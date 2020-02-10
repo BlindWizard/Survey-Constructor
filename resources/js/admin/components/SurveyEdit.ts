@@ -15,10 +15,10 @@ import {Page} from "../models/Page";
             <div class="grid-x grid-padding-x">
                 <ComponentsMenu />
                 <div class="grid-y grid-padding-y medium-10">
-	                <ScreensPager/>
-	                <Viewport v-if="null !== page">
-	                    <PageBlockWrapper :page="page" />
-	                </Viewport>
+                    <ScreensPager v-if="null !== page"/>
+                    <Viewport v-if="null !== page">
+                        <PageBlockWrapper :page="page" />
+                    </Viewport>
                 </div>
             </div>
         </div>

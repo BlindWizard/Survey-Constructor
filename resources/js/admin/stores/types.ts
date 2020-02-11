@@ -6,12 +6,13 @@ export enum mutations
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
-	SET_ACTIVE_PAGE = 'setActivePage',
 	ADD_ELEMENT = 'addElement',
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	DELETE_ELEMENT = 'deleteElement',
 	ADD_PAGE = 'addPage',
+	DELETE_PAGE = 'deletePage',
+	SET_ACTIVE_PAGE = 'setActivePage',
 }
 
 export enum actions
@@ -26,6 +27,8 @@ export enum actions
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	DELETE_ELEMENT = 'deleteElement',
 	ADD_PAGE = 'addPage',
+	DELETE_PAGE = 'deletePage',
+	SET_ACTIVE_PAGE = 'setActivePage',
 }
 
 export enum getters
@@ -35,7 +38,7 @@ export enum getters
 	ELEMENT_DEFAULT_DATA = 'elementDefaultData',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
-	SURVEY = 'survey',
-	PAGE = 'page',
+	SURVEY = 'activeSurvey',
+	CURRENT_PAGE = 'currentPage',
 	PAGES = 'pages',
 }

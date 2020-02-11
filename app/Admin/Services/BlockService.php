@@ -83,6 +83,11 @@ class BlockService implements BlockServiceContract
      */
     public function deleteElement(string $blockId): void
     {
+        $page = $this->pageRepository->getPageByBlockId($blockId);
         $this->blockRepository->deleteElement($blockId);
+
+        $blocks = $this->blockRepository->getPageBlocks($page->getId());
+        $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+        $this->blockRepository->setElementsPositions(array_flip($positions));
     }
 }

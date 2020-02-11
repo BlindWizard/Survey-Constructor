@@ -15,6 +15,7 @@ use Illuminate\Support\Collection;
  * @property string $created_at
  * @property string $updated_at
  *
+ * @property-read Survey  $survey
  * @property-read Block[] $blocks
  */
 class Page extends Model implements PageContract
@@ -76,6 +77,12 @@ class Page extends Model implements PageContract
     {
         return $this->updated_at;
     }
+
+    public function survey()
+    {
+        return $this->belongsTo(Survey::class, static::ATTR_SURVEY_ID, Survey::ATTR_ID);
+    }
+    public const REL_SURVEY = 'survey';
 
     public function blocks()
     {

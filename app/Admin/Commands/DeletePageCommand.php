@@ -7,13 +7,13 @@ use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Services\PageServiceContract;
 
-class AddPageCommand implements Command
+class DeletePageCommand implements Command
 {
     /** @var string */
     public $userId;
 
     /** @var string */
-    public $surveyId;
+    public $pageId;
 
     /** @var PageServiceContract */
     protected $pageService;
@@ -31,13 +31,13 @@ class AddPageCommand implements Command
 
     public function perform(): Command
     {
-        $this->page = $this->pageService->addPage($this->surveyId);
+        $this->page = $this->pageService->deletePage($this->pageId);
 
         return $this;
     }
 
-    public function getResult(): PageContract
+    public function getResult(): bool
     {
-        return $this->page;
+        return true;
     }
 }

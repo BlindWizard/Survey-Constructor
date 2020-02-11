@@ -8,16 +8,17 @@ import {ComponentsMenu} from "./ComponentsMenu";
 import {PageBlockWrapper} from "./editables/PageBlockWrapper";
 import {ScreensPager} from "./ScreensPager";
 import {Page} from "../models/Page";
+import {Survey} from "../models/Survey";
 
 @Component({
 	template: `
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
                 <ComponentsMenu />
-                <div class="grid-y grid-padding-y medium-10">
-                    <ScreensPager v-if="null !== page"/>
-                    <Viewport v-if="null !== page">
-                        <PageBlockWrapper :page="page" />
+                <div v-if="null !== survey" class="grid-y grid-padding-y medium-10">
+                    <ScreensPager/>
+                    <Viewport>
+                        <PageBlockWrapper v-if="null !== page" :page="page"/>
                     </Viewport>
                 </div>
             </div>
@@ -34,7 +35,7 @@ export class SurveyEdit extends Vue {
 	@Prop(String) readonly surveyId: string;
 
 	public mounted() {
-		if (null === this.page) {
+		if (null === this.survey) {
 			let request = new GetSurvey();
 			request.surveyId = this.surveyId;
 
@@ -42,7 +43,11 @@ export class SurveyEdit extends Vue {
 		}
 	}
 
+	get survey(): Survey|null {
+		return this.$store.getters[getters.SURVEY];
+	}
+
 	get page(): Page|null {
-		return this.$store.getters[getters.PAGE];
+		return this.$store.getters[getters.CURRENT_PAGE];
 	}
 }

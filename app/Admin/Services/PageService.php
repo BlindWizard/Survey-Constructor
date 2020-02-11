@@ -28,7 +28,7 @@ class PageService implements PageServiceContract
     {
         $lastPage = $this->pageRepository->getLastPage($surveyId);
 
-        $page = $this->pageRepository->addPage($surveyId, $lastPage->getStep() + 1);
+        $page = $this->pageRepository->addPage($surveyId, null === $lastPage ? 0 : $lastPage->getStep() + 1);
 
         $result = new PageObject();
         $result->id = $page->getId();
@@ -36,5 +36,13 @@ class PageService implements PageServiceContract
         $result->step = $page->getStep();
 
         return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deletePage(string $pageId): void
+    {
+        $this->pageRepository->deletePage($pageId);
     }
 }

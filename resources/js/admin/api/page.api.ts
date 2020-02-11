@@ -16,4 +16,9 @@ export class PageApi {
 				return page;
 			});
 	}
+
+	public static delete(pageId: string)
+	{
+		return axios.post('/admin/page/delete', {pageId});
+	}
 }

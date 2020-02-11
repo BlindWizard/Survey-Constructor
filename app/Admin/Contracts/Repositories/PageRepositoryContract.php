@@ -25,6 +25,11 @@ interface PageRepositoryContract
     public function addPage(string $surveyId, int $step): PageContract;
 
     /**
+     * @param string $pageId
+     */
+    public function deletePage(string $pageId): void;
+
+    /**
      * @param string $block
      *
      * @return PageContract
@@ -36,5 +41,5 @@ interface PageRepositoryContract
      *
      * @return PageContract
      */
-    public function getLastPage(string $surveyId): PageContract;
+    public function getLastPage(string $surveyId): ?PageContract;
 }

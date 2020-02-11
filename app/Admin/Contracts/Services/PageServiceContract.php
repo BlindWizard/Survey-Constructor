@@ -15,4 +15,9 @@ interface PageServiceContract
      * @throws \Throwable
      */
     public function addPage(string $surveyId): PageContract;
+
+    /**
+     * @param string $pageId
+     */
+    public function deletePage(string $pageId): void;
 }

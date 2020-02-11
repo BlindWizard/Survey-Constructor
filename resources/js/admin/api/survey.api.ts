@@ -102,11 +102,12 @@ export class SurveyApi
 					page.step = pageData.step;
 					page.createdAt = pageData.createdAt;
 					page.updatedAt = pageData.updatedAt;
-					survey.pages.push(page);
+					survey.pages[page.getId()] = page;
 
 					pageData.blocks.forEach((wrapper: any) => {
 						let blockData: BlockWrapper = wrapper as BlockWrapper;
-						page.blocks.push(ComponentsFactory.createElementFromData(blockData.type, blockData.data));
+						let block = ComponentsFactory.createElementFromData(blockData.type, blockData.data);
+						page.blocks[block.getId()] = block;
 					});
 				});
 

@@ -6,7 +6,9 @@ namespace App\Admin\Database\Repositories;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Database\Models\Block;
+use App\Admin\Database\Models\BlockData;
 use App\Admin\Database\Models\Page;
+use Illuminate\Support\Facades\DB;
 use Ramsey\Uuid\Uuid;
 
 class PageRepository implements PageRepositoryContract
@@ -38,7 +40,7 @@ class PageRepository implements PageRepositoryContract
     /**
      * @inheritDoc
      */
-    public function getLastPage(string $surveyId): PageContract
+    public function getLastPage(string $surveyId): ?PageContract
     {
         $page = Page::query()->where(Page::ATTR_SURVEY_ID, '=', $surveyId)->orderBy(Page::ATTR_STEP, 'DESC')->first();/** @var Page $page */
 
@@ -57,5 +59,33 @@ class PageRepository implements PageRepositoryContract
         $page->saveOrFail();
 
         return $page;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function deletePage(string $pageId): void
+    {
+        DB::beginTransaction();
+        try {
+            foreach (Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->get()->all() as $block) {/** @var Block $block */
+                BlockData::query()->find($block->getId())->delete();
+                $block->delete();
+            }
+
+            $page = Page::query()->find($pageId);
+            $page->delete();
+            foreach (array_values($page->survey->pages->all()) as $i => $page) {
+                $page->step = $i;
+                $page->saveOrFail();
+            }
+
+            DB::commit();
+        }
+        catch (\Throwable $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
     }
 }

@@ -11,11 +11,12 @@ import {HeaderBlock} from "./HeaderBlock";
 import {TextBlock} from "./TextBlock";
 import {TextBlockWrapper} from "../editables/text/TextBlockWrapper";
 import {Page} from "../../models/Page";
+import {PageContract} from "../../contracts/PageContract";
 
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
-            <component :key="block.getId()" v-for="block in page.blocks" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
+            <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
         </div>
 	`,
 	components: {
@@ -30,6 +31,6 @@ import {Page} from "../../models/Page";
 	}
 })
 export class PageBlock extends Vue {
-	@Prop(Page) readonly page: Page;
+	@Prop(Page) readonly page: PageContract;
 	@Prop(ComponentsResolver) readonly  resolver: ComponentsResolver;
 }

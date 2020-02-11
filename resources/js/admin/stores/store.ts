@@ -18,6 +18,7 @@ import {ReorderElement} from "../api/requests/ReorderElement";
 import {SaveBlockData} from "../api/requests/SaveBlockData";
 import {Page} from "../models/Page";
 import {PageApi} from "../api/page.api";
+import {PageContract} from "../contracts/PageContract";
 
 Vue.use(Vuex);
 
@@ -28,7 +29,7 @@ const store = new Vuex.Store({
 		locale: null as any,
 		defaultBlockData: [],
 		survey: null as any,
-		page: null as any,
+		pageId: null as any,
 		surveys: null as any,
 		templates: null as any,
 	},
@@ -51,32 +52,27 @@ const store = new Vuex.Store({
 		[mutations.SET_ACTIVE_SURVEY](state, survey: Survey) {
 			state.survey = survey;
 		},
-		[mutations.SET_ACTIVE_PAGE](state, page: Page) {
-			state.page = page;
+		[mutations.SET_ACTIVE_PAGE](state, pageId: string) {
+			state.pageId = pageId;
 		},
 		[mutations.ADD_ELEMENT](state, actionData: any) {
-			let blocks: BlockContract[] = state.page.blocks;
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let blocks: BlockContract[] = page.getBlocksInOrder();
 			blocks.splice(actionData.position, 0, actionData.block);
 
 			for (let i = 0; i < blocks.length; i++) {
 				blocks[i].setPosition(i);
 			}
 
-			Vue.set(state.page, 'blocks', blocks);
+			page.setBlocks(blocks);
+			pages[page.getId()] = page;
 		},
 		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
-			let targetBlock: BlockContract | null = null;
-			let blocks: BlockContract[] = state.page.blocks;
-			for (let i = 0; i < blocks.length; i++) {
-				if (blocks[i].getId() === request.blockId) {
-					targetBlock = blocks[i];
-					break;
-				}
-			}
-
-			if (null === targetBlock) {
-				throw new Error('Wrong block id');
-			}
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let targetBlock: BlockContract = page.getBlocks()[request.blockId];
+			let blocks: BlockContract[] = page.getBlocksInOrder();
 
 			let oldPosition = blocks.indexOf(targetBlock);
 			blocks.splice(oldPosition, 1);
@@ -86,42 +82,35 @@ const store = new Vuex.Store({
 				blocks[i].setPosition(i);
 			}
 
-			Vue.set(state.page, 'blocks', blocks);
+			page.setBlocks(blocks);
+			pages[page.getId()] = page;
 		},
 		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
-			let targetBlock: BlockContract | null = null;
-			let blocks: BlockContract[] = state.page.blocks;
-			for (let i = 0; i < blocks.length; i++) {
-				if (blocks[i].getId() === request.blockId) {
-					targetBlock = blocks[i];
-					break;
-				}
-			}
-
-			if (null === targetBlock) {
-				throw new Error('Wrong block id');
-			}
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let targetBlock: BlockContract = page.getBlocks()[request.blockId];
+			let blocks: BlockContract[] = page.getBlocksInOrder();
 
 			targetBlock.setData(request.data);
-			Vue.set(state.page, 'blocks', blocks);
+
+			page.setBlocks(blocks);
+			pages[page.getId()] = page;
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
-			let blocks: BlockContract[] = state.page.blocks;
-			for (let i = 0; i < blocks.length; i++) {
-				if (blocks[i].getId() === blockId) {
-					blocks.splice(i, 1);
-					Vue.set(state.page, 'blocks', blocks);
-					return;
-				}
-			}
-
-			throw new Error('Wrong block id');
+			let page: PageContract = state.survey.pages[state.pageId];
+			Vue.delete(page.getBlocks(), blockId);
 		},
-		[mutations.ADD_PAGE](state, page: Page) {
-			let pages: Page[] = state.survey.pages;
-			pages.push(page);
+		[mutations.ADD_PAGE](state, page: PageContract) {
+			let pages = state.survey.pages;
+			Vue.set(pages, page.getId(), page);
+		},
+		[mutations.DELETE_PAGE](state, pageId: string) {
+			Vue.delete(state.survey.pages, pageId);
 
-			Vue.set(state.survey, 'pages', pages);
+			let pageIds: string[] = Object.keys(state.survey.getPages());
+			pageIds.forEach((reorderPageId: string, key: number) => {
+				state.survey.getPages()[reorderPageId].setStep(key);
+			});
 		}
 	},
 	actions: {
@@ -148,7 +137,10 @@ const store = new Vuex.Store({
 			let survey: Survey = await SurveyApi.getSurvey(request);
 
 			commit(mutations.SET_ACTIVE_SURVEY, survey);
-			commit(mutations.SET_ACTIVE_PAGE, survey.pages[0]);
+			for (let pageId of Object.keys(survey.getPages())) {
+				commit(mutations.SET_ACTIVE_PAGE, pageId);
+				break;
+			}
 		},
 		async [actions.ADD_ELEMENT]({commit, state}, request: CreateElement) {
 			if (null === state.survey) {
@@ -188,7 +180,35 @@ const store = new Vuex.Store({
 		},
 		async [actions.ADD_PAGE]({commit, state}) {
 			let page = await PageApi.add(state.survey.id);
+			let select: boolean = (0 === state.survey.getPagesByStep().length);
+
 			commit(mutations.ADD_PAGE, page);
+
+			if (select) {
+				commit(mutations.SET_ACTIVE_PAGE, page.getId());
+			}
+		},
+		async [actions.DELETE_PAGE]({commit, state}, pageId: string) {
+			let pageIds: string[] = Object.keys(state.survey.getPages());
+			if (pageId === state.pageId && pageIds.length > 1) {
+				if (0 !== pageIds.indexOf(pageId)) {
+					commit(mutations.SET_ACTIVE_PAGE, pageIds[pageIds.indexOf(pageId) - 1])
+				}
+				else {
+					commit(mutations.SET_ACTIVE_PAGE, pageIds[pageIds.indexOf(pageId) + 1])
+				}
+			}
+
+			commit(mutations.DELETE_PAGE, pageId);
+
+			await PageApi.delete(pageId);
+		},
+		async [actions.SET_ACTIVE_PAGE]({commit, state}, pageId: string) {
+			if (-1 === Object.keys(state.survey.pages).indexOf(pageId)) {
+				throw new Error('Page not found');
+			}
+
+			commit(mutations.SET_ACTIVE_PAGE, pageId);
 		}
 	},
 	getters: {
@@ -207,11 +227,11 @@ const store = new Vuex.Store({
 		[getters.SURVEY](state): Survey|null {
 			return state.survey;
 		},
-		[getters.PAGE](state):Page|null {
-			return state.page;
+		[getters.CURRENT_PAGE](state): PageContract|null {
+			return state.survey.pages[state.pageId] || null;
 		},
-		[getters.PAGES](state):Page[]|null {
-			return state.survey.pages;
+		[getters.PAGES](state): PageContract[] {
+			return state.survey.getPagesByStep();
 		},
 		[getters.ELEMENT_DEFAULT_DATA](state): Function {
 			return (type: string): BlockContract => {

@@ -14,7 +14,10 @@ import {Survey} from "../models/Survey";
 	template: `
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
-                <ComponentsMenu />
+                <div class="grid-y grid-padding-y medium-2">
+                    <ComponentsMenu/>
+                    <a :href="'/run/' + surveyId"><button class="button rounded">Run</button></a>
+                </div>
                 <div v-if="null !== survey" class="grid-y grid-padding-y medium-10">
                     <ScreensPager/>
                     <Viewport>

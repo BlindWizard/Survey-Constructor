@@ -24,8 +24,20 @@ mix.webpackConfig({
         },
         extensions: ['.js', '.ts', '.vue']
     },
+    output: {
+        chunkFilename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'public'),
+        publicPath: '/'
+    },
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+    },
 });
 
 mix.js('resources/js/admin/app.ts', 'public/js/admin').version();
 mix.js('resources/js/auth/login.js', 'public/js/auth').version();
+mix.js('resources/js/client/loader.ts', 'public/js/client').version();
+
 mix.sass('resources/sass/app.scss', 'public/css').version();

@@ -13,7 +13,7 @@ import {BlockResizeFrame} from "../../BlockResizeFrame";
             <OptionBlock v-if="!editing" :block="block"/>
             <OptionBlockEdit v-if="editing" :block="blockData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onSave="saveData" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected"/>
+            <BlockResizeFrame v-if="selected && !editing"/>
         </div>
 	`,
 	components: {

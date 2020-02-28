@@ -3,7 +3,7 @@ import Vue from "vue";
 
 @Component({
 	template: `
-        <div :class="bem('components-menu').add('medium-2').classes()">
+        <div :class="bem('components-menu').classes()">
             <span :class="bem('components-menu').el('header').classes()">Elements</span>
             <ul :class="bem('vertical menu').classes()">
                 <li :class="bem('components-menu').el('item').classes()">

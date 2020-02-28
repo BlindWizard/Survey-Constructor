@@ -50,3 +50,7 @@ Route::group(['namespace' => 'Auth'], function () {
 
     Route::post('/logout', 'LoginController@logout')->name('logout');
 });
+
+Route::group(['namespace' => 'Api'], function () {
+    Route::get('/run/{id}', 'ApiController@run');
+});

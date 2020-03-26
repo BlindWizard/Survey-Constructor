@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const path = require('path');
 
 mix.webpackConfig({
     module: {
@@ -25,14 +26,10 @@ mix.webpackConfig({
         extensions: ['.js', '.ts', '.vue']
     },
     output: {
-        chunkFilename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'public'),
-        publicPath: '/'
-    },
-    optimization: {
-        splitChunks: {
-            chunks: 'all',
-        },
+        filename: '[name].js',
+        chunkFilename: 'bundles/[name].bundle.js',
+        publicPath: '/',
+        path: path.resolve(__dirname, 'public')
     },
 });
 

@@ -4,6 +4,6 @@
     <div id="app"></div>
     <script src="{{ mix('/js/client/loader.js') }}"></script>
     <script>
-        SurveyBoxLoader.init('app', '{{ $id }}');
+        SurveyBoxLoader.runSurvey('app', '{{ $id }}');
     </script>
 @endsection

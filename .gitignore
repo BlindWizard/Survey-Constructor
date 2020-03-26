@@ -4,6 +4,7 @@
 /public/css
 /public/js
 /public/images
+/public/bundles
 /public/mix-manifest.json
 /public/vendors~
 /storage/*.key

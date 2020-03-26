@@ -1,12 +1,18 @@
 class Loader {
-	public init(element: HTMLElement|string)
+	public runSurvey(element: HTMLElement|string)
 	{
+		let container: HTMLElement;
 		if (typeof element === 'string') {
-			element = document.getElementById(element) as HTMLElement;
+			container  = document.getElementById(element) as HTMLElement;
+		}
+		else {
+			container = element;
 		}
 
-		import('./app').then((client) => {
-			console.log(element, client);
+		import('./app').then(loaded => {
+			let app = loaded.client;
+			app.$mount();
+			container.appendChild(app.$el);
 		});
 	}
 }

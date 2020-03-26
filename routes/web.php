@@ -53,4 +53,5 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['namespace' => 'Api'], function () {
     Route::get('/run/{id}', 'ApiController@run');
+    Route::get('/api/survey/get/{id}', 'ApiController@getSurvey');
 });

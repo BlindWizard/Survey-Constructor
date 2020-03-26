@@ -1,10 +1,6 @@
 {
-    "/js/admin/app.js": "/js/admin/app.js?id=e91f34097ee4b028e66c",
-    "/css/app.css": "/css/app.css?id=739428e34097e9890311",
-    "/js/admin/app~/js/client/loader.bundle.js": "/js/admin/app~/js/client/loader.bundle.js?id=f6d015ef53471f2e01a4",
-    "/js/auth/login.js": "/js/auth/login.js?id=bf468f88a6dfd38d430a",
-    "/js/client/loader.js": "/js/client/loader.js?id=5bd0378aecd21a35b9e1",
-    "/vendors~/js/admin/app.bundle.js": "/vendors~/js/admin/app.bundle.js?id=c722aadda73e64e093db",
-    "/vendors~/js/admin/app~/js/auth/login~/js/client/loader.bundle.js": "/vendors~/js/admin/app~/js/auth/login~/js/client/loader.bundle.js?id=04abe72464aa36c1c5ed",
-    "/vendors~/js/admin/app~/js/client/loader.bundle.js": "/vendors~/js/admin/app~/js/client/loader.bundle.js?id=80f2b4de920ab70d0afc"
+    "/js/admin/app.js": "/js/admin/app.js?id=1080327ed1c3163108b6",
+    "/css/app.css": "/css/app.css?id=d41d8cd98f00b204e980",
+    "/js/auth/login.js": "/js/auth/login.js?id=0015cd55355bd82f398e",
+    "/js/client/loader.js": "/js/client/loader.js?id=39c7b191e59286b9dd07"
 }

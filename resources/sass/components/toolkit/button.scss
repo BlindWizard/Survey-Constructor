@@ -44,4 +44,12 @@
         vertical-align: top;
         display: inline-block;
     }
+
+    &.dark {
+        background-color: $dark;
+
+        &:hover {
+            background-color: #331f4c;
+        }
+    }
 }

@@ -19,7 +19,8 @@
             "node_modules/vue/types",
             "node_modules/vuex/types",
             "node_modules/vue-router/types",
-            "resources/typescript/types"
+            "resources/typescript/types",
+            "node_modules/foundation-sites/dist/js/foundation.d.ts"
         ],
         "lib": [
             "dom",

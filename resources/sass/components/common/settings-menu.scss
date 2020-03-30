@@ -1,0 +1,28 @@
+.settings-menu {
+    background-color: transparent !important;
+
+    & .submenu {
+        background-color: $dark;
+        border: none;
+    }
+
+    & a {
+        color: $white !important;
+        width: 100%;
+        text-align: left;
+
+
+        &:after {
+            border-color: $white transparent transparent !important;
+        }
+    }
+
+    & button {
+        width: 100%;
+        text-align: left;
+    }
+
+    .settings-link {
+        padding: 0 !important;
+    }
+}

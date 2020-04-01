@@ -6,6 +6,9 @@ use Illuminate\Database\Migrations\Migration;
 use App\Admin\Database\Models\Page;
 use App\Admin\Database\Models\Block;
 
+/**
+ * Create table for surveys pages.
+ */
 class CreatePages extends Migration
 {
     /**

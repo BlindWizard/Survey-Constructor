@@ -23,9 +23,9 @@ import {getters} from "../stores/types";
                                         <a href="#">Menu</a>
                                         <ul class="menu">
                                             <li>
-	                                            <a href="#" :class="bem('settings-link').classes()">
+                                                <router-link :to="{name: 'settings'}" :class="bem('settings-link').classes()">
                                                     <button :class="bem('button').add('dark').classes()">Settings</button>
-                                                </a>
+                                                </router-link>
                                             </li>
                                             <li>
                                                 <form action="/logout" method="post">

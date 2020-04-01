@@ -11,7 +11,7 @@ import {actions} from "../stores/types";
                     <div :class="bem('create-block').el('button').classes()">
                         <i :class="bem('create-block').el('icon').add('fi-plus').classes()" />
                     </div>
-                    <div :class="bem('create-block').el('label').is('down').classes()">new survey</div>
+                    <div :class="bem('create-block').el('label').is('down').classes()">New survey</div>
                 </div>
             </div>
         </div>

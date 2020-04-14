@@ -14,6 +14,7 @@ class CreateApiTokens extends Migration
     {
         Schema::create('api_tokens', function (Blueprint $table) {
             $table->uuid(ApiToken::ATTR_ID)->primary()->unique()->default(DB::raw('uuid_generate_v4()'));
+            $table->uuid(ApiToken::ATTR_USER_ID);
             $table->string(ApiToken::ATTR_NAME);
             $table->string(ApiToken::ATTR_VALUE);
             $table->timestamp(ApiToken::ATTR_CREATED_AT)->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));

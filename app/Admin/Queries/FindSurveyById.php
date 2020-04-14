@@ -14,7 +14,7 @@ use App\Admin\DTO\SurveyObject;
 use App\Admin\Factories\BlockFactory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FindSurveyByIdQuery implements Command
+class FindSurveyById implements Command
 {
     /** @var string */
     public $surveyId;

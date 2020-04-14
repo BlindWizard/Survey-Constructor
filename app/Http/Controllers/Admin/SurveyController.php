@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Admin\Commands\CreateElementCommand;
 use App\Admin\Commands\CreateSurveyCommand;
 use App\Admin\Contracts\SettingsFactoryContract;
-use App\Admin\Queries\FindSurveyByIdQuery;
+use App\Admin\Queries\FindSurveyById;
 use App\Admin\Queries\GetAllUsersSurveys;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
@@ -24,12 +24,12 @@ class SurveyController extends Controller
     }
 
     /**
-     * @param string              $id
-     * @param FindSurveyByIdQuery $query
+     * @param string         $id
+     * @param FindSurveyById $query
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(string $id, FindSurveyByIdQuery $query)
+    public function index(string $id, FindSurveyById $query)
     {
         $query->surveyId = $id;
         $query->userId = Auth::user()->getAuthIdentifier();
@@ -60,7 +60,7 @@ class SurveyController extends Controller
         return response()->json($response);
     }
 
-    public function get(string $id, FindSurveyByIdQuery $query)
+    public function get(string $id, FindSurveyById $query)
     {
         $query->surveyId = $id;
         $query->userId = Auth::user()->getAuthIdentifier();

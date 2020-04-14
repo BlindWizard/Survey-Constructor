@@ -26,6 +26,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('/admin/block/deleteElement', 'BlockController@deleteElement');
 
     Route::get('/admin/settings', 'SettingsController@index');
+    Route::get('/admin/settings/getAvailableTokens', 'SettingsController@getAvailableTokens');
+    Route::post('/admin/settings/addToken', 'SettingsController@addToken');
+    Route::post('/admin/settings/deleteToken', 'SettingsController@deleteToken');
 
     Route::get('/admin/{any}', function () {
         return redirect('/admin');

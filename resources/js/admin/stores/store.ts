@@ -16,9 +16,12 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {BlockApi} from "../api/block.api";
 import {ReorderElement} from "../api/requests/ReorderElement";
 import {SaveBlockData} from "../api/requests/SaveBlockData";
-import {Page} from "../models/Page";
 import {PageApi} from "../api/page.api";
 import {PageContract} from "../contracts/PageContract";
+import {ApiToken} from "../models/ApiToken";
+import {SettingsApi} from "../api/settings.api";
+import {CreateToken} from "../api/requests/CreateToken";
+import {DeleteToken} from "../api/requests/DeleteToken";
 
 Vue.use(Vuex);
 
@@ -32,6 +35,7 @@ const store = new Vuex.Store({
 		pageId: null as any,
 		surveys: null as any,
 		templates: null as any,
+		tokens: null as any,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -111,6 +115,12 @@ const store = new Vuex.Store({
 			pageIds.forEach((reorderPageId: string, key: number) => {
 				state.survey.getPages()[reorderPageId].setStep(key);
 			});
+		},
+		[mutations.SET_TOKENS](state, tokens: ApiToken[]) {
+			state.tokens = tokens;
+		},
+		[mutations.ADD_TOKEN](state, token: ApiToken) {
+			state.tokens.push(token);
 		}
 	},
 	actions: {
@@ -209,7 +219,23 @@ const store = new Vuex.Store({
 			}
 
 			commit(mutations.SET_ACTIVE_PAGE, pageId);
-		}
+		},
+		async [actions.LOAD_TOKENS]({commit}) {
+			let tokens: ApiToken[] = await SettingsApi.getTokens();
+			commit(mutations.SET_TOKENS, tokens);
+		},
+		async [actions.ADD_TOKEN]({commit, state}, request: CreateToken) {
+			let token:ApiToken = await SettingsApi.addToken(request);
+
+			commit(mutations.ADD_TOKEN, token);
+		},
+		async [actions.DELETE_TOKEN]({commit, state}, request: DeleteToken) {
+			await SettingsApi.deleteToken(request);
+			let tokens: ApiToken[] = state.tokens;
+			tokens = tokens.filter(token => token.id !== request.id);
+
+			commit(mutations.SET_TOKENS, tokens);
+		},
 	},
 	getters: {
 		[getters.CSRF](state): string {
@@ -246,6 +272,9 @@ const store = new Vuex.Store({
 
 				return state.defaultBlockData[type] as BlockContract;
 			};
+		},
+		[getters.TOKENS](state): ApiToken[] {
+			return state.tokens;
 		},
 	}
 });

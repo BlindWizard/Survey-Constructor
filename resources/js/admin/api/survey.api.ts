@@ -3,13 +3,8 @@ import {CreateSurvey} from "./requests/CreateSurvey";
 import {AjaxHelper} from "../contracts/AjaxHelper";
 import {Survey} from "../models/Survey";
 import {GetSurvey} from "./requests/GetSurvey";
-import {BlockContract} from "../contracts/BlockContract";
 import {BlockWrapper} from "../models/BlockWrapper";
-import {BlockTypes} from "../contracts/BlockTypes";
-import {OptionsList} from "../models/OptionsList";
-import {Option} from "../models/Option";
 import {ComponentsFactory} from "../services/ComponentsFactory";
-import {PageContract} from "../contracts/PageContract";
 import {Page} from "../models/Page";
 
 export class SurveyApi

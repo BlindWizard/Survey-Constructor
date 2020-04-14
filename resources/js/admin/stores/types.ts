@@ -13,6 +13,8 @@ export enum mutations
 	ADD_PAGE = 'addPage',
 	DELETE_PAGE = 'deletePage',
 	SET_ACTIVE_PAGE = 'setActivePage',
+	ADD_TOKEN = 'addToken',
+	SET_TOKENS = 'setTokens',
 }
 
 export enum actions
@@ -29,6 +31,9 @@ export enum actions
 	ADD_PAGE = 'addPage',
 	DELETE_PAGE = 'deletePage',
 	SET_ACTIVE_PAGE = 'setActivePage',
+	LOAD_TOKENS = 'loadTokens',
+	ADD_TOKEN = 'addToken',
+	DELETE_TOKEN = 'deleteToken',
 }
 
 export enum getters
@@ -41,4 +46,5 @@ export enum getters
 	SURVEY = 'activeSurvey',
 	CURRENT_PAGE = 'currentPage',
 	PAGES = 'pages',
+	TOKENS = 'tokens',
 }

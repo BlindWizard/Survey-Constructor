@@ -36,7 +36,7 @@ class AddPageCommand implements Command
 
     public function perform(): Command
     {
-        if (false === $this->surveyService->canOperate($this->surveyId, $this->userId)) {
+        if (false === $this->surveyService->canOperateById($this->surveyId, $this->userId)) {
             throw new AccessDeniedHttpException();
         }
 

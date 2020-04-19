@@ -12194,6 +12194,20 @@ html.is-reveal-open body {
   display: none;
 }
 
+.screens-pager__inner li {
+  position: relative;
+}
+
+.screens-pager__inner li:hover .screens-pager__delete {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 100%;
+  background-color: #ed0672;
+  z-index: 1;
+}
+
 .screens-pager .pagination-previous a::before,
 .screens-pager .pagination-next a::after {
   margin: 0;

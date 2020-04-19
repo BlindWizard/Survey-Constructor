@@ -11957,11 +11957,28 @@ html.is-reveal-open body {
 }
 
 .app {
-  box-shadow: 0 10px 20px #cacaca;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 
 .app__wrapper {
   margin-top: 1rem;
+}
+
+.app__wrapper::after {
+  content: " ";
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fd5b15;
+}
+
+@media (min-width: 1024px) {
+  .app__wrapper::after {
+    height: 137px;
+  }
 }
 
 .top-menu {
@@ -12196,6 +12213,12 @@ html.is-reveal-open body {
 
 .survey-block {
   background-color: #fefefe;
+}
+
+.survey-block__footer {
+  border-top: 1px solid #cacaca;
+  text-align: center;
+  padding: 0.9375rem;
 }
 
 .options-list-wrapper {

@@ -8,7 +8,9 @@ import {GetSurvey} from "../../admin/api/requests/GetSurvey";
 
 @Component({
 	template: `
-        <PageBlock v-if="null !== page" :page="page" :resolver="resolver"/>
+        <div>
+            <PageBlock v-if="null !== page" :page="page" :resolver="resolver" />
+        </div>
 	`,
 	components: {
 		PageBlock,

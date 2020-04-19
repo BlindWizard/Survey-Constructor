@@ -8,11 +8,13 @@ import {TextBlock} from "../../admin/components/controls/TextBlock";
 import {Page} from "../../admin/models/Page";
 import {PageContract} from "../../admin/contracts/PageContract";
 import {ComponentsResolver} from "../../admin/services/ComponentsResolver";
+import {ScreensPager} from "./ScreensPager";
 
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
             <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
+            <ScreensPager />
         </div>
 	`,
 	components: {
@@ -20,6 +22,7 @@ import {ComponentsResolver} from "../../admin/services/ComponentsResolver";
 		OptionBlock,
 		HeaderBlock,
 		TextBlock,
+		ScreensPager,
 	}
 })
 export class PageBlock extends Vue {

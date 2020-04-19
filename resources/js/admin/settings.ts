@@ -7,6 +7,7 @@ import {ComponentsFactory} from "./services/ComponentsFactory";
 
 export interface Settings {
 	csrf: string;
+	token: string|null;
 	locale: Locale;
 	defaultBlockData: BlockContract[];
 }
@@ -26,6 +27,7 @@ let defaultBlockData: BlockContract[] = [];
 
 export const settings: Settings = {
 	csrf: data.csrf,
+	token: data.token,
 	locale: data.locale,
 	defaultBlockData: defaultBlockData,
 };

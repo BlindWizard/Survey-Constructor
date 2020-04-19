@@ -1,0 +1,17 @@
+.app-page {
+    background-color: $light-gray;
+    height: 100%;
+
+    &__body {
+        height: 100%;
+        background-color: $light-gray;
+    }
+}
+
+.app {
+    box-shadow: 0 10px 20px $medium-gray;
+
+    &__wrapper {
+        margin-top: 1rem;
+    }
+}

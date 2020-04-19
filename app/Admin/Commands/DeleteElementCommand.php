@@ -16,9 +16,6 @@ class DeleteElementCommand implements Command
     /** @var string */
     public $userId;
 
-    /** @var BlockContract */
-    protected $block;
-
     /** @var BlockServiceContract */
     protected $blockService;
 
@@ -29,7 +26,7 @@ class DeleteElementCommand implements Command
 
     public function perform(): Command
     {
-        $this->block = $this->blockService->deleteElement($this->blockId);
+        $this->blockService->deleteElement($this->blockId);
 
         return $this;
     }

@@ -11582,6 +11582,10 @@ html.is-reveal-open body {
   background-color: #331f4c;
 }
 
+.button_run {
+  width: 100%;
+}
+
 .tabs-selector__item {
   color: rgba(254, 254, 254, 0.5);
   display: inline-block;
@@ -11938,6 +11942,28 @@ html.is-reveal-open body {
   z-index: 1000;
 }
 
+.dark {
+  background-color: #2d1e45;
+}
+
+.app-page {
+  background-color: #e6e6e6;
+  height: 100%;
+}
+
+.app-page__body {
+  height: 100%;
+  background-color: #e6e6e6;
+}
+
+.app {
+  box-shadow: 0 10px 20px #cacaca;
+}
+
+.app__wrapper {
+  margin-top: 1rem;
+}
+
 .top-menu {
   background-color: #2d1e45;
   color: #fefefe;
@@ -12075,7 +12101,7 @@ html.is-reveal-open body {
 }
 
 .viewport__inner {
-  padding: 0.9375rem;
+  padding: 0.9375rem 1.875rem 1.875rem 1.875rem;
 }
 
 .components-menu {
@@ -12135,18 +12161,24 @@ html.is-reveal-open body {
 }
 
 .screens-pager {
-  padding: 0.9375rem;
+  padding: 0.9375rem 0.9375rem 0 0.9375rem;
   text-align: center;
+  background-color: #e6e6e6;
 }
 
 .screens-pager__inner {
   margin: 0;
   background-color: #fefefe;
   display: inline-block;
+  padding: 0.46875rem;
 }
 
-.screens-pager .pagination-previous:after,
-.screens-pager .pagination-next:after {
+.screens-pager__inner .screens-pager__delete {
+  display: none;
+}
+
+.screens-pager .pagination-previous a::before,
+.screens-pager .pagination-next a::after {
   margin: 0;
 }
 

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Http\Controllers\Controller;
 use Illuminate\Contracts\Support\Renderable;
 

@@ -16,9 +16,18 @@ import {SurveyContract} from "../contracts/SurveyContract";
 	template: `
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
-                <div class="grid-y grid-padding-y medium-2">
-                    <ComponentsMenu/>
-                    <a :href="'/run/' + surveyId"><button class="button rounded">Run</button></a>
+                <div class="grid-y grid-padding-y medium-2 dark">
+                    <ComponentsMenu />
+                    <a v-if="token" :href="runUrl" target="_blank">
+                        <button :class="bem('button').is('run').classes()">
+                            <span :class="bem('button').el('label').classes()">Run Survey!</span>
+                        </button>
+                    </a>
+                    <router-link v-if="!token" :href="runUrl">
+                        <button :class="bem('button').is('run').classes()">
+                            <span :class="bem('button').el('label').classes()">Run Survey!</span>
+                        </button>
+                    </router-link>
                 </div>
                 <div v-if="null !== survey" class="grid-y grid-padding-y medium-10">
                     <ScreensPager/>
@@ -52,7 +61,15 @@ export class SurveyEdit extends Vue {
 		return this.$store.getters[getters.SURVEY];
 	}
 
+	get token(): string {
+		return this.$store.getters[getters.TOKEN];
+	}
+
 	get page(): PageContract|null {
 		return this.$store.getters[getters.CURRENT_PAGE];
+	}
+
+	get runUrl() {
+		return '/run/' + this.surveyId + '?token=' + this.token;
 	}
 }

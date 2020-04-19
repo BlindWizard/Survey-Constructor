@@ -18,9 +18,6 @@ class DeletePageCommand implements Command
     /** @var PageServiceContract */
     protected $pageService;
 
-    /** @var PageContract */
-    protected $page;
-
     /**
      * @param PageServiceContract $pageService
      */
@@ -31,7 +28,7 @@ class DeletePageCommand implements Command
 
     public function perform(): Command
     {
-        $this->page = $this->pageService->deletePage($this->pageId);
+        $this->pageService->deletePage($this->pageId);
 
         return $this;
     }

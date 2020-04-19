@@ -12,6 +12,8 @@ class Settings implements \JsonSerializable
 {
     /** @var string */
     public $csrf;
+    /** @var string|null */
+    public $token;
     /** @var Locale */
     public $locale;
     /** @var BlockContract[] */
@@ -24,6 +26,7 @@ class Settings implements \JsonSerializable
     {
         return [
             'csrf'             => $this->csrf,
+            'token'            => $this->token,
             'locale'           => $this->locale,
             'defaultBlockData' => $this->defaultBlockData,
         ];

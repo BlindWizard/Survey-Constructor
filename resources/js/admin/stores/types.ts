@@ -2,6 +2,7 @@ export enum mutations
 {
 	SET_CSRF = 'setCsrf',
 	SET_LOCALE = 'setLocale',
+	SET_TOKEN = 'setToken',
 	SET_DEFAULT_BLOCK_DATA = 'setDefaultBlockData',
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
@@ -40,11 +41,13 @@ export enum getters
 {
 	CSRF = 'csrf',
 	LOCALE = 'locale',
+	TOKEN = 'token',
 	ELEMENT_DEFAULT_DATA = 'elementDefaultData',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
 	SURVEY = 'activeSurvey',
 	CURRENT_PAGE = 'currentPage',
+	PAGE_BY_STEP = 'pageByStep',
 	PAGES = 'pages',
 	TOKENS = 'tokens',
 }

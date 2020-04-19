@@ -9,6 +9,7 @@ use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\SurveyObject;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SurveyService implements SurveyServiceContract
 {
@@ -62,5 +63,18 @@ class SurveyService implements SurveyServiceContract
     public function canOperate(SurveyContract $survey, string $userId): bool
     {
         return $survey->getOwnerId() === $userId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function canOperateById(string $surveyId, string $userId): bool
+    {
+        $survey = $this->surveyRepository->findById($surveyId);
+        if (null === $survey) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->canOperate($survey, $userId);
     }
 }

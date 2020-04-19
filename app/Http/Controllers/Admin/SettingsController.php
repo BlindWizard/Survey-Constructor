@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Commands\AddTokenCommand;
 use App\Admin\Commands\DeleteTokenCommand;
-use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\GetAllUsersTokens;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;

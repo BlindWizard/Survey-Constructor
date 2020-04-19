@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyById;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
 class ApiController extends Controller
 {
@@ -18,9 +19,14 @@ class ApiController extends Controller
         $this->settings = $settings;
     }
 
-    public function run(string $id)
+    public function run(string $id, Request $request)
     {
-        return view('api.run', ['id' => $id]);
+        $token = $request->get('token');
+        if (null === $token) {
+            throw new BadRequestHttpException();
+        }
+
+        return view('api.run', ['id' => $id, 'token' => $token]);
     }
 
     public function getSurvey(string $id, FindSurveyById $query)

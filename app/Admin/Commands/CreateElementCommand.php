@@ -51,12 +51,7 @@ class CreateElementCommand implements Command
             throw new NotFoundHttpException();
         }
 
-        $survey = $this->surveyRepository->findById($page->getSurveyId());
-        if (null === $survey) {
-            throw new NotFoundHttpException();
-        }
-
-        if (false === $this->surveyService->canOperate($survey, $this->userId)) {
+        if (false === $this->surveyService->canOperateById($page->getSurveyId(), $this->userId)) {
             throw new AccessDeniedHttpException();
         }
 

@@ -29,6 +29,7 @@ const store = new Vuex.Store({
 	strict: process.env.NODE_ENV !== 'production',
 	state: {
 		csrf: '',
+		token: null as string|null,
 		locale: null as any,
 		defaultBlockData: [],
 		survey: null as any,
@@ -43,6 +44,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_LOCALE](state, locale: Locale) {
 			state.locale = locale;
+		},
+		[mutations.SET_TOKEN](state, token: string|null) {
+			state.token = token;
 		},
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
@@ -127,6 +131,7 @@ const store = new Vuex.Store({
 		[actions.LOAD_SETTINGS]({commit}, setting: Settings) {
 			commit(mutations.SET_CSRF, setting.csrf);
 			commit(mutations.SET_LOCALE, setting.locale);
+			commit(mutations.SET_TOKEN, setting.token);
 			commit(mutations.SET_DEFAULT_BLOCK_DATA, setting.defaultBlockData);
 		},
 		async [actions.LOAD_SURVEYS]({commit}) {
@@ -241,6 +246,9 @@ const store = new Vuex.Store({
 		[getters.CSRF](state): string {
 			return state.csrf;
 		},
+		[getters.TOKEN](state): string|null {
+			return state.token;
+		},
 		[getters.LOCALE](state): Locale {
 			return state.locale;
 		},
@@ -255,6 +263,13 @@ const store = new Vuex.Store({
 		},
 		[getters.CURRENT_PAGE](state): PageContract|null {
 			return state.survey.pages[state.pageId] || null;
+		},
+		[getters.PAGE_BY_STEP](state): Function {
+			return (step: Number): PageContract|null => {
+				let pages = state.survey.getPagesByStep();
+
+				return pages[step.toString()] || null;
+			}
 		},
 		[getters.PAGES](state): PageContract[] {
 			return state.survey.getPagesByStep();

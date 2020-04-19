@@ -1,18 +1,33 @@
+import {RunSettings} from "./models/RunSettings";
+
 class Loader {
-	public runSurvey(element: HTMLElement|string)
+	public runSurvey(settings: RunSettings)
 	{
-		let container: HTMLElement;
-		if (typeof element === 'string') {
-			container  = document.getElementById(element) as HTMLElement;
+		let container: HTMLElement|null;
+		if (typeof settings.element === 'string') {
+			container  = document.getElementById(settings.element);
+		}
+		else if (null !== settings.element) {
+			container = settings.element;
 		}
 		else {
-			container = element;
+			container = document.getElementById(settings.defaultContainer);
+		}
+
+		if (!settings.surveyId) {
+			throw new Error('Survey is undefined: surveyId isn\'t set');
+		}
+
+		if (null === container) {
+			throw new Error('Container is undefined: element not found');
 		}
 
 		import('./app').then(loaded => {
-			let app = loaded.client;
-			app.$mount();
-			container.appendChild(app.$el);
+			if (container) {
+				let app = loaded.client;
+				app.$mount();
+				container.appendChild(app.$el);
+			}
 		});
 	}
 }

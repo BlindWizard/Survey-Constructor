@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin\Commands\CreateElementCommand;
 use App\Admin\Commands\CreateSurveyCommand;
-use App\Admin\Contracts\SettingsFactoryContract;
+use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyById;
 use App\Admin\Queries\GetAllUsersSurveys;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
-use App\Http\Requests\AddElementRequest;
 use App\Http\Requests\CreateSurveyRequest;
 use Illuminate\Support\Facades\Auth;
 

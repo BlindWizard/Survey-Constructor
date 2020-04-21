@@ -23,16 +23,16 @@ class FindSurveyById implements Command
     public $userId;
 
     /** @var SurveyContract */
-    public $survey;
+    protected $survey;
 
     /** @var SurveyRepositoryContract */
-    public $surveyRepository;
+    protected $surveyRepository;
 
     /** @var SurveyRepositoryContract */
-    public $surveyService;
+    protected $surveyService;
 
     /** @var BlockRepositoryContract */
-    public $blockFactory;
+    protected $blockFactory;
 
     public function __construct(SurveyRepositoryContract $surveyRepository, SurveyServiceContract $surveyService, BlockFactory $blockFactory)
     {

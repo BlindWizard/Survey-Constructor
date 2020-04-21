@@ -175,7 +175,8 @@ return [
         /*
          * Modules Service Providers...
          */
-        App\Admin\ServiceProviders\BindingsServiceProvider::class,
+        App\Admin\ServiceProviders\AdminServiceProvider::class,
+        App\Api\ServiceProviders\ApiServiceProvider::class,
     ],
 
     /*

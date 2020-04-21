@@ -51,7 +51,6 @@ $app->loadEnvironmentFrom('.env-prod');
 */
 
 $kernel = $app->make(Illuminate\Contracts\Http\Kernel::class);
-$kernel->getApplication()->loadEnvironmentFrom('.env-prod');
 
 $response = $kernel->handle(
     $request = Illuminate\Http\Request::capture()

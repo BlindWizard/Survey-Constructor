@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Database\Models;
 
 use App\Admin\Contracts\Entities\ApiTokenContract;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $value
  * @property string $created_at
  * @property string $updated_at
+ *
+ * @property-read User|null $user
  */
 class ApiToken extends Model implements ApiTokenContract
 {
@@ -73,4 +76,10 @@ class ApiToken extends Model implements ApiTokenContract
     {
         return $this->updated_at->format(Carbon::DEFAULT_TO_STRING_FORMAT);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class, User::ATTR_ID, static::ATTR_USER_ID);
+    }
+    public const REL_USER = 'user';
 }

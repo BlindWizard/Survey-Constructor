@@ -13,10 +13,10 @@ class GetAllUsersSurveys implements Command
     public $userId;
 
     /** @var PageContract[] */
-    public $surveys;
+    protected $surveys;
 
     /** @var SurveyServiceContract */
-    public $surveyService;
+    protected $surveyService;
 
     public function __construct(SurveyServiceContract $surveyService)
     {

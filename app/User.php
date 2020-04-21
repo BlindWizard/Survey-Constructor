@@ -18,6 +18,8 @@ use DateTime;
  */
 class User extends Authenticatable
 {
+    public const ATTR_ID = 'id';
+
     use Notifiable;
 
     public $incrementing = false;

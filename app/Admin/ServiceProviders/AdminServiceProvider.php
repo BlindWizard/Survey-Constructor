@@ -12,6 +12,7 @@ use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
+use App\Admin\Contracts\Repositories\UserRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Contracts\Services\PageServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
@@ -21,6 +22,7 @@ use App\Admin\Database\Repositories\BlockRepository;
 use App\Admin\Database\Repositories\PageRepository;
 use App\Admin\Database\Repositories\SurveyRepository;
 use App\Admin\Database\Repositories\TemplateRepository;
+use App\Admin\Database\Repositories\UserRepository;
 use App\Admin\Factories\BlockFactory;
 use App\Admin\Factories\SettingsFactory;
 use App\Admin\Factories\SurveyFactory;
@@ -31,7 +33,7 @@ use App\Admin\Services\SurveyService;
 use App\Admin\Services\TemplateService;
 use Illuminate\Support\ServiceProvider;
 
-class BindingsServiceProvider extends ServiceProvider
+class AdminServiceProvider extends ServiceProvider
 {
     public function register()
     {
@@ -47,6 +49,7 @@ class BindingsServiceProvider extends ServiceProvider
         $this->app->singleton(BlockRepositoryContract::class, BlockRepository::class);
         $this->app->singleton(PageRepositoryContract::class, PageRepository::class);
         $this->app->singleton(ApiTokenRepositoryContract::class, ApiTokenRepository::class);
+        $this->app->singleton(UserRepositoryContract::class, UserRepository::class);
 
         // services
         $this->app->bind(TemplateServiceContract::class, TemplateService::class);

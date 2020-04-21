@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Queries;
 
 use App\Admin\Contracts\Command;
+use App\Admin\Contracts\Entities\ApiTokenContract;
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\DTO\ApiToken;
 
@@ -15,6 +16,7 @@ class GetAllUsersTokens implements Command
     /** @var ApiTokenRepositoryContract */
     protected $apiTokenRepository;
 
+    /** @var ApiTokenContract[] */
     protected $tokens;
 
     public function __construct(ApiTokenRepositoryContract $apiTokenRepository)

@@ -13,10 +13,10 @@ class GetAllUsersTemplates implements Command
     public $userId;
 
     /** @var TemplateContract[] */
-    public $templates;
+    protected $templates;
 
     /** @var TemplateServiceContract */
-    public $templatesService;
+    protected $templatesService;
 
     public function __construct(TemplateServiceContract $templatesService)
     {

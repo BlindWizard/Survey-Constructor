@@ -8,7 +8,10 @@ use App\Admin\Queries\FindSurveyById;
 use App\Api\Commands\HandleEventCommand;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
+use App\Http\Requests\NextPageRequest;
+use http\Cookie;
 use Illuminate\Http\Request;
+use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 
@@ -22,12 +25,24 @@ class ApiController extends Controller
         $this->settings = $settings;
     }
 
-    public function run(string $id, Request $request)
+    public function run(string $id, Request $request, UserRepositoryContract $userRepository, FindSurveyById $query)
     {
         $token = $request->get('token');
         if (null === $token) {
             throw new BadRequestHttpException();
         }
+
+        $user = $userRepository->findUserByToken($token);
+        if (null === $user) {
+            throw new AccessDeniedHttpException();
+        }
+
+        $query->surveyId = $id;
+        $query->userId = $user->id;
+
+        $clientId = $request->cookie('clientId');
+
+        $query->perform();
 
         return view('api.run', ['id' => $id, 'token' => $token]);
     }
@@ -50,11 +65,22 @@ class ApiController extends Controller
         $result = new AjaxResponse();
         $result->data = $query->perform()->getResult();
 
-        return response()->json($result);
+        $clientId = $request->cookie('clientId');
+        if (null === $clientId) {
+            $clientId = Uuid::uuid4()->toString();
+        }
+
+        $cookie = cookie()->forever('clientId', $clientId, '/', null, null, false);
+
+        return response()->json($result)->withCookie($cookie);
     }
 
-    public function event(ApiEventRequest $request, HandleEventCommand $command)
+    public function event(NextPageRequest $request, HandleEventCommand $command)
     {
+        $result = new AjaxResponse();
+        $command->event = $request;
+        $command->perform();
 
+        return response()->json($result);
     }
 }

@@ -1,9 +1,11 @@
 export enum mutations {
+	SET_CLIENT_ID = 'setClientId',
 	SET_SURVEY = 'setSurvey',
 	SET_PAGE = 'setPage',
 }
 
 export enum actions {
+	LOAD_SETTINGS = 'loadSettings',
 	LOAD_SURVEY = 'loadSurvey',
 	NEXT_PAGE = 'nextPage',
 	PREV_PAGE = 'prevPage',
@@ -11,6 +13,7 @@ export enum actions {
 
 export enum getters
 {
+	CLIENT_ID = 'clientId',
 	CURRENT_PAGE = 'currentPage',
 	PAGES = 'pages',
 	IS_LAST_PAGE = 'isLastPage',

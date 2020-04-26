@@ -6,12 +6,12 @@ import {PageContract} from "../../admin/contracts/PageContract";
 @Component({
 	template: `
         <div v-if="page" :class="bem('survey-block').el('footer').classes()">
-            <button v-if="!isFirstPage" :class="bem('button').add('secondary').classes()">
-                <span :class="bem('button').el('label').classes()" @click="prevPage">Back...</span>
+            <button v-if="!isFirstPage" :class="bem('button').add('secondary').classes()" @click="prevPage">
+                <span :class="bem('button').el('label').classes()">Back...</span>
             </button>
 
-            <button v-if="!isLastPage" :class="bem('button').add('primary').classes()">
-                <span :class="bem('button').el('label').classes()" @click="nextPage">Next Step!</span>
+            <button v-if="!isLastPage" :class="bem('button').add('primary').classes()" @click="nextPage">
+                <span :class="bem('button').el('label').classes()">Next Step!</span>
             </button>
 
             <button v-if="isLastPage" :class="bem('button').add('primary').classes()">

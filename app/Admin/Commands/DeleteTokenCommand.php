@@ -32,4 +32,9 @@ class DeleteTokenCommand implements Command
 
         return $this;
     }
+
+    public function getResult()
+    {
+        return true;
+    }
 }

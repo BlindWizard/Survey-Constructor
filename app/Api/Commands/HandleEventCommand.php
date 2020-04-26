@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Api\Commands;
 
@@ -10,6 +11,7 @@ class HandleEventCommand implements Command
 {
     /** @var ApiEventContract */
     public $event;
+
     /** @var ApiEventHandlersFactoryContract */
     protected $handlers;
 

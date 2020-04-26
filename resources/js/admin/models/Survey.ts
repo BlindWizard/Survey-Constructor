@@ -11,6 +11,10 @@ export class Survey implements SurveyContract
 	public createdAt: string;
 	public updatedAt: string;
 
+	getId(): string {
+		return this.id;
+	}
+
 	getPages()
 	{
 		return this.pages;

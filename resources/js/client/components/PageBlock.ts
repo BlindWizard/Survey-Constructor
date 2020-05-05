@@ -13,7 +13,12 @@ import {ScreensPager} from "./ScreensPager";
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
-            <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
+            <component :key="block.getId()"
+                       v-for="block in page.getBlocksInOrder()"
+                       :is="resolver.resolveComponentClass(block.getType()).name"
+                       :block="block"
+                       :handler="resolver.resolveComponentHandler(block.getType())"
+            />
             <ScreensPager />
         </div>
 	`,

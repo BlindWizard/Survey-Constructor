@@ -6,7 +6,7 @@ import {Option} from "../../models/Option";
 @Component({
 	template: `
         <div :class="bem('option').classes()">
-            <input :class="bem('option').el('control').classes()" :id="block.id" :name="block.id + '[]'" :value="block.id" type="checkbox">
+            <input :class="bem('option').el('control').classes()" :id="block.id" :name="block.id + '[]'" :value="block.id" type="checkbox" @input="handle">
             <label :class="bem('option').el('checkbox').classes()" :for="block.id">
                 <span :class="bem('option').el('checkbox-inner').classes()">
                     <svg width="12px" height="10px" viewBox="0 0 12 10">
@@ -20,4 +20,13 @@ import {Option} from "../../models/Option";
 })
 export class OptionBlock extends Vue {
 	@Prop(Option) readonly block: Option;
+	@Prop(Function) readonly handler: Function|null;
+
+	private handle(event: Event) {
+		if (!this.handler) {
+			return;
+		}
+
+		this.handler(this, event);
+	}
 }

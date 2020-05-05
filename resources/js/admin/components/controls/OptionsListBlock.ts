@@ -7,10 +7,10 @@ import {OptionsList} from "../../models/OptionsList";
 	template: `
         <div :class="bem('options-list').classes()">
             <label :class="bem('options-list').el('option').classes()" :key="option.id" v-for="option in block.options">
-                <input :class="bem('options-list').el('control').classes()" :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio"/>
+                <input :class="bem('options-list').el('control').classes()" :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio" @input="handle"/>
                 <span :class="bem('options-list').el('radio').classes()"></span>
                 <span :class="bem('options-list').el('label').classes()">
-	                {{ option.text }}
+                    {{ option.text }}
                 </span>
             </label>
         </div>
@@ -18,4 +18,13 @@ import {OptionsList} from "../../models/OptionsList";
 })
 export class OptionsListBlock extends Vue {
 	@Prop(OptionsList) readonly block: OptionsList;
+	@Prop(Function) readonly handler: Function|null;
+
+	private handle(event: Event) {
+		if (!this.handler) {
+			return;
+		}
+
+		this.handler(this, event);
+	}
 }

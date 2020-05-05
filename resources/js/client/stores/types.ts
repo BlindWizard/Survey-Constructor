@@ -9,6 +9,8 @@ export enum actions {
 	LOAD_SURVEY = 'loadSurvey',
 	NEXT_PAGE = 'nextPage',
 	PREV_PAGE = 'prevPage',
+	OPTIONS_LIST_SELECT = 'optionsListSelect',
+	OPTION_SELECT = 'optionSelect',
 }
 
 export enum getters

@@ -8,6 +8,9 @@ import {SurveyContract} from "../../admin/contracts/SurveyContract";
 import {EventsApi} from "../api/events.api";
 import {NextPageRequest} from "../api/requests/NextPageRequest";
 import Cookies from 'js-cookie';
+import {PrevPageRequest} from "../api/requests/PrevPageRequest";
+import {OptionSelectRequest} from "../api/requests/OptionSelectRequest";
+import {OptionsListSelectRequest} from "../api/requests/OptionsListSelectRequest";
 
 Vue.use(Vuex);
 
@@ -62,7 +65,31 @@ const store = new Vuex.Store({
 				return;
 			}
 
-			commit(mutations.SET_PAGE, pages[setStep]);
+			let newPage = pages[setStep];
+			let prevPageRequest = new PrevPageRequest();
+			prevPageRequest.clientId = state.clientId;
+			prevPageRequest.surveyId = state.survey.getId();
+			prevPageRequest.pageId = newPage.getId();
+			await EventsApi.prevPage(prevPageRequest);
+
+			commit(mutations.SET_PAGE, newPage);
+		},
+		async [actions.OPTIONS_LIST_SELECT]({commit, state}, data: any) {
+			let request = new OptionsListSelectRequest();
+			request.clientId = state.clientId;
+			request.surveyId = state.survey.getId();
+			request.blockId = data.blockId;
+			request.optionId = data.optionId;
+
+			await EventsApi.optionsListSelect(request);
+		},
+		async [actions.OPTION_SELECT]({commit, state}, data: any) {
+			let request = new OptionSelectRequest();
+			request.clientId = state.clientId;
+			request.surveyId = state.survey.getId();
+			request.blockId = data.blockId;
+
+			await EventsApi.optionSelect(request);
 		},
 	},
 	getters: {

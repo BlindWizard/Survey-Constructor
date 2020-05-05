@@ -8,6 +8,8 @@ import {HeaderBlockWrapper} from "../components/editables/header/HeaderBlockWrap
 import {OptionBlock} from "../components/controls/OptionBlock";
 import {TextBlock} from "../components/controls/TextBlock";
 import {TextBlockWrapper} from "../components/editables/text/TextBlockWrapper";
+import {BaseBlock} from "../components/editables/BaseBlock";
+import {actions} from "../../client/stores/types";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -39,6 +41,34 @@ export class ComponentsResolver {
 				return this.editable ? HeaderBlockWrapper : HeaderBlock;
 			case BlockTypes.TEXT:
 				return this.editable ? TextBlockWrapper : TextBlock;
+			default:
+				throw new Error('Undefined block type');
+		}
+	}
+
+	public resolveComponentHandler(type: string): Function {
+		switch (type) {
+			case BlockTypes.OPTIONS_LIST:
+				return (component: BaseBlock, event: MouseEvent) => {
+					let data = {
+						blockId: component.block.getId(),
+						optionId: (event.target as HTMLElement).getAttribute('value')
+					};
+
+					component.$store.dispatch(actions.OPTIONS_LIST_SELECT, data);
+				};
+			case BlockTypes.OPTION:
+				return (component: BaseBlock, event: MouseEvent) => {
+					let data = {
+						blockId: component.block.getId(),
+					};
+
+					component.$store.dispatch(actions.OPTION_SELECT, data);
+				};
+			case BlockTypes.HEADER:
+			case BlockTypes.TEXT:
+				return () => {
+				};
 			default:
 				throw new Error('Undefined block type');
 		}

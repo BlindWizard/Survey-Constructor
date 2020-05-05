@@ -9,7 +9,6 @@ use App\Api\Commands\HandleEventCommand;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\NextPageRequest;
-use http\Cookie;
 use Illuminate\Http\Request;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -39,8 +38,6 @@ class ApiController extends Controller
 
         $query->surveyId = $id;
         $query->userId = $user->id;
-
-        $clientId = $request->cookie('clientId');
 
         $query->perform();
 
@@ -73,14 +70,5 @@ class ApiController extends Controller
         $cookie = cookie()->forever('clientId', $clientId, '/', null, null, false);
 
         return response()->json($result)->withCookie($cookie);
-    }
-
-    public function event(NextPageRequest $request, HandleEventCommand $command)
-    {
-        $result = new AjaxResponse();
-        $command->event = $request;
-        $command->perform();
-
-        return response()->json($result);
     }
 }

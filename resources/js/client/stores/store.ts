@@ -107,6 +107,7 @@ const store = new Vuex.Store({
 			request.surveyId = state.survey.getId();
 			request.blockId = data.blockId;
 			request.optionId = data.optionId;
+			request.checked = data.checked as boolean;
 			request.token = state.token;
 
 			await EventsApi.optionsListSelect(request);
@@ -116,6 +117,7 @@ const store = new Vuex.Store({
 			request.clientId = state.clientId;
 			request.surveyId = state.survey.getId();
 			request.blockId = data.blockId;
+			request.checked = data.checked as boolean;
 			request.token = state.token;
 
 			await EventsApi.optionSelect(request);

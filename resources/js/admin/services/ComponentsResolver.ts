@@ -52,7 +52,8 @@ export class ComponentsResolver {
 				return (component: BaseBlock, event: MouseEvent) => {
 					let data = {
 						blockId: component.block.getId(),
-						optionId: (event.target as HTMLElement).getAttribute('value')
+						optionId: (event.target as HTMLElement).getAttribute('value'),
+						checked: (event.target as any).checked,
 					};
 
 					component.$store.dispatch(actions.OPTIONS_LIST_SELECT, data);
@@ -61,6 +62,7 @@ export class ComponentsResolver {
 				return (component: BaseBlock, event: MouseEvent) => {
 					let data = {
 						blockId: component.block.getId(),
+						checked: (event.target as any).checked,
 					};
 
 					component.$store.dispatch(actions.OPTION_SELECT, data);

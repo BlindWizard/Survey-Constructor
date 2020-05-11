@@ -59,6 +59,7 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['namespace' => 'Api'], function () {
     Route::get('/run/{id}', 'ApiController@run');
     Route::get('/api/survey/get/{id}', 'ApiController@getSurvey');
+    Route::post('/api/event/run', 'EventController@run');
     Route::post('/api/event/nextPage', 'EventController@nextPage');
     Route::post('/api/event/prevPage', 'EventController@prevPage');
     Route::post('/api/event/optionsListSelect', 'EventController@optionsListSelect');

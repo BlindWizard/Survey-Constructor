@@ -24,10 +24,7 @@ export class Application extends Vue {
 
 	public mounted() {
 		if (null === this.page) {
-			let request = new GetSurvey();
-			request.surveyId = window.location.href.substring(window.location.href.lastIndexOf('/') + 1);
-
-			this.$store.dispatch(actions.LOAD_SURVEY, request);
+			this.$store.dispatch(actions.LOAD_SURVEY);
 		}
 	}
 

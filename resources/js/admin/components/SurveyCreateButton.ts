@@ -4,14 +4,14 @@ import {actions} from "../stores/types";
 
 @Component({
 	template: `
-        <div :class="bem('create-block').add('cell large-3 medium-6').is('filled').classes()" @click="getTemplates()">
-            <div :class="bem('create-block').el('wrapper').classes()">
-                <div :class="bem('create-block').el('inner').classes()">
-                    <div :class="bem('create-block').el('label').is('up').classes()">create</div>
-                    <div :class="bem('create-block').el('button').classes()">
-                        <i :class="bem('create-block').el('icon').add('fi-plus').classes()" />
+        <div :class="bem('survey-preview').add('cell large-3 medium-6').is('filled').classes()" @click="getTemplates()">
+            <div :class="bem('survey-preview').el('wrapper').classes()">
+                <div :class="bem('survey-preview').el('inner').classes()">
+                    <div :class="bem('survey-preview').el('label').is('up').classes()">create</div>
+                    <div :class="bem('survey-preview').el('button').classes()">
+                        <i :class="bem('survey-preview').el('icon').add('fi-plus').classes()" />
                     </div>
-                    <div :class="bem('create-block').el('label').is('down').classes()">New survey</div>
+                    <div :class="bem('survey-preview').el('label').is('down').classes()">New survey</div>
                 </div>
             </div>
         </div>

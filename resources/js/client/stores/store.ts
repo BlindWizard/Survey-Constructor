@@ -2,7 +2,6 @@ import Vue from "vue";
 import Vuex from 'vuex';
 import {PageContract} from "../../admin/contracts/PageContract";
 import {actions, getters, mutations} from "./types";
-import {GetSurvey} from "../../admin/api/requests/GetSurvey";
 import {SurveyApi} from "../api/survey.api";
 import {SurveyContract} from "../../admin/contracts/SurveyContract";
 import {EventsApi} from "../api/events.api";
@@ -11,13 +10,18 @@ import Cookies from 'js-cookie';
 import {PrevPageRequest} from "../api/requests/PrevPageRequest";
 import {OptionSelectRequest} from "../api/requests/OptionSelectRequest";
 import {OptionsListSelectRequest} from "../api/requests/OptionsListSelectRequest";
+import {RunRequest} from "../api/requests/RunRequest";
+import {RunSettings} from "../models/RunSettings";
+import {GetSurvey} from "../api/requests/GetSurvey";
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
 	strict: process.env.NODE_ENV !== 'production',
 	state: {
+		surveyId: null as any,
 		clientId: null as any,
+		token: null as any,
 		survey: null as any,
 		pageId: null as any,
 	},
@@ -30,15 +34,36 @@ const store = new Vuex.Store({
 		[mutations.SET_PAGE](state, page: PageContract) {
 			state.pageId = page.getId();
 		},
+		[mutations.SET_SURVEY_ID](state, surveyId: string) {
+			state.surveyId = surveyId;
+		},
 		[mutations.SET_CLIENT_ID](state, clientId: string) {
 			state.clientId = clientId;
+		},
+		[mutations.SET_TOKEN](state, token: string) {
+			state.token = token;
 		}
 	},
 	actions: {
-		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
-			let survey = await SurveyApi.getSurvey(request);
-			commit(mutations.SET_SURVEY, survey);
+		async [actions.LOAD_SETTINGS]({commit}, settings: RunSettings) {
 			commit(mutations.SET_CLIENT_ID, (Cookies.get('clientId')));
+			commit(mutations.SET_TOKEN, settings.token);
+			commit(mutations.SET_SURVEY_ID, settings.surveyId);
+		},
+		async [actions.LOAD_SURVEY]({commit, state}) {
+			let getSurvey = new GetSurvey();
+			getSurvey.surveyId = state.surveyId;
+			getSurvey.token = state.token;
+
+			let survey = await SurveyApi.getSurvey(getSurvey);
+			commit(mutations.SET_SURVEY, survey);
+
+			let runRequest = new RunRequest();
+			runRequest.surveyId = survey.getId();
+			runRequest.clientId = state.clientId;
+			runRequest.token = state.token;
+
+			await EventsApi.run(runRequest);
 		},
 		async [actions.NEXT_PAGE]({commit, state}) {
 			let pages = state.survey.getPagesByStep();
@@ -53,6 +78,7 @@ const store = new Vuex.Store({
 			nextPageRequest.clientId = state.clientId;
 			nextPageRequest.surveyId = state.survey.getId();
 			nextPageRequest.pageId = newPage.getId();
+			nextPageRequest.token = state.token;
 			await EventsApi.nextPage(nextPageRequest);
 
 			commit(mutations.SET_PAGE, newPage);
@@ -70,6 +96,7 @@ const store = new Vuex.Store({
 			prevPageRequest.clientId = state.clientId;
 			prevPageRequest.surveyId = state.survey.getId();
 			prevPageRequest.pageId = newPage.getId();
+			prevPageRequest.token = state.token;
 			await EventsApi.prevPage(prevPageRequest);
 
 			commit(mutations.SET_PAGE, newPage);
@@ -80,6 +107,7 @@ const store = new Vuex.Store({
 			request.surveyId = state.survey.getId();
 			request.blockId = data.blockId;
 			request.optionId = data.optionId;
+			request.token = state.token;
 
 			await EventsApi.optionsListSelect(request);
 		},
@@ -88,14 +116,12 @@ const store = new Vuex.Store({
 			request.clientId = state.clientId;
 			request.surveyId = state.survey.getId();
 			request.blockId = data.blockId;
+			request.token = state.token;
 
 			await EventsApi.optionSelect(request);
 		},
 	},
 	getters: {
-		[getters.CLIENT_ID](state): string {
-			return state.clientId;
-		},
 		[getters.CURRENT_PAGE](state): PageContract|null {
 			if (null === state.survey) {
 				return null;

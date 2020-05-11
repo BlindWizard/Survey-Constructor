@@ -1,10 +1,10 @@
-import {GetSurvey} from "../../admin/api/requests/GetSurvey";
 import {Survey} from "../../admin/models/Survey";
 import {AjaxHelper} from "../../admin/contracts/AjaxHelper";
 import {axios} from "../../common/axios";
 import {Page} from "../../admin/models/Page";
 import {BlockWrapper} from "../../admin/models/BlockWrapper";
 import {ComponentsFactory} from "../../admin/services/ComponentsFactory";
+import {GetSurvey} from "./requests/GetSurvey";
 
 export class SurveyApi
 {
@@ -15,7 +15,7 @@ export class SurveyApi
 	 */
 	public static getSurvey(request: GetSurvey): Promise<Survey>
 	{
-		return axios.get('/api/survey/get/' + request.surveyId)
+		return axios.get('/api/survey/get/' + request.surveyId + '?token=' + request.token)
 			.then((response) => {
 				let result:AjaxHelper = response.data as AjaxHelper;
 				let survey = new Survey();

@@ -10,12 +10,15 @@ use App\Api\Services\NextPageHandler;
 use App\Api\Services\OptionHandler;
 use App\Api\Services\OptionsListHandler;
 use App\Api\Services\PrevPageHandler;
+use App\Api\Services\RunHandler;
 
 class ApiEventHandlersFactory implements ApiEventHandlersFactoryContract
 {
     public function getEventHandler(ApiEventContract $event): ApiEventHandlerContract
     {
         switch ($event->getType()) {
+            case ApiEventContract::RUN:
+                return app()->make(RunHandler::class);
             case ApiEventContract::NEXT_PAGE:
                 return app()->make(NextPageHandler::class);
             case ApiEventContract::PREV_PAGE:

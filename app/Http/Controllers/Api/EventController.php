@@ -9,6 +9,7 @@ use App\Http\Requests\NextPageRequest;
 use App\Http\Requests\OptionSelectRequest;
 use App\Http\Requests\OptionsListSelectRequest;
 use App\Http\Requests\PrevPageRequest;
+use App\Http\Requests\RunRequest;
 
 class EventController extends Controller
 {
@@ -21,6 +22,15 @@ class EventController extends Controller
     public function __construct(HandleEventCommand $command)
     {
         $this->command = $command;
+    }
+
+    public function run(RunRequest $request)
+    {
+        $result = new AjaxResponse();
+        $this->command->event = $request;
+        $this->command->perform();
+
+        return response()->json($result);
     }
 
     public function nextPage(NextPageRequest $request)

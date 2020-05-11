@@ -3,8 +3,14 @@ import {NextPageRequest} from "./requests/NextPageRequest";
 import {PrevPageRequest} from "./requests/PrevPageRequest";
 import {OptionsListSelectRequest} from "./requests/OptionsListSelectRequest";
 import {OptionSelectRequest} from "./requests/OptionSelectRequest";
+import {RunRequest} from "./requests/RunRequest";
 
 export class EventsApi {
+	public static run(request: RunRequest)
+	{
+		return axios.post('/api/event/run', request);
+	}
+
 	public static nextPage(request: NextPageRequest)
 	{
 		return axios.post('/api/event/nextPage', request);

@@ -44,4 +44,12 @@ class ApiTokenRepository implements ApiTokenRepositoryContract
     {
         return ApiToken::query()->where(ApiToken::ATTR_USER_ID, '=', $userId)->get()->all();
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTokenByValue(string $value): ?ApiTokenContract
+    {
+        return ApiToken::query()->where(ApiToken::ATTR_VALUE, '=', $value)->get()->first();
+    }
 }

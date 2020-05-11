@@ -1,4 +1,5 @@
 import {RunSettings} from "./models/RunSettings";
+import {Vue} from "vue/types/vue";
 
 class Loader {
 	public runSurvey(settings: RunSettings)
@@ -23,11 +24,12 @@ class Loader {
 		}
 
 		import('./app').then(loaded => {
-			if (container) {
-				let app = loaded.client;
-				app.$mount();
-				container.appendChild(app.$el);
-			}
+			loaded.run(settings).then((app: Vue) => {
+				if (container) {
+					app.$mount();
+					container.appendChild(app.$el);
+				}
+			});
 		});
 	}
 }

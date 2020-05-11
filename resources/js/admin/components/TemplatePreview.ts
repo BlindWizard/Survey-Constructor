@@ -7,9 +7,9 @@ import {CreateSurvey} from "../api/requests/CreateSurvey";
 
 @Component({
 	template: `
-        <div :class="bem('create-block').add('cell large-3 medium-6').classes()" @click="createSurvey()">
-            <div :class="bem('create-block').el('wrapper').classes()">
-                <div :class="bem('create-block').el('inner').classes()">
+        <div :class="bem('survey-preview').add('cell large-3 medium-6').classes()" @click="createSurvey()">
+            <div :class="bem('survey-preview').el('wrapper').classes()">
+                <div :class="bem('survey-preview').el('inner').classes()">
                     {{ template.title }}
                 </div>
             </div>

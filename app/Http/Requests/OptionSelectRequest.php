@@ -13,10 +13,16 @@ class OptionSelectRequest extends FormRequest implements ApiEventContract
     public function rules()
     {
         return [
+            'token' => 'required|string',
             'clientId' => 'required|uuid',
             'surveyId' => 'required|uuid',
             'blockId' => 'required|uuid',
         ];
+    }
+
+    public function getToken(): string
+    {
+        return (string) $this->json('token');
     }
 
     public function getClientId(): string
@@ -34,7 +40,7 @@ class OptionSelectRequest extends FormRequest implements ApiEventContract
         return ApiEventContract::OPTION_SELECT;
     }
 
-    public function getPayload(): ApiEventPayloadContract
+    public function getPayload(): ?ApiEventPayloadContract
     {
         $payload = new OptionSelectEventPayload();
         $payload->blockId = (string) $this->json('blockId');

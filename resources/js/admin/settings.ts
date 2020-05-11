@@ -1,8 +1,5 @@
 import {Locale} from "./models/Locale";
 import {BlockContract} from "./contracts/BlockContract";
-import {BlockTypes} from "./contracts/BlockTypes";
-import {OptionsList} from "./models/OptionsList";
-import {Option} from "./models/Option";
 import {ComponentsFactory} from "./services/ComponentsFactory";
 
 export interface Settings {

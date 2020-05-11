@@ -31,4 +31,11 @@ interface ApiTokenRepositoryContract
      * @return ApiTokenContract[]
      */
     public function getUsersTokens(string $userId): array;
+
+    /**
+     * @param string $value
+     *
+     * @return ApiTokenContract|null
+     */
+    public function getTokenByValue(string $value): ?ApiTokenContract;
 }

@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property string $id
  * @property string $client_id
+ * @property string $token_id
  * @property string $survey_id
  * @property string $type
  * @property string $data
@@ -23,6 +24,7 @@ class Event extends Model implements ApiEventPayloadContract
 {
     public const ATTR_ID         = 'id';
     public const ATTR_CLIENT_ID  = 'client_id';
+    public const ATTR_TOKEN_ID   = 'token_id';
     public const ATTR_SURVEY_ID  = 'survey_id';
     public const ATTR_TYPE       = 'type';
     public const ATTR_DATA       = 'data';

@@ -11861,7 +11861,7 @@ html.is-reveal-open body {
   }
 }
 
-.create-block {
+.survey-preview {
   min-height: 24rem;
   border-radius: 1rem;
   cursor: pointer;
@@ -11869,24 +11869,24 @@ html.is-reveal-open body {
   border: 1px #cacaca solid;
 }
 
-.create-block_filled {
+.survey-preview_filled {
   border-color: #fd5b15;
   background-color: #fd5b15;
 }
 
-.create-block__wrapper {
+.survey-preview__wrapper {
   width: 100%;
   height: 100%;
   display: table;
 }
 
-.create-block__inner {
+.survey-preview__inner {
   display: table-cell;
   vertical-align: middle;
   text-align: center;
 }
 
-.create-block__button {
+.survey-preview__button {
   display: inline-block;
   width: 2.9rem;
   height: 2.9rem;
@@ -11895,7 +11895,7 @@ html.is-reveal-open body {
   border-radius: 100%;
 }
 
-.create-block__label {
+.survey-preview__label {
   color: #fefefe;
   font-size: 1.3rem;
   font-weight: bold;
@@ -11905,34 +11905,43 @@ html.is-reveal-open body {
   text-transform: uppercase;
 }
 
-.create-block__label_up {
+.survey-preview__label_up {
   margin-bottom: 0.75rem;
 }
 
-.create-block__label_down {
+.survey-preview__label_down {
   margin-top: 0.75rem;
 }
 
-.create-block__icon {
+.survey-preview__icon {
   color: #fd5b15;
   font-size: 2rem;
   transition: font-size 0.2s;
 }
 
-.create-block:hover {
+.survey-preview__statistics {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.survey-preview__statistics-item {
+  margin-bottom: 0;
+}
+
+.survey-preview:hover {
   box-shadow: 0 0 1rem rgba(10, 10, 10, 0.5);
 }
 
-.create-block:hover .create-block__button {
+.survey-preview:hover .survey-preview__button {
   width: 4.3rem;
   height: 4.3rem;
 }
 
-.create-block:hover .create-block__icon {
+.survey-preview:hover .survey-preview__icon {
   font-size: 3rem;
 }
 
-.create-block:hover .create-block__label {
+.survey-preview:hover .survey-preview__label {
   opacity: 0;
 }
 

@@ -1,4 +1,4 @@
-.create-block {
+.survey-preview {
     min-height: 24rem;
     border-radius: 1rem;
     cursor: pointer;
@@ -55,10 +55,19 @@
         transition: font-size $animation-fast;
     }
 
+    &__statistics {
+        margin-top: 1rem;
+        text-align: center;
+    }
+
+    &__statistics-item {
+        margin-bottom: 0;
+    }
+
     &:hover {
         box-shadow: 0 0 1rem rgba($black, 0.5);
 
-        .create-block {
+        .survey-preview {
             &__button {
                 width: 4.3rem;
                 height: 4.3rem;

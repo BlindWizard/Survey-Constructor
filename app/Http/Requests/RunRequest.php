@@ -5,10 +5,10 @@ namespace App\Http\Requests;
 
 use App\Api\Contracts\Entities\ApiEventContract;
 use App\Api\Contracts\Entities\ApiEventPayloadContract;
-use App\Api\Entities\PrevPageEventPayload;
+use App\Api\Entities\NextPageEventPayload;
 use Illuminate\Foundation\Http\FormRequest;
 
-class PrevPageRequest extends FormRequest implements ApiEventContract
+class RunRequest extends FormRequest implements ApiEventContract
 {
     public function rules()
     {
@@ -16,7 +16,6 @@ class PrevPageRequest extends FormRequest implements ApiEventContract
             'token' => 'required|string',
             'clientId' => 'required|uuid',
             'surveyId' => 'required|uuid',
-            'pageId' => 'required|uuid',
         ];
     }
 
@@ -37,14 +36,11 @@ class PrevPageRequest extends FormRequest implements ApiEventContract
 
     public function getType(): string
     {
-        return ApiEventContract::PREV_PAGE;
+        return ApiEventContract::RUN;
     }
 
     public function getPayload(): ?ApiEventPayloadContract
     {
-        $payload = new PrevPageEventPayload();
-        $payload->pageId = (string) $this->json('pageId');
-
-        return $payload;
+        return null;
     }
 }

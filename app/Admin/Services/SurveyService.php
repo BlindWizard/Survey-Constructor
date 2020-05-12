@@ -7,22 +7,27 @@ use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
+use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
-use App\Admin\DTO\SurveyObject;
+use App\Admin\DTO\Survey;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SurveyService implements SurveyServiceContract
 {
     /** @var SurveyFactoryContract */
-    public $surveyFactory;
+    protected $surveyFactory;
 
     /** @var SurveyRepositoryContract */
-    public $surveyRepository;
+    protected $surveyRepository;
 
-    public function __construct(SurveyFactoryContract $surveyFactory, SurveyRepositoryContract $surveyRepository)
+    /** @var SurveyStatisticRepositoryContract */
+    protected $statisticRepository;
+
+    public function __construct(SurveyFactoryContract $surveyFactory, SurveyRepositoryContract $surveyRepository, SurveyStatisticRepositoryContract $statisticRepository)
     {
         $this->surveyFactory = $surveyFactory;
         $this->surveyRepository = $surveyRepository;
+        $this->statisticRepository = $statisticRepository;
     }
 
     /**
@@ -33,12 +38,14 @@ class SurveyService implements SurveyServiceContract
         $surveys = $this->surveyRepository->getAvailableSurveys($ownerId);
         $objects = [];
         foreach ($surveys as $survey) {
-            $object            = new SurveyObject();
+            $object            = new Survey();
             $object->id        = $survey->getId();
             $object->title     = $survey->getTitle();
             $object->ownerId   = $survey->getOwnerId();
             $object->createdAt = $survey->getCreatedAt();
             $object->updatedAt = $survey->getUpdatedAt();
+
+            $object->statistics = $this->statisticRepository->findBySurveyId($survey->getId());
 
             $objects[] = $object;
         }

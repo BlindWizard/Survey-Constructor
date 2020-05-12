@@ -9,8 +9,8 @@ use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\BlockWrapper;
-use App\Admin\DTO\PageObject;
-use App\Admin\DTO\SurveyObject;
+use App\Admin\DTO\Page;
+use App\Admin\DTO\Survey;
 use App\Admin\Factories\BlockFactory;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -56,7 +56,7 @@ class FindSurveyById implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $surveyObject = new SurveyObject();
+        $surveyObject = new Survey();
         $surveyObject->id = $survey->getId();
         $surveyObject->title = $survey->getTitle();
         $surveyObject->ownerId = $survey->getOwnerId();
@@ -64,7 +64,7 @@ class FindSurveyById implements Command
         $surveyObject->updatedAt = $survey->getUpdatedAt();
 
         foreach ($survey->getPages() as $page) {
-            $pageObject = new PageObject();
+            $pageObject = new Page();
             $pageObject->id = $page->getId();
             $pageObject->step = $page->getStep();
             $pageObject->surveyId = $page->getSurveyId();

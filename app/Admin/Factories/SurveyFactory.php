@@ -6,8 +6,8 @@ namespace App\Admin\Factories;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
-use App\Admin\DTO\PageObject;
-use App\Admin\DTO\SurveyObject;
+use App\Admin\DTO\Page;
+use App\Admin\DTO\Survey;
 use Carbon\Carbon;
 use Ramsey\Uuid\Uuid;
 
@@ -23,7 +23,7 @@ class SurveyFactory implements SurveyFactoryContract
      */
     public function build(string $ownerId, TemplateContract $template): SurveyContract
     {
-        $survey = new SurveyObject();
+        $survey = new Survey();
         $survey->id = Uuid::uuid4()->toString();
         $survey->title = __('New survey');
         $survey->ownerId = $ownerId;
@@ -31,7 +31,7 @@ class SurveyFactory implements SurveyFactoryContract
         $survey->updatedAt = (string) Carbon::now('UTC');
 
         foreach ($template->getPages() as $page) {
-            $pageObject = new PageObject();
+            $pageObject = new Page();
             $pageObject->id = $page->getId();
             $pageObject->surveyId = $survey->id;
             $pageObject->step = $page->getStep();

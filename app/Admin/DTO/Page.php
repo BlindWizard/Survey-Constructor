@@ -5,7 +5,7 @@ namespace App\Admin\DTO;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\PageContract;
 
-class PageObject implements PageContract
+class Page implements PageContract
 {
     /** @var string */
     public $id;

@@ -6,7 +6,7 @@ namespace App\Admin\DTO;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 
-class TemplateObject implements TemplateContract
+class Template implements TemplateContract
 {
     /** @var string */
     public $id;

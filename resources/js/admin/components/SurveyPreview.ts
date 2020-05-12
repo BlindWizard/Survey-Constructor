@@ -15,8 +15,7 @@ import {GetSurvey} from "../api/requests/GetSurvey";
                         <div :class="bem('survey-preview').el('statistics').classes()">
                             <p :class="bem('survey-preview').el('statistics-item').classes()">Runs: {{ survey.statistics.runsCount }}</p>
                             <p :class="bem('survey-preview').el('statistics-item').classes()">Completed: {{ survey.statistics.completesCount }}</p>
-                            <p :class="bem('survey-preview').el('statistics-item').classes()">Rejected: {{ survey.statistics.rejectsCount}}</p>
-                            <p :class="bem('survey-preview').el('statistics-item').classes()">Last update: {{ survey.statistics.lastUpdate || 'Never' }}</p>
+                            <p :class="bem('survey-preview').el('statistics-item').classes()">Last update: {{ survey.statistics.lastUpdated || 'Never' }}</p>
                         </div>
                     </div>
                 </div>

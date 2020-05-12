@@ -6,7 +6,7 @@ namespace App\Admin\Services;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Services\PageServiceContract;
-use App\Admin\DTO\PageObject;
+use App\Admin\DTO\Page;
 
 class PageService implements PageServiceContract
 {
@@ -30,7 +30,7 @@ class PageService implements PageServiceContract
 
         $page = $this->pageRepository->addPage($surveyId, null === $lastPage ? 0 : $lastPage->getStep() + 1);
 
-        $result = new PageObject();
+        $result = new Page();
         $result->id = $page->getId();
         $result->surveyId = $page->getSurveyId();
         $result->step = $page->getStep();

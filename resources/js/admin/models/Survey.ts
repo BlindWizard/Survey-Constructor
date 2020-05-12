@@ -13,10 +13,6 @@ export class Survey implements SurveyContract
 	public updatedAt: string;
 	public statistics: SurveyStatistics;
 
-	constructor() {
-		this.statistics = new SurveyStatistics();
-	}
-
 	getId(): string {
 		return this.id;
 	}

@@ -7,7 +7,7 @@ use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
-use App\Admin\DTO\TemplateObject;
+use App\Admin\DTO\Template;
 
 class TemplateService implements TemplateServiceContract
 {
@@ -31,7 +31,7 @@ class TemplateService implements TemplateServiceContract
         $public = $this->templatesRepository->getPublic($ownerId);
         $objects = [];
         foreach ($public as $template) {
-            $object            = new TemplateObject();
+            $object            = new Template();
             $object->id        = $template->getId();
             $object->title     = $template->getTitle();
             $object->public    = $template->getPublic();

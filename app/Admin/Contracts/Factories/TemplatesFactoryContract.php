@@ -5,7 +5,7 @@ namespace App\Admin\Contracts\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\TemplateContract;
-use App\Admin\DTO\TemplateObject;
+use App\Admin\DTO\Template;
 use App\Admin\Exceptions\TemplateNotFoundException;
 
 interface TemplatesFactoryContract
@@ -15,7 +15,7 @@ interface TemplatesFactoryContract
     /**
      * @param string $title
      *
-     * @return TemplateObject
+     * @return Template
      *
      * @throws TemplateNotFoundException
      * @throws \Throwable
@@ -23,7 +23,7 @@ interface TemplatesFactoryContract
     public function getSystemTemplate(string $title): TemplateContract;
 
     /**
-     * @return TemplateObject
+     * @return Template
      *
      * @throws \Throwable
      */

@@ -6,6 +6,7 @@ import {GetSurvey} from "./requests/GetSurvey";
 import {BlockWrapper} from "../models/BlockWrapper";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {Page} from "../models/Page";
+import {SurveyStatistics} from "../models/SurveyStatistics";
 
 export class SurveyApi
 {
@@ -39,6 +40,11 @@ export class SurveyApi
 					survey.ownerId = data.ownerId;
 					survey.createdAt = data.createdAt;
 					survey.updatedAt = data.updatedAt;
+
+					survey.statistics = new SurveyStatistics();
+					survey.statistics.runsCount = data.statistics.runsCount;
+					survey.statistics.completesCount = data.statistics.completesCount;
+					survey.statistics.lastUpdated = data.statistics.lastUpdated;
 
 					surveys.push(survey);
 				});

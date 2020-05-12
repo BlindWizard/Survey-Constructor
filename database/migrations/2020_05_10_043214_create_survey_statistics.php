@@ -21,8 +21,8 @@ class CreateSurveyStatistics extends Migration
             $table->uuid(SurveyStatistic::ATTR_SURVEY_ID);
             $table->integer(SurveyStatistic::ATTR_RUNS_COUNT)->default(0);
             $table->integer(SurveyStatistic::ATTR_COMPLETES_COUNT)->default(0);
-            $table->integer(SurveyStatistic::ATTR_REJECTS_COUNT)->default(0);
-            $table->timestamp(SurveyStatistic::ATTR_UPDATED_AT)->nullable()->default(null);
+            $table->timestamp(SurveyStatistic::ATTR_CREATED_AT)->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
+            $table->timestamp(SurveyStatistic::ATTR_UPDATED_AT)->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
         });
     }
 

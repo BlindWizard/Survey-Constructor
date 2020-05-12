@@ -6,7 +6,7 @@ namespace App\Admin\DTO;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 
-class SurveyObject implements SurveyContract
+class Survey implements SurveyContract
 {
     /** @var string */
     public $id;
@@ -20,6 +20,9 @@ class SurveyObject implements SurveyContract
     public $createdAt;
     /** @var string */
     public $updatedAt;
+
+    /** @var SurveyStatistic */
+    public $statistics;
 
     /**
      * @inheritDoc

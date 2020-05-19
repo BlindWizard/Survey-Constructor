@@ -16,6 +16,7 @@ export enum mutations
 	SET_ACTIVE_PAGE = 'setActivePage',
 	ADD_TOKEN = 'addToken',
 	SET_TOKENS = 'setTokens',
+	SET_SURVEY_STATISTICS = 'setSurveyStatistics',
 }
 
 export enum actions
@@ -35,6 +36,7 @@ export enum actions
 	LOAD_TOKENS = 'loadTokens',
 	ADD_TOKEN = 'addToken',
 	DELETE_TOKEN = 'deleteToken',
+	LOAD_SURVEY_STATISTICS = 'getSurveyStatistics',
 }
 
 export enum getters

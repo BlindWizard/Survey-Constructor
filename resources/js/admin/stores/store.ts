@@ -22,6 +22,8 @@ import {ApiToken} from "../models/ApiToken";
 import {SettingsApi} from "../api/settings.api";
 import {CreateToken} from "../api/requests/CreateToken";
 import {DeleteToken} from "../api/requests/DeleteToken";
+import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
+import {StatisticsApi} from "../api/statistics.api";
 
 Vue.use(Vuex);
 
@@ -240,6 +242,11 @@ const store = new Vuex.Store({
 			tokens = tokens.filter(token => token.id !== request.id);
 
 			commit(mutations.SET_TOKENS, tokens);
+		},
+		async [actions.LOAD_SURVEY_STATISTICS]({commit}, request: GetSurveyStatistics) {
+			let data = await StatisticsApi.getSurveyStatistics(request);
+
+			commit(mutations.SET_SURVEY_STATISTICS, data);
 		},
 	},
 	getters: {

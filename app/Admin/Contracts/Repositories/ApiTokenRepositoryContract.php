@@ -8,6 +8,13 @@ use App\Admin\Contracts\Entities\ApiTokenContract;
 interface ApiTokenRepositoryContract
 {
     /**
+     * @param array $tokenIds
+     *
+     * @return ApiTokenContract[]
+     */
+    public function findByIds(array $tokenIds): array;
+
+    /**
      * @param string $userId
      * @param string $name
      *

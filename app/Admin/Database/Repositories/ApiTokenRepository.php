@@ -10,6 +10,24 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ApiTokenRepository implements ApiTokenRepositoryContract
 {
+    public function findByIds(array $tokenIds): array
+    {
+        $tokens = [];
+        foreach (ApiToken::query()->whereIn(ApiToken::ATTR_ID, $tokenIds)->get() as $model) {
+            $token = new \App\Admin\DTO\ApiToken();
+            $token->id = $model->getId();
+            $token->userId = $model->getUserId();
+            $token->name = $model->getName();
+            $token->value = $model->getValue();
+            $token->createdAt = $model->getCreatedAt();
+            $token->updatedAt = $model->getUpdatedAt();
+
+            $tokens[$token->id] = $token;
+        }
+
+        return $tokens;
+    }
+
     /**
      * @inheritDoc
      */

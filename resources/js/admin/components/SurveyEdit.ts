@@ -7,8 +7,6 @@ import {GetSurvey} from "../api/requests/GetSurvey";
 import {ComponentsMenu} from "./ComponentsMenu";
 import {PageBlockWrapper} from "./editables/PageBlockWrapper";
 import {ScreensPager} from "./ScreensPager";
-import {Page} from "../models/Page";
-import {Survey} from "../models/Survey";
 import {PageContract} from "../contracts/PageContract";
 import {SurveyContract} from "../contracts/SurveyContract";
 

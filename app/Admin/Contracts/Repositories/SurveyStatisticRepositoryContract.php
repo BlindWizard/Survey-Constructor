@@ -28,5 +28,12 @@ interface SurveyStatisticRepositoryContract
      *
      * @return \App\Admin\DTO\SurveyStatistic
      */
-    public function findBySurveyId(string $surveyId): \App\Admin\DTO\SurveyStatistic;
+    public function findStatisticsBySurveyId(string $surveyId): \App\Admin\DTO\SurveyStatistic;
+
+    /**
+     * @param string $surveyId
+     *
+     * @return mixed
+     */
+    public function findBlockStatisticsBySurveyId(string $surveyId);
 }

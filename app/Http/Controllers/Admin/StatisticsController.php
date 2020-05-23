@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyById;
+use App\Admin\Queries\FindSurveyStatisticsById;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use Illuminate\Support\Facades\Auth;
@@ -34,9 +35,14 @@ class StatisticsController extends Controller
         return view('admin.main', ['settings' => $this->settings->getSettings()->toJson()]);
     }
 
-    public function getSurveyStatistics(string $id)
+    public function getSurveyStatistics(string $id, FindSurveyStatisticsById $query)
     {
         $response = new AjaxResponse();
+
+        $query->surveyId = $id;
+        $query->userId = Auth::user()->getAuthIdentifier();
+
+        $response->data = $query->perform()->getResult();
 
         return response()->json($response);
     }

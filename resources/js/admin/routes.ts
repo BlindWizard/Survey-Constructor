@@ -9,5 +9,5 @@ export const routes = [
 	{path: '/admin/templates', component: TemplatesList, name: 'templates-list'},
 	{path: '/admin/survey/:surveyId/edit', component: SurveyEdit, name: 'survey', props: true},
 	{path: '/admin/settings', component: UserSettings, name: 'settings'},
-	{path: '/admin/statistics/:surveyId', component: StatisticsReport, name: 'survey-statistics'},
+	{path: '/admin/statistics/:surveyId', component: StatisticsReport, name: 'survey-statistics', props: true},
 ];

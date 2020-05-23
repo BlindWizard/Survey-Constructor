@@ -45,7 +45,7 @@ class SurveyService implements SurveyServiceContract
             $object->createdAt = $survey->getCreatedAt();
             $object->updatedAt = $survey->getUpdatedAt();
 
-            $object->statistics = $this->statisticRepository->findBySurveyId($survey->getId());
+            $object->statistics = $this->statisticRepository->findStatisticsBySurveyId($survey->getId());
 
             $objects[] = $object;
         }

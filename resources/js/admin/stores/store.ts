@@ -24,6 +24,9 @@ import {CreateToken} from "../api/requests/CreateToken";
 import {DeleteToken} from "../api/requests/DeleteToken";
 import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
 import {StatisticsApi} from "../api/statistics.api";
+import {StatisticsReport} from "../components/StatisticsReport";
+import {SurveyStatistics} from "../models/SurveyStatistics";
+import {BlocksStatistics} from "../models/BlocksStatistics";
 
 Vue.use(Vuex);
 
@@ -39,6 +42,7 @@ const store = new Vuex.Store({
 		surveys: null as any,
 		templates: null as any,
 		tokens: null as any,
+		statistics: null as any,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -127,6 +131,10 @@ const store = new Vuex.Store({
 		},
 		[mutations.ADD_TOKEN](state, token: ApiToken) {
 			state.tokens.push(token);
+		},
+		[mutations.SET_SURVEY_STATISTICS] (state, data: BlocksStatistics) {
+			console.log(data);
+			state.statistics = data;
 		}
 	},
 	actions: {

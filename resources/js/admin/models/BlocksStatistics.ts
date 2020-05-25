@@ -1,4 +1,7 @@
+import {BlockStatistics} from "./BlockStatistics";
+
 export class BlocksStatistics {
-	public token: string;
-	public availableTokens: string[];
+	public tokenId: string;
+	public tokenLabel: string;
+	public blockStatistics: BlockStatistics[] = [];
 }

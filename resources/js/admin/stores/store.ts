@@ -132,8 +132,7 @@ const store = new Vuex.Store({
 		[mutations.ADD_TOKEN](state, token: ApiToken) {
 			state.tokens.push(token);
 		},
-		[mutations.SET_SURVEY_STATISTICS] (state, data: BlocksStatistics) {
-			console.log(data);
+		[mutations.SET_SURVEY_STATISTICS] (state, data: BlocksStatistics[]) {
 			state.statistics = data;
 		}
 	},
@@ -306,6 +305,9 @@ const store = new Vuex.Store({
 		[getters.TOKENS](state): ApiToken[] {
 			return state.tokens;
 		},
+		[getters.SURVEY_STATISTICS](state): BlocksStatistics[] {
+			return state.statistics;
+		}
 	}
 });
 

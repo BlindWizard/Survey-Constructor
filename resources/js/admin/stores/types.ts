@@ -48,6 +48,7 @@ export enum getters
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
 	SURVEY = 'activeSurvey',
+	SURVEY_STATISTICS = 'surveyStatistics',
 	CURRENT_PAGE = 'currentPage',
 	PAGE_BY_STEP = 'pageByStep',
 	PAGES = 'pages',

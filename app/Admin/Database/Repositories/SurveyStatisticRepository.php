@@ -7,7 +7,7 @@ use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Database\Models\SurveyStatistic;
 use App\Admin\DTO\BlocksStatistics;
-use App\Admin\DTO\OptionSelectedStatistics;
+use App\Admin\DTO\BlockStatistic;
 use App\Api\Contracts\Entities\ApiEventContract;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -120,7 +120,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 case ApiEventContract::OPTIONS_LIST_SELECT:
                     $statId =  $actionData['blockId'] . '.' . $actionData['optionId'];
                     if (false === array_key_exists($statId, $byToken[$tokenId])) {
-                        $blockStat = new OptionSelectedStatistics();
+                        $blockStat = new BlockStatistic();
                         $blockStat->blockId = $actionData['blockId'];
                         $blockStat->blockLabel = $blockData['text'];
                         $blockStat->type = ApiEventContract::OPTIONS_LIST_SELECT;
@@ -141,7 +141,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 case ApiEventContract::OPTION_SELECT:
                     $statId =  $actionData['blockId'];
                     if (false === array_key_exists($statId, $byToken[$tokenId])) {
-                        $blockStat = new OptionSelectedStatistics();
+                        $blockStat = new BlockStatistic();
                         $blockStat->blockId = $actionData['blockId'];
                         $blockStat->blockLabel = $blockData['text'];
                         $blockStat->type = ApiEventContract::OPTION_SELECT;
@@ -166,13 +166,15 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
 
         $result = [];
         foreach ($byToken as $tokenId => $blocksStat) {
-            $result = new BlocksStatistics();
-            $result->tokenId = $tokenId;
-            $result->tokenLabel = $tokens[$tokenId]->getValue();
+            $tokenData = new BlocksStatistics();
+            $tokenData->tokenId = $tokenId;
+            $tokenData->tokenLabel = $tokens[$tokenId]->getValue();
 
             foreach ($blocksStat as $blockStat) {
-                $result->blocks[] = $blockStat;
+                $tokenData->blocks[] = $blockStat;
             }
+
+            $result[] = $tokenData;
         }
 
         return $result;

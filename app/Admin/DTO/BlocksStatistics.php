@@ -11,6 +11,6 @@ class BlocksStatistics
     /** @var string */
     public $tokenLabel;
 
-    /** @var OptionSelectedStatistics[] */
+    /** @var BlockStatistic[] */
     public $blocks = [];
 }

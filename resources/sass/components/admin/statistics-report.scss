@@ -1,0 +1,23 @@
+.statistics-report {
+    &__block-statistics {
+        margin-top: 1rem;
+    }
+
+    &__block-header {
+        border-bottom: solid 2px $primary;
+    }
+
+    &__block-header {
+        font-size: 1.25rem;
+    }
+
+    &__block-option {
+        margin-top: 0.5rem;
+        text-align: left;
+    }
+
+    &__block-option-count {
+        margin-top: 0.5rem;
+        text-align: right;
+    }
+}

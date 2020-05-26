@@ -4,6 +4,7 @@ import {ApiToken} from "../models/ApiToken";
 import {GetSurveyStatistics} from "./requests/GetSurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
 import {BlockStatistics} from "../models/BlockStatistics";
+import {OptionStatistics} from "../models/OptionStatistics";
 
 export class StatisticsApi {
 	public static getSurveyStatistics(request: GetSurveyStatistics): Promise<BlocksStatistics[]>
@@ -22,9 +23,16 @@ export class StatisticsApi {
 						let blockStatistics = new BlockStatistics();
 						blockStatistics.blockId = blockData.blockId;
 						blockStatistics.blockLabel = blockData.blockLabel;
-						blockStatistics.valueLabel = blockData.valueLabel;
 						blockStatistics.type = blockData.type;
-						blockStatistics.count = blockData.count;
+
+						blockData.options.forEach((optionData: any) => {
+							let optionStatistics = new OptionStatistics();
+							optionStatistics.optionId = optionData.optionId;
+							optionStatistics.label = optionData.label;
+							optionStatistics.count = optionData.count;
+
+							blockStatistics.options.push(optionStatistics);
+						});
 
 						blocksStatistics.blockStatistics.push(blockStatistics);
 					});

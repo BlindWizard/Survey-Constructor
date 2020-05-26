@@ -11,8 +11,6 @@ class BlockStatistic
     public $blockId;
     /** @var string */
     public $blockLabel;
-    /** @var string */
-    public $valueLabel;
-    /** @var int */
-    public $count;
+    /** @var BlockOptionStatistic[] */
+    public $options = [];
 }

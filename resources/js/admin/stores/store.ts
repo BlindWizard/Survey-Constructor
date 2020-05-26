@@ -252,7 +252,6 @@ const store = new Vuex.Store({
 		},
 		async [actions.LOAD_SURVEY_STATISTICS]({commit}, request: GetSurveyStatistics) {
 			let data = await StatisticsApi.getSurveyStatistics(request);
-
 			commit(mutations.SET_SURVEY_STATISTICS, data);
 		},
 	},

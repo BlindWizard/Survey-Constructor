@@ -12222,6 +12222,28 @@ html.is-reveal-open body {
   margin: 0;
 }
 
+.statistics-report__block-statistics {
+  margin-top: 1rem;
+}
+
+.statistics-report__block-header {
+  border-bottom: solid 2px #fd5b15;
+}
+
+.statistics-report__block-header {
+  font-size: 1.25rem;
+}
+
+.statistics-report__block-option {
+  margin-top: 0.5rem;
+  text-align: left;
+}
+
+.statistics-report__block-option-count {
+  margin-top: 0.5rem;
+  text-align: right;
+}
+
 .description {
   background-color: #2d1e45;
   color: #fefefe;

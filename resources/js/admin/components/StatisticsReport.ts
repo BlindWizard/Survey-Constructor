@@ -2,23 +2,41 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {actions, getters} from "../stores/types";
 import {Prop} from "vue-property-decorator";
-import {SurveyContract} from "../contracts/SurveyContract";
 import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
 
 @Component({
 	template: `
-        <div :class="bem('statistics-report').classes()">
-            <div>
-                <select v-model="tokenId">
-                    <option v-for="(tokenValue, token) in tokensSelector" :value="token">{{ tokenValue }}</option>
-                </select>
-            </div>
-            <div v-if="tokenStatistics">
-                <div v-for="blockStatistics in tokenStatistics.blockStatistics">
-                    <div>{{ blockStatistics.blockLabel }}</div>
-                    <div>{{ blockStatistics.valueLabel }}</div>
-                    <div>{{ blockStatistics.count }}</div>
+        <div :class="bem('statistics-report').add('grid-container fluid').classes()">
+            <div class="grid-x">
+                <div class="cell large-8 large-offset-2 medium-12 medium-offset-0">
+                    <div :class="bem('statistics-report').el('header').classes()">
+                        <label>
+                            Token
+                            <select v-model="tokenId" :class="bem('statistics-report').el('token-selector-element').classes()">
+                                <option v-for="(tokenValue, token) in tokensSelector" :value="token">{{ tokenValue }}</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div v-if="tokenStatistics">
+                        <div v-for="blockStatistics in tokenStatistics.blockStatistics" :class="bem('statistics-report').el('block-statistics').classes()">
+                            <div :class="bem('statistics-report').el('block-header').classes()">
+                                {{ blockStatistics.blockLabel }}
+                            </div>
+                            <div :class="bem('statistics-report').el('block-data').classes()">
+                                <div v-for="optionStatistics in blockStatistics.options" class="grid-container fluid">
+                                    <div class="grid-x">
+	                                    <div :class="bem('statistics-report').el('block-option').add('cell small-6').classes()">
+	                                        {{ optionStatistics.label }}
+	                                    </div>
+	                                    <div :class="bem('statistics-report').el('block-option-count').add('cell small-6').classes()">
+	                                        {{ optionStatistics.count }}
+	                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,7 +51,7 @@ export class StatisticsReport extends Vue {
 			let request = new GetSurveyStatistics();
 			request.surveyId = this.surveyId;
 
-			this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request). then(() => {
+			this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request).then(() => {
 				if (null !== this.surveyStatistics) {
 					for (let statistics of this.surveyStatistics) {
 						this.tokenId = statistics.tokenId;
@@ -41,6 +59,12 @@ export class StatisticsReport extends Vue {
 					}
 				}
 			});
+		}
+		else {
+			for (let statistics of this.surveyStatistics) {
+				this.tokenId = statistics.tokenId;
+				break;
+			}
 		}
 	}
 

@@ -6,6 +6,7 @@ namespace App\Admin\Database\Repositories;
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Database\Models\SurveyStatistic;
+use App\Admin\DTO\BlockOptionStatistic;
 use App\Admin\DTO\BlocksStatistics;
 use App\Admin\DTO\BlockStatistic;
 use App\Api\Contracts\Entities\ApiEventContract;
@@ -77,11 +78,12 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                     SELECT
                         id,
                         survey_id,
+                        client_id,
                         token_id,
                         type,
                         data,
                         updated_at,
-                        rank() OVER (PARTITION BY data->>'blockId' ORDER BY updated_at DESC) AS rank
+                        rank() OVER (PARTITION BY client_id, data->>'blockId' ORDER BY updated_at DESC) AS rank
                     FROM
                         events
                     WHERE
@@ -93,7 +95,8 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 a.token_id,
                 a.type,
                 a.data as action_data,
-                d.data as block_data
+                d.data as block_data,
+                b.position as position
             FROM
                 last_actions a
             INNER JOIN blocks b
@@ -101,7 +104,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
             INNER JOIN blocks_data d 
                 ON d.id = b.id
             WHERE
-                  rank = 1
+                rank = 1
             ORDER BY
                 a.updated_at, b.position
         SQL, $bindings);
@@ -118,48 +121,63 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
 
             switch ($jsonData->{'type'}) {
                 case ApiEventContract::OPTIONS_LIST_SELECT:
-                    $statId =  $actionData['blockId'] . '.' . $actionData['optionId'];
-                    if (false === array_key_exists($statId, $byToken[$tokenId])) {
+                    if (false === array_key_exists($actionData['blockId'], $byToken[$tokenId])) {
                         $blockStat = new BlockStatistic();
                         $blockStat->blockId = $actionData['blockId'];
-                        $blockStat->blockLabel = $blockData['text'];
+                        $blockStat->blockLabel = $blockData['text'] ?: __('Block') . ' ' . $jsonData->{'position'};
                         $blockStat->type = ApiEventContract::OPTIONS_LIST_SELECT;
-                        $blockStat->count = 0;
                     }
                     else {
-                        $blockStat = $byToken[$tokenId][$statId];
+                        $blockStat = $byToken[$tokenId][$actionData['blockId']];
                     }
 
-                    foreach ($blockData['options'] as $option) {
-                        if ($option['id'] === $actionData['optionId']) {
-                            $blockStat->valueLabel = $option['text'];
-                            $blockStat->count++;
+                    foreach ($blockData['options'] as $optionData) {
+                        if ($optionData['id'] === $actionData['optionId']) {
+                            $found = false;
+                            foreach ($blockStat->options as $optionStat) {
+                                if ($optionStat->optionId === $actionData['optionId']) {
+                                    $found = true;
+                                    $blockStat->count++;
+                                }
+                            }
+
+                            if (false === $found) {
+                                $newOption = new BlockOptionStatistic();
+                                $newOption->optionId = $optionData['id'];
+                                $newOption->label = $optionData['text'];
+                                $newOption->count = 1;
+
+                                $blockStat->options[] = $newOption;
+                            }
                         }
                     }
 
                     break;
                 case ApiEventContract::OPTION_SELECT:
-                    $statId =  $actionData['blockId'];
-                    if (false === array_key_exists($statId, $byToken[$tokenId])) {
+                    if (false === array_key_exists($actionData['blockId'], $byToken[$tokenId])) {
                         $blockStat = new BlockStatistic();
                         $blockStat->blockId = $actionData['blockId'];
-                        $blockStat->blockLabel = $blockData['text'];
+                        $blockStat->blockLabel = $blockData['text'] ?: __('Block') . ' ' . $jsonData->{'position'};
                         $blockStat->type = ApiEventContract::OPTION_SELECT;
-                        $blockStat->count = 0;
+
+                        $optionStat = new BlockOptionStatistic();
+                        $optionStat->optionId = 0;
+                        $optionStat->label = 'Checked';
+                        $optionStat->count = 0;
+                        $blockStat->options[] = $optionStat;
                     }
                     else {
-                        $blockStat = $byToken[$tokenId][$statId];
+                        $blockStat = $byToken[$tokenId][$actionData['blockId']];
                     }
 
-                    $blockStat->valueLabel = $blockData['text'];
-                    $blockStat->count++;
+                    $blockStat->options[0]->count++;
 
                     break;
                 default:
                     throw new \Exception('Unknown stat data');
             }
 
-            $byToken[$tokenId][$statId] = $blockStat;
+            $byToken[$tokenId][$actionData['blockId']] = $blockStat;
         }
 
         $tokens = $this->tokenRepository->findByIds(array_keys($byToken));
@@ -168,7 +186,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
         foreach ($byToken as $tokenId => $blocksStat) {
             $tokenData = new BlocksStatistics();
             $tokenData->tokenId = $tokenId;
-            $tokenData->tokenLabel = $tokens[$tokenId]->getValue();
+            $tokenData->tokenLabel = $tokens[$tokenId]->getName();
 
             foreach ($blocksStat as $blockStat) {
                 $tokenData->blocks[] = $blockStat;

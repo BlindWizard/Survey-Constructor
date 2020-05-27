@@ -17,6 +17,7 @@ export enum mutations
 	ADD_TOKEN = 'addToken',
 	SET_TOKENS = 'setTokens',
 	SET_SURVEY_STATISTICS = 'setSurveyStatistics',
+	SET_STATISTICS_SAMPLE = 'setStatisticsSample',
 }
 
 export enum actions
@@ -37,6 +38,7 @@ export enum actions
 	ADD_TOKEN = 'addToken',
 	DELETE_TOKEN = 'deleteToken',
 	LOAD_SURVEY_STATISTICS = 'getSurveyStatistics',
+	LOAD_STATISTICS_SAMPLE = 'getStatisticsSample',
 }
 
 export enum getters
@@ -49,6 +51,7 @@ export enum getters
 	TEMPLATES = 'templates',
 	SURVEY = 'activeSurvey',
 	SURVEY_STATISTICS = 'surveyStatistics',
+	STATISTICS_SAMPLE = 'statisticsSample',
 	CURRENT_PAGE = 'currentPage',
 	PAGE_BY_STEP = 'pageByStep',
 	PAGES = 'pages',

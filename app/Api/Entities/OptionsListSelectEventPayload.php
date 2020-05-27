@@ -11,7 +11,7 @@ class OptionsListSelectEventPayload implements ApiEventPayloadContract
     /** @var string */
     public $optionId;
 
-    public function getData(): array
+    public function getData(): ?array
     {
         return [
             'blockId' => $this->blockId,

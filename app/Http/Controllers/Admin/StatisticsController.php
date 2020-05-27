@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyById;
+use App\Admin\Queries\FindSurveySampleById;
 use App\Admin\Queries\FindSurveyStatisticsById;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
@@ -41,6 +42,19 @@ class StatisticsController extends Controller
 
         $query->surveyId = $id;
         $query->userId = Auth::user()->getAuthIdentifier();
+
+        $response->data = $query->perform()->getResult();
+
+        return response()->json($response);
+    }
+
+    public function getStatisticsSample(string $id, string $sampleId, FindSurveySampleById $query)
+    {
+        $response = new AjaxResponse();
+
+        $query->surveyId = $id;
+        $query->sampleId = $sampleId;
+        $query->userId   = Auth::user()->getAuthIdentifier();
 
         $response->data = $query->perform()->getResult();
 

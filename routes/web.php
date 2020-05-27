@@ -13,8 +13,11 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin/survey/getAll', 'SurveyController@getAll');
     Route::get('/admin/survey/get/{id}', 'SurveyController@get');
     Route::post('/admin/survey/create', 'SurveyController@create');
+
     Route::get('/admin/statistics/{id}', 'StatisticsController@index');
+    Route::get('/admin/statistics/{id}/sample/{sampleId}', 'StatisticsController@index');
     Route::get('/admin/survey/statistics/{id}', 'StatisticsController@getSurveyStatistics');
+    Route::get('/admin/survey/statistics/{id}/sample/{sampleId}', 'StatisticsController@getStatisticsSample');
 
     Route::post('/admin/page/add', 'PageController@add');
     Route::post('/admin/page/delete', 'PageController@delete');

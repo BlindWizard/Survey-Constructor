@@ -5,11 +5,15 @@ namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
+use App\Admin\Database\Models\BlockData;
+use App\Admin\Database\Models\Page;
 use App\Admin\Database\Models\SurveyStatistic;
 use App\Admin\DTO\BlockOptionStatistic;
 use App\Admin\DTO\BlocksStatistics;
 use App\Admin\DTO\BlockStatistic;
+use App\Admin\DTO\StatisticSampleAction;
 use App\Api\Contracts\Entities\ApiEventContract;
+use App\Api\Database\Models\Event;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -68,7 +72,10 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
         return $object;
     }
 
-    public function findBlockStatisticsBySurveyId(string $surveyId)
+    /**
+     * @inheritDoc
+     */
+    public function findBlockStatisticsBySurveyId(string $surveyId): array
     {
         $bindings = ['surveyId' => $surveyId];
 
@@ -92,6 +99,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 )
             
             SELECT
+                a.client_id,
                 a.token_id,
                 a.type,
                 a.data as action_data,
@@ -137,7 +145,8 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                             foreach ($blockStat->options as $optionStat) {
                                 if ($optionStat->optionId === $actionData['optionId']) {
                                     $found = true;
-                                    $blockStat->count++;
+                                    $optionStat->count++;
+                                    $optionStat->samples[] = $jsonData->{'client_id'};
                                 }
                             }
 
@@ -146,6 +155,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                                 $newOption->optionId = $optionData['id'];
                                 $newOption->label = $optionData['text'];
                                 $newOption->count = 1;
+                                $newOption->samples[] = $jsonData->{'client_id'};
 
                                 $blockStat->options[] = $newOption;
                             }
@@ -171,6 +181,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                     }
 
                     $blockStat->options[0]->count++;
+                    $blockStat->options[0]->samples[] = $jsonData->{'client_id'};
 
                     break;
                 default:
@@ -196,6 +207,89 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
         }
 
         return $result;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findStatisticsSampleBySurveyId(string $surveyId, string $sampleId): array
+    {
+        $events = Event::query()
+            ->where(Event::ATTR_SURVEY_ID, '=', $surveyId)
+            ->where(Event::ATTR_CLIENT_ID, '=', $sampleId)
+            ->orderBy(Event::ATTR_UPDATED_AT)
+            ->get()
+            ->all()
+        ;/** @var Event[] $events */
+
+        $blockIds = [];
+        $pagesIds = [];
+        foreach ($events as $event) {
+            if (!empty($event->getData()['blockId'])) {
+                $blockIds[] = $event->getData()['blockId'];
+            }
+
+            if (!empty($event->getData()['pageId'])) {
+                $pagesIds[] = $event->getData()['pageId'];
+            }
+        }
+
+        $blocksData = BlockData::query()
+            ->whereIn(BlockData::ATTR_ID, $blockIds)
+            ->get()
+            ->keyBy(BlockData::ATTR_ID)
+            ->all()
+        ;/** @var BlockData[] $blocksData */
+
+        $pagesData = Page::query()
+            ->whereIn(Page::ATTR_ID, $pagesIds)
+            ->get()
+            ->keyBy(Page::ATTR_ID)
+            ->all()
+        ;/** @var Page[] $pagesData */
+
+        $sample = [];
+        foreach ($events as $event) {
+            $sampleAction = new StatisticSampleAction();
+            switch ($event->type) {
+                case ApiEventContract::RUN:
+                    $sampleAction->actionLabel = __('Start survey');
+                    $sampleAction->blockLabel = null;
+                    break;
+                case ApiEventContract::OPTION_SELECT:
+                    $sampleAction->actionLabel = __('Check option');
+                    $sampleAction->blockLabel = $blocksData[$event->getData()['blockId']]->getData()['text'];
+                    break;
+                case ApiEventContract::OPTIONS_LIST_SELECT:
+                    $sampleAction->actionLabel = __('Select option');
+
+                    $listData = $blocksData[$event->getData()['blockId']]->getData();
+                    foreach ($listData['options'] as $optionData) {
+                        if ($optionData['id'] === $event->getData()['optionId']) {
+                            $sampleAction->blockLabel = $listData['text'] . ($listData['text'] ? ' : ' : '') . $optionData['text'];
+                            break;
+                        }
+                    }
+
+                    break;
+                case ApiEventContract::PREV_PAGE:
+                    $sampleAction->actionLabel = __('Previous page');
+                    $sampleAction->blockLabel = 'Step ' . ($pagesData[$event->getData()['pageId']]->step + 1);
+                    break;
+                case ApiEventContract::NEXT_PAGE:
+                    $sampleAction->actionLabel = __('Next page');
+                    $sampleAction->blockLabel = 'Step ' . ($pagesData[$event->getData()['pageId']]->step + 1);
+
+                    break;
+                default:
+                    throw new \Exception('Undefined event type');
+            }
+
+            $sampleAction->timestamp = (new Carbon($event->updated_at))->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+            $sample[] = $sampleAction;
+        }
+
+        return $sample;
     }
 
     protected function findOrNew(string $surveyId, string $tokenId): SurveyStatistic

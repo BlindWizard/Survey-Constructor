@@ -33,8 +33,8 @@ class Event extends Model implements ApiEventPayloadContract
 
     public $incrementing = false;
 
-    public function getData(): array
+    public function getData(): ?array
     {
-        return \GuzzleHttp\json_decode($this->data);
+        return \GuzzleHttp\json_decode($this->data, true);
     }
 }

@@ -9,7 +9,7 @@ class NextPageEventPayload implements ApiEventPayloadContract
     /** @var string */
     public $pageId;
 
-    public function getData(): array
+    public function getData(): ?array
     {
         return [
             'pageId' => $this->pageId,

@@ -27,6 +27,8 @@ import {StatisticsApi} from "../api/statistics.api";
 import {StatisticsReport} from "../components/StatisticsReport";
 import {SurveyStatistics} from "../models/SurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
+import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
+import {StatisticAction} from "../models/StatisticAction";
 
 Vue.use(Vuex);
 
@@ -43,6 +45,7 @@ const store = new Vuex.Store({
 		templates: null as any,
 		tokens: null as any,
 		statistics: null as any,
+		sample: null as any,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -134,6 +137,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_SURVEY_STATISTICS] (state, data: BlocksStatistics[]) {
 			state.statistics = data;
+		},
+		[mutations.SET_STATISTICS_SAMPLE] (state, data: StatisticAction[]) {
+			state.sample = data;
 		}
 	},
 	actions: {
@@ -254,6 +260,10 @@ const store = new Vuex.Store({
 			let data = await StatisticsApi.getSurveyStatistics(request);
 			commit(mutations.SET_SURVEY_STATISTICS, data);
 		},
+		async [actions.LOAD_STATISTICS_SAMPLE]({commit}, request: GetStatisticsSample) {
+			let data = await StatisticsApi.getStatisticsSample(request);
+			commit(mutations.SET_STATISTICS_SAMPLE, data);
+		}
 	},
 	getters: {
 		[getters.CSRF](state): string {
@@ -306,6 +316,9 @@ const store = new Vuex.Store({
 		},
 		[getters.SURVEY_STATISTICS](state): BlocksStatistics[] {
 			return state.statistics;
+		},
+		[getters.STATISTICS_SAMPLE](state): null {
+			return state.sample;
 		}
 	}
 });

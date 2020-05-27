@@ -17,4 +17,8 @@ class BlockData extends Model
 
     public $incrementing = false;
     public $timestamps = false;
+
+    public function getData(): array {
+        return \GuzzleHttp\json_decode($this->data, true);
+    }
 }

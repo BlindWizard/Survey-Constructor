@@ -4,6 +4,7 @@ import {actions, getters} from "../stores/types";
 import {Prop} from "vue-property-decorator";
 import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
+import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 
 @Component({
 	template: `
@@ -26,12 +27,20 @@ import {BlocksStatistics} from "../models/BlocksStatistics";
                             <div :class="bem('statistics-report').el('block-data').classes()">
                                 <div v-for="optionStatistics in blockStatistics.options" class="grid-container fluid">
                                     <div class="grid-x">
-	                                    <div :class="bem('statistics-report').el('block-option').add('cell small-6').classes()">
-	                                        {{ optionStatistics.label }}
-	                                    </div>
-	                                    <div :class="bem('statistics-report').el('block-option-count').add('cell small-6').classes()">
-	                                        {{ optionStatistics.count }}
-	                                    </div>
+                                        <div :class="bem('statistics-report').el('block-option').add('cell small-6').classes()">
+                                            {{ optionStatistics.label }}
+                                        </div>
+                                        <div :class="bem('statistics-report').el('block-option-count').add('cell small-6').classes()">
+                                            {{ optionStatistics.count }}
+                                        </div>
+                                    </div>
+                                    <div :class="bem('statistics-report').el('samples-list').classes()">
+                                        <button v-for="sampleId in optionStatistics.samples"
+                                                :class="bem('button').is('rounded').add('primary').classes()"
+                                                @click="openRun(sampleId)"
+                                        >
+                                            {{ sampleId }}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -46,7 +55,7 @@ export class StatisticsReport extends Vue {
 	@Prop(String) readonly surveyId: string;
 	private tokenId: string|null = null;
 
-	public mounted() {
+	public mounted(){
 		if (null === this.surveyStatistics) {
 			let request = new GetSurveyStatistics();
 			request.surveyId = this.surveyId;
@@ -96,5 +105,15 @@ export class StatisticsReport extends Vue {
 
 	get surveyStatistics(): BlocksStatistics[]|null {
 		return this.$store.getters[getters.SURVEY_STATISTICS];
+	}
+
+	public openRun(sampleId: string) {
+		let request = new GetStatisticsSample();
+		request.surveyId = this.surveyId;
+		request.sampleId = sampleId;
+
+		this.$store.dispatch(actions.LOAD_STATISTICS_SAMPLE, request).then(() => {
+			this.$router.push({name: 'statistics-sample', params: {surveyId: this.surveyId, sampleId: sampleId}});
+		});
 	}
 }

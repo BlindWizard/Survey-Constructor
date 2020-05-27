@@ -175,13 +175,25 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         $optionStat->label = 'Checked';
                         $optionStat->count = 0;
                         $blockStat->options[] = $optionStat;
+
+                        $optionStat = new BlockOptionStatistic();
+                        $optionStat->optionId = 0;
+                        $optionStat->label = 'Not checked';
+                        $optionStat->count = 0;
+                        $blockStat->options[] = $optionStat;
                     }
                     else {
                         $blockStat = $byToken[$tokenId][$actionData['blockId']];
                     }
 
-                    $blockStat->options[0]->count++;
-                    $blockStat->options[0]->samples[] = $jsonData->{'client_id'};
+                    if ($actionData['checked']) {
+                        $blockStat->options[0]->count++;
+                        $blockStat->options[0]->samples[] = $jsonData->{'client_id'};
+                    }
+                    else {
+                        $blockStat->options[1]->count++;
+                        $blockStat->options[1]->samples[] = $jsonData->{'client_id'};
+                    }
 
                     break;
                 default:

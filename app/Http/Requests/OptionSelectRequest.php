@@ -17,6 +17,7 @@ class OptionSelectRequest extends FormRequest implements ApiEventContract
             'clientId' => 'required|uuid',
             'surveyId' => 'required|uuid',
             'blockId' => 'required|uuid',
+            'checked' => 'required|bool',
         ];
     }
 
@@ -44,6 +45,7 @@ class OptionSelectRequest extends FormRequest implements ApiEventContract
     {
         $payload = new OptionSelectEventPayload();
         $payload->blockId = (string) $this->json('blockId');
+        $payload->checked = (bool) $this->json('checked');
 
         return $payload;
     }

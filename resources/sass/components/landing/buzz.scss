@@ -1,0 +1,16 @@
+.buzz {
+    width: 640px;
+    height: 640px;
+
+    &_list {
+        background-image: url("../../../images/list.png");
+    }
+
+    &_chat {
+        background-image: url("../../../images/chat.png");
+    }
+
+    &_data {
+        background-image: url("../../../images/database.png");
+    }
+}

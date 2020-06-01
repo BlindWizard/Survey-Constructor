@@ -1,6 +1,8 @@
 .top-menu {
     background-color: $dark;
     color: $white;
+    position: relative;
+    z-index: 10;
 
     &__inner {
         background-color: $dark;
@@ -20,5 +22,13 @@
         display: inline-block;
         vertical-align: top;
         padding: 0.5rem 0;
+    }
+
+    &_transparent {
+        background-color: transparent;
+
+        .top-menu__inner {
+            background-color: transparent;
+        }
     }
 }

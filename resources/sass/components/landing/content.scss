@@ -1,0 +1,19 @@
+.content-wrapper {
+    padding: 0 1rem;
+}
+
+.content {
+    margin-top: -2rem;
+    border-radius: 1rem;
+    background-color: $white;
+
+    &__about {
+        padding: 1rem;
+        text-align: center;
+
+        h4 {
+            color: $dark-gray;
+            margin: 0;
+        }
+    }
+}

@@ -11993,6 +11993,8 @@ html.is-reveal-open body {
 .top-menu {
   background-color: #2d1e45;
   color: #fefefe;
+  position: relative;
+  z-index: 10;
 }
 
 .top-menu__inner {
@@ -12013,6 +12015,14 @@ html.is-reveal-open body {
   display: inline-block;
   vertical-align: top;
   padding: 0.5rem 0;
+}
+
+.top-menu_transparent {
+  background-color: transparent;
+}
+
+.top-menu_transparent .top-menu__inner {
+  background-color: transparent;
 }
 
 .settings-menu {
@@ -12244,16 +12254,71 @@ html.is-reveal-open body {
   text-align: right;
 }
 
+.home-page__body {
+  background-color: #2d1e45;
+}
+
 .description {
   background-color: #2d1e45;
   color: #fefefe;
   text-align: center;
+  background-image: url(/images/sky-bg-1.jpg?459ebd03579e0bac258eb4dfa88bf424);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  margin-top: -4rem;
 }
 
 .join-block {
   display: inline-block;
   padding: 2rem;
-  border: solid 0.2rem #fefefe;
+  margin: 8rem 0 6rem 0;
+}
+
+.join-block h1 {
+  font-size: 3.5rem;
+  font-weight: bold;
+}
+
+.join-block__button {
+  margin-top: 2rem;
+}
+
+.content-wrapper {
+  padding: 0 1rem;
+}
+
+.content {
+  margin-top: -2rem;
+  border-radius: 1rem;
+  background-color: #fefefe;
+}
+
+.content__about {
+  padding: 1rem;
+  text-align: center;
+}
+
+.content__about h4 {
+  color: #8a8a8a;
+  margin: 0;
+}
+
+.buzz {
+  width: 640px;
+  height: 640px;
+}
+
+.buzz_list {
+  background-image: url(/images/list.png?cf90b79a5bd7511acef20e18d58180af);
+}
+
+.buzz_chat {
+  background-image: url(/images/chat.png?34021a0d488f4387a6fc46de3f97f0b4);
+}
+
+.buzz_data {
+  background-image: url(/images/database.png?33e9e7fb131d222bdd82f8979c8b715d);
 }
 
 .survey-block {

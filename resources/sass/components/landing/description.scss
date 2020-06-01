@@ -2,4 +2,9 @@
     background-color: $dark;
     color: $white;
     text-align: center;
+    background-image: url('../../../images/sky-bg-1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    margin-top: -4rem;
 }

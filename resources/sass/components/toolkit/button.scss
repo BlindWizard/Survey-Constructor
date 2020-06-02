@@ -45,12 +45,24 @@
         display: inline-block;
     }
 
+    &.transparent {
+        background-color: transparent;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+
     &.dark {
         background-color: $dark;
 
         &:hover {
             background-color: #331f4c;
         }
+    }
+
+    &.wide {
+        padding: 0.25rem 2rem;;
     }
 
     &_run {

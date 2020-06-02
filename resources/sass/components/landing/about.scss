@@ -1,6 +1,9 @@
 .about {
+    padding: 2rem 0;
+
     &__label {
         color: $white;
+        font-weight: bold;
     }
 
     &__description {

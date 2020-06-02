@@ -27,7 +27,40 @@
         }
     }
 
+    &__feedback {
+        background-image: url("../../../images/laptop.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        &-background {
+            padding: 2rem 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        &-label {
+            color: $white;
+            font-weight: bold;
+        }
+
+        &-about {
+            color: $white;
+        }
+    }
+
     &__footer {
         background-color: $dark;
+    }
+
+    &__copyright {
+        background-color: $dark;
+        color: $dark-gray;
+        border-radius: 0 0 1rem 1rem;
+
+        h3 {
+            border-top: solid 1px $dark-gray;
+            text-align: center;
+            padding: 1rem;
+            font-size: 1rem;
+        }
     }
 }

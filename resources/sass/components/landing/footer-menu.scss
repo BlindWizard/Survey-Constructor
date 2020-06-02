@@ -1,0 +1,13 @@
+.footer-menu {
+    font-weight: bold;
+    color: $white;
+    padding: 2rem;
+
+    &__item {
+        margin-bottom: 0.5rem;
+
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+}

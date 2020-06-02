@@ -10,8 +10,17 @@
                 </div>
                 <div class="top-bar-right">
                     <div>
+                        <button class="button button_rounded transparent">
+                            <span class="button__label">{{ __('Features') }}</span>
+                        </button>
+                        <button class="button button_rounded transparent">
+                            <span class="button__label">{{ __('How to use') }}</span>
+                        </button>
+                        <button class="button button_rounded transparent">
+                            <span class="button__label">{{ __('Contact us') }}</span>
+                        </button>
                         @auth
-                            <form action="{{ route('logout') }}" method="post">
+                            <form class="top-menu__auth-form" action="{{ route('logout') }}" method="post">
                                 @csrf
                                 <button class="button button_rounded secondary">
                                     <span class="button__label">{{ __('Logout') }}</span>

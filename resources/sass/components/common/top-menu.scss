@@ -24,6 +24,10 @@
         padding: 0.5rem 0;
     }
 
+    &__auth-form {
+        display: inline-block;
+    }
+
     &_transparent {
         background-color: transparent;
 

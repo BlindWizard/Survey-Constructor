@@ -11574,12 +11574,24 @@ html.is-reveal-open body {
   display: inline-block;
 }
 
+.button.transparent {
+  background-color: transparent;
+}
+
+.button.transparent:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 .button.dark {
   background-color: #2d1e45;
 }
 
 .button.dark:hover {
   background-color: #331f4c;
+}
+
+.button.wide {
+  padding: 0.25rem 2rem;
 }
 
 .button_run {
@@ -12017,6 +12029,10 @@ html.is-reveal-open body {
   padding: 0.5rem 0;
 }
 
+.top-menu__auth-form {
+  display: inline-block;
+}
+
 .top-menu_transparent {
   background-color: transparent;
 }
@@ -12309,8 +12325,41 @@ html.is-reveal-open body {
   color: #8a8a8a;
 }
 
+.content__feedback {
+  background-image: url(/images/laptop.jpg?62e80a6add3491a13dfa40b5de9e4873);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.content__feedback-background {
+  padding: 2rem 0;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content__feedback-label {
+  color: #fefefe;
+  font-weight: bold;
+}
+
+.content__feedback-about {
+  color: #fefefe;
+}
+
 .content__footer {
   background-color: #2d1e45;
+}
+
+.content__copyright {
+  background-color: #2d1e45;
+  color: #8a8a8a;
+  border-radius: 0 0 1rem 1rem;
+}
+
+.content__copyright h3 {
+  border-top: solid 1px #8a8a8a;
+  text-align: center;
+  padding: 1rem;
+  font-size: 1rem;
 }
 
 .buzz {
@@ -12346,12 +12395,31 @@ html.is-reveal-open body {
   height: 200px;
 }
 
+.about {
+  padding: 2rem 0;
+}
+
 .about__label {
   color: #fefefe;
+  font-weight: bold;
 }
 
 .about__description {
   color: #8a8a8a;
+}
+
+.footer-menu {
+  font-weight: bold;
+  color: #fefefe;
+  padding: 2rem;
+}
+
+.footer-menu__item {
+  margin-bottom: 0.5rem;
+}
+
+.footer-menu__item:last-of-type {
+  margin-bottom: 0;
 }
 
 .survey-block {

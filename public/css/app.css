@@ -12255,24 +12255,21 @@ html.is-reveal-open body {
 }
 
 .home-page__body {
-  background-color: #2d1e45;
-}
-
-.description {
-  background-color: #2d1e45;
-  color: #fefefe;
-  text-align: center;
   background-image: url(/images/sky-bg-1.jpg?459ebd03579e0bac258eb4dfa88bf424);
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
-  margin-top: -4rem;
+}
+
+.description {
+  color: #fefefe;
+  text-align: center;
 }
 
 .join-block {
   display: inline-block;
   padding: 2rem;
-  margin: 8rem 0 6rem 0;
+  margin: 10rem 0 8rem 0;
 }
 
 .join-block h1 {
@@ -12285,17 +12282,16 @@ html.is-reveal-open body {
 }
 
 .content-wrapper {
-  padding: 0 1rem;
+  padding: 0 2rem;
 }
 
 .content {
-  margin-top: -2rem;
   border-radius: 1rem;
   background-color: #fefefe;
 }
 
 .content__about {
-  padding: 1rem;
+  padding: 4rem 2rem 2rem 2rem;
   text-align: center;
 }
 
@@ -12304,9 +12300,25 @@ html.is-reveal-open body {
   margin: 0;
 }
 
+.content__buzz h3 {
+  font-size: 1.5rem;
+}
+
+.content__buzz h4 {
+  font-size: 1.5rem;
+  color: #8a8a8a;
+}
+
+.content__footer {
+  background-color: #2d1e45;
+}
+
 .buzz {
-  width: 640px;
-  height: 640px;
+  width: 100%;
+  height: 100%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  display: inline-block;
 }
 
 .buzz_list {
@@ -12319,6 +12331,27 @@ html.is-reveal-open body {
 
 .buzz_data {
   background-image: url(/images/database.png?33e9e7fb131d222bdd82f8979c8b715d);
+  background-size: 150% 150%;
+  background-position: 50% 50%;
+}
+
+.advance {
+  text-align: center;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+
+.advance .buzz {
+  width: 200px;
+  height: 200px;
+}
+
+.about__label {
+  color: #fefefe;
+}
+
+.about__description {
+  color: #8a8a8a;
 }
 
 .survey-block {

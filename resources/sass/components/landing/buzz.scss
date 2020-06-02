@@ -1,6 +1,9 @@
 .buzz {
-    width: 640px;
-    height: 640px;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    display: inline-block;
 
     &_list {
         background-image: url("../../../images/list.png");
@@ -12,5 +15,7 @@
 
     &_data {
         background-image: url("../../../images/database.png");
+        background-size: 150% 150%;
+        background-position: 50% 50%;
     }
 }

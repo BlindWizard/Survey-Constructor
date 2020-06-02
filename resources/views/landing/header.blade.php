@@ -10,11 +10,6 @@
                 </div>
                 <div class="top-bar-right">
                     <div>
-                        <a href="{{ route('login') }}">
-                            <button class="button button_rounded primary">
-                                <span class="button__label">{{ __('Sign in') }}</span>
-                            </button>
-                        </a>
                         @auth
                             <form action="{{ route('logout') }}" method="post">
                                 @csrf
@@ -22,6 +17,12 @@
                                     <span class="button__label">{{ __('Logout') }}</span>
                                 </button>
                             </form>
+                        @else
+                            <a href="{{ route('login') }}">
+                                <button class="button button_rounded primary">
+                                    <span class="button__label">{{ __('Sign in') }}</span>
+                                </button>
+                            </a>
                         @endauth
                     </div>
                 </div>

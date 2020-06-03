@@ -30,6 +30,12 @@ import Vue from "vue";
                         <i :class="bem('components-menu').el('icon').add('fi-pencil').classes()"></i>
                     </a>
                 </li>
+                <li :class="bem('components-menu').el('item').classes()">
+                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'text-field'">
+                        Text field
+                        <i :class="bem('components-menu').el('icon').add('fi-print').classes()"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     `,

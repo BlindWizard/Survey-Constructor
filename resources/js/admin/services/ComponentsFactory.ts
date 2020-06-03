@@ -9,6 +9,7 @@ import {Option} from "../models/Option";
 import {BaseBlock} from "../components/editables/BaseBlock";
 import {Header} from "../models/Header";
 import {Text} from "../models/Text";
+import {TextField} from "../models/TextField";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -73,6 +74,14 @@ export class ComponentsFactory
 				block.text = blockData.text;
 
 				break;
+			case BlockTypes.TEXT_FIELD:
+				block = new TextField();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.text = blockData.text;
+				block.multiline = blockData.multiline;
+				break;
+
 			default:
 				throw new Error('Undefined block type');
 		}

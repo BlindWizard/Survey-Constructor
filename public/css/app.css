@@ -12707,3 +12707,32 @@ html.is-reveal-open body {
   margin: 1rem;
 }
 
+.text-field-wrapper {
+  position: relative;
+}
+
+.text-field-wrapper .block-edit-menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.text-field-wrapper:focus {
+  outline: none;
+}
+
+.text-field {
+  background-color: #fefefe;
+  display: inline-block;
+  width: 100%;
+  color: #0a0a0a;
+  font-size: 1rem;
+  line-height: 1.25rem;
+  padding: 1rem;
+}
+
+.text-field__value {
+  display: block;
+  margin: 0;
+}
+

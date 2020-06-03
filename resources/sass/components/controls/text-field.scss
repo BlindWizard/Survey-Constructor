@@ -1,0 +1,28 @@
+.text-field-wrapper {
+    position: relative;
+
+    .block-edit-menu {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.text-field {
+    background-color: $white;
+    display: inline-block;
+    width: 100%;
+    color: $black;
+    font-size: 1rem;
+    line-height: 1.25rem;
+    padding: 1rem;
+
+    &__value {
+        display: block;
+        margin: 0;
+    }
+}

@@ -12,6 +12,8 @@ import {TextBlock} from "./TextBlock";
 import {TextBlockWrapper} from "../editables/text/TextBlockWrapper";
 import {Page} from "../../models/Page";
 import {PageContract} from "../../contracts/PageContract";
+import {TextFieldBlock} from "./TextFieldBlock";
+import {TextFieldBlockWrapper} from "../editables/text-field/TextFieldBlockWrapper";
 
 @Component({
 	template: `
@@ -28,6 +30,8 @@ import {PageContract} from "../../contracts/PageContract";
 		HeaderBlockWrapper,
 		TextBlock,
 		TextBlockWrapper,
+		TextFieldBlock,
+		TextFieldBlockWrapper,
 	}
 })
 export class PageBlock extends Vue {

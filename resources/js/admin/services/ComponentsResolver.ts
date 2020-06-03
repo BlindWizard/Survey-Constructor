@@ -10,6 +10,8 @@ import {TextBlock} from "../components/controls/TextBlock";
 import {TextBlockWrapper} from "../components/editables/text/TextBlockWrapper";
 import {BaseBlock} from "../components/editables/BaseBlock";
 import {actions} from "../../client/stores/types";
+import {TextFieldBlockWrapper} from "../components/editables/text-field/TextFieldBlockWrapper";
+import {TextFieldBlock} from "../components/controls/TextFieldBlock";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -25,6 +27,8 @@ export class ComponentsResolver {
 				return 'HeaderBlock' + (this.editable ? 'Wrapper' : '');
 			case BlockTypes.TEXT:
 				return 'TextBlock' + (this.editable ? 'Wrapper' : '');
+			case BlockTypes.TEXT_FIELD:
+				return 'TextFieldBlock' + (this.editable ? 'Wrapper' : '');
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -41,6 +45,8 @@ export class ComponentsResolver {
 				return this.editable ? HeaderBlockWrapper : HeaderBlock;
 			case BlockTypes.TEXT:
 				return this.editable ? TextBlockWrapper : TextBlock;
+			case BlockTypes.TEXT_FIELD:
+				return this.editable ? TextFieldBlockWrapper : TextFieldBlock;
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -69,6 +75,7 @@ export class ComponentsResolver {
 				};
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:
+			case BlockTypes.TEXT_FIELD:
 				return () => {
 				};
 			default:

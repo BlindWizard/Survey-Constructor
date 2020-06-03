@@ -10,6 +10,7 @@ use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\DTO\Text;
+use App\Admin\DTO\TextField;
 use App\Admin\Exceptions\BlockTypeException;
 use Ramsey\Uuid\Uuid;
 
@@ -29,6 +30,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getHeader($blockId);
             case BlockContract::TYPE_TEXT:
                 return $this->getText($blockId);
+            case BlockContract::TYPE_TEXT_FIELD:
+                return $this->getTextField($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -78,6 +81,15 @@ class BlockFactory implements BlockFactoryContract
                 break;
             case BlockContract::TYPE_TEXT:
                 $dto = new Text();
+                $dto->id = $model->getId();
+                $dto->pageId = $model->getPageId();
+                $dto->text = $model->getData()['text'];
+                $dto->position = $model->getPosition();
+
+                $result[] = $dto;
+                break;
+            case BlockContract::TYPE_TEXT_FIELD:
+                $dto = new TextField();
                 $dto->id = $model->getId();
                 $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
@@ -170,6 +182,23 @@ class BlockFactory implements BlockFactoryContract
     public function getText(string $blockId = null): Text
     {
         $block = new Text();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+        $block->text = __('Default text');
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return TextField
+     *
+     * @throws \Exception
+     */
+    public function getTextField(string $blockId = null): TextField
+    {
+        $block = new TextField();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
         $block->text = __('Default text');

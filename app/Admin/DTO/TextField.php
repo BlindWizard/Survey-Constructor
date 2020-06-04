@@ -11,13 +11,15 @@ class TextField implements BlockContract
     /** @var string */
     public $id;
     /** @var string */
-    public $text;
+    public $label;
+    /** @var string */
+    public $placeholder;
     /** @var string */
     public $pageId;
     /** @var int */
     public $position;
     /** @var bool */
-    public $multiline = false;
+    public $multiline;
 
     /**
      * @inheritDoc
@@ -81,7 +83,8 @@ class TextField implements BlockContract
     public function getData(): array
     {
         return [
-            'text' => $this->text,
+            'label' => $this->label,
+            'placeholder' => $this->placeholder,
             'multiline' => $this->multiline,
         ];
     }

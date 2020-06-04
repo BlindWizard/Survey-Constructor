@@ -12,6 +12,11 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('landing.main');
+        $config = config('util');
+
+        $feedbackFormId = $config['feedback_form_id'];
+        $adminToken = $config['admin_token'];
+
+        return view('landing.main', compact('feedbackFormId', 'adminToken'));
     }
 }

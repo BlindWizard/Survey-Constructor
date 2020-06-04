@@ -20,20 +20,20 @@ import Vue from "vue";
                 </li>
                 <li :class="bem('components-menu').el('item').classes()">
                     <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'option'">
-                        Single check mark
+                        Single checkbox
                         <i :class="bem('components-menu').el('icon').add('fi-checkbox').classes()"></i>
                     </a>
                 </li>
                 <li :class="bem('components-menu').el('item').classes()">
                     <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'text'">
-                        Text
+                        Label
                         <i :class="bem('components-menu').el('icon').add('fi-pencil').classes()"></i>
                     </a>
                 </li>
                 <li :class="bem('components-menu').el('item').classes()">
                     <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'text-field'">
                         Text field
-                        <i :class="bem('components-menu').el('icon').add('fi-print').classes()"></i>
+                        <i :class="bem('components-menu').el('icon').add('fi-page').classes()"></i>
                     </a>
                 </li>
             </ul>

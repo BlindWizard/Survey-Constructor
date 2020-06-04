@@ -1,4 +1,4 @@
-export class GetSurvey {
+export class GetSurveyRequest {
 	surveyId: string;
 	token: string;
 }

@@ -4,7 +4,8 @@ import {BlockTypes} from "../contracts/BlockTypes";
 export class TextField implements BlockContract {
 	public id: string;
 	public position: number;
-	public text: string;
+	public label: string;
+	public placeholder: string;
 	public multiline: boolean;
 
 	getType(): string
@@ -30,12 +31,16 @@ export class TextField implements BlockContract {
 	getData(): Object
 	{
 		return {
-			'text': this.text,
+			'label': this.label,
+			'placeholder': this.placeholder,
+			'multiline': this.multiline,
 		};
 	}
 
 	setData(data: Object): void
 	{
-		this.text = data['text'];
+		this.label = data['label'];
+		this.placeholder = data['placeholder'];
+		this.multiline = data['multiline'];
 	}
 }

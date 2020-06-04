@@ -52,7 +52,7 @@ export class ComponentsResolver {
 		}
 	}
 
-	public resolveComponentHandler(type: string): Function {
+	public resolveComponentHandler(type: string): Function|null {
 		switch (type) {
 			case BlockTypes.OPTIONS_LIST:
 				return (component: BaseBlock, event: MouseEvent) => {
@@ -73,11 +73,18 @@ export class ComponentsResolver {
 
 					component.$store.dispatch(actions.OPTION_SELECT, data);
 				};
+			case BlockTypes.TEXT_FIELD:
+				return (component: BaseBlock, event: KeyboardEvent) => {
+					let data = {
+						blockId: component.block.getId(),
+						text: (event.target as any).value,
+					};
+
+					component.$store.dispatch(actions.ENTER_TEXT, data);
+				}
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:
-			case BlockTypes.TEXT_FIELD:
-				return () => {
-				};
+				return null;
 			default:
 				throw new Error('Undefined block type');
 		}

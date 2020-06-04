@@ -12,7 +12,8 @@ import {OptionSelectRequest} from "../api/requests/OptionSelectRequest";
 import {OptionsListSelectRequest} from "../api/requests/OptionsListSelectRequest";
 import {RunRequest} from "../api/requests/RunRequest";
 import {RunSettings} from "../models/RunSettings";
-import {GetSurvey} from "../api/requests/GetSurvey";
+import {GetSurveyRequest} from "../api/requests/GetSurveyRequest";
+import {EnterTextRequest} from "../api/requests/EnterTextRequest";
 
 Vue.use(Vuex);
 
@@ -51,7 +52,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_SURVEY_ID, settings.surveyId);
 		},
 		async [actions.LOAD_SURVEY]({commit, state}) {
-			let getSurvey = new GetSurvey();
+			let getSurvey = new GetSurveyRequest();
 			getSurvey.surveyId = state.surveyId;
 			getSurvey.token = state.token;
 
@@ -122,6 +123,16 @@ const store = new Vuex.Store({
 
 			await EventsApi.optionSelect(request);
 		},
+		async [actions.ENTER_TEXT]({commit, state}, data: any) {
+			let request = new EnterTextRequest();
+			request.clientId = state.clientId;
+			request.surveyId = state.survey.getId();
+			request.blockId = data.blockId;
+			request.text = data.text as string;
+			request.token = state.token;
+
+			await EventsApi.enterText(request);
+		}
 	},
 	getters: {
 		[getters.CURRENT_PAGE](state): PageContract|null {

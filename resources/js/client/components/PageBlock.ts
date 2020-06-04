@@ -9,14 +9,15 @@ import {Page} from "../../admin/models/Page";
 import {PageContract} from "../../admin/contracts/PageContract";
 import {ComponentsResolver} from "../../admin/services/ComponentsResolver";
 import {ScreensPager} from "./ScreensPager";
+import {TextFieldBlock} from "../../admin/components/controls/TextFieldBlock";
 
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
             <component :key="block.getId()"
                        v-for="block in page.getBlocksInOrder()"
-                       :is="resolver.resolveComponentClass(block.getType()).name"
                        :block="block"
+                       :is="resolver.resolveComponentClass(block.getType()).name"
                        :handler="resolver.resolveComponentHandler(block.getType())"
             />
             <ScreensPager />
@@ -27,6 +28,7 @@ import {ScreensPager} from "./ScreensPager";
 		OptionBlock,
 		HeaderBlock,
 		TextBlock,
+		TextFieldBlock,
 		ScreensPager,
 	}
 })

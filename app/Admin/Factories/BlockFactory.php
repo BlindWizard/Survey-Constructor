@@ -5,7 +5,6 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
-use App\Admin\Database\Models\Block;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
@@ -92,8 +91,10 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new TextField();
                 $dto->id = $model->getId();
                 $dto->pageId = $model->getPageId();
-                $dto->text = $model->getData()['text'];
+                $dto->label = $model->getData()['label'];
+                $dto->placeholder = $model->getData()['placeholder'];
                 $dto->position = $model->getPosition();
+                $dto->multiline = $model->getData()['multiline'];
 
                 $result[] = $dto;
                 break;
@@ -201,7 +202,9 @@ class BlockFactory implements BlockFactoryContract
         $block = new TextField();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
-        $block->text = __('Default text');
+        $block->label = __('Label');
+        $block->placeholder = __('Placeholder text');
+        $block->multiline = false;
 
         return $block;
     }

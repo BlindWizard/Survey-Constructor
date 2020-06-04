@@ -4,7 +4,7 @@ import {axios} from "../../common/axios";
 import {Page} from "../../admin/models/Page";
 import {BlockWrapper} from "../../admin/models/BlockWrapper";
 import {ComponentsFactory} from "../../admin/services/ComponentsFactory";
-import {GetSurvey} from "./requests/GetSurvey";
+import {GetSurveyRequest} from "./requests/GetSurveyRequest";
 
 export class SurveyApi
 {
@@ -13,7 +13,7 @@ export class SurveyApi
 	 *
 	 * @param request
 	 */
-	public static getSurvey(request: GetSurvey): Promise<Survey>
+	public static getSurvey(request: GetSurveyRequest): Promise<Survey>
 	{
 		return axios.get('/api/survey/get/' + request.surveyId + '?token=' + request.token)
 			.then((response) => {

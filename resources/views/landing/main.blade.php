@@ -63,12 +63,15 @@
                                 </div>
                                 <div class="cell small-6">
                                     <div class="feedback-form">
-                                        <div class="survey-block">
-                                            <div class="header">
-                                                <div class="header__image"><div class="main-logo"></div></div>
-                                                <h1 class="header__label">Survey Box</h1>
-                                            </div>
-                                        </div>
+                                        <div id="survey-feedback"></div>
+                                        <script src="{{ mix('/js/client/loader.js') }}"></script>
+                                        <script>
+                                            SurveyBoxLoader.runSurvey({
+                                                element: 'survey-feedback',
+                                                surveyId: '{{ $feedbackFormId }}',
+                                                token: '{{ $adminToken }}'
+                                            });
+                                        </script>
                                     </div>
                                 </div>
                             </div>

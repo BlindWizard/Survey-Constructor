@@ -78,7 +78,8 @@ export class ComponentsFactory
 				block = new TextField();
 				block.id = blockData.id;
 				block.position = blockData.position;
-				block.text = blockData.text;
+				block.label = blockData.label;
+				block.placeholder = blockData.placeholder;
 				block.multiline = blockData.multiline;
 				break;
 

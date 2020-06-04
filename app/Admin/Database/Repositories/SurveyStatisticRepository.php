@@ -95,7 +95,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         events
                     WHERE
                             survey_id = :surveyId
-                        AND type IN ('optionsListSelect', 'optionSelect')
+                        AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
                 )
             
             SELECT
@@ -132,7 +132,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                     if (false === array_key_exists($actionData['blockId'], $byToken[$tokenId])) {
                         $blockStat = new BlockStatistic();
                         $blockStat->blockId = $actionData['blockId'];
-                        $blockStat->blockLabel = $blockData['text'] ?: __('Block') . ' ' . $jsonData->{'position'};
+                        $blockStat->blockLabel = !empty($blockData['text']) ? $blockData['text'] : (__('Block') . ' ' . $jsonData->{'position'});
                         $blockStat->type = ApiEventContract::OPTIONS_LIST_SELECT;
                     }
                     else {
@@ -195,6 +195,36 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         $blockStat->options[1]->samples[] = $jsonData->{'client_id'};
                     }
 
+                    break;
+                case ApiEventContract::ENTER_TEXT:
+                    if (false === array_key_exists($actionData['blockId'], $byToken[$tokenId])) {
+                        $blockStat = new BlockStatistic();
+                        $blockStat->blockId = $actionData['blockId'];
+                        $blockStat->blockLabel = $blockData['label'] ?: __('Block') . ' ' . $jsonData->{'position'};
+                        $blockStat->type = ApiEventContract::ENTER_TEXT;
+                    }
+                    else {
+                        $blockStat = $byToken[$tokenId][$actionData['blockId']];
+                    }
+
+                    $found = false;
+                    foreach ($blockStat->options as $optionStat) {
+                        if ($optionStat->label === $actionData['text']) {
+                            $optionStat->count++;
+                            $optionStat->samples[] = $jsonData->{'client_id'};
+                            $found = true;
+                            break;
+                        }
+                    }
+
+                    if (false === $found) {
+                        $optionStat           = new BlockOptionStatistic();
+                        $optionStat->optionId = 0;
+                        $optionStat->label    = $actionData['text'];
+                        $optionStat->count    = 1;
+                        $blockStat->options[] = $optionStat;
+                        $optionStat->samples[] = $jsonData->{'client_id'};
+                    }
                     break;
                 default:
                     throw new \Exception('Unknown stat data');
@@ -278,11 +308,16 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                     $listData = $blocksData[$event->getData()['blockId']]->getData();
                     foreach ($listData['options'] as $optionData) {
                         if ($optionData['id'] === $event->getData()['optionId']) {
-                            $sampleAction->blockLabel = $listData['text'] . ($listData['text'] ? ' : ' : '') . $optionData['text'];
+                            $sampleAction->blockLabel = (!empty($listData['text']) ? $listData['text'] . ' : ' : '') . $optionData['text'];
                             break;
                         }
                     }
 
+                    break;
+                case ApiEventContract::ENTER_TEXT:
+                    $sampleAction->actionLabel = __('Enter text');
+                    $textFieldData = $blocksData[$event->getData()['blockId']]->getData();
+                    $sampleAction->blockLabel = (!empty($textFieldData['label']) ? $textFieldData['label'] . ' : ' : '') . $event->getData()['text'];
                     break;
                 case ApiEventContract::PREV_PAGE:
                     $sampleAction->actionLabel = __('Previous page');

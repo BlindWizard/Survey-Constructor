@@ -6,6 +6,7 @@ namespace App\Api\Factories;
 use App\Api\Contracts\Entities\ApiEventContract;
 use App\Api\Contracts\Factories\ApiEventHandlersFactoryContract;
 use App\Api\Contracts\Services\ApiEventHandlerContract;
+use App\Api\Services\EnterTextHandler;
 use App\Api\Services\NextPageHandler;
 use App\Api\Services\OptionHandler;
 use App\Api\Services\OptionsListHandler;
@@ -27,6 +28,8 @@ class ApiEventHandlersFactory implements ApiEventHandlersFactoryContract
                 return app()->make(OptionsListHandler::class);
             case ApiEventContract::OPTION_SELECT:
                 return app()->make(OptionHandler::class);
+            case ApiEventContract::ENTER_TEXT:
+                return app()->make(EnterTextHandler::class);
             default:
                 throw new \Exception('Event handler for ' . $event->getType() . ' not found');
         }

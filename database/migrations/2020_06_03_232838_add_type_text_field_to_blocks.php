@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Add text field.
+ */
 class AddTypeTextFieldToBlocks extends Migration
 {
     /**

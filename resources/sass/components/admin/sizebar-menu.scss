@@ -1,5 +1,4 @@
-.components-menu {
-    //min-height: calc(100vh - 4rem);
+.sidebar-menu {
     background-color: $dark;
 
     &__header {
@@ -19,5 +18,22 @@
 
     &__icon {
         float: right;
+    }
+
+    &__form-section {
+        padding: 0.7rem 1rem;
+
+        &:first-of-type {
+            padding-top: 0;
+        }
+
+        &:last-of-type {
+            padding-bottom: 0;
+        }
+
+        label {
+            color : $white;
+            font-weight: bold;
+        }
     }
 }

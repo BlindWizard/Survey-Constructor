@@ -11,10 +11,11 @@ import {getters} from "../stores/types";
                 <div class="cell medium-12">
                     <div :class="bem('top-menu').el('inner').add('top-bar').classes()">
                         <div class="top-bar-left">
-                            <div :class="bem('top-menu').el('logo').classes()">
-                                <div :class="bem('main-logo').is('borderless').classes()" />
-                            </div>
-                            <div :class="bem('top-menu').el('title').classes()">{{ appName }}</div>
+                           <div :class="bem('top-menu').el('logo').classes()">
+                               <div :class="bem('main-logo').is('borderless').classes()" />
+                           </div><!--
+                        --><div :class="bem('top-menu').el('title').classes()">{{ appName }}</div><!--
+                        --><div v-if="null !== section" :class="bem('top-menu').el('section').classes()">{{ section }}</div>
                         </div>
                         <div class="top-bar-right">
                             <div>
@@ -59,5 +60,10 @@ export class AppHeader extends Vue
 	get appName(): string
 	{
 		return this.$store.getters[getters.LOCALE].appName;
+	}
+
+	get section(): string|null
+	{
+		return this.$store.getters[getters.SECTION];
 	}
 }

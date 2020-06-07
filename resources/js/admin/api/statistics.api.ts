@@ -18,6 +18,8 @@ export class StatisticsApi {
 				let data: BlocksStatistics[] = [];
 				result.data.forEach((tokenData: any) => {
 					let blocksStatistics = new BlocksStatistics();
+					blocksStatistics.surveyId = tokenData.surveyId;
+					blocksStatistics.surveyName = tokenData.surveyName
 					blocksStatistics.tokenId = tokenData.tokenId;
 					blocksStatistics.tokenLabel = tokenData.tokenLabel;
 

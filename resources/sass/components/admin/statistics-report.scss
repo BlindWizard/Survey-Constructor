@@ -1,4 +1,6 @@
 .statistics-report {
+    min-height: calc(100vh - 4rem);
+
     &__block-statistics {
         margin-top: 1rem;
     }
@@ -14,10 +16,22 @@
     &__block-option {
         margin-top: 0.5rem;
         text-align: left;
+
+        &-label {
+            cursor: pointer;
+        }
     }
 
     &__block-option-count {
         margin-top: 0.5rem;
         text-align: right;
+    }
+
+    &__samples-list .button {
+        margin-right: 0.5rem;
+
+        &:last-of-type {
+            margin-right: 0;
+        }
     }
 }

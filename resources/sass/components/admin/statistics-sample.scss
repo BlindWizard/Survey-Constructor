@@ -1,0 +1,42 @@
+.statistics-sample {
+    margin-top: 1rem;
+
+    &__timeline {
+        text-align: center;
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &__data {
+        display: inline-block;
+        vertical-align: top;
+    }
+
+    &__counter {
+        display: inline-block;
+        width: 3rem;
+        height: 3rem;
+        text-align: center;
+        border-radius: 50%;
+        background-color: $primary;
+        color: $white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    &__action {
+        font-weight: bold;
+        font-size: 1rem;
+        display: inline-block;
+        vertical-align: top;
+        margin-top: 0.75rem;
+    }
+
+    &__block {
+
+    }
+
+    &__timestamp {
+
+    }
+}

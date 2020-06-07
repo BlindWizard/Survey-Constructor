@@ -38,6 +38,7 @@ const store = new Vuex.Store({
 		csrf: '',
 		token: null as string|null,
 		locale: null as any,
+		section: null as string|null,
 		defaultBlockData: [],
 		survey: null as any,
 		pageId: null as any,
@@ -56,6 +57,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_TOKEN](state, token: string|null) {
 			state.token = token;
+		},
+		[mutations.SET_SECTION](state, section: string|null) {
+			state.section = section;
 		},
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
@@ -263,6 +267,9 @@ const store = new Vuex.Store({
 		async [actions.LOAD_STATISTICS_SAMPLE]({commit}, request: GetStatisticsSample) {
 			let data = await StatisticsApi.getStatisticsSample(request);
 			commit(mutations.SET_STATISTICS_SAMPLE, data);
+		},
+		async [actions.SET_SECTION]({commit}, section: string|null) {
+			commit(mutations.SET_SECTION, section);
 		}
 	},
 	getters: {
@@ -274,6 +281,9 @@ const store = new Vuex.Store({
 		},
 		[getters.LOCALE](state): Locale {
 			return state.locale;
+		},
+		[getters.SECTION](state): string|null {
+			return state.section;
 		},
 		[getters.SURVEYS](state): Survey[]|null {
 			return state.surveys;

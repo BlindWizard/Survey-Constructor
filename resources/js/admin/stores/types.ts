@@ -3,6 +3,7 @@ export enum mutations
 	SET_CSRF = 'setCsrf',
 	SET_LOCALE = 'setLocale',
 	SET_TOKEN = 'setToken',
+	SET_SECTION = 'setSection',
 	SET_DEFAULT_BLOCK_DATA = 'setDefaultBlockData',
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
@@ -39,6 +40,7 @@ export enum actions
 	DELETE_TOKEN = 'deleteToken',
 	LOAD_SURVEY_STATISTICS = 'getSurveyStatistics',
 	LOAD_STATISTICS_SAMPLE = 'getStatisticsSample',
+	SET_SECTION = 'setSection',
 }
 
 export enum getters
@@ -46,6 +48,7 @@ export enum getters
 	CSRF = 'csrf',
 	LOCALE = 'locale',
 	TOKEN = 'token',
+	SECTION = 'section',
 	ELEMENT_DEFAULT_DATA = 'elementDefaultData',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',

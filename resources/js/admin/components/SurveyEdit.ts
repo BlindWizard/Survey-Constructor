@@ -53,6 +53,8 @@ export class SurveyEdit extends Vue {
 
 			this.$store.dispatch(actions.LOAD_SURVEY, request);
 		}
+
+		this.$store.dispatch(actions.SET_SECTION, 'Editor');
 	}
 
 	get survey(): SurveyContract|null {

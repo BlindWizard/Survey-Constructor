@@ -12019,6 +12019,7 @@ html.is-reveal-open body {
   font-weight: bold;
   display: inline-block;
   line-height: 4rem;
+  margin-right: 4.15rem;
 }
 
 .top-menu__logo {
@@ -12027,6 +12028,12 @@ html.is-reveal-open body {
   display: inline-block;
   vertical-align: top;
   padding: 0.5rem 0;
+}
+
+.top-menu__section {
+  display: inline-block;
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .top-menu__auth-form {
@@ -12156,27 +12163,44 @@ html.is-reveal-open body {
   padding: 0.9375rem 1.875rem 1.875rem 1.875rem;
 }
 
-.components-menu {
+.sidebar-menu {
   background-color: #2d1e45;
 }
 
-.components-menu__header {
+.sidebar-menu__header {
   color: #fefefe;
   padding: 0.7rem 1rem;
   font-weight: bold;
   display: block;
 }
 
-.components-menu__item {
+.sidebar-menu__item {
   background-color: #2d1e45;
 }
 
-.components-menu__link {
+.sidebar-menu__link {
   color: #fefefe;
 }
 
-.components-menu__icon {
+.sidebar-menu__icon {
   float: right;
+}
+
+.sidebar-menu__form-section {
+  padding: 0.7rem 1rem;
+}
+
+.sidebar-menu__form-section:first-of-type {
+  padding-top: 0;
+}
+
+.sidebar-menu__form-section:last-of-type {
+  padding-bottom: 0;
+}
+
+.sidebar-menu__form-section label {
+  color: #fefefe;
+  font-weight: bold;
 }
 
 .drag-container {
@@ -12248,6 +12272,10 @@ html.is-reveal-open body {
   margin: 0;
 }
 
+.statistics-report {
+  min-height: calc(100vh - 4rem);
+}
+
 .statistics-report__block-statistics {
   margin-top: 1rem;
 }
@@ -12265,9 +12293,56 @@ html.is-reveal-open body {
   text-align: left;
 }
 
+.statistics-report__block-option-label {
+  cursor: pointer;
+}
+
 .statistics-report__block-option-count {
   margin-top: 0.5rem;
   text-align: right;
+}
+
+.statistics-report__samples-list .button {
+  margin-right: 0.5rem;
+}
+
+.statistics-report__samples-list .button:last-of-type {
+  margin-right: 0;
+}
+
+.statistics-sample {
+  margin-top: 1rem;
+}
+
+.statistics-sample__timeline {
+  text-align: center;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.statistics-sample__data {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.statistics-sample__counter {
+  display: inline-block;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  border-radius: 50%;
+  background-color: #fd5b15;
+  color: #fefefe;
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.statistics-sample__action {
+  font-weight: bold;
+  font-size: 1rem;
+  display: inline-block;
+  vertical-align: top;
+  margin-top: 0.75rem;
 }
 
 .home-page__body {

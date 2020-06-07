@@ -3,37 +3,37 @@ import Vue from "vue";
 
 @Component({
 	template: `
-        <div :class="bem('components-menu').classes()">
-            <span :class="bem('components-menu').el('header').classes()">Elements</span>
+        <div :class="bem('sidebar-menu').classes()">
+            <span :class="bem('sidebar-menu').el('header').classes()">Elements</span>
             <ul :class="bem('vertical menu').classes()">
-                <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'header'">
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'header'">
                         Header
-                        <i :class="bem('components-menu').el('icon').add('fi-flag').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-flag').classes()"></i>
                     </a>
                 </li>
-                <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'options-list'">
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'options-list'">
                         Options List
-                        <i :class="bem('components-menu').el('icon').add('fi-list-thumbnails').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-list-thumbnails').classes()"></i>
                     </a>
                 </li>
-                <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'option'">
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'option'">
                         Single checkbox
-                        <i :class="bem('components-menu').el('icon').add('fi-checkbox').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-checkbox').classes()"></i>
                     </a>
                 </li>
-                <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'text'">
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'text'">
                         Label
-                        <i :class="bem('components-menu').el('icon').add('fi-pencil').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-pencil').classes()"></i>
                     </a>
                 </li>
-                <li :class="bem('components-menu').el('item').classes()">
-                    <a :class="bem('components-menu').el('link').classes()" v-component-drag.create="'text-field'">
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'text-field'">
                         Text field
-                        <i :class="bem('components-menu').el('icon').add('fi-page').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-page').classes()"></i>
                     </a>
                 </li>
             </ul>

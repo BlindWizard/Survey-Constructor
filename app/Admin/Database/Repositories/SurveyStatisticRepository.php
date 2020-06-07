@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
+use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Database\Models\BlockData;
 use App\Admin\Database\Models\Page;
@@ -19,14 +20,19 @@ use Illuminate\Support\Facades\DB;
 
 class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
 {
+    /** @var SurveyRepositoryContract */
+    protected $surveyRepository;
+
     /** @var ApiTokenRepositoryContract */
-    public $tokenRepository;
+    protected $tokenRepository;
 
     /**
+     * @param SurveyRepositoryContract   $surveyRepository
      * @param ApiTokenRepositoryContract $apiTokenRepository
      */
-    public function __construct(ApiTokenRepositoryContract $apiTokenRepository)
+    public function __construct(SurveyRepositoryContract $surveyRepository, ApiTokenRepositoryContract $apiTokenRepository)
     {
+        $this->surveyRepository = $surveyRepository;
         $this->tokenRepository = $apiTokenRepository;
     }
 
@@ -78,6 +84,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
     public function findBlockStatisticsBySurveyId(string $surveyId): array
     {
         $bindings = ['surveyId' => $surveyId];
+        $survey = $this->surveyRepository->findById($surveyId);
 
         $data = DB::select(<<<SQL
             WITH
@@ -238,6 +245,8 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
         $result = [];
         foreach ($byToken as $tokenId => $blocksStat) {
             $tokenData = new BlocksStatistics();
+            $tokenData->surveyId = $surveyId;
+            $tokenData->surveyName = $survey->getTitle();
             $tokenData->tokenId = $tokenId;
             $tokenData->tokenLabel = $tokens[$tokenId]->getName();
 

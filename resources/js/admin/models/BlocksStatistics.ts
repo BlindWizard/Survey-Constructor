@@ -5,5 +5,7 @@ export class BlocksStatistics {
 	public surveyName: string;
 	public tokenId: string;
 	public tokenLabel: string;
+	public startDate: string;
+	public lastDate: string;
 	public blockStatistics: BlockStatistics[] = [];
 }

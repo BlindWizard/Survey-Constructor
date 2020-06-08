@@ -2,6 +2,7 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {AppHeader} from "./AppHeader";
 
+
 @Component({
 	template: `
         <div class="grid-y">

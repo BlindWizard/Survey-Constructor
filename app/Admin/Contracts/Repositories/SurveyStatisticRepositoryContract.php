@@ -5,6 +5,7 @@ namespace App\Admin\Contracts\Repositories;
 
 use App\Admin\Database\Models\SurveyStatistic;
 use App\Admin\DTO\StatisticSampleAction;
+use Carbon\Carbon;
 
 interface SurveyStatisticRepositoryContract
 {
@@ -32,11 +33,13 @@ interface SurveyStatisticRepositoryContract
     public function findStatisticsBySurveyId(string $surveyId): \App\Admin\DTO\SurveyStatistic;
 
     /**
-     * @param string $surveyId
+     * @param string      $surveyId
+     * @param Carbon|null $dateFrom
+     * @param Carbon|null $dataTo
      *
      * @return \App\Admin\DTO\BlocksStatistics[]
      */
-    public function findBlockStatisticsBySurveyId(string $surveyId): array;
+    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo): array;
 
     /**
      * @param string $surveyId

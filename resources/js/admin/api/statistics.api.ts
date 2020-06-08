@@ -11,7 +11,16 @@ import {StatisticAction} from "../models/StatisticAction";
 export class StatisticsApi {
 	public static getSurveyStatistics(request: GetSurveyStatistics): Promise<BlocksStatistics[]>
 	{
-		return axios.get('/admin/survey/statistics/' + request.surveyId)
+		let url = new URL('/admin/survey/statistics/' + request.surveyId, window.location.origin);
+		if (null !== request.dateFrom) {
+			url.searchParams.append('dateFrom', request.dateFrom);
+		}
+
+		if (null !== request.dateTo) {
+			url.searchParams.append('dateTo', request.dateTo);
+		}
+
+		return axios.get(url.toString())
 			.then((response) => {
 				let result:AjaxHelper = response.data as AjaxHelper;
 
@@ -22,6 +31,8 @@ export class StatisticsApi {
 					blocksStatistics.surveyName = tokenData.surveyName
 					blocksStatistics.tokenId = tokenData.tokenId;
 					blocksStatistics.tokenLabel = tokenData.tokenLabel;
+					blocksStatistics.startDate = tokenData.startDate;
+					blocksStatistics.lastDate = tokenData.lastDate;
 
 					tokenData.blocks.forEach((blockData: any) => {
 						let blockStatistics = new BlockStatistics();
@@ -34,6 +45,7 @@ export class StatisticsApi {
 							optionStatistics.optionId = optionData.optionId;
 							optionStatistics.label = optionData.label;
 							optionStatistics.count = optionData.count;
+							optionStatistics.percent = optionData.percent;
 							optionStatistics.samples = optionData.samples;
 
 							blockStatistics.options.push(optionStatistics);

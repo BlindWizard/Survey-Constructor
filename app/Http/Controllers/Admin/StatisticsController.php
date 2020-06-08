@@ -8,6 +8,8 @@ use App\Admin\Queries\FindSurveySampleById;
 use App\Admin\Queries\FindSurveyStatisticsById;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class StatisticsController extends Controller
@@ -36,11 +38,13 @@ class StatisticsController extends Controller
         return view('admin.main', ['settings' => $this->settings->getSettings()->toJson()]);
     }
 
-    public function getSurveyStatistics(string $id, FindSurveyStatisticsById $query)
+    public function getSurveyStatistics(string $id, Request $request, FindSurveyStatisticsById $query)
     {
         $response = new AjaxResponse();
 
         $query->surveyId = $id;
+        $query->dateFrom = $request->get('dateFrom') ? Carbon::parse($request->get('dateFrom')) : null;
+        $query->dateTo = $request->get('dateTo') ? Carbon::parse($request->get('dateTo')) : null;
         $query->userId = Auth::user()->getAuthIdentifier();
 
         $response->data = $query->perform()->getResult();

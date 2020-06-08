@@ -12,6 +12,9 @@ import {ComponentDrag} from "./directives/ComponentDrag";
 import {ComponentDrop} from "./directives/ComponentDrop";
 import {ComponentDropTarget} from "./directives/ComponentDropTarget";
 
+import $ from 'jquery';
+window['$'] = window['jQuery'] = $;
+
 Vue.mixin(BemMixin);
 Vue.use(VueRouter);
 

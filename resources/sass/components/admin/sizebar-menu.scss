@@ -36,4 +36,8 @@
             font-weight: bold;
         }
     }
+
+    &__date-from, &__date-to {
+        width: 50%;
+    }
 }

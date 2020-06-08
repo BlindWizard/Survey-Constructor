@@ -19,4 +19,10 @@ class BlocksStatistics
 
     /** @var BlockStatistic[] */
     public $blocks = [];
+
+    /** @var string */
+    public $startDate;
+
+    /** @var string */
+    public $lastDate;
 }

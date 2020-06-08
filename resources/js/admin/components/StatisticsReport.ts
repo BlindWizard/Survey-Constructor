@@ -12,7 +12,14 @@ import {StatisticsFilter} from "./StatisticsFilter";
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
                 <div class="grid-y grid-padding-y medium-2 dark">
-                    <StatisticsFilter :tokenId="tokenId" :selectToken="selectToken" :tokens="tokensSelector" />
+                    <StatisticsFilter :tokenId="tokenId"
+                                      :selectToken="selectToken"
+                                      :tokens="tokensSelector"
+                                      :dateFrom="dateFrom"
+                                      :dateTo="dateTo"
+                                      :selectDateFrom="selectDateFrom"
+                                      :selectDateTo="selectDateTo"
+                    />
                 </div>
                 <div class="cell medium-10">
                     <div :class="bem('statistics-report').classes()">
@@ -61,6 +68,9 @@ import {StatisticsFilter} from "./StatisticsFilter";
 export class StatisticsReport extends Vue {
 	@Prop(String) readonly surveyId: string;
 	private tokenId: string|null = null;
+	private dateFrom: string|null = null;
+	private dateTo: string|null = null;
+
 	private opened: Object = {};
 
 	public mounted() {
@@ -72,6 +82,8 @@ export class StatisticsReport extends Vue {
 				if (null !== this.surveyStatistics) {
 					for (let statistics of this.surveyStatistics) {
 						this.tokenId = statistics.tokenId;
+						this.dateFrom = statistics.startDate;
+						this.dateTo = statistics.lastDate;
 						break;
 					}
 				}
@@ -80,6 +92,8 @@ export class StatisticsReport extends Vue {
 		else {
 			for (let statistics of this.surveyStatistics) {
 				this.tokenId = statistics.tokenId;
+				this.dateFrom = statistics.startDate;
+				this.dateTo = statistics.lastDate;
 				break;
 			}
 		}
@@ -89,6 +103,28 @@ export class StatisticsReport extends Vue {
 
 	public selectToken(event: Event) {
 		this.tokenId = (event.target as any).value;
+	}
+
+	public selectDateFrom(event: Event) {
+		this.dateFrom = (event.target as HTMLInputElement).value;
+
+		let request = new GetSurveyStatistics();
+		request.surveyId = this.surveyId;
+		request.dateFrom = this.dateFrom;
+		request.dateTo = this.dateTo;
+
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request);
+	}
+
+	public selectDateTo(event: Event) {
+		this.dateTo = (event.target as HTMLInputElement).value;
+
+		let request = new GetSurveyStatistics();
+		request.surveyId = this.surveyId;
+		request.dateFrom = this.dateFrom;
+		request.dateTo = this.dateTo;
+
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request);
 	}
 
 	get tokensSelector(): Object {

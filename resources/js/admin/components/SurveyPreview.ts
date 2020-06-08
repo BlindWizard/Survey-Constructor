@@ -19,7 +19,7 @@ import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
                             <p :class="bem('survey-preview').el('statistics-item').classes()">Last update: {{ survey.statistics.lastUpdated || 'Never' }}</p>
                             <p>
                                 <button :class="bem('button').is('rounded').classes()" v-on:click.stop="openStats()">
-                                    <span :class="bem('button').el('label').classes()">Full stats...</span>
+                                    <span :class="bem('button').el('label').classes()">Statistics</span>
                                 </button>
                             </p>
                         </div>

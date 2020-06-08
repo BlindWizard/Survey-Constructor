@@ -11,6 +11,8 @@ class BlockOptionStatistic
     public $label;
     /** @var int */
     public $count;
+    /** @var float */
+    public $percent;
     /** @var string[] */
     public $samples = [];
 }

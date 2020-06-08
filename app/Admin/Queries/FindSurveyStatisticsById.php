@@ -7,12 +7,19 @@ use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
+use Carbon\Carbon;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class FindSurveyStatisticsById implements Command
 {
     /** @var string */
     public $surveyId;
+
+    /** @var Carbon|null */
+    public $dateFrom;
+
+    /** @var Carbon|null */
+    public $dateTo;
 
     /** @var string */
     public $userId;
@@ -47,7 +54,7 @@ class FindSurveyStatisticsById implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $this->result = $this->statisticRepository->findBlockStatisticsBySurveyId($this->surveyId);
+        $this->result = $this->statisticRepository->findBlockStatisticsBySurveyId($this->surveyId, $this->dateFrom, $this->dateTo);
 
         return $this;
     }

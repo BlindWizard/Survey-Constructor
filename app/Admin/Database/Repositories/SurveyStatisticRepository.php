@@ -81,10 +81,13 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findBlockStatisticsBySurveyId(string $surveyId): array
+    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo): array
     {
         $bindings = ['surveyId' => $surveyId];
         $survey = $this->surveyRepository->findById($surveyId);
+
+        $dateFromSql = (null !== $dateFrom) ? ' AND created_at >= \'' . $dateFrom->format('Y-m-d') . '\'' : '';
+        $dateToSql = (null !== $dataTo) ? ' AND created_at <= \'' . $dataTo->format('Y-m-d 23:59:59') . '\'' : '';
 
         $data = DB::select(<<<SQL
             WITH
@@ -96,6 +99,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         token_id,
                         type,
                         data,
+                        created_at,
                         updated_at,
                         rank() OVER (PARTITION BY client_id, data->>'blockId' ORDER BY updated_at DESC) AS rank
                     FROM
@@ -103,6 +107,8 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                     WHERE
                             survey_id = :surveyId
                         AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                        $dateFromSql
+                        $dateToSql
                 )
             
             SELECT
@@ -111,7 +117,9 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 a.type,
                 a.data as action_data,
                 d.data as block_data,
-                b.position as position
+                b.position as position,
+                (SELECT MIN(created_at) FROM last_actions) as start_date,
+                (SELECT MAX(created_at) FROM last_actions) as last_date
             FROM
                 last_actions a
             INNER JOIN blocks b
@@ -240,6 +248,19 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
             $byToken[$tokenId][$actionData['blockId']] = $blockStat;
         }
 
+        foreach ($byToken as $blockStats) {
+            foreach ($blockStats as $blockStat) {
+                $total = 0;
+                foreach ($blockStat->options as $optionStat) {
+                    $total += $optionStat->count;
+                }
+
+                foreach ($blockStat->options as $optionStat) {
+                    $optionStat->percent = round($optionStat->count * 100 / $total, 2);
+                }
+            }
+        }
+
         $tokens = $this->tokenRepository->findByIds(array_keys($byToken));
 
         $result = [];
@@ -249,6 +270,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
             $tokenData->surveyName = $survey->getTitle();
             $tokenData->tokenId = $tokenId;
             $tokenData->tokenLabel = $tokens[$tokenId]->getName();
+            [$tokenData->startDate, $tokenData->lastDate] = [(new Carbon($jsonData->{'start_date'}))->format('m/d/Y'), (new Carbon($jsonData->{'last_date'}))->format('m/d/Y')];
 
             foreach ($blocksStat as $blockStat) {
                 $tokenData->blocks[] = $blockStat;

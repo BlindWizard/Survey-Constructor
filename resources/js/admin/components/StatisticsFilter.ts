@@ -1,6 +1,7 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
+import $ from "jquery";
 
 @Component({
 	template: `
@@ -11,9 +12,18 @@ import {Prop} from "vue-property-decorator";
                     <div :class="bem('sidebar-menu').el('form-section').classes()">
                         <label>
                             Token
-                            <select :value="tokenId" @change="selectToken" :class="bem('statistics-report').el('token-selector-element').classes()">
+                            <select :value="tokenId" @change="selectToken" :class="bem('sidebar-menu').el('token-selector-element').classes()">
                                 <option v-for="(tokenValue, token) in tokens" :value="token">{{ tokenValue }}</option>
                             </select>
+                        </label>
+                    </div>
+                    <div :class="bem('sidebar-menu').el('form-section').classes()">
+                        <label>
+                            Time range
+                            <div :class="bem('sidebar-menu').el('item').classes()">
+                                <input id="date-from" type="text" :value="dateFrom" :class="bem('sidebar-menu').el('date-from').classes()" /><!--
+                             --><input id="date-to" type="text" :value="dateTo" :class="bem('sidebar-menu').el('date-to').classes()" />
+                            </div>
                         </label>
                     </div>
                 </li>
@@ -22,7 +32,30 @@ import {Prop} from "vue-property-decorator";
     `,
 })
 export class StatisticsFilter extends Vue {
-	@Prop(String) readonly tokenId: string;
 	@Prop(Object) readonly tokens: object;
+	@Prop(String) readonly tokenId: string;
+	@Prop(String) readonly dateFrom: string;
+	@Prop(String) readonly dateTo: string;
+
 	@Prop(Function) readonly selectToken: Function;
+	@Prop(Function) readonly selectDateFrom: Function;
+	@Prop(Function) readonly selectDateTo: Function;
+
+	mounted()
+	{
+		import(('foundation-datepicker/css/foundation-datepicker.css') as any);
+		import(('foundation-datepicker/js/foundation-datepicker') as any).then(() => {
+			($('#date-from') as any).fdatepicker({
+				format: 'mm/dd/yyyy',
+			}).on('changeDate', (event: Event) => {
+				this.selectDateFrom(event);
+			});
+
+			($('#date-to') as any).fdatepicker({
+				format: 'mm/dd/yyyy',
+			}).on('changeDate', (event: Event) => {
+				this.selectDateTo(event);
+			});
+		});
+	}
 }

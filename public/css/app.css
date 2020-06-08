@@ -12020,6 +12020,7 @@ html.is-reveal-open body {
   display: inline-block;
   line-height: 4rem;
   margin-right: 4.15rem;
+  color: #fefefe;
 }
 
 .top-menu__logo {
@@ -12201,6 +12202,11 @@ html.is-reveal-open body {
 .sidebar-menu__form-section label {
   color: #fefefe;
   font-weight: bold;
+}
+
+.sidebar-menu__date-from,
+.sidebar-menu__date-to {
+  width: 50%;
 }
 
 .drag-container {

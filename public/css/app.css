@@ -12209,6 +12209,10 @@ html.is-reveal-open body {
   width: 50%;
 }
 
+.sidebar-menu__options-list {
+  color: #fefefe;
+}
+
 .drag-container {
   overflow: hidden;
 }
@@ -12301,6 +12305,16 @@ html.is-reveal-open body {
 
 .statistics-report__block-option-label {
   cursor: pointer;
+  color: #ed0672;
+}
+
+.statistics-report__block-option-filter {
+  visibility: hidden;
+  cursor: pointer;
+}
+
+.statistics-report__block-option:hover .statistics-report__block-option-filter {
+  visibility: visible;
 }
 
 .statistics-report__block-option-count {

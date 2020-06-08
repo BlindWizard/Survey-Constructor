@@ -45,6 +45,7 @@ class StatisticsController extends Controller
         $query->surveyId = $id;
         $query->dateFrom = $request->get('dateFrom') ? Carbon::parse($request->get('dateFrom')) : null;
         $query->dateTo = $request->get('dateTo') ? Carbon::parse($request->get('dateTo')) : null;
+        $query->options = $request->get('options');
         $query->userId = Auth::user()->getAuthIdentifier();
 
         $response->data = $query->perform()->getResult();

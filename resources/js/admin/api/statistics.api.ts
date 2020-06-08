@@ -20,6 +20,12 @@ export class StatisticsApi {
 			url.searchParams.append('dateTo', request.dateTo);
 		}
 
+		for (let blockId of Object.keys(request.options)) {
+			for (let optionId of (request.options[blockId])) {
+				url.searchParams.append('options[' + blockId + '][]', optionId);
+			}
+		}
+
 		return axios.get(url.toString())
 			.then((response) => {
 				let result:AjaxHelper = response.data as AjaxHelper;

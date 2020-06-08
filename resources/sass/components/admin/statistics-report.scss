@@ -19,6 +19,18 @@
 
         &-label {
             cursor: pointer;
+            color: $secondary;
+        }
+
+        &-filter {
+            visibility: hidden;
+            cursor: pointer;
+        }
+
+        &:hover {
+            .statistics-report__block-option-filter {
+                visibility: visible;
+            }
         }
     }
 

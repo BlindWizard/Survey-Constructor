@@ -6,6 +6,8 @@ import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
 import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticsFilter} from "./StatisticsFilter";
+import {OptionStatistics} from "../models/OptionStatistics";
+import {BlockStatistics} from "../models/BlockStatistics";
 
 @Component({
 	template: `
@@ -19,13 +21,11 @@ import {StatisticsFilter} from "./StatisticsFilter";
                                       :dateTo="dateTo"
                                       :selectDateFrom="selectDateFrom"
                                       :selectDateTo="selectDateTo"
+                                      :options="filterOptions"
                     />
                 </div>
                 <div class="cell medium-10">
                     <div :class="bem('statistics-report').classes()">
-                        <div :class="bem('statistics-report').el('header').classes()">
-                           
-                        </div>
                         <div v-if="tokenStatistics">
                             <div v-for="blockStatistics in tokenStatistics.blockStatistics" :class="bem('statistics-report').el('block-statistics').classes()">
                                 <div :class="bem('statistics-report').el('block-header').classes()">
@@ -35,16 +35,16 @@ import {StatisticsFilter} from "./StatisticsFilter";
                                     <div v-for="(optionStatistics, i) in blockStatistics.options" class="grid-container full">
                                         <div class="grid-x">
                                             <div :class="bem('statistics-report').el('block-option').add('cell small-6').classes()">
-                                                <span :class="bem('statistics-report').el('block-option-label').classes()" @click="toggleRunsSection(blockStatistics.blockId + '-' + i)">
-                                                    {{ optionStatistics.label }} {{ (opened[blockStatistics.blockId  + '-' + i]) ? '-' : '+' }}
-
-                                                </span>
+                                                <div>
+                                                    {{ optionStatistics.label }} 
+                                                    <span :class="bem('statistics-report').el('block-option-filter').add('fi-filter').classes()" @click="addFilterOption(blockStatistics, optionStatistics)"></span>
+                                                </div>
                                             </div>
                                             <div :class="bem('statistics-report').el('block-option-count').add('cell small-6').classes()">
                                                 {{ optionStatistics.count }}
                                             </div>
                                         </div>
-                                        <div v-show="opened[blockStatistics.blockId + '-' + i]" :class="bem('statistics-report').el('samples-list').classes()">
+                                        <div v-show="spoilers[blockStatistics.blockId + '-' + i]" :class="bem('statistics-report').el('samples-list').classes()">
                                             <button v-for="sampleId in optionStatistics.samples"
                                                     :class="bem('button').is('rounded').add('primary').classes()"
                                                     @click="openRun(sampleId)"
@@ -52,6 +52,9 @@ import {StatisticsFilter} from "./StatisticsFilter";
                                                 {{ sampleId }}
                                             </button>
                                         </div>
+                                        <span :class="bem('statistics-report').el('block-option-label').classes()" @click="toggleRunsSection(blockStatistics.blockId + '-' + i)">
+                                            {{ (spoilers[blockStatistics.blockId + '-' + i]) ? 'Hide' : 'Show samples' }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -70,15 +73,13 @@ export class StatisticsReport extends Vue {
 	private tokenId: string|null = null;
 	private dateFrom: string|null = null;
 	private dateTo: string|null = null;
+	private filterOptions: Object = {};
 
-	private opened: Object = {};
+	private spoilers: Object = {};
 
 	public mounted() {
 		if (null === this.surveyStatistics) {
-			let request = new GetSurveyStatistics();
-			request.surveyId = this.surveyId;
-
-			this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request).then(() => {
+			this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request).then(() => {
 				if (null !== this.surveyStatistics) {
 					for (let statistics of this.surveyStatistics) {
 						this.tokenId = statistics.tokenId;
@@ -108,23 +109,48 @@ export class StatisticsReport extends Vue {
 	public selectDateFrom(event: Event) {
 		this.dateFrom = (event.target as HTMLInputElement).value;
 
-		let request = new GetSurveyStatistics();
-		request.surveyId = this.surveyId;
-		request.dateFrom = this.dateFrom;
-		request.dateTo = this.dateTo;
-
-		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request);
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
 	}
 
 	public selectDateTo(event: Event) {
 		this.dateTo = (event.target as HTMLInputElement).value;
 
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
+	}
+
+	public addFilterOption(blockStatistics: BlockStatistics, optionStatistics: OptionStatistics) {
+		let items = {};
+		if (this.filterOptions[blockStatistics.blockId]) {
+			items = this.filterOptions[blockStatistics.blockId];
+		}
+
+		items[optionStatistics.optionId] = optionStatistics;
+
+		Vue.set(this.filterOptions, blockStatistics.blockId, items);
+
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
+	}
+
+	public toggleRunsSection(key: string) {
+		Vue.set(this.spoilers, key, !this.spoilers[key]);
+	}
+
+	get request(): GetSurveyStatistics {
+		let filterOptions = {};
+		for (let blockId of Object.keys(this.filterOptions)) {
+			filterOptions[blockId] = [];
+			for (let optionId of Object.keys(this.filterOptions[blockId])) {
+				filterOptions[blockId].push(optionId);
+			}
+		}
+
 		let request = new GetSurveyStatistics();
 		request.surveyId = this.surveyId;
 		request.dateFrom = this.dateFrom;
 		request.dateTo = this.dateTo;
+		request.options = filterOptions;
 
-		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request);
+		return request;
 	}
 
 	get tokensSelector(): Object {
@@ -165,9 +191,5 @@ export class StatisticsReport extends Vue {
 		this.$store.dispatch(actions.LOAD_STATISTICS_SAMPLE, request).then(() => {
 			this.$router.push({name: 'statistics-sample', params: {surveyId: this.surveyId, sampleId: sampleId}});
 		});
-	}
-
-	public toggleRunsSection(key: string) {
-		Vue.set(this.opened, key, !this.opened[key]);
 	}
 }

@@ -26,6 +26,19 @@ import $ from "jquery";
                             </div>
                         </label>
                     </div>
+                    <div :class="bem('sidebar-menu').el('form-section').classes()">
+                        <label>
+                            Options
+                        </label>
+                        <div :class="bem('sidebar-menu').el('options-list').classes()">
+                            <div v-if="options">
+                                <div v-for="blocks in options">
+                                    <div v-for="option in blocks">{{ option.label }}</div>
+                                </div>
+                            </div>
+                            <div v-else>None</div>
+                        </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -36,6 +49,7 @@ export class StatisticsFilter extends Vue {
 	@Prop(String) readonly tokenId: string;
 	@Prop(String) readonly dateFrom: string;
 	@Prop(String) readonly dateTo: string;
+	@Prop(Object) readonly options: Object;
 
 	@Prop(Function) readonly selectToken: Function;
 	@Prop(Function) readonly selectDateFrom: Function;
@@ -43,8 +57,9 @@ export class StatisticsFilter extends Vue {
 
 	mounted()
 	{
-		import(('foundation-datepicker/css/foundation-datepicker.css') as any);
 		import(('foundation-datepicker/js/foundation-datepicker') as any).then(() => {
+			import(('foundation-datepicker/css/foundation-datepicker.css') as any);
+
 			($('#date-from') as any).fdatepicker({
 				format: 'mm/dd/yyyy',
 			}).on('changeDate', (event: Event) => {

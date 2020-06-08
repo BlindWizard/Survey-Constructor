@@ -21,6 +21,9 @@ class FindSurveyStatisticsById implements Command
     /** @var Carbon|null */
     public $dateTo;
 
+    /** @var string[][] */
+    public $options = [];
+
     /** @var string */
     public $userId;
 
@@ -54,7 +57,7 @@ class FindSurveyStatisticsById implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $this->result = $this->statisticRepository->findBlockStatisticsBySurveyId($this->surveyId, $this->dateFrom, $this->dateTo);
+        $this->result = $this->statisticRepository->findBlockStatisticsBySurveyId($this->surveyId, $this->dateFrom, $this->dateTo, $this->options);
 
         return $this;
     }

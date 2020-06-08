@@ -33,13 +33,14 @@ interface SurveyStatisticRepositoryContract
     public function findStatisticsBySurveyId(string $surveyId): \App\Admin\DTO\SurveyStatistic;
 
     /**
-     * @param string      $surveyId
-     * @param Carbon|null $dateFrom
-     * @param Carbon|null $dataTo
+     * @param string         $surveyId
+     * @param Carbon|null    $dateFrom
+     * @param Carbon|null    $dataTo
+     * @param string[][]null $options
      *
      * @return \App\Admin\DTO\BlocksStatistics[]
      */
-    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo): array;
+    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo, ?array $options): array;
 
     /**
      * @param string $surveyId

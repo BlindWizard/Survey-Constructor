@@ -81,13 +81,49 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo): array
+    public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo, ?array $options): array
     {
         $bindings = ['surveyId' => $surveyId];
         $survey = $this->surveyRepository->findById($surveyId);
 
         $dateFromSql = (null !== $dateFrom) ? ' AND created_at >= \'' . $dateFrom->format('Y-m-d') . '\'' : '';
         $dateToSql = (null !== $dataTo) ? ' AND created_at <= \'' . $dataTo->format('Y-m-d 23:59:59') . '\'' : '';
+
+        $samplesSql = '';
+
+        $samples = [];
+        if ($options) {
+            $blockSql = '';
+            if ($options) {
+                $blockSql = ' AND data->>\'blockId\' IN (' . implode(',', array_map(function (string $blockId) {
+                        return '\'' . $blockId .'\'';
+                    }, array_keys($options))) . ')';
+            }
+
+            $samplesData = DB::select(<<<SQL
+                SELECT 
+                    client_id
+                FROM events
+                WHERE
+                        survey_id = :surveyId
+                    AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                    $dateFromSql
+                    $dateToSql
+                    $blockSql
+            SQL, $bindings);
+
+            foreach ($samplesData as $sampleData) {
+                $samples[] = $sampleData->{'client_id'};
+            }
+
+            $samples = array_unique($samples);
+        }
+
+        if (count($samples) > 0) {
+            $samplesSql = ' AND client_id IN (' . implode(',', array_map(function (string $sampleId) {
+                return '\'' . $sampleId . '\'';
+            }, $samples)) . ')';
+        }
 
         $data = DB::select(<<<SQL
             WITH
@@ -109,6 +145,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
                         $dateFromSql
                         $dateToSql
+                        $samplesSql
                 )
             
             SELECT

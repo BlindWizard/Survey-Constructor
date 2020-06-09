@@ -83,7 +83,6 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
      */
     public function findBlockStatisticsBySurveyId(string $surveyId, ?Carbon $dateFrom, ?Carbon $dataTo, ?array $options): array
     {
-        $bindings = ['surveyId' => $surveyId];
         $survey = $this->surveyRepository->findById($surveyId);
 
         $dateFromSql = (null !== $dateFrom) ? ' AND created_at >= \'' . $dateFrom->format('Y-m-d') . '\'' : '';
@@ -91,38 +90,84 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
 
         $samplesSql = '';
 
-        $samples = [];
+        $samples = null;
         if ($options) {
-            $blockSql = '';
-            if ($options) {
-                $blockSql = ' AND data->>\'blockId\' IN (' . implode(',', array_map(function (string $blockId) {
-                        return '\'' . $blockId .'\'';
-                    }, array_keys($options))) . ')';
+            $optionsData = [];
+            foreach ($options as $blockId => $option) {
+                $optionsData[] = ['blockId' => $blockId, 'option' => $option];
             }
 
             $samplesData = DB::select(<<<SQL
-                SELECT 
-                    client_id
-                FROM events
-                WHERE
-                        survey_id = :surveyId
-                    AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
-                    $dateFromSql
-                    $dateToSql
-                    $blockSql
-            SQL, $bindings);
+            WITH
+                last_actions AS (
+                    SELECT * FROM (
+                        SELECT id,
+                            survey_id,
+                            client_id,
+                            token_id,
+                            type,
+                            data,
+                            created_at,
+                            updated_at,
+                                    rank() OVER (PARTITION BY client_id, data ->> 'blockId' ORDER BY updated_at DESC) AS rank
+                        FROM events
+                        WHERE    survey_id = '4c4e1d3e-fdf6-469f-aecb-8cc762a4c373'
+                             AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                             $dateFromSql
+                             $dateToSql
+                    ) as t
+                    WHERE t.rank = 1
+                ),
 
+                faceted AS (
+                    SELECT
+                         client_id,
+                         json_build_object(
+                                 'blockId',
+                                 data ->> 'blockId',
+                                 'option',
+                                 CASE WHEN type = 'optionsListSelect'
+                                          THEN data ->> 'optionId'
+                                      WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS TRUE
+                                          THEN '1'
+                                      WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS FALSE
+                                          THEN '0'
+                                      WHEN type = 'enterText'
+                                          THEN data ->> 'text'
+                                     END
+                             )
+                         as options
+                    FROM last_actions
+                    WHERE survey_id = :surveyId AND
+                        type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                ),
+                sampled AS (
+                    SELECT 
+                           client_id,
+                           jsonb_agg(options) as options
+                    FROM faceted
+                    GROUP BY client_id
+                )
+
+            SELECT client_id FROM sampled 
+            WHERE options @> :options;
+            SQL, ['surveyId' => $surveyId, 'options' => \GuzzleHttp\json_encode($optionsData)]);
+
+            $samples = [];
             foreach ($samplesData as $sampleData) {
                 $samples[] = $sampleData->{'client_id'};
             }
-
-            $samples = array_unique($samples);
         }
 
-        if (count($samples) > 0) {
-            $samplesSql = ' AND client_id IN (' . implode(',', array_map(function (string $sampleId) {
-                return '\'' . $sampleId . '\'';
-            }, $samples)) . ')';
+        if (null !== $samples) {
+            if (count($samples) > 0) {
+                $samplesSql = ' AND client_id IN (' . implode(',', array_map(function (string $sampleId) {
+                        return '\'' . $sampleId . '\'';
+                    }, $samples)) . ')';
+            }
+            else {
+                return [];
+            }
         }
 
         $data = DB::select(<<<SQL
@@ -167,7 +212,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                 rank = 1
             ORDER BY
                 a.updated_at, b.position
-        SQL, $bindings);
+        SQL, ['surveyId' => $surveyId]);
 
         $byToken = [];
         foreach ($data as $jsonData) {

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import PortalVue from 'portal-vue'
 import {Application} from './components/Application';
 import {store} from "./stores/store";
 import {actions} from "./stores/types";
@@ -17,6 +18,7 @@ window['$'] = window['jQuery'] = $;
 
 Vue.mixin(BemMixin);
 Vue.use(VueRouter);
+Vue.use(PortalVue);
 
 Vue.directive('component-drag', ComponentDrag);
 Vue.directive('component-drop', ComponentDrop);

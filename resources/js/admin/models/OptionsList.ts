@@ -1,6 +1,7 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {Option} from "./Option";
+import {ComponentsFactory} from "../services/ComponentsFactory";
 
 export class OptionsList implements BlockContract {
 	public id: string;
@@ -51,8 +52,10 @@ export class OptionsList implements BlockContract {
 	{
 		this.text = data['text'];
 		this.multiple = data['multiple'];
-		this.options.forEach((option: Option, i: number) => {
-			option.setData(data['options'][i]);
+		this.options = [];
+
+		data['options'].forEach((option: Option, i: number) => {
+			this.options.push(option)
 		});
 	}
 }

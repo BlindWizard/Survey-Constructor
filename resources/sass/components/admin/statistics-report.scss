@@ -23,13 +23,16 @@
         }
 
         &-filter {
-            visibility: hidden;
+            opacity: 0.3;
             cursor: pointer;
-        }
 
-        &:hover {
-            .statistics-report__block-option-filter {
-                visibility: visible;
+            &:hover {
+                opacity: 1;
+            }
+
+            &_active {
+                color: $primary;
+                opacity: 1;
             }
         }
     }

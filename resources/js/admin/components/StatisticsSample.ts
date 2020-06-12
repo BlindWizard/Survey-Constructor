@@ -9,12 +9,13 @@ import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
         <div :class="bem('statistics-sample').add('grid-container fluid').classes()">
             <div class="grid-x grid-padding-x">
                 <div class="cell large-8 large-offset-2 medium-12 medium-offset-0">
+                    <h4>Sample {{ sampleId }}</h4>
                     <div :class="bem('statistics-sample').el('item').classes()" v-for="(action, i) in statisticsSample">
                         <div :class="bem('statistics-sample').el('timeline').classes()">
                             <div :class="bem('statistics-sample').el('counter').classes()">{{ i }}</div>
                             <div :class="bem('statistics-sample').el('timestamp').classes()">{{ action.timestamp }}</div>
-                        </div>
-                        <div :class="bem('statistics-sample').el('data').classes()">
+                        </div><!--
+                     --><div :class="bem('statistics-sample').el('data').classes()">
                             <div :class="bem('statistics-sample').el('action').classes()">{{ action.actionLabel }}</div>
                             <div :class="bem('statistics-sample').el('block').classes()">{{ action.blockLabel }}</div>
                         </div>

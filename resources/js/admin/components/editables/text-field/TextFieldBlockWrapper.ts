@@ -10,7 +10,7 @@ import {TextFieldBlockEdit} from "./TextFieldBlockEdit";
 @Component({
 	template: `
         <div ref="selectable" :class="bem('text-field-wrapper').classes()" v-component-drag v-component-drop-target>
-            <TextFieldBlock v-if="!editing" :block="block"/>
+            <TextFieldBlock :block="block"/>
             <TextFieldBlockEdit v-if="editing" :block="blockData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onSave="saveData" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected && !editing"/>

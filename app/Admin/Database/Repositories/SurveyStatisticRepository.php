@@ -93,64 +93,66 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
         $samples = null;
         if ($options) {
             $optionsData = [];
-            foreach ($options as $blockId => $option) {
-                $optionsData[] = ['blockId' => $blockId, 'option' => $option];
+            foreach ($options as $blockId => $optionIds) {
+                foreach ($optionIds as $option) {
+                    $optionsData[] = ['blockId' => $blockId, 'option' => $option];
+                }
             }
 
             $samplesData = DB::select(<<<SQL
-            WITH
-                last_actions AS (
-                    SELECT * FROM (
-                        SELECT id,
-                            survey_id,
-                            client_id,
-                            token_id,
-                            type,
-                            data,
-                            created_at,
-                            updated_at,
-                                    rank() OVER (PARTITION BY client_id, data ->> 'blockId' ORDER BY updated_at DESC) AS rank
-                        FROM events
-                        WHERE    survey_id = '4c4e1d3e-fdf6-469f-aecb-8cc762a4c373'
-                             AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
-                             $dateFromSql
-                             $dateToSql
-                    ) as t
-                    WHERE t.rank = 1
-                ),
+                WITH
+                    last_actions AS (
+                        SELECT * FROM (
+                            SELECT id,
+                                survey_id,
+                                client_id,
+                                token_id,
+                                type,
+                                data,
+                                created_at,
+                                updated_at,
+                                rank() OVER (PARTITION BY client_id, data ->> 'blockId' ORDER BY updated_at DESC) AS rank
+                            FROM events
+                            WHERE    survey_id = :surveyId
+                                 AND type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                                 $dateFromSql
+                                 $dateToSql
+                        ) as t
+                        WHERE t.rank = 1
+                    ),
 
-                faceted AS (
-                    SELECT
-                         client_id,
-                         json_build_object(
-                                 'blockId',
-                                 data ->> 'blockId',
-                                 'option',
-                                 CASE WHEN type = 'optionsListSelect'
-                                          THEN data ->> 'optionId'
-                                      WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS TRUE
-                                          THEN '1'
-                                      WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS FALSE
-                                          THEN '0'
-                                      WHEN type = 'enterText'
-                                          THEN data ->> 'text'
-                                     END
-                             )
-                         as options
-                    FROM last_actions
-                    WHERE survey_id = :surveyId AND
-                        type IN ('optionsListSelect', 'optionSelect', 'enterText')
-                ),
-                sampled AS (
-                    SELECT 
-                           client_id,
-                           jsonb_agg(options) as options
-                    FROM faceted
-                    GROUP BY client_id
-                )
+                    faceted AS (
+                        SELECT
+                             client_id,
+                             json_build_object(
+                                     'blockId',
+                                     data ->> 'blockId',
+                                     'option',
+                                     CASE WHEN type = 'optionsListSelect'
+                                              THEN data ->> 'optionId'
+                                          WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS TRUE
+                                              THEN '1'
+                                          WHEN type = 'optionSelect' AND (data -> 'checked')::bool IS FALSE
+                                              THEN '0'
+                                          WHEN type = 'enterText'
+                                              THEN data ->> 'text'
+                                         END
+                                 )
+                             as options
+                        FROM last_actions
+                        WHERE survey_id = :surveyId AND
+                            type IN ('optionsListSelect', 'optionSelect', 'enterText')
+                    ),
+                    sampled AS (
+                        SELECT 
+                               client_id,
+                               jsonb_agg(options) as options
+                        FROM faceted
+                        GROUP BY client_id
+                    )
 
-            SELECT client_id FROM sampled 
-            WHERE options @> :options;
+                SELECT client_id FROM sampled 
+                WHERE options @> :options;
             SQL, ['surveyId' => $surveyId, 'options' => \GuzzleHttp\json_encode($optionsData)]);
 
             $samples = [];
@@ -211,7 +213,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
             WHERE
                 rank = 1
             ORDER BY
-                a.updated_at, b.position
+                b.position
         SQL, ['surveyId' => $surveyId]);
 
         $byToken = [];
@@ -268,7 +270,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
                         $blockStat->type = ApiEventContract::OPTION_SELECT;
 
                         $optionStat = new BlockOptionStatistic();
-                        $optionStat->optionId = 0;
+                        $optionStat->optionId = 1;
                         $optionStat->label = 'Checked';
                         $optionStat->count = 0;
                         $blockStat->options[] = $optionStat;
@@ -316,7 +318,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
 
                     if (false === $found) {
                         $optionStat           = new BlockOptionStatistic();
-                        $optionStat->optionId = 0;
+                        $optionStat->optionId = $actionData['text'];
                         $optionStat->label    = $actionData['text'];
                         $optionStat->count    = 1;
                         $blockStat->options[] = $optionStat;

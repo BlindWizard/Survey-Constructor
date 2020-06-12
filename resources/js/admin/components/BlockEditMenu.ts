@@ -9,7 +9,6 @@ import {EditingModes} from "../contracts/EditingModes";
 	template: `
         <div :class="bem('block-edit-menu').classes()">
             <button v-if="-1 !== activeButtons().indexOf('edit')" :class="bem('button').is('rounded').classes()" @click="onEdit">{{ locale.editLabel }}</button>
-            <button v-if="-1 !== activeButtons().indexOf('save')" :class="bem('button').is('rounded').classes()" @click="onSave">{{ locale.saveLabel }}</button>
             <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" @click="onDelete">{{ locale.deleteLabel }}</button>
         </div>
 	`,
@@ -17,7 +16,6 @@ import {EditingModes} from "../contracts/EditingModes";
 export class BlockEditMenu extends Vue {
 	@Prop(String) mode: string;
 	@Prop(Function) onEdit: Function;
-	@Prop(Function) onSave: Function;
 	@Prop(Function) onDelete: Function;
 
 	get locale(): Locale
@@ -29,10 +27,6 @@ export class BlockEditMenu extends Vue {
 	{
 		if (EditingModes.EDIT === this.mode) {
 			return ['edit', 'delete'];
-		}
-
-		if (EditingModes.SAVE === this.mode) {
-			return ['save'];
 		}
 
 		return [];

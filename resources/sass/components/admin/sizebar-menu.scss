@@ -43,5 +43,9 @@
 
     &__options-list {
         color: $white;
+
+        .button {
+            margin-bottom: 0.5rem;
+        }
     }
 }

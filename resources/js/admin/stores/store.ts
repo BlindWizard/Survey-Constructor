@@ -39,6 +39,7 @@ const store = new Vuex.Store({
 		token: null as string|null,
 		locale: null as any,
 		section: null as string|null,
+		editing: false as boolean,
 		defaultBlockData: [],
 		survey: null as any,
 		pageId: null as any,
@@ -60,6 +61,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_SECTION](state, section: string|null) {
 			state.section = section;
+		},
+		[mutations.SET_EDITING](state, editing: boolean) {
+			state.editing = editing;
 		},
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
@@ -147,6 +151,9 @@ const store = new Vuex.Store({
 		}
 	},
 	actions: {
+		[actions.SET_EDITING]({commit}, editing: boolean) {
+			commit(mutations.SET_EDITING, editing);
+		},
 		[actions.LOAD_SETTINGS]({commit}, setting: Settings) {
 			commit(mutations.SET_CSRF, setting.csrf);
 			commit(mutations.SET_LOCALE, setting.locale);
@@ -284,6 +291,9 @@ const store = new Vuex.Store({
 		},
 		[getters.SECTION](state): string|null {
 			return state.section;
+		},
+		[getters.EDITING](state): boolean {
+			return state.editing;
 		},
 		[getters.SURVEYS](state): Survey[]|null {
 			return state.surveys;

@@ -31,10 +31,11 @@ import $ from "jquery";
                             Options
                         </label>
                         <div :class="bem('sidebar-menu').el('options-list').classes()">
-                            <div v-if="options">
-                                <div v-for="blocks in options">
-                                    <div v-for="option in blocks">{{ option.label }}</div>
-                                </div>
+                            <div v-if="Object.keys(options).length > 0">
+                                <button :class="bem('button').add('primary').classes()" v-for="data in flatOptions">
+                                    {{ data['option'].label }}
+                                    <span class="fi-x" @click="removeFilterOption(data['block'], data['option'])"></span>
+                                </button>
                             </div>
                             <div v-else>None</div>
                         </div>
@@ -54,11 +55,12 @@ export class StatisticsFilter extends Vue {
 	@Prop(Function) readonly selectToken: Function;
 	@Prop(Function) readonly selectDateFrom: Function;
 	@Prop(Function) readonly selectDateTo: Function;
+	@Prop(Function) readonly removeFilterOption: Function;
 
 	mounted()
 	{
+		import(('foundation-datepicker/css/foundation-datepicker.css') as any);
 		import(('foundation-datepicker/js/foundation-datepicker') as any).then(() => {
-			import(('foundation-datepicker/css/foundation-datepicker.css') as any);
 
 			($('#date-from') as any).fdatepicker({
 				format: 'mm/dd/yyyy',
@@ -72,5 +74,17 @@ export class StatisticsFilter extends Vue {
 				this.selectDateTo(event);
 			});
 		});
+	}
+
+	get flatOptions(): Object[]
+	{
+		let result: Object[] = [];
+		for (let options of Object.values(this.options)) {
+			for (let option of Object.values(options)) {
+				result.push(option as Object);
+			}
+		}
+
+		return result;
 	}
 }

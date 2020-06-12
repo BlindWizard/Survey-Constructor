@@ -12150,6 +12150,10 @@ html.is-reveal-open body {
   height: 100%;
 }
 
+.admin-page .edit-modal.reveal {
+  display: block;
+}
+
 .survey-list {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -12211,6 +12215,10 @@ html.is-reveal-open body {
 
 .sidebar-menu__options-list {
   color: #fefefe;
+}
+
+.sidebar-menu__options-list .button {
+  margin-bottom: 0.5rem;
 }
 
 .drag-container {
@@ -12309,12 +12317,17 @@ html.is-reveal-open body {
 }
 
 .statistics-report__block-option-filter {
-  visibility: hidden;
+  opacity: 0.3;
   cursor: pointer;
 }
 
-.statistics-report__block-option:hover .statistics-report__block-option-filter {
-  visibility: visible;
+.statistics-report__block-option-filter:hover {
+  opacity: 1;
+}
+
+.statistics-report__block-option-filter_active {
+  color: #fd5b15;
+  opacity: 1;
 }
 
 .statistics-report__block-option-count {
@@ -12334,15 +12347,47 @@ html.is-reveal-open body {
   margin-top: 1rem;
 }
 
+.statistics-sample h4 {
+  text-align: center;
+}
+
 .statistics-sample__timeline {
   text-align: center;
   display: inline-block;
   vertical-align: top;
+  padding-bottom: 1.5rem;
+  position: relative;
+  margin-right: 1rem;
+  width: calc(50% - 1rem);
+}
+
+.statistics-sample__timeline:after {
+  content: " ";
+  width: 100%;
+  height: 1rem;
+  display: block;
+  position: absolute;
+  border-left: dotted 2px #0a0a0a;
+  left: calc(50% - 1px);
+}
+
+.statistics-sample__item:last-of-type .statistics-sample__timeline {
+  padding-bottom: 0;
+}
+
+.statistics-sample__item:last-of-type .statistics-sample__timeline:after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: static;
+  border: none;
+  left: auto;
 }
 
 .statistics-sample__data {
   display: inline-block;
   vertical-align: top;
+  width: 50%;
 }
 
 .statistics-sample__counter {
@@ -12397,7 +12442,7 @@ html.is-reveal-open body {
 }
 
 .content {
-  border-radius: 1rem;
+  border-radius: 1rem 1rem 0 0;
   background-color: #fefefe;
 }
 
@@ -12447,7 +12492,6 @@ html.is-reveal-open body {
 .content__copyright {
   background-color: #2d1e45;
   color: #8a8a8a;
-  border-radius: 0 0 1rem 1rem;
 }
 
 .content__copyright h3 {
@@ -12455,6 +12499,7 @@ html.is-reveal-open body {
   text-align: center;
   padding: 1rem;
   font-size: 1rem;
+  margin: 0;
 }
 
 .buzz {
@@ -12602,6 +12647,10 @@ html.is-reveal-open body {
   transform: scale(1);
   transition: all 0.2s cubic-bezier(0.35, 0.9, 0.4, 0.9);
   opacity: 1;
+}
+
+.options-list__add-wrapper {
+  text-align: center;
 }
 
 .option-wrapper {

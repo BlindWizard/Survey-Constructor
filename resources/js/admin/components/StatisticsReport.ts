@@ -22,6 +22,7 @@ import {BlockStatistics} from "../models/BlockStatistics";
                                       :selectDateFrom="selectDateFrom"
                                       :selectDateTo="selectDateTo"
                                       :options="filterOptions"
+                                      :removeFilterOption="removeFilterOption"
                     />
                 </div>
                 <div class="cell medium-10">
@@ -37,7 +38,9 @@ import {BlockStatistics} from "../models/BlockStatistics";
                                             <div :class="bem('statistics-report').el('block-option').add('cell small-6').classes()">
                                                 <div>
                                                     {{ optionStatistics.label }} 
-                                                    <span :class="bem('statistics-report').el('block-option-filter').add('fi-filter').classes()" @click="addFilterOption(blockStatistics, optionStatistics)"></span>
+                                                    <span :class="bem('statistics-report').el('block-option-filter').is(isActiveFilterOption(blockStatistics, optionStatistics) ? 'active' : '').add('fi-filter').classes()"
+                                                          @click="addFilterOption(blockStatistics, optionStatistics)">
+                                                    </span>
                                                 </div>
                                             </div>
                                             <div :class="bem('statistics-report').el('block-option-count').add('cell small-6').classes()">
@@ -118,15 +121,45 @@ export class StatisticsReport extends Vue {
 		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
 	}
 
+	public isActiveFilterOption(blockStatistics: BlockStatistics, optionStatistics: OptionStatistics): boolean {
+		if (!this.filterOptions[blockStatistics.blockId]) {
+			return false;
+		}
+
+		if (!this.filterOptions[blockStatistics.blockId][optionStatistics.optionId]) {
+			return false;
+		}
+
+		return true;
+	}
+
 	public addFilterOption(blockStatistics: BlockStatistics, optionStatistics: OptionStatistics) {
 		let items = {};
 		if (this.filterOptions[blockStatistics.blockId]) {
 			items = this.filterOptions[blockStatistics.blockId];
 		}
 
-		items[optionStatistics.optionId] = optionStatistics;
+		items[optionStatistics.optionId] = {'block': blockStatistics, 'option': optionStatistics};
 
 		Vue.set(this.filterOptions, blockStatistics.blockId, items);
+
+		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
+	}
+
+	public removeFilterOption(blockStatistics: BlockStatistics, optionStatistics: OptionStatistics) {
+		let items = {};
+		if (this.filterOptions[blockStatistics.blockId]) {
+			items = this.filterOptions[blockStatistics.blockId];
+		}
+
+		delete items[optionStatistics.optionId];
+
+		if (Object.keys(items).length > 0) {
+			Vue.set(this.filterOptions, blockStatistics.blockId, items);
+		}
+		else {
+			Vue.delete(this.filterOptions, blockStatistics.blockId);
+		}
 
 		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, this.request);
 	}

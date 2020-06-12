@@ -12,7 +12,7 @@ import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
             <div :class="bem('survey-preview').el('wrapper').classes()">
                 <div :class="bem('survey-preview').el('inner').classes()">
                     <div>
-                        {{ survey.title }}
+                        <h4>{{ survey.title }}</h4>
                         <div :class="bem('survey-preview').el('statistics').classes()">
                             <p :class="bem('survey-preview').el('statistics-item').classes()">Runs: {{ survey.statistics.runsCount }}</p>
                             <p :class="bem('survey-preview').el('statistics-item').classes()">Completed: {{ survey.statistics.completesCount }}</p>

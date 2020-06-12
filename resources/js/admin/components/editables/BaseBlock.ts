@@ -13,7 +13,7 @@ export class BaseBlock extends Vue implements Draggable {
 	@Prop(Object) readonly block: BlockContract;
 	public selected: boolean = false;
 	public editing: boolean = false;
-	public blockData: BlockContract;
+	public blockData: BlockContract|null = null;
 
 	public created()
 	{
@@ -30,8 +30,17 @@ export class BaseBlock extends Vue implements Draggable {
 		return this.block.getType();
 	}
 
+	public changeData(newData: BlockContract)
+	{
+		this.blockData = newData;
+	}
+
 	public saveData()
 	{
+		if (null === this.blockData) {
+			return;
+		}
+
 		let request = new SaveBlockData();
 		request.blockId = this.block.getId();
 		request.data = this.blockData.getData();
@@ -47,7 +56,7 @@ export class BaseBlock extends Vue implements Draggable {
 
 	public getMenuMode(): string
 	{
-		return this.editing ? EditingModes.SAVE : EditingModes.EDIT;
+		return EditingModes.EDIT;
 	}
 
 	public toggleSelect(selected?: boolean)
@@ -68,10 +77,12 @@ export class BaseBlock extends Vue implements Draggable {
 		else {
 			this.editing = editing;
 		}
+
+		this.$store.dispatch(actions.SET_EDITING, this.editing);
 	}
 
 	public bindSelecting(bemClass: string) {
-		document.addEventListener('click', (e: MouseEvent) => {
+		document.addEventListener('mousedown', (e: MouseEvent) => {
 			var clickOnThis = (e.target as HTMLElement).closest('.' + bemClass) === this.$refs.selectable;
 			this.toggleSelect(clickOnThis);
 		});

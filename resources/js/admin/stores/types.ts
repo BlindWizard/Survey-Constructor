@@ -4,6 +4,7 @@ export enum mutations
 	SET_LOCALE = 'setLocale',
 	SET_TOKEN = 'setToken',
 	SET_SECTION = 'setSection',
+	SET_EDITING = 'setEditing',
 	SET_DEFAULT_BLOCK_DATA = 'setDefaultBlockData',
 	SET_SURVEYS = 'setSurveys',
 	SET_TEMPLATES = 'setTemplates',
@@ -23,6 +24,7 @@ export enum mutations
 
 export enum actions
 {
+	SET_EDITING = 'setEditing',
 	LOAD_SETTINGS = 'loadSettings',
 	LOAD_SURVEYS = 'loadSurveys',
 	LOAD_TEMPLATES = 'loadTemplates',
@@ -49,6 +51,7 @@ export enum getters
 	LOCALE = 'locale',
 	TOKEN = 'token',
 	SECTION = 'section',
+	EDITING = 'editing',
 	ELEMENT_DEFAULT_DATA = 'elementDefaultData',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',

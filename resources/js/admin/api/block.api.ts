@@ -30,10 +30,7 @@ export class BlockApi
 	 */
 	public static reoderElement(request: ReorderElement)
 	{
-		return axios.post('/admin/block/reorderElement', request)
-			.then((response) => {
-				console.log(response);
-			});
+		return axios.post('/admin/block/reorderElement', request);
 	}
 
 	/**
@@ -43,10 +40,7 @@ export class BlockApi
 	 */
 	public static saveData(request: SaveBlockData): Promise<any>
 	{
-		return axios.post('/admin/block/saveData', request)
-			.then((response) => {
-				console.log(response);
-			});
+		return axios.post('/admin/block/saveData', request);
 	}
 
 	/**
@@ -56,9 +50,6 @@ export class BlockApi
 	 */
 	public static deleteElement(blockId: string): Promise<any>
 	{
-		return axios.post('/admin/block/deleteElement', {blockId})
-			.then((response) => {
-				console.log(response);
-			});
+		return axios.post('/admin/block/deleteElement', {blockId});
 	}
 }

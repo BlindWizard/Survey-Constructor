@@ -10,9 +10,9 @@ import {BlockResizeFrame} from "../../BlockResizeFrame";
 @Component({
 	template: `
         <div ref="selectable" :class="bem('text-wrapper').classes()" v-component-drag v-component-drop-target>
-            <TextBlock v-if="!editing" :block="block"/>
-            <TextBlockEdit v-if="editing" :block="blockData"/>
-            <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onSave="saveData" :onDelete="deleteElement" :mode="getMenuMode()"/>
+            <TextBlock :block="block"/>
+            <TextBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
+            <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected && !editing"/>
         </div>
     `,

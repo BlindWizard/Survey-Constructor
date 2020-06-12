@@ -1,15 +1,50 @@
 .statistics-sample {
     margin-top: 1rem;
 
+    h4 {
+        text-align: center;
+    }
+
     &__timeline {
         text-align: center;
         display: inline-block;
         vertical-align: top;
+        padding-bottom: 1.5rem;
+        position: relative;
+        margin-right: 1rem;
+        width: calc(50% - 1rem);
+
+        &:after {
+            content: ' ';
+            width: 100%;
+            height: 1rem;
+            display: block;
+            position: absolute;
+            border-left: dotted 2px $black;
+            left: calc(50% - 1px);
+        }
+    }
+
+    &__item {
+        &:last-of-type {
+            .statistics-sample__timeline {
+                padding-bottom: 0;
+                &:after {
+                    content: '';
+                    width: 0;
+                    height: 0;
+                    position: static;
+                    border: none;
+                    left: auto;
+                }
+            }
+        }
     }
 
     &__data {
         display: inline-block;
         vertical-align: top;
+        width: 50%;
     }
 
     &__counter {

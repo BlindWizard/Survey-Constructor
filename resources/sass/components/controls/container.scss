@@ -1,0 +1,22 @@
+.container-wrapper {
+    position: relative;
+
+    .block-edit-menu {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.container {
+    background-color: $white;
+    overflow: hidden;
+
+    .cell {
+        min-height: 5rem;
+    }
+}

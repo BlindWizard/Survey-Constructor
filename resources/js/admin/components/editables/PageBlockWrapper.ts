@@ -7,7 +7,7 @@ import {Page} from "../../models/Page";
 
 @Component({
 	template: `
-		<PageBlock :page="page" v-component-drop :resolver="resolver"/>
+		<PageBlock :page="page" v-component-drop.default :resolver="resolver"/>
 	`,
 	components: {
 		PageBlock

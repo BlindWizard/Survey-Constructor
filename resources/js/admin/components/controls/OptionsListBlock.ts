@@ -6,6 +6,7 @@ import {OptionsList} from "../../models/OptionsList";
 @Component({
 	template: `
         <div :class="bem('options-list').classes()">
+            <h4 :class="bem('options-list').el('header').classes()" v-if="block.text">{{ block.text }}</h4>
             <label :class="bem('options-list').el('option').classes()" :key="option.id" v-for="option in block.options">
                 <input :class="bem('options-list').el('control').classes()" :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio" @input="handle"/>
                 <span :class="bem('options-list').el('radio').classes()"></span>

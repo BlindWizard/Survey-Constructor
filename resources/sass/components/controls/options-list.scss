@@ -16,6 +16,12 @@
     background-color: $white;
     overflow: hidden;
 
+    &__header {
+        margin: 1rem;
+        line-height: 1.25rem;
+        font-size: 1rem;
+    }
+
     &__option {
         display: block;
         position: relative;
@@ -78,5 +84,24 @@
 
     &__add-wrapper {
         text-align: center;
+    }
+
+    &.edit-modal {
+        p {
+            input {
+                display: inline-block;
+                width: calc(100% - 3rem);
+            }
+
+            .button {
+                height: 2.4375rem;
+                vertical-align: top;
+                width: 3rem;
+            }
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
     }
 }

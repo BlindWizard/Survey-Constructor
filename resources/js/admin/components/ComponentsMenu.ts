@@ -7,6 +7,12 @@ import Vue from "vue";
             <span :class="bem('sidebar-menu').el('header').classes()">Elements</span>
             <ul :class="bem('vertical menu').classes()">
                 <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'container'">
+                        Container
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-flag').classes()"></i>
+                    </a>
+                </li>
+                <li :class="bem('sidebar-menu').el('item').classes()">
                     <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'header'">
                         Header
                         <i :class="bem('sidebar-menu').el('icon').add('fi-flag').classes()"></i>

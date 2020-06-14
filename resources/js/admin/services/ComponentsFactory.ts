@@ -10,6 +10,7 @@ import {BaseBlock} from "../components/editables/BaseBlock";
 import {Header} from "../models/Header";
 import {Text} from "../models/Text";
 import {TextField} from "../models/TextField";
+import {Container} from "../models/Container";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -42,10 +43,19 @@ export class ComponentsFactory
 		let block: any;
 
 		switch (type) {
+			case BlockTypes.CONTAINER:
+				block = new Container();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.slotsCount = blockData.slotsCount;
+				block.children = blockData.children;
+
+				break;
 			case BlockTypes.OPTIONS_LIST:
 				block = new OptionsList();
 				block.id = blockData.id;
 				block.position = blockData.position;
+				block.text = blockData.text;
 				block.options = [];
 				blockData.options.forEach((optionData: Object) => {
 					block.options.push(this.createElementFromData(BlockTypes.OPTION, optionData));

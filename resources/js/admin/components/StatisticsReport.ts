@@ -8,6 +8,7 @@ import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticsFilter} from "./StatisticsFilter";
 import {OptionStatistics} from "../models/OptionStatistics";
 import {BlockStatistics} from "../models/BlockStatistics";
+import {Sections} from "../contracts/Sections";
 
 @Component({
 	template: `
@@ -102,7 +103,7 @@ export class StatisticsReport extends Vue {
 			}
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, 'Statistics');
+		this.$store.dispatch(actions.SET_SECTION, Sections.STATISTICS);
 	}
 
 	public selectToken(event: Event) {

@@ -7,7 +7,8 @@ class DragDropService
 	private dragState: boolean = false;
 	private dragElement: HTMLElement|null = null;
 	private container: HTMLElement;
-	private target: HTMLElement;
+	private activeTarget: HTMLElement|null = null;
+	private targets: HTMLElement[] = [];
 	private dropTargets: HTMLElement[] = [];
 	private placeholder: HTMLElement|null = null;
 
@@ -24,17 +25,25 @@ class DragDropService
 		this.drag = this.drag.bind(this);
 	}
 
-	public handleTarget(target: HTMLElement)
+	public handleTarget(target: HTMLElement): void
 	{
-		this.target = target;
+		this.targets.push(target);
 
-		this.target.addEventListener('mousemove', (e: MouseEvent) => {
+		target.addEventListener('mousemove', (e: MouseEvent) => {
 			if (!this.getDragState() || null === this.placeholder) {
 				return;
 			}
 
-			var dropPlace: HTMLElement|null = null;
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
+			for(let i = 0; i < possibleTargets.length - 1; i++) {
+				let el: HTMLElement = possibleTargets[i];
+				if (-1 !== this.targets.indexOf(el)) {
+					this.setActiveTarget(el);
+					break;
+				}
+			}
+
+			var dropPlace: HTMLElement|null = null;
 			let target: HTMLElement|null = null;
 			for(let i = 0; i < possibleTargets.length - 1; i++) {
 				let el: HTMLElement = possibleTargets[i];
@@ -50,7 +59,7 @@ class DragDropService
 				}
 			}
 
-			if (null === target) {
+			if (null === target || null === this.activeTarget) {
 				return;
 			}
 
@@ -70,26 +79,24 @@ class DragDropService
 				return;
 			}
 
-			this.target.insertBefore(this.placeholder as Node, dropPlace as Node);
+			this.activeTarget.insertBefore(this.placeholder as Node, dropPlace as Node);
 		});
 
-		this.target.addEventListener('mouseleave', () => {
+		target.addEventListener('mouseleave', () => {
 			if (!this.getDragState()) {
 				return;
 			}
-
-
 		});
 	}
 
-	public handleDropTarget(el: HTMLElement)
+	public handleDropTarget(el: HTMLElement): void
 	{
 		if (-1 === this.dropTargets.indexOf(el)) {
 			this.dropTargets.push(el);
 		}
 	}
 
-	public handleDrag(dragElement: HTMLElement)
+	public handleDrag(dragElement: HTMLElement): void
 	{
 		this.dragElement = dragElement;
 		this.createPlaceholder();
@@ -97,17 +104,17 @@ class DragDropService
 		document.addEventListener('mousemove', this.drag);
 	}
 
-	public drag(e: MouseEvent)
+	public drag(e: MouseEvent): void
 	{
 		if (null === this.dragElement) {
 			return;
 		}
 
-		this.dragElement.style.left = e.x + 'px';
-		this.dragElement.style.top = e.y + 'px';
+		this.dragElement.style.left = (e.pageX - this.dragElement.offsetWidth / 2) + 'px';
+		this.dragElement.style.top = (e.pageY - this.dragElement.offsetHeight / 2) + 'px';
 	}
 
-	public setDragState(state: boolean)
+	public setDragState(state: boolean): void
 	{
 		this.dragState = state;
 
@@ -134,19 +141,28 @@ class DragDropService
 		return this.container;
 	}
 
-	public getDropPosition(e: MouseEvent): number|null
+	public getDropBlockId(): string|null
 	{
-		if (null === this.placeholder) {
+		if (null === this.activeTarget) {
 			return null;
 		}
 
-		var containerBounds = this.target.getBoundingClientRect();
+		return this.activeTarget.getAttribute('data-drop-id');
+	}
+
+	public getDropPosition(e: MouseEvent): number|null
+	{
+		if (null === this.placeholder || null === this.activeTarget) {
+			return null;
+		}
+
+		var containerBounds = this.activeTarget.getBoundingClientRect();
 		var isDropInContainer = (e.x >= containerBounds.left && e.x <= containerBounds.right && e.y >=containerBounds.top && e.y <= containerBounds.bottom);
 		if (!isDropInContainer) {
 			return null;
 		}
 
-		let elements:HTMLElement[] = Array.from(this.target.children) as HTMLElement[];
+		let elements:HTMLElement[] = Array.from(this.activeTarget.children) as HTMLElement[];
 		if (null !== this.dragElement) {
 			elements = elements.filter((element: HTMLElement) => {
 				return element !== this.dragElement;
@@ -154,6 +170,18 @@ class DragDropService
 		}
 
 		return elements.indexOf(this.placeholder);
+	}
+
+	public setActiveTarget(target: HTMLElement): void {
+		let recreatePlaceholder = this.activeTarget !== target;
+		this.activeTarget = target;
+
+		if (null !== this.placeholder && recreatePlaceholder) {
+			this.placeholder.remove();
+			this.placeholder = null;
+
+			this.createPlaceholder();
+		}
 	}
 
 	private createContainer(): HTMLElement
@@ -169,9 +197,9 @@ class DragDropService
 		return container;
 	}
 
-	private createPlaceholder()
+	private createPlaceholder(): void
 	{
-		if (null !== this.placeholder) {
+		if (null !== this.placeholder || null === this.activeTarget) {
 			return;
 		}
 
@@ -179,11 +207,11 @@ class DragDropService
 		placeholder.classList.add(bem('placeholder').classes());
 		placeholder.innerHTML = '<span class="' + bem('placeholder').el('label').classes() + '">' + store.getters[getters.LOCALE].dropPlaceholderLabel + '</span>';
 
-		if (this.target.lastChild) {
-			this.target.insertBefore(placeholder, this.target.lastChild.nextSibling);
+		if (this.activeTarget.lastChild) {
+			this.activeTarget.insertBefore(placeholder, this.activeTarget.lastChild.nextSibling);
 		}
 		else {
-			this.target.insertBefore(placeholder, this.target.firstChild);
+			this.activeTarget.insertBefore(placeholder, this.activeTarget.firstChild);
 		}
 
 		this.placeholder = placeholder;

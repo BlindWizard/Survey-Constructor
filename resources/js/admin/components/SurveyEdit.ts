@@ -9,6 +9,7 @@ import {PageBlockWrapper} from "./editables/PageBlockWrapper";
 import {ScreensPager} from "./ScreensPager";
 import {PageContract} from "../contracts/PageContract";
 import {SurveyContract} from "../contracts/SurveyContract";
+import {Sections} from "../contracts/Sections";
 
 @Component({
 	template: `
@@ -54,7 +55,7 @@ export class SurveyEdit extends Vue {
 			this.$store.dispatch(actions.LOAD_SURVEY, request);
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, 'Editor');
+		this.$store.dispatch(actions.SET_SECTION, Sections.EDITOR);
 	}
 
 	get survey(): SurveyContract|null {

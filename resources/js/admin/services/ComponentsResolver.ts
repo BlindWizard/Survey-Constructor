@@ -12,6 +12,9 @@ import {BaseBlock} from "../components/editables/BaseBlock";
 import {actions} from "../../client/stores/types";
 import {TextFieldBlockWrapper} from "../components/editables/text-field/TextFieldBlockWrapper";
 import {TextFieldBlock} from "../components/controls/TextFieldBlock";
+import {Container} from "../models/Container";
+import {ContainerBlockWrapper} from "../components/editables/container/ContainerBlockWrapper";
+import {ContainerBlock} from "../components/controls/ContainerBlock";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -19,6 +22,8 @@ export class ComponentsResolver {
 	public resolveComponent(type: string): string
 	{
 		switch (type) {
+			case BlockTypes.CONTAINER:
+				return 'ContainerBlock' + (this.editable ? 'Wrapper' : '');
 			case BlockTypes.OPTIONS_LIST:
 				return 'OptionsListBlock' + (this.editable ? 'Wrapper' : '');
 			case BlockTypes.OPTION:
@@ -37,6 +42,8 @@ export class ComponentsResolver {
 	public resolveComponentClass(type: string): VueConstructor
 	{
 		switch (type) {
+			case BlockTypes.CONTAINER:
+				return this.editable ? ContainerBlockWrapper : ContainerBlock;
 			case BlockTypes.OPTIONS_LIST:
 				return this.editable ? OptionsListBlockWrapper : OptionsListBlock;
 			case BlockTypes.OPTION:
@@ -82,6 +89,7 @@ export class ComponentsResolver {
 
 					component.$store.dispatch(actions.ENTER_TEXT, data);
 				}
+			case BlockTypes.CONTAINER:
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:
 				return null;

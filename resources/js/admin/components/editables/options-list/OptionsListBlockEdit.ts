@@ -12,16 +12,27 @@ const uuidv4 = require('uuid/v4');
 	template: `
         <portal to="edit-modal">
             <div :class="bem('options-list').add('edit-modal reveal').classes()" v-component-drop-target>
+                <label>
+                    Header
+                    <input @input="changeBlockText" :value="block.text" type="text" />
+                </label>
                 <p :key="option.id" v-for="option in blockData.options">
-                    <input @input="changeOptionText(option.id, $event)" :value="option.text" type="text" />
-                    <button :class="bem('button').add('rounded secondary').classes()" @click="deleteOption(option.id)">
-                        -
-                    </button>
+                    <label>
+                        Option text
+                        <input @input="changeOptionText(option.id, $event)" :value="option.text" type="text" /><!--
+                     --><button :class="bem('button').add('secondary').classes()" @click="deleteOption(option.id)">
+                            <span :class="bem('button').el('label').classes()">-</span>
+                        </button>
+                    </label>
                 </p>
                 <div :class="bem('options-list').el('add-wrapper').classes()">
-                    <button :class="bem('button').add('rounded secondary').classes()" @click="addOption">+</button>
+                    <button :class="bem('button').add('secondary').classes()" @click="addOption">
+                        <span :class="bem('button').el('label').classes()">Add option</span>
+                    </button>
                 </div>
-                <button :class="bem('button').add('primary').classes()" @click="onSave">{{ locale.saveLabel }}</button>
+                <button :class="bem('button').add('primary').classes()" @click="onSave">
+                    <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
+                </button>
             </div>
         </portal>
 	`,
@@ -44,20 +55,12 @@ export class OptionsListBlockEdit extends Vue {
 			return;
 		}
 
-		let block = new OptionsList();
-		block.id = this.blockData.id;
-		block.position = this.blockData.position;
-		block.text = this.blockData.text;
-		block.multiple = this.blockData.multiple;
-		block.options = this.blockData.options;
-
 		let option = new Option();
 		option.id = uuidv4();
-		option.position = block.options.length;
+		option.position = this.blockData.options.length;
 
-		block.options.push(option);
+		this.blockData.options.push(option);
 
-		this.blockData = block;
 		this.onUpdate(this.blockData);
 	}
 
@@ -67,19 +70,22 @@ export class OptionsListBlockEdit extends Vue {
 			return;
 		}
 
-		let block = new OptionsList();
-		block.id = this.blockData.id;
-		block.position = this.blockData.position;
-		block.text = this.blockData.text;
-		block.multiple = this.blockData.multiple;
-		block.options = this.blockData.options;
-
-		let options = block.options;
-		block.options = options.filter((option: Option) => {
+		let options = this.blockData.options;
+		options = options.filter((option: Option) => {
 			return option.id !== id;
 		});
 
-		this.blockData = block;
+		this.blockData.options = options;
+		this.onUpdate(this.blockData);
+	}
+
+	public changeBlockText(event: KeyboardEvent)
+	{
+		if (null === this.blockData) {
+			return;
+		}
+
+		this.blockData.text = (event.target as any).value;
 		this.onUpdate(this.blockData);
 	}
 
@@ -89,21 +95,14 @@ export class OptionsListBlockEdit extends Vue {
 			return;
 		}
 
-		let block = new OptionsList();
-		block.id = this.blockData.id;
-		block.position = this.blockData.position;
-		block.text = this.blockData.text;
-		block.multiple = this.blockData.multiple;
-		block.options = this.blockData.options;
-
-		let options = block.options;
+		let options = this.blockData.options;
 		options.forEach((option: Option) => {
 			if (option.id === optionId) {
 				option.text = (event.target as any).value;
 			}
 		});
 
-		this.blockData = block;
+		this.blockData.options = options;
 		this.onUpdate(this.blockData);
 	}
 

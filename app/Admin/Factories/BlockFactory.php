@@ -5,6 +5,7 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
+use App\Admin\DTO\Container;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
@@ -21,6 +22,8 @@ class BlockFactory implements BlockFactoryContract
     public function getEmptyBlock(string $type, string $blockId = null): BlockContract
     {
         switch ($type) {
+            case BlockContract::TYPE_CONTAINER:
+                return $this->getContainer($blockId);
             case BlockContract::TYPE_OPTIONS_LIST:
                 return $this->getOptionList($blockId);
             case BlockContract::TYPE_OPTION:
@@ -42,9 +45,19 @@ class BlockFactory implements BlockFactoryContract
     public function getDTO(BlockContract $model): BlockContract
     {
         switch ($model->getType()) {
+            case BlockContract::TYPE_CONTAINER:
+                $dto = new Container();
+                $dto->id = $model->getId();
+                $dto->pageId = $model->getPageId();
+                $dto->position = $model->getPosition();
+                $dto->slotsCount = $model->getData()['slotsCount'] ?? 0;
+                $dto->children =  $model->getData()['children'] ?? [];
+
+                break;
             case BlockContract::TYPE_OPTIONS_LIST:
                 $dto = new OptionsList();
                 $dto->id = $model->getId();
+                $dto->text = $model->getData()['text'] ?? null;
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
 
@@ -58,7 +71,6 @@ class BlockFactory implements BlockFactoryContract
                     $dto->options[] = $option;
                 }
 
-                $result[] = $dto;
                 break;
             case BlockContract::TYPE_OPTION:
                 $dto = new Option();
@@ -68,6 +80,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
 
                 $result[] = $dto;
+
                 break;
             case BlockContract::TYPE_HEADER:
                 $dto = new Header();
@@ -76,7 +89,6 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
-                $result[] = $dto;
                 break;
             case BlockContract::TYPE_TEXT:
                 $dto = new Text();
@@ -85,7 +97,6 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
-                $result[] = $dto;
                 break;
             case BlockContract::TYPE_TEXT_FIELD:
                 $dto = new TextField();
@@ -96,13 +107,29 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
                 $dto->multiline = $model->getData()['multiline'];
 
-                $result[] = $dto;
                 break;
             default:
                 throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));
         }
 
         return $dto;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return Container
+     *
+     * @throws \Throwable
+     */
+    public function getContainer(string $blockId = null): Container
+    {
+        $block = new Container();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+        $block->slotsCount = 2;
+
+        return $block;
     }
 
     /**

@@ -29,6 +29,7 @@ import {SurveyStatistics} from "../models/SurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
 import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticAction} from "../models/StatisticAction";
+import {Container} from "../models/Container";
 
 Vue.use(Vuex);
 
@@ -83,14 +84,33 @@ const store = new Vuex.Store({
 		[mutations.ADD_ELEMENT](state, actionData: any) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
-			let blocks: BlockContract[] = page.getBlocksInOrder();
-			blocks.splice(actionData.position, 0, actionData.block);
 
-			for (let i = 0; i < blocks.length; i++) {
-				blocks[i].setPosition(i);
+			if (null === actionData.parentBlockId) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				blocks.splice(actionData.position, 0, actionData.block);
+
+				for (let i = 0; i < blocks.length; i++) {
+					blocks[i].setPosition(i);
+				}
+
+				page.setBlocks(blocks);
+			}
+			else {
+				let container: Container = page.getBlocks()[actionData.parentBlockId] || null;
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				let blocks: BlockContract[] = container.getBlocksInOrder();
+				blocks.splice(actionData.position, 0, actionData.block);
+
+				for (let i = 0; i < blocks.length; i++) {
+					blocks[i].setPosition(i);
+				}
+
+				container.setBlocks(blocks);
 			}
 
-			page.setBlocks(blocks);
 			pages[page.getId()] = page;
 		},
 		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
@@ -201,6 +221,7 @@ const store = new Vuex.Store({
 			let reorderData: ReorderElement = new ReorderElement();
 			reorderData.blockId = block.getId();
 			reorderData.position = block.getPosition();
+			reorderData.parentBlockId = request.parentBlockId;
 			commit(mutations.CHANGE_ELEMENT_POSITION, reorderData);
 		},
 		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {

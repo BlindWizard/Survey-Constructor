@@ -12572,6 +12572,29 @@ html.is-reveal-open body {
   padding: 0.9375rem;
 }
 
+.container-wrapper {
+  position: relative;
+}
+
+.container-wrapper .block-edit-menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.container-wrapper:focus {
+  outline: none;
+}
+
+.container {
+  background-color: #fefefe;
+  overflow: hidden;
+}
+
+.container .cell {
+  min-height: 5rem;
+}
+
 .options-list-wrapper {
   position: relative;
 }
@@ -12589,6 +12612,12 @@ html.is-reveal-open body {
 .options-list {
   background-color: #fefefe;
   overflow: hidden;
+}
+
+.options-list__header {
+  margin: 1rem;
+  line-height: 1.25rem;
+  font-size: 1rem;
 }
 
 .options-list__option {
@@ -12651,6 +12680,21 @@ html.is-reveal-open body {
 
 .options-list__add-wrapper {
   text-align: center;
+}
+
+.options-list.edit-modal p input {
+  display: inline-block;
+  width: calc(100% - 3rem);
+}
+
+.options-list.edit-modal p .button {
+  height: 2.4375rem;
+  vertical-align: top;
+  width: 3rem;
+}
+
+.options-list.edit-modal p:last-of-type {
+  margin-bottom: 0;
 }
 
 .option-wrapper {

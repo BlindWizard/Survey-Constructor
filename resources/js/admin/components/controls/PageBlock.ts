@@ -14,6 +14,8 @@ import {Page} from "../../models/Page";
 import {PageContract} from "../../contracts/PageContract";
 import {TextFieldBlock} from "./TextFieldBlock";
 import {TextFieldBlockWrapper} from "../editables/text-field/TextFieldBlockWrapper";
+import {ContainerBlockWrapper} from "../editables/container/ContainerBlockWrapper";
+import {ContainerBlock} from "./ContainerBlock";
 
 @Component({
 	template: `
@@ -22,6 +24,8 @@ import {TextFieldBlockWrapper} from "../editables/text-field/TextFieldBlockWrapp
         </div>
 	`,
 	components: {
+		ContainerBlock,
+		ContainerBlockWrapper,
 		OptionsListBlock,
 		OptionsListBlockWrapper,
 		OptionBlock,

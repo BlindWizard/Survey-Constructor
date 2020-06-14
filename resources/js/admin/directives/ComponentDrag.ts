@@ -79,6 +79,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			let blockId = dragDropService.getDropBlockId();
 			let position = dragDropService.getDropPosition(e);
 
 			if (newElement) {
@@ -89,6 +90,7 @@ const ComponentDrag: DirectiveOptions = {
 					request.pageId = $store.getters[getters.CURRENT_PAGE].id;
 					request.type = dragElement.getType();
 					request.position = position;
+					request.parentBlockId = blockId;
 
 					$store.dispatch(actions.ADD_ELEMENT, request);
 				}
@@ -105,6 +107,7 @@ const ComponentDrag: DirectiveOptions = {
 					let request = new ReorderElement();
 					request.blockId = dragElement.$props.block.id;
 					request.position = position;
+					request.parentBlockId = blockId;
 
 					$store.dispatch(actions.REORDER_ELEMENT, request);
 				}

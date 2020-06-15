@@ -173,6 +173,12 @@ class DragDropService
 	}
 
 	public setActiveTarget(target: HTMLElement): void {
+		if (null !== this.activeTarget) {
+			this.activeTarget.classList.remove('drop-active');
+		}
+
+		target.classList.add('drop-active');
+
 		let recreatePlaceholder = this.activeTarget !== target;
 		this.activeTarget = target;
 

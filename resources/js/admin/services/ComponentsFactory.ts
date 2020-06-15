@@ -34,6 +34,11 @@ export class ComponentsFactory
 		let blockData: any = store.getters[getters.ELEMENT_DEFAULT_DATA](type);
 		let block: any = this.createElementFromData(type, blockData);
 		block.id = uuidv4();
+		if (block.getType() === BlockTypes.CONTAINER) {
+			for(let i of Object.keys(block.getData()['slots'])) {
+				block.slots[i] = uuidv4();
+			}
+		}
 
 		return block as BlockContract;
 	}
@@ -47,7 +52,7 @@ export class ComponentsFactory
 				block = new Container();
 				block.id = blockData.id;
 				block.position = blockData.position;
-				block.slotsCount = blockData.slotsCount;
+				block.slots = blockData.slots;
 				block.children = blockData.children;
 
 				break;

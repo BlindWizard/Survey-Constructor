@@ -3,34 +3,38 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Container} from "../../models/Container";
 import {BlockContract} from "../../contracts/BlockContract";
+import {ComponentsResolver} from "../../services/ComponentsResolver";
+import {OptionsListBlock} from "./OptionsListBlock";
+import {OptionBlock} from "./OptionBlock";
+import {HeaderBlock} from "./HeaderBlock";
+import {TextBlock} from "./TextBlock";
+import {TextFieldBlock} from "./TextFieldBlock";
 
 @Component({
 	template: `
         <div :class="bem('container').classes()">
             <div class="grid-container full">
                 <div class="grid-x">
-                    <div :key="slotNumber" v-for="slotNumber in block.slotsCount" class="cell small-6" v-component-drop="block.getId()">
-                        <component :key="block.getId()" v-if="null !== getBlockForSlot(slotNumber)" :is="resolver.resolveComponentClass(getBlockForSlot(slotNumber).getType()).name" :block="getBlockForSlot(slotNumber)" />
+                    <div :key="slotId" v-for="slotId in block.slots" class="cell small-4">
+                        <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" />
                     </div>
                 </div>
             </div>
         </div>
 	`,
+	components: {
+		ContainerBlock,
+		OptionsListBlock,
+		OptionBlock,
+		HeaderBlock,
+		TextBlock,
+		TextFieldBlock,
+	}
 })
 export class ContainerBlock extends Vue {
+	public name: string = 'ContainerBlock';
+
 	@Prop(Container) readonly block: Container;
+	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
 	@Prop(Function) readonly handler: Function|null;
-
-	private handle(event: Event) {
-		if (!this.handler) {
-			return;
-		}
-
-		this.handler(this, event);
-	}
-
-	public getBlockForSlot(slotNumber: number): BlockContract|null
-	{
-		return this.block.getBlocksInOrder()[slotNumber] || null;
-	}
 }

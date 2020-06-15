@@ -50,7 +50,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->id = $model->getId();
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
-                $dto->slotsCount = $model->getData()['slotsCount'] ?? 0;
+                $dto->slots = $model->getData()['slots'] ?? [];
                 $dto->children =  $model->getData()['children'] ?? [];
 
                 break;
@@ -127,7 +127,7 @@ class BlockFactory implements BlockFactoryContract
         $block = new Container();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
-        $block->slotsCount = 2;
+        $block->slots= [Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), Uuid::uuid4()->toString()];
 
         return $block;
     }

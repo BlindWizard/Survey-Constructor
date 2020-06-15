@@ -4,7 +4,7 @@ import {BlockTypes} from "../contracts/BlockTypes";
 export class Container implements BlockContract {
 	public id: string;
 	public position: number;
-	public slotsCount: number;
+	public slots: string[] = [];
 	public children: any = {};
 
 	getId(): string {
@@ -20,7 +20,7 @@ export class Container implements BlockContract {
 	}
 
 	setData(data: Object): void {
-		this.slotsCount = data['slotsCount'];
+		this.slots = data['slots'];
 		this.children = data['children'];
 	}
 
@@ -30,16 +30,21 @@ export class Container implements BlockContract {
 
 	getData(): Object {
 		return {
-			'slotsCount': this.slotsCount,
+			'slots': this.slots,
 			'children': this.children,
 		};
 	}
 
-	getBlocksInOrder(): BlockContract[]
+	getBlocksInOrder(slotId: string): BlockContract[]
 	{
 		let blocks: BlockContract[] = [];
-		for (let blockId of Object.keys(this.children)) {
-			let block: BlockContract = this.children[blockId];
+
+		if (!this.children[slotId] || 0 === this.children[slotId].length) {
+			return blocks;
+		}
+
+		for (let blockId of Object.keys(this.children[slotId])) {
+			let block: BlockContract = this.children[slotId][blockId];
 			blocks.push(block);
 		}
 
@@ -50,11 +55,11 @@ export class Container implements BlockContract {
 		return blocks;
 	}
 
-	setBlocks(blocks: BlockContract[]): void
+	setBlocks(slotId: string, blocks: BlockContract[]): void
 	{
-		this.children = {};
+		this.children[slotId] = {};
 		for (let block of blocks) {
-			this.children[block.getId()] = block;
+			this.children[slotId][block.getId()] = block;
 		}
 	}
 }

@@ -1,7 +1,6 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {Option} from "./Option";
-import {ComponentsFactory} from "../services/ComponentsFactory";
 
 export class OptionsList implements BlockContract {
 	public id: string;

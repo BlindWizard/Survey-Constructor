@@ -10,13 +10,20 @@
     &:focus {
         outline: none;
     }
+
+    .container__slot_empty {
+        border: 0.18rem dashed $medium-gray;
+
+        h4 {
+            font-size: 1rem;
+            text-align: center;
+            color: $medium-gray;
+            line-height: 4rem;
+        }
+    }
 }
 
 .container {
     background-color: $white;
     overflow: hidden;
-
-    .cell {
-        min-height: 5rem;
-    }
 }

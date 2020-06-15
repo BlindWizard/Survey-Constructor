@@ -2,4 +2,13 @@
     position: absolute !important;
     pointer-events: none;
     z-index: 1000;
+    background-color: $white;
+    border: 0.18rem $primary dashed;
+    min-width: 10rem;
+}
+
+.drop-active.container__slot_empty {
+    h4 {
+        display: none;
+    }
 }

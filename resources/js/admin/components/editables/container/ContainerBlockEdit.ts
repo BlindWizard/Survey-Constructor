@@ -3,7 +3,7 @@ import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Locale} from "../../../models/Locale";
 import {getters} from "../../../stores/types";
-import {ContainerBlock} from "../../controls/ContainerBlock";
+import {Container} from "../../../models/Container";
 
 @Component({
 template: `
@@ -17,7 +17,7 @@ template: `
 `,
 })
 export class ContainerBlockEdit extends Vue {
-@Prop(ContainerBlock) readonly block: ContainerBlock;
+@Prop(Container) readonly block: Container;
 @Prop(Function) onSave: Function;
 
 get locale(): Locale {

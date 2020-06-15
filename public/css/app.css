@@ -11961,6 +11961,13 @@ html.is-reveal-open body {
   position: absolute !important;
   pointer-events: none;
   z-index: 1000;
+  background-color: #fefefe;
+  border: 0.18rem #fd5b15 dashed;
+  min-width: 10rem;
+}
+
+.drop-active.container__slot_empty h4 {
+  display: none;
 }
 
 .dark {
@@ -12586,13 +12593,20 @@ html.is-reveal-open body {
   outline: none;
 }
 
+.container-wrapper .container__slot_empty {
+  border: 0.18rem dashed #cacaca;
+}
+
+.container-wrapper .container__slot_empty h4 {
+  font-size: 1rem;
+  text-align: center;
+  color: #cacaca;
+  line-height: 4rem;
+}
+
 .container {
   background-color: #fefefe;
   overflow: hidden;
-}
-
-.container .cell {
-  min-height: 5rem;
 }
 
 .options-list-wrapper {

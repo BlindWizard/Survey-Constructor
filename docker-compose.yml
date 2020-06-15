@@ -22,7 +22,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/www/polls:cached
-      - ./docker/php/fpm:/etc/php/7.3/fpm:ro
+      - ./docker/php/fpm:/etc/php/7.4/fpm:ro
       - ./docker/logs/php:/var/log/php:rw
       - ./storage:/www/polls/storage:rw
     environment:

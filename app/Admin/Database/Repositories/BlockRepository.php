@@ -25,11 +25,26 @@ class BlockRepository implements BlockRepositoryContract
         $this->factory = $factory;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function findById(string $blockId): ?BlockContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
 
         return  $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findContainerBySlotId(string $slotId): ?BlockContract
+    {
+        $block = Block::query()->whereHas(Block::REL_DATA, function ($query) use ($slotId) {
+            $query->whereRaw("data->'slots' ?? '$slotId'");
+        })->get()->first(); /** @var Block $block */
+
+        return $block;
     }
 
     /**

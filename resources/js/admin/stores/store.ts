@@ -85,46 +85,73 @@ const store = new Vuex.Store({
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
 
-			if (null === actionData.parentBlockId) {
-				let blocks: BlockContract[] = page.getBlocksInOrder();
+			let blocks: BlockContract[] = page.getBlocksInOrder();
+			if (!actionData.parentBlockId) {
 				blocks.splice(actionData.position, 0, actionData.block);
 
 				for (let i = 0; i < blocks.length; i++) {
 					blocks[i].setPosition(i);
 				}
-
-				page.setBlocks(blocks);
 			}
 			else {
-				let container: Container = page.getBlocks()[actionData.parentBlockId] || null;
-				if (null === container) {
-					throw new Error('Container not found');
+				for (let blockId of Object.keys(blocks)) {
+					let block = blocks[blockId];
+					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(actionData.parentBlockId)) {
+						let container: Container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: block.getId(), position: block.getPosition(), ...block.getData()})
+						blocks[blockId] = container;
+
+						let containerBlocks: BlockContract[] = container.getBlocksInOrder(actionData.parentBlockId);
+						containerBlocks.splice(actionData.position, 0, actionData.block);
+
+						for (let i = 0; i < containerBlocks.length; i++) {
+							containerBlocks[i].setPosition(i);
+						}
+
+						container.setBlocks(actionData.parentBlockId, containerBlocks);
+						break;
+					}
 				}
-
-				let blocks: BlockContract[] = container.getBlocksInOrder();
-				blocks.splice(actionData.position, 0, actionData.block);
-
-				for (let i = 0; i < blocks.length; i++) {
-					blocks[i].setPosition(i);
-				}
-
-				container.setBlocks(blocks);
 			}
 
+			page.setBlocks(blocks);
 			pages[page.getId()] = page;
 		},
 		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
-			let targetBlock: BlockContract = page.getBlocks()[request.blockId];
 			let blocks: BlockContract[] = page.getBlocksInOrder();
 
-			let oldPosition = blocks.indexOf(targetBlock);
-			blocks.splice(oldPosition, 1);
-			blocks.splice(request.position, 0, targetBlock);
+			if (null === request.parentBlockId) {
+				let targetBlock: BlockContract = page.getBlocks()[request.blockId];
 
-			for (let i = 0; i < blocks.length; i++) {
-				blocks[i].setPosition(i);
+				let oldPosition = blocks.indexOf(targetBlock);
+				blocks.splice(oldPosition, 1);
+				blocks.splice(request.position, 0, targetBlock);
+
+				for (let i = 0; i < blocks.length; i++) {
+					blocks[i].setPosition(i);
+				}
+			}
+			else {
+				for (let blockId of Object.keys(blocks)) {
+					let block = blocks[blockId];
+					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(request.parentBlockId)) {
+						let container: Container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: block.getId(), position: block.getPosition(), ...block.getData()})
+						blocks[blockId] = container;
+
+						let targetBlock: BlockContract = container.getData()['children'][request.parentBlockId][request.blockId];
+
+						let containerBlocks: BlockContract[] = container.getBlocksInOrder(request.parentBlockId);
+						containerBlocks.splice(request.position, 0, targetBlock);
+
+						for (let i = 0; i < containerBlocks.length; i++) {
+							containerBlocks[i].setPosition(i);
+						}
+
+						container.setBlocks(request.parentBlockId, containerBlocks);
+						break;
+					}
+				}
 			}
 
 			page.setBlocks(blocks);
@@ -133,10 +160,25 @@ const store = new Vuex.Store({
 		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
-			let targetBlock: BlockContract = page.getBlocks()[request.blockId];
 			let blocks: BlockContract[] = page.getBlocksInOrder();
 
-			targetBlock.setData(request.data);
+			if (null === request.parentBlockId) {
+				let targetBlock = page.getBlocks()[request.blockId];
+				blocks[targetBlock.getPosition()] = ComponentsFactory.createElementFromData(targetBlock.getType(), {...request.data, id: targetBlock.getId(), position: targetBlock.getPosition()});
+			}
+			else {
+				for (let blockId of Object.keys(blocks)) {
+					let container = blocks[blockId];
+					if (BlockTypes.CONTAINER === container.getType() && -1 !== container.getData()['slots'].indexOf(request.parentBlockId)) {
+						let targetBlock = container.getData()['children'][request.parentBlockId][request.blockId];
+						container.getData()['children'][request.parentBlockId][request.blockId] = ComponentsFactory.createElementFromData(targetBlock.getType(), {...request.data, id: targetBlock.getId(), position: targetBlock.getPosition()});
+						container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: container.getId(), position: container.getPosition(), ...container.getData()});
+
+						blocks[blockId] = container;
+						break;
+					}
+				}
+			}
 
 			page.setBlocks(blocks);
 			pages[page.getId()] = page;
@@ -209,13 +251,14 @@ const store = new Vuex.Store({
 			}
 
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
-			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0});
+			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0, parentBlockId: request.parentBlockId});
 			request.blockId = block.getId();
 			block = await BlockApi.createElement(request);
 
 			let newData: SaveBlockData = new SaveBlockData();
 			newData.blockId = block.getId();
 			newData.data = block.getData();
+			newData.parentBlockId = request.parentBlockId
 			commit(mutations.SAVE_ELEMENT_DATA, newData);
 
 			let reorderData: ReorderElement = new ReorderElement();

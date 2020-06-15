@@ -10,4 +10,4 @@ wait
 chmod -R 777 /www/polls/storage
 chmod -R 777 /www/polls/bootstrap/cache
 
-php-fpm7.3 --nodaemonize
+php-fpm7.4 --nodaemonize

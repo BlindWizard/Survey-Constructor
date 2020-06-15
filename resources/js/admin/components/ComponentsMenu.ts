@@ -9,7 +9,7 @@ import Vue from "vue";
                 <li :class="bem('sidebar-menu').el('item').classes()">
                     <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'container'">
                         Container
-                        <i :class="bem('sidebar-menu').el('icon').add('fi-flag').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-thumbnails').classes()"></i>
                     </a>
                 </li>
                 <li :class="bem('sidebar-menu').el('item').classes()">
@@ -39,7 +39,7 @@ import Vue from "vue";
                 <li :class="bem('sidebar-menu').el('item').classes()">
                     <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'text-field'">
                         Text field
-                        <i :class="bem('sidebar-menu').el('icon').add('fi-page').classes()"></i>
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-comment').classes()"></i>
                     </a>
                 </li>
             </ul>

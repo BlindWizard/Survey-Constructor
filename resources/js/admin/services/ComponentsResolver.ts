@@ -19,26 +19,6 @@ import {ContainerBlock} from "../components/controls/ContainerBlock";
 export class ComponentsResolver {
 	protected editable: boolean = false;
 
-	public resolveComponent(type: string): string
-	{
-		switch (type) {
-			case BlockTypes.CONTAINER:
-				return 'ContainerBlock' + (this.editable ? 'Wrapper' : '');
-			case BlockTypes.OPTIONS_LIST:
-				return 'OptionsListBlock' + (this.editable ? 'Wrapper' : '');
-			case BlockTypes.OPTION:
-				return 'OptionBlock' + (this.editable ? 'Wrapper' : '');
-			case BlockTypes.HEADER:
-				return 'HeaderBlock' + (this.editable ? 'Wrapper' : '');
-			case BlockTypes.TEXT:
-				return 'TextBlock' + (this.editable ? 'Wrapper' : '');
-			case BlockTypes.TEXT_FIELD:
-				return 'TextFieldBlock' + (this.editable ? 'Wrapper' : '');
-			default:
-				throw new Error('Undefined block type');
-		}
-	}
-
 	public resolveComponentClass(type: string): VueConstructor
 	{
 		switch (type) {

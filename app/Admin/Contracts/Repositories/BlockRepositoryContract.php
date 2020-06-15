@@ -18,6 +18,13 @@ interface BlockRepositoryContract
     public function findById(string $blockId): ?BlockContract;
 
     /**
+     * @param string $slotId
+     *
+     * @return BlockContract|null
+     */
+    public function findContainerBySlotId(string $slotId): ?BlockContract;
+
+    /**
      * @param BlockContract $block
      *
      * @throws Throwable

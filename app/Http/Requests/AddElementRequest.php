@@ -11,6 +11,7 @@ class AddElementRequest extends FormRequest
         return [
             'pageId' => 'required|uuid',
             'blockId'  => 'required|uuid',
+            'parentBlockId' => 'uuid|nullable',
             'type'     => 'required',
             'position' => 'numeric|nullable',
         ];
@@ -24,6 +25,11 @@ class AddElementRequest extends FormRequest
     public function getBlockId(): string
     {
         return (string) $this->json('blockId');
+    }
+
+    public function getParentBlockId(): ?string
+    {
+        return $this->json('parentBlockId')? (string) $this->json('parentBlockId') : null;
     }
 
     public function getType(): string

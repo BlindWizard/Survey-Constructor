@@ -10,16 +10,15 @@ interface BlockServiceContract
 {
 
     /**
-     * @param string $pageId
-     * @param string $blockId
-     * @param string $type
-     * @param int    $position
+     * @param string      $pageId
+     * @param string      $blockId
+     * @param string      $type
+     * @param int         $position
+     * @param string|null $parentBlockId
      *
      * @return BlockContract
-     *
-     * @throws Throwable
      */
-    public function addEmptyElement(string $pageId, string $blockId, string $type, int $position): BlockContract;
+    public function addEmptyElement(string $pageId, string $blockId, string $type, int $position, ?string $parentBlockId): BlockContract;
 
     /**
      * @param string $blockId

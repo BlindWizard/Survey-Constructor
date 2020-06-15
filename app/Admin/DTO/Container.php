@@ -14,8 +14,8 @@ class Container implements BlockContract
     public $pageId;
     /** @var int */
     public $position;
-    /** @var int */
-    public $slotsCount;
+    /** @var string[] */
+    public $slots;
     /** @var BlockContract[] */
     public $children = [];
 
@@ -81,7 +81,7 @@ class Container implements BlockContract
     public function getData(): array
     {
         return [
-            'slotsCount' => $this->slotsCount,
+            'slots' => $this->slots,
             'children' => $this->children,
         ];
     }

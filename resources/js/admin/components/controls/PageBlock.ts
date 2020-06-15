@@ -20,7 +20,7 @@ import {ContainerBlock} from "./ContainerBlock";
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
-            <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" />
+            <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" :resolver="resolver"/>
         </div>
 	`,
 	components: {
@@ -40,5 +40,5 @@ import {ContainerBlock} from "./ContainerBlock";
 })
 export class PageBlock extends Vue {
 	@Prop(Page) readonly page: PageContract;
-	@Prop(ComponentsResolver) readonly  resolver: ComponentsResolver;
+	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
 }

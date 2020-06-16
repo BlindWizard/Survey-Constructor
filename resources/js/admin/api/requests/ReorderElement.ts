@@ -1,5 +1,5 @@
 export class ReorderElement {
-	blockId: string;
-	position: number;
-	parentBlockId: string|null = null;
+	public blockId: string;
+	public position: number;
+	public parentBlockId: string|null = null;
 }

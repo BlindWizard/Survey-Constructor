@@ -24,8 +24,6 @@ import {CreateToken} from "../api/requests/CreateToken";
 import {DeleteToken} from "../api/requests/DeleteToken";
 import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
 import {StatisticsApi} from "../api/statistics.api";
-import {StatisticsReport} from "../components/StatisticsReport";
-import {SurveyStatistics} from "../models/SurveyStatistics";
 import {BlocksStatistics} from "../models/BlocksStatistics";
 import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticAction} from "../models/StatisticAction";
@@ -97,7 +95,7 @@ const store = new Vuex.Store({
 				for (let blockId of Object.keys(blocks)) {
 					let block = blocks[blockId];
 					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(actionData.parentBlockId)) {
-						let container: Container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: block.getId(), position: block.getPosition(), ...block.getData()})
+						let container: Container = ComponentsFactory.cloneElement(block) as Container;
 						blocks[blockId] = container;
 
 						let containerBlocks: BlockContract[] = container.getBlocksInOrder(actionData.parentBlockId);
@@ -136,7 +134,7 @@ const store = new Vuex.Store({
 				for (let blockId of Object.keys(blocks)) {
 					let block = blocks[blockId];
 					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(request.parentBlockId)) {
-						let container: Container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: block.getId(), position: block.getPosition(), ...block.getData()})
+						let container: Container = ComponentsFactory.cloneElement(block) as Container;
 						blocks[blockId] = container;
 
 						let targetBlock: BlockContract = container.getData()['children'][request.parentBlockId][request.blockId];
@@ -164,17 +162,16 @@ const store = new Vuex.Store({
 
 			if (null === request.parentBlockId) {
 				let targetBlock = page.getBlocks()[request.blockId];
-				blocks[targetBlock.getPosition()] = ComponentsFactory.createElementFromData(targetBlock.getType(), {...request.data, id: targetBlock.getId(), position: targetBlock.getPosition()});
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
 			}
 			else {
-				for (let blockId of Object.keys(blocks)) {
-					let container = blocks[blockId];
-					if (BlockTypes.CONTAINER === container.getType() && -1 !== container.getData()['slots'].indexOf(request.parentBlockId)) {
-						let targetBlock = container.getData()['children'][request.parentBlockId][request.blockId];
-						container.getData()['children'][request.parentBlockId][request.blockId] = ComponentsFactory.createElementFromData(targetBlock.getType(), {...request.data, id: targetBlock.getId(), position: targetBlock.getPosition()});
-						container = ComponentsFactory.createElementFromData(BlockTypes.CONTAINER, {id: container.getId(), position: container.getPosition(), ...container.getData()});
+				for (let block of blocks) {
+					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(request.parentBlockId)) {
+						let targetBlock = block.getData()['children'][request.parentBlockId][request.blockId];
+						block.getData()['children'][request.parentBlockId][request.blockId] = ComponentsFactory.cloneElement(targetBlock);
+						block = ComponentsFactory.cloneElement(block);
 
-						blocks[blockId] = container;
+						blocks[block.getId()] = block;
 						break;
 					}
 				}
@@ -184,8 +181,29 @@ const store = new Vuex.Store({
 			pages[page.getId()] = page;
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
-			let page: PageContract = state.survey.pages[state.pageId];
-			Vue.delete(page.getBlocks(), blockId);
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let blocks: BlockContract[] = page.getBlocksInOrder();
+
+			blocks = blocks.filter((block: BlockContract) => {
+				return block.getId() !== blockId;
+			});
+
+			for (let block of blocks) {
+				if (BlockTypes.CONTAINER === block.getType()) {
+					for (let slotId of Object.keys(block.getData()['children'])) {
+						for (let deleteBlockId of Object.keys(block.getData()['children'][slotId])) {
+							if (deleteBlockId === blockId) {
+								(block as Container).deleteBlock(slotId, blockId);
+								blocks[block.getId()] = ComponentsFactory.cloneElement(block);
+							}
+						}
+					}
+				}
+			}
+
+			page.setBlocks(blocks);
+			pages[page.getId()] = page;
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {
 			let pages = state.survey.pages;
@@ -254,11 +272,10 @@ const store = new Vuex.Store({
 			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0, parentBlockId: request.parentBlockId});
 			request.blockId = block.getId();
 			block = await BlockApi.createElement(request);
-
 			let newData: SaveBlockData = new SaveBlockData();
 			newData.blockId = block.getId();
 			newData.data = block.getData();
-			newData.parentBlockId = request.parentBlockId
+			newData.parentBlockId = request.parentBlockId;
 			commit(mutations.SAVE_ELEMENT_DATA, newData);
 
 			let reorderData: ReorderElement = new ReorderElement();

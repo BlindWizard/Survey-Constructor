@@ -5,7 +5,6 @@ namespace App\Admin\DTO;
 
 use App\Admin\Contracts\Entities\BlockContract;
 
-//@TODO-04.02.2020-Чучманский Aндрей Remove entity
 class BlockWrapper implements BlockContract
 {
     /** @var BlockContract */
@@ -33,17 +32,25 @@ class BlockWrapper implements BlockContract
     /**
      * @inheritDoc
      */
-    public function getPageId(): string
+    public function getParentId(): string
     {
-        return $this->data->getPageId();
+        return $this->data->getParentId();
     }
 
     /**
      * @inheritDoc
      */
-    public function setPageId(string $pageId): void
+    public function setParentId(string $parentId): void
     {
-        $this->data->setPageId($pageId);
+        $this->data->setParentId($parentId);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getChildren(): ?array
+    {
+        return $this->data->getChildren();
     }
 
     /**

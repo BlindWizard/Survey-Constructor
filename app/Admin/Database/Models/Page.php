@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 namespace App\Admin\Database\Models;
+use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\PageContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
@@ -86,7 +87,7 @@ class Page extends Model implements PageContract
 
     public function blocks()
     {
-        return $this->hasMany(Block::class, Block::ATTR_PAGE_ID, static::ATTR_ID)->orderBy(Block::ATTR_POSITION);
+        return $this->hasMany(Block::class, Block::ATTR_PARENT_ID, static::ATTR_ID)->orderBy(Block::ATTR_POSITION);
     }
     public const REL_BLOCKS = 'blocks';
 }

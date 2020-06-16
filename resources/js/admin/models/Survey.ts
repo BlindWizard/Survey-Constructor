@@ -1,6 +1,5 @@
 import {SurveyContract} from "../contracts/SurveyContract";
 import {PageContract} from "../contracts/PageContract";
-import {BlockContract} from "../contracts/BlockContract";
 import {SurveyStatistics} from "./SurveyStatistics";
 
 export class Survey implements SurveyContract

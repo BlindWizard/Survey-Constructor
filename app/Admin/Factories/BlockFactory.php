@@ -5,6 +5,9 @@ namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\PageRepositoryContract;
+use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\Container;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Option;
@@ -16,6 +19,14 @@ use Ramsey\Uuid\Uuid;
 
 class BlockFactory implements BlockFactoryContract
 {
+    /** @var BlockRepositoryContract */
+    protected $blockRepository;
+
+    public function __construct(BlockRepositoryContract $blockRepository)
+    {
+        $this->blockRepository = $blockRepository;
+    }
+
     /**
      * @inheritDoc
      */
@@ -48,24 +59,28 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_CONTAINER:
                 $dto = new Container();
                 $dto->id = $model->getId();
-                $dto->pageId = $model->getPageId();
+                $dto->parentId = $model->getParentId();
                 $dto->position = $model->getPosition();
                 $dto->slots = $model->getData()['slots'] ?? [];
-                $dto->children =  $model->getData()['children'] ?? [];
+                foreach ($model->getData()['slots'] as $slotId) {
+                    foreach ($this->blockRepository->getBlocksByParentId($slotId) as $innerModel) {
+                        $dto->children[] = new BlockWrapper($this->getDTO($innerModel));
+                    }
+                }
 
                 break;
             case BlockContract::TYPE_OPTIONS_LIST:
                 $dto = new OptionsList();
                 $dto->id = $model->getId();
                 $dto->text = $model->getData()['text'] ?? null;
-                $dto->pageId = $model->getPageId();
+                $dto->pageId = $model->getParentId();
                 $dto->position = $model->getPosition();
 
                 foreach ($model->getData()['options'] as $optionData) {
                     $option = new Option();
                     $option->id = $optionData['id'];
                     $option->text = $optionData['text'];
-                    $option->pageId = $dto->pageId;
+                    $option->parentId = $dto->pageId;
                     $option->position = $optionData['position'];
 
                     $dto->options[] = $option;
@@ -75,7 +90,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_OPTION:
                 $dto = new Option();
                 $dto->id = $model->getId();
-                $dto->pageId = $model->getPageId();
+                $dto->parentId = $model->getParentId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -85,7 +100,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_HEADER:
                 $dto = new Header();
                 $dto->id = $model->getId();
-                $dto->pageId = $model->getPageId();
+                $dto->parentId = $model->getParentId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -93,7 +108,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_TEXT:
                 $dto = new Text();
                 $dto->id = $model->getId();
-                $dto->pageId = $model->getPageId();
+                $dto->parentId = $model->getParentId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -101,7 +116,7 @@ class BlockFactory implements BlockFactoryContract
             case BlockContract::TYPE_TEXT_FIELD:
                 $dto = new TextField();
                 $dto->id = $model->getId();
-                $dto->pageId = $model->getPageId();
+                $dto->parentId = $model->getParentId();
                 $dto->label = $model->getData()['label'];
                 $dto->placeholder = $model->getData()['placeholder'];
                 $dto->position = $model->getPosition();

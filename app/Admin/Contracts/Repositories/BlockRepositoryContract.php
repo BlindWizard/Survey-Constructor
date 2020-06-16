@@ -38,14 +38,14 @@ interface BlockRepositoryContract
      *
      * @throws BlockTypeException
      */
-    public function getPageBlocks(string $pageId): array;
+    public function getBlocksByParentId(string $pageId): array;
 
     /**
-     * @param string $pageId
+     * @param string $parentId
      *
      * @return BlockContract|null
      */
-    public function findLastBlock(string $pageId): ?BlockContract;
+    public function findLastBlock(string $parentId): ?BlockContract;
 
     /**
      * @param string $blockId

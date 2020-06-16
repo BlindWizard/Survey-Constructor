@@ -68,7 +68,7 @@ class PageRepository implements PageRepositoryContract
     {
         DB::beginTransaction();
         try {
-            foreach (Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->get()->all() as $block) {/** @var Block $block */
+            foreach (Block::query()->where(Block::ATTR_PARENT_ID, '=', $pageId)->get()->all() as $block) {/** @var Block $block */
                 BlockData::query()->find($block->getId())->delete();
                 $block->delete();
             }

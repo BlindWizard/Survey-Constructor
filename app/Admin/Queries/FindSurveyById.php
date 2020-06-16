@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace App\Admin\Queries;
 
 use App\Admin\Contracts\Command;
+use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\BlockWrapper;
+use App\Admin\DTO\Container;
 use App\Admin\DTO\Page;
 use App\Admin\DTO\Survey;
 use App\Admin\Factories\BlockFactory;
@@ -72,7 +74,9 @@ class FindSurveyById implements Command
             $surveyObject->pages[] = $pageObject;
 
             foreach ($page->getBlocks() as $block) {
-                $pageObject->blocks[] = new BlockWrapper($this->blockFactory->getDTO($block));
+                $blockObject = $this->blockFactory->getDTO($block);/** @var Container $blockObject */
+
+                $pageObject->blocks[] = new BlockWrapper($blockObject);
             }
         }
 

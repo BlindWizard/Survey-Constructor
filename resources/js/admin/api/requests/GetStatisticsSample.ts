@@ -1,4 +1,4 @@
 export class GetStatisticsSample {
-	surveyId: string;
-	sampleId: string;
+	public surveyId: string;
+	public sampleId: string;
 }

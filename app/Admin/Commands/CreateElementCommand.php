@@ -5,6 +5,7 @@ namespace App\Admin\Commands;
 
 use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
@@ -33,15 +34,24 @@ class CreateElementCommand implements Command
     /** @var BlockServiceContract */
     protected $blockService;
 
+    /** @var BlockRepositoryContract */
+    protected $blockRepository;
+
     /** @var BlockContract */
     protected $block;
 
-    public function __construct(SurveyServiceContract $surveyService, SurveyRepositoryContract $surveyRepository, PageRepositoryContract $pageRepository, BlockServiceContract $blockService)
-    {
+    public function __construct(
+        SurveyServiceContract $surveyService,
+        SurveyRepositoryContract $surveyRepository,
+        PageRepositoryContract $pageRepository,
+        BlockServiceContract $blockService,
+        BlockRepositoryContract $blockRepository
+    ) {
         $this->surveyService    = $surveyService;
         $this->surveyRepository = $surveyRepository;
         $this->pageRepository   = $pageRepository;
         $this->blockService     = $blockService;
+        $this->blockRepository  = $blockRepository;
     }
 
     public function perform(): Command
@@ -55,7 +65,14 @@ class CreateElementCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $block = $this->blockService->addEmptyElement($page->getId(), $this->request->getBlockId(), $this->request->getType(), $this->request->getPosition(), $this->request->getParentBlockId());
+        if (null !== $this->request->getParentBlockId()) {
+            $container = $this->blockRepository->findContainerBySlotId($this->request->getParentBlockId());
+            if (null === $container) {
+                throw new NotFoundHttpException();
+            }
+        }
+
+        $block = $this->blockService->addEmptyElement($this->request->getParentBlockId() ?? $page->getId(), $this->request->getBlockId(), $this->request->getType(), $this->request->getPosition());
         $this->block = new BlockWrapper($block);
 
         return $this;

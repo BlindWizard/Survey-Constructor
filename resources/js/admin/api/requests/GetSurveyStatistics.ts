@@ -1,6 +1,6 @@
 export class GetSurveyStatistics {
-	surveyId: string;
-	dateFrom: string|null = null;
-	dateTo: string|null = null;
-	options: Object = {};
+	public surveyId: string;
+	public dateFrom: string|null = null;
+	public dateTo: string|null = null;
+	public options: Object = {};
 }

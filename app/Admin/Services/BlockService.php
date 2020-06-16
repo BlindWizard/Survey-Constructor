@@ -33,36 +33,20 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function addEmptyElement(string $pageId, string $blockId, string $type, int $position, ?string $parentBlockId = null): BlockContract
+    public function addEmptyElement(string $parentId, string $blockId, string $type, ?int $position): BlockContract
     {
         $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
-        $lastBlock = $this->blockRepository->findLastBlock($pageId);
+        $lastBlock = $this->blockRepository->findLastBlock($parentId);
         $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() + 1 : 0);
 
-        $element->setPageId($pageId);
+        $element->setParentId($parentId);
         $element->setPosition($lastBlockPosition);
 
         $element = $this->blockRepository->save($element);
 
-        if (null !== $parentBlockId) {
-            $container = $this->blockRepository->findContainerBySlotId($parentBlockId);
-            if (null === $container) {
-                throw new NotFoundHttpException();
-            }
-
-            $data = $container->getData();
-            if (false === array_key_exists($parentBlockId, $data['children'])) {
-                $data['children'][$parentBlockId] = [];
-            }
-
-            $data['children'][$parentBlockId][$position] = $blockId;
-
-            $this->blockRepository->setElementData($container->getId(), $data);
-        }
-
         if (null !== $position) {
-            $element = $this->reorderElement($element->getId(), $position, $parentBlockId);
+            $element = $this->reorderElement($element->getId(), $position);
         }
 
         return $this->blockFactory->getDTO($element);
@@ -71,36 +55,17 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function reorderElement(string $blockId, int $position, ?string $parentBlockId = null): BlockContract
+    public function reorderElement(string $blockId, int $position): BlockContract
     {
         $reorderBlock = $this->blockRepository->findById($blockId);
-        if (null === $parentBlockId) {
-            $page         = $this->pageRepository->getPageByBlockId($blockId);
-            $blocks       = $this->blockRepository->getPageBlocks($page->getId());
+        $blocks       = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
 
-            $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
-            array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
-            array_splice($positions, $position, 0, $reorderBlock->getId());
+        $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+        array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
+        array_splice($positions, $position, 0, $reorderBlock->getId());
 
-            $this->blockRepository->setElementsPositions(array_flip($positions));
-            $reorderBlock->setPosition($position);
-        }
-        else {
-            $container = $this->blockRepository->findContainerBySlotId($parentBlockId);
-            $blocks = [];
-            foreach ($container->getData()['children'][$parentBlockId] ?? [] as $slotBlockId) {
-                $block = $this->blockRepository->findById($slotBlockId);
-                $blocks[$block->getPosition()] = $block;
-            }
-
-
-            $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
-            array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
-            array_splice($positions, $position, 0, $reorderBlock->getId());
-
-            $this->blockRepository->setElementsPositions(array_flip($positions));
-            $reorderBlock->setPosition($position);
-        }
+        $this->blockRepository->setElementsPositions(array_flip($positions));
+        $reorderBlock->setPosition($position);
 
         return $reorderBlock;
     }
@@ -118,14 +83,11 @@ class BlockService implements BlockServiceContract
      */
     public function deleteElement(string $blockId): void
     {
-        $page = $this->pageRepository->getPageByBlockId($blockId);
         $blockToDelete = $this->blockRepository->findById($blockId);
 
         if ($blockToDelete->getType() === BlockContract::TYPE_CONTAINER) {
-            foreach ($blockToDelete->getData()['children'] as $slotId => $blocksToDelete) {
-                foreach ($blocksToDelete as $innerBlockToDeleteId) {
-                    $this->blockRepository->deleteElement($innerBlockToDeleteId);
-                }
+            foreach ($blockToDelete->getChildren() as $innerBlockToDelete) {
+                $this->blockRepository->deleteElement($innerBlockToDelete->getId());
             }
 
             $this->blockRepository->deleteElement($blockId);
@@ -134,7 +96,7 @@ class BlockService implements BlockServiceContract
             $this->blockRepository->deleteElement($blockId);
         }
 
-        $blocks = $this->blockRepository->getPageBlocks($page->getId());
+        $blocks = $this->blockRepository->getBlocksByParentId($blockToDelete->getParentId());
         $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
         $this->blockRepository->setElementsPositions(array_flip($positions));
     }

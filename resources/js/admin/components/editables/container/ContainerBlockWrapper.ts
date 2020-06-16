@@ -26,9 +26,9 @@ import {Container} from "../../../models/Container";
             <div :class="bem('container').classes()">
                 <div class="grid-container full">
                     <div class="grid-x">
-                        <div :key="slotId" v-for="slotId in block.getData()['slots']" :class="'cell small-4 ' + (0 === block.getBlocksInOrder(slotId).length ? bem('container').el('slot').is('empty').classes() : '')" v-component-drop="slotId">
+                        <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-4 ' + (0 === block.getBlocksInOrder(slotId).length ? bem('container').el('slot').is('empty').classes() : '')" v-component-drop="slotId">
                             <h4 v-if="0 === block.getBlocksInOrder(slotId).length">Slot</h4>
-                            <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
+                            <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId, 'template3').length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@ import {Container} from "../../../models/Container";
 export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 	public name: string = 'ContainerBlockWrapper';
 
-	@Prop(Object) readonly block: Container;
+	@Prop(Container) readonly block: Container;
 	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
 
 	public created()

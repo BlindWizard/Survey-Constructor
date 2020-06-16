@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Model;
  * Active record model for Blocks table.
  *
  * @property        string         $id
- * @property        string         $page_id
+ * @property        string         $parent_id
  * @property        string         $type
  * @property        int            $position
  * @property        string         $created_at
@@ -21,9 +21,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Block extends Model implements BlockContract
 {
-    public const ATTR_ID      = 'id';
-    public const ATTR_PAGE_ID = 'page_id';
-    public const ATTR_TYPE    = 'type';
+    public const ATTR_ID        = 'id';
+    public const ATTR_PARENT_ID = 'parent_id';
+    public const ATTR_TYPE      = 'type';
     public const ATTR_POSITION = 'position';
     public const ATTR_CREATED_AT = 'created_at';
     public const ATTR_UPDATED_AT = 'updated_at';
@@ -41,17 +41,33 @@ class Block extends Model implements BlockContract
     /**
      * @return string
      */
-    public function getPageId(): string
+    public function getParentId(): string
     {
-        return $this->page_id;
+        return $this->parent_id;
     }
 
     /**
      * @inheritDoc
      */
-    public function setPageId(string $pageId): void
+    public function setParentId(string $parentId): void
     {
-        $this->page_id = $pageId;
+        $this->parent_id = $parentId;
+    }
+
+    /**
+     * @return Block[]
+     */
+    public function getChildren(): ?array
+    {
+        if ($this->getType() !== BlockContract::TYPE_CONTAINER) {
+            return null;
+        }
+
+        $slots = $this->getData()['slots'];
+
+        $blocks = Block::query()->whereIn(Block::ATTR_PARENT_ID, $slots)->get()->all();/** @var Block[] $blocks */
+
+        return $blocks;
     }
 
     /**
@@ -106,7 +122,7 @@ class Block extends Model implements BlockContract
 
     public function page()
     {
-        return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PAGE_ID);
+        return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PARENT_ID);
     }
     public const REL_PAGE = 'page';
 }

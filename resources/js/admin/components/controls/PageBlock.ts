@@ -25,17 +25,11 @@ import {ContainerBlock} from "./ContainerBlock";
 	`,
 	components: {
 		ContainerBlock,
-		ContainerBlockWrapper,
 		OptionsListBlock,
-		OptionsListBlockWrapper,
 		OptionBlock,
-		OptionBlockWrapper,
 		HeaderBlock,
-		HeaderBlockWrapper,
 		TextBlock,
-		TextBlockWrapper,
 		TextFieldBlock,
-		TextFieldBlockWrapper,
 	}
 })
 export class PageBlock extends Vue {

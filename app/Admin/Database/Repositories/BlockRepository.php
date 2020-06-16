@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\BlockData;
@@ -17,14 +18,6 @@ use Ramsey\Uuid\Uuid;
 
 class BlockRepository implements BlockRepositoryContract
 {
-    /** @var BlockFactory */
-    protected $factory;
-
-    public function __construct(BlockFactory $factory)
-    {
-        $this->factory = $factory;
-    }
-
     /**
      * @inheritDoc
      */
@@ -56,7 +49,7 @@ class BlockRepository implements BlockRepositoryContract
         try {
             $model           = new Block();
             $model->id       = $element->getId();
-            $model->page_id  = $element->getPageId();
+            $model->parent_id  = $element->getParentId();
             $model->position = $element->getPosition();
             $model->type     = $element->getType();
             $model->saveOrFail();
@@ -80,15 +73,11 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
-    public function getPageBlocks(string $pageId): array
+    public function getBlocksByParentId(string $pageId): array
     {
-        $models = Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
-        $result = [];
-        foreach ($models as $model) {
-            $result[] = $this->factory->getDTO($model);
-        }
+        $models = Block::query()->where(Block::ATTR_PARENT_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION)->get()->all();/** @var Block[] $models */
 
-        return $result;
+        return $models;
     }
 
     /**
@@ -96,7 +85,7 @@ class BlockRepository implements BlockRepositoryContract
      */
     public function findLastBlock(string $pageId): ?BlockContract
     {
-        $block = Block::query()->where(Block::ATTR_PAGE_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION, 'DESC')->first();/** @var BlockContract $block */
+        $block = Block::query()->where(Block::ATTR_PARENT_ID, '=', $pageId)->orderBy(Block::ATTR_POSITION, 'DESC')->first();/** @var BlockContract $block */
 
         return $block;
     }

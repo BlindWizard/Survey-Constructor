@@ -1,3 +1,3 @@
 export class CreateSurvey {
-	templateId: string;
+	public templateId: string;
 }

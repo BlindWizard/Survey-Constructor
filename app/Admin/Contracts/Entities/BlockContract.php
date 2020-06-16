@@ -24,12 +24,17 @@ interface BlockContract
     /**
      * @return string
      */
-    public function getPageId(): string;
+    public function getParentId(): string;
 
     /**
-     * @param string $pageId
+     * @param string $parentId
      */
-    public function setPageId(string $pageId): void;
+    public function setParentId(string $parentId): void;
+
+    /**
+     * @return BlockContract[]|null
+     */
+    public function getChildren(): ?array;
 
     /**
      * @return string

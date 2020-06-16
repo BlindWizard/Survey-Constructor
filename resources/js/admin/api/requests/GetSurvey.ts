@@ -1,3 +1,3 @@
 export class GetSurvey {
-	surveyId: string;
+	public surveyId: string;
 }

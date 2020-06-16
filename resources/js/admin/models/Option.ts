@@ -4,6 +4,7 @@ import {BlockTypes} from "../contracts/BlockTypes";
 export class Option implements BlockContract {
 	public id: string;
 	public position: number;
+	public parentId: string;
 	public text: string;
 
 	getType(): string
@@ -21,9 +22,17 @@ export class Option implements BlockContract {
 		return this.position;
 	}
 
+	getParentId(): string {
+		return this.parentId;
+	}
+
 	setPosition(position: number)
 	{
 		this.position = position;
+	}
+
+	setParentId(id: string) {
+		this.parentId = id;
 	}
 
 	getData(): Object

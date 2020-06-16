@@ -4,6 +4,7 @@ import {BlockTypes} from "../contracts/BlockTypes";
 export class TextField implements BlockContract {
 	public id: string;
 	public position: number;
+	public parentId: string;
 	public label: string;
 	public placeholder: string;
 	public multiline: boolean;
@@ -23,9 +24,17 @@ export class TextField implements BlockContract {
 		return this.position;
 	}
 
+	getParentId(): string {
+		return this.parentId;
+	}
+
 	setPosition(position: number)
 	{
 		this.position = position;
+	}
+
+	setParentId(id: string) {
+		this.parentId = id;
 	}
 
 	getData(): Object

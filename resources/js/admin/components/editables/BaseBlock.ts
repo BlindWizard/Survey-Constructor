@@ -83,7 +83,6 @@ export class BaseBlock extends Vue implements Draggable {
 
 	public bindSelecting(bemClass: string) {
 		document.addEventListener('mousedown', (e: MouseEvent) => {
-			e.stopPropagation();
 			var clickOnThis = (e.target as HTMLElement).closest('.' + bemClass) === this.$refs.selectable;
 			this.toggleSelect(clickOnThis);
 		});

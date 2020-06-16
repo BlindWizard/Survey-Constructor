@@ -55,7 +55,7 @@ class SurveyRepository implements SurveyRepositoryContract
                 foreach ($page->getBlocks() as $block) {
                     $blockModel = new Block();
                     $blockModel->id = $block->getId();
-                    $blockModel->page_id = $block->getPageId();
+                    $blockModel->parent_id = $block->getParentId();
                     $blockModel->type = $block->getType();
                     $blockModel->position = $block->getPosition();
                     $blockModel->created_at = $block->getCreatedAt();

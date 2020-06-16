@@ -11,7 +11,7 @@ class Container implements BlockContract
     /** @var string */
     public $id;
     /** @var string */
-    public $pageId;
+    public $parentId;
     /** @var int */
     public $position;
     /** @var string[] */
@@ -38,9 +38,17 @@ class Container implements BlockContract
     /**
      * @inheritDoc
      */
-    public function setPageId(string $pageId): void
+    public function setParentId(string $parentId): void
     {
-        $this->pageId = $pageId;
+        $this->parentId = $parentId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getChildren(): ?array
+    {
+        return $this->children;
     }
 
     /**
@@ -70,9 +78,9 @@ class Container implements BlockContract
     /**
      * @inheritDoc
      */
-    public function getPageId(): string
+    public function getParentId(): string
     {
-        return $this->pageId;
+        return $this->parentId;
     }
 
     /**
@@ -82,7 +90,6 @@ class Container implements BlockContract
     {
         return [
             'slots' => $this->slots,
-            'children' => $this->children,
         ];
     }
 }

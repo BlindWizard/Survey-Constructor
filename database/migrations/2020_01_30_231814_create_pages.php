@@ -26,7 +26,7 @@ class CreatePages extends Migration
 
         Schema::table('blocks', function (Blueprint $table) {
             $table->dropColumn('survey_id');
-            $table->uuid(Block::ATTR_PAGE_ID);
+            $table->uuid(Block::ATTR_PARENT_ID);
         });
     }
 
@@ -38,7 +38,7 @@ class CreatePages extends Migration
         Schema::dropIfExists('pages');
 
         Schema::table('blocks', function (Blueprint $table) {
-            $table->dropColumn(Block::ATTR_PAGE_ID);
+            $table->dropColumn(Block::ATTR_PARENT_ID);
             $table->uuid('survey_id');
         });
     }

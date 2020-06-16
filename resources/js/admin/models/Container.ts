@@ -4,6 +4,7 @@ import {BlockTypes} from "../contracts/BlockTypes";
 export class Container implements BlockContract {
 	public id: string;
 	public position: number;
+	public parentId: string;
 	public slots: string[] = [];
 	public children: any = {};
 
@@ -26,6 +27,14 @@ export class Container implements BlockContract {
 
 	setPosition(position: number): void {
 		this.position = position;
+	}
+
+	getParentId(): string {
+		return this.parentId;
+	}
+
+	setParentId(id: string) {
+		this.parentId = id;
 	}
 
 	getData(): Object {
@@ -61,5 +70,14 @@ export class Container implements BlockContract {
 		for (let block of blocks) {
 			this.children[slotId][block.getId()] = block;
 		}
+	}
+
+	deleteBlock(slotId: string, blockId: string): void
+	{
+		let blocks = this.getBlocksInOrder(slotId).filter((block: BlockContract) => {
+			return block.getId() !== blockId;
+		});
+
+		this.setBlocks(slotId, blocks);
 	}
 }

@@ -1,7 +1,7 @@
 export class CreateElement {
-	pageId: string;
-	blockId: string;
-	type: string;
-	parentBlockId: string|null = null;
-	position: number|null;
+	public pageId: string;
+	public blockId: string;
+	public type: string;
+	public parentBlockId: string|null = null;
+	public position: number|null;
 }

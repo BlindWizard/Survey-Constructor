@@ -5,6 +5,7 @@ import {Option} from "./Option";
 export class OptionsList implements BlockContract {
 	public id: string;
 	public position: number;
+	public parentId: string;
 	public options: Option[] = [];
 	public text: string;
 	public multiple: boolean = false;
@@ -19,6 +20,10 @@ export class OptionsList implements BlockContract {
 		return this.id;
 	}
 
+	getParentId(): string {
+		return this.parentId;
+	}
+
 	getPosition(): number
 	{
 		return this.position;
@@ -27,6 +32,10 @@ export class OptionsList implements BlockContract {
 	setPosition(position: number)
 	{
 		this.position = position;
+	}
+
+	setParentId(id: string) {
+		this.parentId = id;
 	}
 
 	getData(): Object

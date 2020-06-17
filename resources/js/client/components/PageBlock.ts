@@ -20,6 +20,7 @@ import {ContainerBlock} from "../../admin/components/controls/ContainerBlock";
                        :block="block"
                        :is="resolver.resolveComponentClass(block.getType()).name"
                        :handler="resolver.resolveComponentHandler(block.getType())"
+                       :resolver="resolver"
             />
             <ScreensPager />
         </div>

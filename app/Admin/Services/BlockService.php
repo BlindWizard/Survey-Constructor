@@ -46,7 +46,7 @@ class BlockService implements BlockServiceContract
         $element = $this->blockRepository->save($element);
 
         if (null !== $position) {
-            $element = $this->reorderElement($element->getId(), $position);
+            $element = $this->reorderElement($element->getId(), $position, $parentId);
         }
 
         return $this->blockFactory->getDTO($element);
@@ -55,17 +55,32 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function reorderElement(string $blockId, int $position): BlockContract
+    public function reorderElement(string $blockId, int $position, string $parentId): BlockContract
     {
         $reorderBlock = $this->blockRepository->findById($blockId);
-        $blocks       = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
+        if ($reorderBlock->getParentId() !== $parentId) {
+            $blocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
+            $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+            array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
+            $this->blockRepository->setElementsPositions(array_flip($positions));
+
+            $reorderBlock->setParentId($parentId);
+            $this->blockRepository->setElementParent($reorderBlock->getId(), $parentId);
+        }
+
+        $blocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
 
         $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
-        array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
-        array_splice($positions, $position, 0, $reorderBlock->getId());
+        if (count($positions) > 0) {
+            array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
+            array_splice($positions, $position, 0, $reorderBlock->getId());
 
-        $this->blockRepository->setElementsPositions(array_flip($positions));
-        $reorderBlock->setPosition($position);
+            $this->blockRepository->setElementsPositions(array_flip($positions));
+            $reorderBlock->setPosition($position);
+        }
+        else {
+            $this->blockRepository->setElementPosition($reorderBlock->getId(), 0);
+        }
 
         return $reorderBlock;
     }

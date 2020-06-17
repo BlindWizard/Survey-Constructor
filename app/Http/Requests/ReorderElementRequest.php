@@ -11,6 +11,7 @@ class ReorderElementRequest extends FormRequest
         return [
             'blockId' => 'required|uuid',
             'position' => 'numeric',
+            'parentBlockId' => 'required|uuid',
         ];
     }
 
@@ -22,5 +23,10 @@ class ReorderElementRequest extends FormRequest
     public function getPosition(): int
     {
         return $this->json('position');
+    }
+
+    public function getParentId(): string
+    {
+        return (string) $this->json('parentBlockId');
     }
 }

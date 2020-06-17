@@ -131,7 +131,17 @@ class BlockRepository implements BlockRepositoryContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
         $block->position = $position;
-        $block->save();
+        $block->saveOrFail();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function setElementParent(string $blockId, string $parentId): void
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+        $block->parent_id = $parentId;
+        $block->saveOrFail();
     }
 
     /**

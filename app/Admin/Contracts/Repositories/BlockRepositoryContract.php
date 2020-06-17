@@ -70,6 +70,12 @@ interface BlockRepositoryContract
 
     /**
      * @param string $blockId
+     * @param string $parentId
+     */
+    public function setElementParent(string $blockId, string $parentId): void;
+
+    /**
+     * @param string $blockId
      *
      * @throws Throwable
      */

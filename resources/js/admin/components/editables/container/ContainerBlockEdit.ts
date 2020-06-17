@@ -5,7 +5,6 @@ import {Locale} from "../../../models/Locale";
 import {getters} from "../../../stores/types";
 import {Container} from "../../../models/Container";
 import {ComponentsFactory} from "../../../services/ComponentsFactory";
-import {OptionsList} from "../../../models/OptionsList";
 const uuidv4 = require('uuid/v4');
 
 @Component({

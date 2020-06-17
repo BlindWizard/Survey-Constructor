@@ -28,7 +28,7 @@ class ReorderElementCommand implements Command
 
     public function perform(): Command
     {
-        $this->blockService->reorderElement($this->request->getId(), $this->request->getPosition());
+        $this->blockService->reorderElement($this->request->getId(), $this->request->getPosition(), $this->request->getParentId());
 
         return $this;
     }

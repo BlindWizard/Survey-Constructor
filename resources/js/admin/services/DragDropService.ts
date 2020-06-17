@@ -141,13 +141,13 @@ class DragDropService
 		return this.container;
 	}
 
-	public getDropBlockId(): string|null
+	public getDropBlockId(): string
 	{
 		if (null === this.activeTarget) {
-			return null;
+			throw new Error('No drop zone');
 		}
 
-		return this.activeTarget.getAttribute('data-drop-id');
+		return this.activeTarget.getAttribute('data-drop-id') as string;
 	}
 
 	public getDropPosition(e: MouseEvent): number|null

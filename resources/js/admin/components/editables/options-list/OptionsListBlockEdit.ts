@@ -46,7 +46,7 @@ export class OptionsListBlockEdit extends Vue {
 
 	public created()
 	{
-		this.blockData = ComponentsFactory.createElementFromData(this.block.getType(), this.block.getData());
+		this.blockData = ComponentsFactory.cloneElement(this.block) as OptionsList;
 	}
 
 	public addOption(): void

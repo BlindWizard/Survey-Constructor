@@ -28,6 +28,7 @@ import {BlocksStatistics} from "../models/BlocksStatistics";
 import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticAction} from "../models/StatisticAction";
 import {Container} from "../models/Container";
+import {Page} from "../models/Page";
 
 Vue.use(Vuex);
 
@@ -83,126 +84,260 @@ const store = new Vuex.Store({
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
 
-			let blocks: BlockContract[] = page.getBlocksInOrder();
-			if (!actionData.parentBlockId) {
+			if (pages[actionData.block.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
 				blocks.splice(actionData.position, 0, actionData.block);
 
 				for (let i = 0; i < blocks.length; i++) {
 					blocks[i].setPosition(i);
 				}
+
+				page.setBlocks(blocks);
 			}
 			else {
-				for (let blockId of Object.keys(blocks)) {
-					let block = blocks[blockId];
-					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(actionData.parentBlockId)) {
-						let container: Container = ComponentsFactory.cloneElement(block) as Container;
-						blocks[blockId] = container;
+				let container = page.getContainerBySlotId(actionData.block.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
 
-						let containerBlocks: BlockContract[] = container.getBlocksInOrder(actionData.parentBlockId);
-						containerBlocks.splice(actionData.position, 0, actionData.block);
+				let containerBlocks: BlockContract[] = container.getBlocksInOrder(actionData.block.getParentId());
+				containerBlocks.splice(actionData.position, 0, actionData.block);
 
-						for (let i = 0; i < containerBlocks.length; i++) {
-							containerBlocks[i].setPosition(i);
-						}
+				for (let i = 0; i < containerBlocks.length; i++) {
+					containerBlocks[i].setPosition(i);
+				}
 
-						container.setBlocks(actionData.parentBlockId, containerBlocks);
+				container = ComponentsFactory.cloneElement(container) as Container;
+				container.setBlocks(actionData.block.getParentId(), containerBlocks);
+
+				while (true) {
+					let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
 						break;
 					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
 				}
-			}
 
-			page.setBlocks(blocks);
-			pages[page.getId()] = page;
-		},
-		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
-			let pages = state.survey.pages;
-			let page = pages[state.pageId] as PageContract;
-			let blocks: BlockContract[] = page.getBlocksInOrder();
-
-			if (null === request.parentBlockId) {
-				let targetBlock: BlockContract = page.getBlocks()[request.blockId];
-
-				let oldPosition = blocks.indexOf(targetBlock);
-				blocks.splice(oldPosition, 1);
-				blocks.splice(request.position, 0, targetBlock);
-
-				for (let i = 0; i < blocks.length; i++) {
-					blocks[i].setPosition(i);
-				}
-			}
-			else {
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
 				for (let blockId of Object.keys(blocks)) {
-					let block = blocks[blockId];
-					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(request.parentBlockId)) {
-						let container: Container = ComponentsFactory.cloneElement(block) as Container;
-						blocks[blockId] = container;
-
-						let targetBlock: BlockContract = container.getData()['children'][request.parentBlockId][request.blockId];
-
-						let containerBlocks: BlockContract[] = container.getBlocksInOrder(request.parentBlockId);
-						containerBlocks.splice(request.position, 0, targetBlock);
-
-						for (let i = 0; i < containerBlocks.length; i++) {
-							containerBlocks[i].setPosition(i);
-						}
-
-						container.setBlocks(request.parentBlockId, containerBlocks);
-						break;
-					}
+					plain.push(blocks[blockId]);
 				}
+
+				page.setBlocks(plain);
 			}
 
-			page.setBlocks(blocks);
 			pages[page.getId()] = page;
 		},
 		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
-			let blocks: BlockContract[] = page.getBlocksInOrder();
 
-			if (null === request.parentBlockId) {
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			targetBlock.setData(request.data);
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
 				let targetBlock = page.getBlocks()[request.blockId];
-				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				let block = ComponentsFactory.cloneElement(targetBlock);
+				block.setData(request.data);
+
+				blocks[targetBlock.getPosition()] = block;
+				page.setBlocks(blocks);
 			}
 			else {
-				for (let block of blocks) {
-					if (BlockTypes.CONTAINER === block.getType() && -1 !== block.getData()['slots'].indexOf(request.parentBlockId)) {
-						let targetBlock = block.getData()['children'][request.parentBlockId][request.blockId];
-						block.getData()['children'][request.parentBlockId][request.blockId] = ComponentsFactory.cloneElement(targetBlock);
-						block = ComponentsFactory.cloneElement(block);
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
 
-						blocks[block.getId()] = block;
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
 						break;
 					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
+
+			pages[page.getId()] = page;
+		},
+		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			if (request.parentBlockId === targetBlock.getParentId()) {
+				let container: PageContract|Container|null = null;
+				let blocks: BlockContract[] = [];
+				if (pages[request.parentBlockId]) {
+					container = pages[request.parentBlockId];
+					blocks = page.getBlocksInOrder();
+				}
+				else {
+					container = page.getContainerBySlotId(request.parentBlockId);
+					if (null === container) {
+						throw new Error('Container not found');
+					}
+
+					blocks = (container as Container).getBlocksInOrder(request.parentBlockId);
+				}
+
+				blocks.splice(targetBlock.getPosition(), 1);
+				blocks.splice(request.position, 0, targetBlock);
+
+				for (let i = 0; i < blocks.length; i++) {
+					blocks[i].setPosition(i);
+				}
+
+				if (container instanceof Page) {
+					container.setBlocks(blocks);
+				}
+				else if (container instanceof Container) {
+					container.setBlocks(request.parentBlockId, blocks);
 				}
 			}
 
-			page.setBlocks(blocks);
+			if (request.parentBlockId !== targetBlock.getParentId()) {
+				//delete
+				let container: PageContract|Container|null = null;
+				if (pages[targetBlock.getParentId()]) {
+					container = pages[targetBlock.getParentId()];
+					let blocks: BlockContract[] = (container as PageContract).getBlocksInOrder();
+					blocks.splice(targetBlock.getPosition(), 1);
+					pages[targetBlock.getParentId()].setBlocks(blocks);
+				}
+				else {
+					container = page.getContainerBySlotId(targetBlock.getParentId());
+					if (null === container) {
+						throw new Error('Container not found');
+					}
+
+					container.deleteBlock(targetBlock.getId());
+				}
+
+				//add
+				if (pages[request.parentBlockId]) {
+					let blocks: BlockContract[] = page.getBlocksInOrder();
+					blocks.splice(request.position, 0, targetBlock);
+
+					for (let i = 0; i < blocks.length; i++) {
+						blocks[i].setPosition(i);
+					}
+
+					page.setBlocks(blocks);
+				}
+				else {
+					let container = page.getContainerBySlotId(request.parentBlockId);
+					if (null === container) {
+						throw new Error('Container not found');
+					}
+
+					let containerBlocks: BlockContract[] = container.getBlocksInOrder(request.parentBlockId);
+					containerBlocks.splice(request.position, 0, targetBlock);
+
+					for (let i = 0; i < containerBlocks.length; i++) {
+						containerBlocks[i].setPosition(i);
+					}
+
+					container.setBlocks(request.parentBlockId, containerBlocks);
+					container = ComponentsFactory.cloneElement(container) as Container;
+
+					while (true) {
+						let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+						if (null === upperContainer) {
+							break;
+						}
+
+						upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+						container = upperContainer;
+					}
+
+					let blocks: BlockContract[] = page.getBlocks();
+					blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+					let plain = [];
+					for (let blockId of Object.keys(blocks)) {
+						plain.push(blocks[blockId]);
+					}
+
+					page.setBlocks(plain);
+				}
+			}
+
 			pages[page.getId()] = page;
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
-			let blocks: BlockContract[] = page.getBlocksInOrder();
 
-			blocks = blocks.filter((block: BlockContract) => {
-				return block.getId() !== blockId;
-			});
-
-			for (let block of blocks) {
-				if (BlockTypes.CONTAINER === block.getType()) {
-					for (let slotId of Object.keys(block.getData()['children'])) {
-						for (let deleteBlockId of Object.keys(block.getData()['children'][slotId])) {
-							if (deleteBlockId === blockId) {
-								(block as Container).deleteBlock(slotId, blockId);
-								blocks[block.getId()] = ComponentsFactory.cloneElement(block);
-							}
-						}
-					}
-				}
+			let targetBlock: BlockContract|null = page.getBlockById(blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
 			}
 
-			page.setBlocks(blocks);
+			let container: PageContract|Container|null = null;
+			if (pages[targetBlock.getParentId()]) {
+				container = pages[targetBlock.getParentId()];
+				let blocks: BlockContract[] = (container as PageContract).getBlocksInOrder();
+				blocks.splice(targetBlock.getPosition(), 1);
+				pages[targetBlock.getParentId()].setBlocks(blocks);
+			}
+			else {
+				container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.deleteBlock(targetBlock.getId());
+
+				while (true) {
+					let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
+
 			pages[page.getId()] = page;
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {
@@ -269,19 +404,20 @@ const store = new Vuex.Store({
 			}
 
 			let block: BlockContract = ComponentsFactory.getDefaultData(request.type);
-			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0, parentBlockId: request.parentBlockId});
+			block.setParentId(request.parentBlockId || request.pageId);
+			commit(mutations.ADD_ELEMENT, {block, position: request.position || 0});
+
 			request.blockId = block.getId();
 			block = await BlockApi.createElement(request);
 			let newData: SaveBlockData = new SaveBlockData();
 			newData.blockId = block.getId();
 			newData.data = block.getData();
-			newData.parentBlockId = request.parentBlockId;
 			commit(mutations.SAVE_ELEMENT_DATA, newData);
 
 			let reorderData: ReorderElement = new ReorderElement();
 			reorderData.blockId = block.getId();
 			reorderData.position = block.getPosition();
-			reorderData.parentBlockId = request.parentBlockId;
+			reorderData.parentBlockId = block.getParentId();
 			commit(mutations.CHANGE_ELEMENT_POSITION, reorderData);
 		},
 		async [actions.REORDER_ELEMENT]({commit, state}, request: ReorderElement) {

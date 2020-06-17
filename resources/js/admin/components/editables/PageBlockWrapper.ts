@@ -12,7 +12,7 @@ import {TextFieldBlockWrapper} from "./text-field/TextFieldBlockWrapper";
 
 @Component({
 	template: `
-        <div :class="bem('survey-block').classes()" v-component-drop.default>
+        <div :class="bem('survey-block').classes()" v-component-drop.default="page.getId()">
             <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" :resolver="resolver"/>
         </div>`,
 	components: {

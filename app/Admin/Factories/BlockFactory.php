@@ -73,14 +73,14 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new OptionsList();
                 $dto->id = $model->getId();
                 $dto->text = $model->getData()['text'] ?? null;
-                $dto->pageId = $model->getParentId();
+                $dto->parentId = $model->getParentId();
                 $dto->position = $model->getPosition();
 
                 foreach ($model->getData()['options'] as $optionData) {
                     $option = new Option();
                     $option->id = $optionData['id'];
                     $option->text = $optionData['text'];
-                    $option->parentId = $dto->pageId;
+                    $option->parentId = $dto->parentId;
                     $option->position = $optionData['position'];
 
                     $dto->options[] = $option;

@@ -13,7 +13,7 @@ class OptionsList implements BlockContract
     /** @var string */
     public $text;
     /** @var string */
-    public $pageId;
+    public $parentId;
     /** @var int */
     public $position;
     /** @var Option[] */
@@ -42,7 +42,7 @@ class OptionsList implements BlockContract
      */
     public function getParentId(): string
     {
-        return $this->pageId;
+        return $this->parentId;
     }
 
     /**
@@ -50,7 +50,7 @@ class OptionsList implements BlockContract
      */
     public function setParentId(string $parentId): void
     {
-        $this->pageId = $parentId;
+        $this->parentId = $parentId;
         foreach ($this->options as $option) {
             $option->setParentId($parentId);
         }

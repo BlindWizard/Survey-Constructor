@@ -1,5 +1,6 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
+import {ComponentsFactory} from "../services/ComponentsFactory";
 
 export class Container implements BlockContract {
 	public id: string;
@@ -21,8 +22,14 @@ export class Container implements BlockContract {
 	}
 
 	setData(data: Object): void {
-		this.slots = data['slots'];
-		this.children = data['children'];
+		this.slots = data['slots'].slice(0);
+		this.children = {};
+		for(let slotId of Object.keys(data['children'])) {
+			this.children[slotId] = {};
+			for (let blockId of Object.keys(data['children'][slotId])) {
+				this.children[slotId][blockId] = ComponentsFactory.cloneElement(data['children'][slotId][blockId]);
+			}
+		}
 	}
 
 	setPosition(position: number): void {
@@ -72,12 +79,14 @@ export class Container implements BlockContract {
 		}
 	}
 
-	deleteBlock(slotId: string, blockId: string): void
+	deleteBlock(blockId: string): void
 	{
-		let blocks = this.getBlocksInOrder(slotId).filter((block: BlockContract) => {
-			return block.getId() !== blockId;
-		});
+		for (let slotId of Object.keys(this.children)) {
+			let blocks = this.getBlocksInOrder(slotId).filter((block: BlockContract) => {
+				return block.getId() !== blockId;
+			});
 
-		this.setBlocks(slotId, blocks);
+			this.setBlocks(slotId, blocks);
+		}
 	}
 }

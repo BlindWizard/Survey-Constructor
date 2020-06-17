@@ -8,9 +8,8 @@ const ComponentDrop: DirectiveOptions = {
 		if (binding.modifiers['default']) {
 			dragDropService.setActiveTarget(el);
 		}
-		else {
-			el.setAttribute('data-drop-id', binding.value);
-		}
+
+		el.setAttribute('data-drop-id', binding.value);
 	},
 };
 

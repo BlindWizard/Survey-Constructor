@@ -35,8 +35,14 @@ export class ComponentsFactory
 		let block: any = this.createElementFromData(type, blockData);
 		block.id = uuidv4();
 		if (block.getType() === BlockTypes.CONTAINER) {
-			for(let i of Object.keys(block.getData()['slots'])) {
-				block.slots[i] = uuidv4();
+			let oldSlots = Object.keys(block.getData()['slots']);
+
+			block.slots = [];
+			block.children = {};
+			for(let i of oldSlots) {
+				let slotId: string = uuidv4();
+				block.slots.push(slotId);
+				block.children[slotId] = {};
 			}
 		}
 

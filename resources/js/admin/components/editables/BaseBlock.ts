@@ -17,7 +17,7 @@ export class BaseBlock extends Vue implements Draggable {
 
 	public created()
 	{
-		this.blockData = ComponentsFactory.createElementFromData(this.block.getType(), this.block.getData());
+		this.blockData = ComponentsFactory.cloneElement(this.block);
 	}
 
 	public draggable(): boolean

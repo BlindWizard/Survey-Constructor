@@ -65,7 +65,7 @@ class CreateElementCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        if (null !== $this->request->getParentBlockId()) {
+        if ($this->request->getPageId() !== $this->request->getParentBlockId()) {
             $container = $this->blockRepository->findContainerBySlotId($this->request->getParentBlockId());
             if (null === $container) {
                 throw new NotFoundHttpException();

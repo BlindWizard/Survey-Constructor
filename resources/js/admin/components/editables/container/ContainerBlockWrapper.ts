@@ -28,12 +28,12 @@ import {Container} from "../../../models/Container";
                     <div class="grid-x">
                         <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-4 ' + (0 === block.getBlocksInOrder(slotId).length ? bem('container').el('slot').is('empty').classes() : '')" v-component-drop="slotId">
                             <h4 v-if="0 === block.getBlocksInOrder(slotId).length">Slot</h4>
-                            <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId, 'template3').length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
+                            <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
                         </div>
                     </div>
                 </div>
             </div>
-            <ContainerBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
+            <ContainerBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected || editing" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected || editing"/>
         </div>

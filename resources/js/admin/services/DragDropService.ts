@@ -8,6 +8,7 @@ class DragDropService
 	private dragElement: HTMLElement|null = null;
 	private container: HTMLElement;
 	private activeTarget: HTMLElement|null = null;
+	private defaultTarget: HTMLElement|null = null;
 	private targets: HTMLElement[] = [];
 	private dropTargets: HTMLElement[] = [];
 	private placeholder: HTMLElement|null = null;
@@ -79,7 +80,9 @@ class DragDropService
 				return;
 			}
 
-			this.activeTarget.insertBefore(this.placeholder as Node, dropPlace as Node);
+			if (null !== dropPlace && dropPlace.parentNode === this.activeTarget) {
+				this.activeTarget.insertBefore(this.placeholder as Node, dropPlace as Node);
+			}
 		});
 
 		target.addEventListener('mouseleave', () => {
@@ -117,6 +120,7 @@ class DragDropService
 	public setDragState(state: boolean): void
 	{
 		this.dragState = state;
+		this.activeTarget = this.defaultTarget;
 
 		if (!this.dragState) {
 			if (null !== this.placeholder) {
@@ -188,6 +192,10 @@ class DragDropService
 
 			this.createPlaceholder();
 		}
+	}
+
+	public setDefaultTarget(target: HTMLElement): void {
+		this.defaultTarget = target;
 	}
 
 	private createContainer(): HTMLElement

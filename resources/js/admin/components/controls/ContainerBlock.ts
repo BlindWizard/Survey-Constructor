@@ -14,7 +14,7 @@ import {TextFieldBlock} from "./TextFieldBlock";
         <div :class="bem('container').classes()">
             <div class="grid-container full">
                 <div class="grid-x">
-                    <div :key="slotId" v-for="slotId in block.slots" class="cell small-4">
+                    <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-' + (12 / block.slots.length)">
                         <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
                     </div>
                 </div>

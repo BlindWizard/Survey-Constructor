@@ -6,7 +6,7 @@ const ComponentDrop: DirectiveOptions = {
 		dragDropService.handleTarget(el);
 
 		if (binding.modifiers['default']) {
-			dragDropService.setActiveTarget(el);
+			dragDropService.setDefaultTarget(el);
 		}
 
 		el.setAttribute('data-drop-id', binding.value);

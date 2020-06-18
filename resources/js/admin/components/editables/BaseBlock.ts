@@ -7,6 +7,7 @@ import {actions} from "../../stores/types";
 import {EditingModes} from "../../contracts/EditingModes";
 import {ComponentsFactory} from "../../services/ComponentsFactory";
 import Component from "vue-class-component";
+import {bem} from "../../../common/bem-helper";
 
 @Component({})
 export class BaseBlock extends Vue implements Draggable {
@@ -79,12 +80,5 @@ export class BaseBlock extends Vue implements Draggable {
 		}
 
 		this.$store.dispatch(actions.SET_EDITING, this.editing);
-	}
-
-	public bindSelecting(bemClass: string) {
-		document.addEventListener('mousedown', (e: MouseEvent) => {
-			var clickOnThis = (e.target as HTMLElement).closest('.' + bemClass) === this.$refs.selectable;
-			this.toggleSelect(clickOnThis);
-		});
 	}
 }

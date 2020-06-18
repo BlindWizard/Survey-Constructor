@@ -6,6 +6,7 @@ import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
 import {TextFieldBlock} from "../../controls/TextFieldBlock";
 import {TextFieldBlockEdit} from "./TextFieldBlockEdit";
+import {selectDispatcher} from "../../../services/SelectDispatcher";
 
 @Component({
 	template: `
@@ -26,6 +27,6 @@ import {TextFieldBlockEdit} from "./TextFieldBlockEdit";
 export class TextFieldBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
-		this.bindSelecting(bem('text-field-wrapper').classes());
+		selectDispatcher.handleElement(this);
 	}
 }

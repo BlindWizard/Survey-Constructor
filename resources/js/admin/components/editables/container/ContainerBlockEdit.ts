@@ -18,13 +18,7 @@ template: `
                     <option>2</option>
                     <option>3</option>
                     <option>4</option>
-                    <option>5</option>
                     <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
                     <option>12</option>
                 </select>
             </label>
@@ -54,16 +48,16 @@ export class ContainerBlockEdit extends Vue {
 		}
 
 		let newSlotsCount = ((e.target as any).value) as number;
-
-		if (newSlotsCount > this.blockData.slots.length) {
-			for (let i = 0; i <= newSlotsCount - this.blockData.slots.length; i++) {
+		let oldSlotsCount = this.blockData.slots.length as number;
+		if (newSlotsCount > oldSlotsCount) {
+			for (let i = 0; i < newSlotsCount - oldSlotsCount; i++) {
 				let newSlot = uuidv4();
 				this.blockData.slots.push(newSlot);
 				this.blockData.children[newSlot] = {};
 			}
 		}
 		else {
-			for (let i = 0; i <= this.blockData.slots.length - newSlotsCount; i++) {
+			for (let i = 0; i < oldSlotsCount - newSlotsCount; i++) {
 				let deleteSlot: string = this.blockData.slots.pop() as string;
 				delete this.blockData.children[deleteSlot];
 			}

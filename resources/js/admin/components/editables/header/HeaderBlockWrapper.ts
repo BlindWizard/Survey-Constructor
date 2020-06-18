@@ -6,6 +6,7 @@ import {HeaderBlock} from "../../controls/HeaderBlock";
 import {Draggable} from "../../../contracts/Draggable";
 import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
+import {selectDispatcher} from "../../../services/SelectDispatcher";
 
 @Component({
 	template: `
@@ -26,6 +27,6 @@ import {BlockResizeFrame} from "../../BlockResizeFrame";
 export class HeaderBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
-		this.bindSelecting(bem('header-wrapper').classes());
+		selectDispatcher.handleElement(this);
 	}
 }

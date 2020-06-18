@@ -40,18 +40,9 @@ export class OptionsList implements BlockContract {
 
 	getData(): Object
 	{
-		let optionsData: Array<Object> = [];
-		this.options.forEach((option: Option) => {
-			optionsData.push({
-				'id': option.getId(),
-				...option.getData(),
-				'position': option.getPosition(),
-			});
-		});
-
 		return {
 			'text': this.text,
-			'options': optionsData,
+			'options': this.options,
 			'multiple': this.multiple,
 		};
 	}

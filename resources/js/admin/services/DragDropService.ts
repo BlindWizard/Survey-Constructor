@@ -132,6 +132,10 @@ class DragDropService
 				this.dragElement = null;
 				document.removeEventListener('mousemove', this.drag);
 			}
+
+			if (null !== this.container) {
+				this.container.innerHTML = '';
+			}
 		}
 	}
 

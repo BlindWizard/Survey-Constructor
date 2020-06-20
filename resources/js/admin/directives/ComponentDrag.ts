@@ -25,6 +25,7 @@ const ComponentDrag: DirectiveOptions = {
 
 				if (dragElement.draggable()) {
 					dragDropService.setDragState(true);
+					e.stopPropagation();
 				}
 			}
 			else {
@@ -65,6 +66,7 @@ const ComponentDrag: DirectiveOptions = {
 			dragElement.$el.classList.add(bem('draggable').classes());
 			(dragElement.$el as HTMLElement).style.left = e.x + 'px';
 			(dragElement.$el as HTMLElement).style.top = e.y + 'px';
+			dragDropService.getContainer().appendChild(dragElement.$el);
 
 			dragDropService.handleDrag(dragElement.$el as HTMLElement);
 		};

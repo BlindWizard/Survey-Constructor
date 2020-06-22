@@ -42,6 +42,12 @@ import Vue from "vue";
                         <i :class="bem('sidebar-menu').el('icon').add('fi-comment').classes()"></i>
                     </a>
                 </li>
+                <li :class="bem('sidebar-menu').el('item').classes()">
+                    <a :class="bem('sidebar-menu').el('link').classes()" v-component-drag.create="'image'">
+                        Image
+                        <i :class="bem('sidebar-menu').el('icon').add('fi-photo').classes()"></i>
+                    </a>
+                </li>
             </ul>
         </div>
     `,

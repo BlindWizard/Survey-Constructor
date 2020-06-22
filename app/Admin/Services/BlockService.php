@@ -57,19 +57,21 @@ class BlockService implements BlockServiceContract
      */
     public function reorderElement(string $blockId, int $position, string $parentId): BlockContract
     {
+        $blocks = $this->blockRepository->getBlocksByParentId($parentId);
+
         $reorderBlock = $this->blockRepository->findById($blockId);
         if ($reorderBlock->getParentId() !== $parentId) {
-            $blocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
-            $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+            $innerBlocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
+            $positions = array_values(array_column($innerBlocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
             array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
             $this->blockRepository->setElementsPositions(array_flip($positions));
 
             $reorderBlock->setParentId($parentId);
             $this->blockRepository->setElementParent($reorderBlock->getId(), $parentId);
+            $this->blockRepository->setElementPosition($reorderBlock->getId(), count($blocks));
         }
 
-        $blocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
-
+        $blocks = $this->blockRepository->getBlocksByParentId($parentId);
         $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
         if (count($positions) > 0) {
             array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);

@@ -23,7 +23,7 @@ export class BaseBlock extends Vue implements Draggable {
 
 	public draggable(): boolean
 	{
-		return this.selected;
+		return this.selected && !this.editing;
 	}
 
 	public getType(): string

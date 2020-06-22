@@ -10,6 +10,7 @@ use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\Container;
 use App\Admin\DTO\Header;
+use App\Admin\DTO\Image;
 use App\Admin\DTO\Option;
 use App\Admin\DTO\OptionsList;
 use App\Admin\DTO\Text;
@@ -45,6 +46,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getText($blockId);
             case BlockContract::TYPE_TEXT_FIELD:
                 return $this->getTextField($blockId);
+            case BlockContract::TYPE_IMAGE:
+                return $this->getImage($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -121,6 +124,14 @@ class BlockFactory implements BlockFactoryContract
                 $dto->placeholder = $model->getData()['placeholder'];
                 $dto->position = $model->getPosition();
                 $dto->multiline = $model->getData()['multiline'];
+
+                break;
+            case BlockContract::TYPE_IMAGE:
+                $dto = new Image();
+                $dto->id = $model->getId();
+                $dto->parentId = $model->getParentId();
+                $dto->position = $model->getPosition();
+                $dto->imageUrl = $model->getData()['imageUrl'];
 
                 break;
             default:
@@ -247,6 +258,22 @@ class BlockFactory implements BlockFactoryContract
         $block->label = __('Label');
         $block->placeholder = __('Placeholder text');
         $block->multiline = false;
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return TextField
+     *
+     * @throws \Exception
+     */
+    public function getImage(string $blockId = null): Image
+    {
+        $block = new Image();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
 
         return $block;
     }

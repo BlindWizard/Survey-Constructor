@@ -7,7 +7,7 @@ use App\Admin\Exceptions\BlockTypeException;
 
 interface BlockContract
 {
-    public const TYPES = [self::TYPE_CONTAINER, self::TYPE_HEADER, self::TYPE_OPTION, self::TYPE_OPTIONS_LIST, self::TYPE_TEXT, self::TYPE_TEXT_FIELD];
+    public const TYPES = [self::TYPE_CONTAINER, self::TYPE_HEADER, self::TYPE_OPTION, self::TYPE_OPTIONS_LIST, self::TYPE_TEXT, self::TYPE_TEXT_FIELD, self::TYPE_IMAGE];
 
     public const TYPE_CONTAINER = 'container';
     public const TYPE_HEADER = 'header';
@@ -15,6 +15,7 @@ interface BlockContract
     public const TYPE_OPTIONS_LIST = 'options-list';
     public const TYPE_TEXT = 'text';
     public const TYPE_TEXT_FIELD = 'text-field';
+    public const TYPE_IMAGE = 'image';
 
     /**
      * @return string

@@ -95,11 +95,26 @@ class BlockRepository implements BlockRepositoryContract
      */
     public function setElementData(string $blockId, array $data): BlockContract
     {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        $children = [];
+        if (BlockContract::TYPE_CONTAINER === $block->getType()) {
+            $children = $block->getChildren();
+        }
+
         $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
         $blockData->data = \GuzzleHttp\json_encode($data);
         $blockData->save();
 
-        $block = Block::query()->find($blockId);/** @var Block $block */
+        $block->refresh();
+        if (BlockContract::TYPE_CONTAINER === $block->getType()) {
+            $newChildren = array_column($block->getChildren(), Block::ATTR_ID);
+            foreach ($children as $child) {
+                if (false === in_array($child->getId(), $newChildren)) {
+                    $this->deleteElement($child->getId());
+                }
+            }
+        }
 
         return $block;
     }

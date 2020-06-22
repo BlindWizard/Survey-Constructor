@@ -11,6 +11,7 @@ import {Header} from "../models/Header";
 import {Text} from "../models/Text";
 import {TextField} from "../models/TextField";
 import {Container} from "../models/Container";
+import {Image} from "../models/Image";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -120,6 +121,15 @@ export class ComponentsFactory
 				block.label = blockData.label;
 				block.placeholder = blockData.placeholder;
 				block.multiline = blockData.multiline;
+
+				break;
+			case BlockTypes.IMAGE:
+				block = new Image();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.parentId = blockData.parentId;
+				block.imageUrl = blockData.imageUrl;
+
 				break;
 			default:
 				throw new Error('Undefined block type');
@@ -154,6 +164,10 @@ export class ComponentsFactory
 				break;
 			case BlockTypes.TEXT_FIELD:
 				block = new TextField();
+
+				break;
+			case BlockTypes.IMAGE:
+				block = new Image();
 
 				break;
 			default:

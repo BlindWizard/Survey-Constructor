@@ -5,4 +5,5 @@ export enum BlockTypes {
 	OPTIONS_LIST = 'options-list',
 	TEXT = 'text',
 	TEXT_FIELD = 'text-field',
+	IMAGE = 'image',
 }

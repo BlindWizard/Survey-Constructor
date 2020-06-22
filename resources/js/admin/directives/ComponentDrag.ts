@@ -11,6 +11,7 @@ let dragElement: BaseBlock|null = null;
 let spawned = false;
 let newElement = false;
 let threshold = 0;
+let originalParent: HTMLElement|null = null;
 
 const ComponentDrag: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
@@ -60,6 +61,10 @@ const ComponentDrag: DirectiveOptions = {
 
 			if (!dragElement) {
 				return;
+			}
+
+			if (null === originalParent) {
+				originalParent = dragElement.$el.parentNode as HTMLElement;
 			}
 
 			dragElement.toggleSelect(false);
@@ -116,6 +121,10 @@ const ComponentDrag: DirectiveOptions = {
 
 				dragElement.$el.classList.remove(bem('draggable').classes());
 				(dragElement.$el as HTMLElement).removeAttribute('style');
+
+				if (null !== originalParent) {
+					originalParent.append(dragElement.$el);
+				}
 
 				dragElement = null;
 			}

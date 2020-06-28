@@ -6,7 +6,7 @@ class DragDropService
 {
 	private dragState: boolean = false;
 	private dragElement: HTMLElement|null = null;
-	private container: HTMLElement;
+	private dragContainer: HTMLElement;
 	private activeTarget: HTMLElement|null = null;
 	private defaultTarget: HTMLElement|null = null;
 	private targets: HTMLElement[] = [];
@@ -15,7 +15,7 @@ class DragDropService
 
 	constructor()
 	{
-		this.container = this.createContainer();
+		this.dragContainer = this.createDragContainer();
 
 		document.addEventListener('selectstart', (e: Event) => {
 			if (this.getDragState()) {
@@ -133,8 +133,8 @@ class DragDropService
 				document.removeEventListener('mousemove', this.drag);
 			}
 
-			if (null !== this.container) {
-				this.container.innerHTML = '';
+			if (null !== this.dragContainer) {
+				this.dragContainer.innerHTML = '';
 			}
 		}
 	}
@@ -144,9 +144,19 @@ class DragDropService
 		return this.dragState;
 	}
 
-	public getContainer(): HTMLElement
+	public getDragContainer(): HTMLElement
 	{
-		return this.container;
+		return this.dragContainer;
+	}
+
+	public getActiveTarget(): HTMLElement|null
+	{
+		return this.activeTarget;
+	}
+
+	public getPlaceholder(): HTMLElement|null
+	{
+		return this.placeholder;
 	}
 
 	public getDropBlockId(): string
@@ -202,7 +212,7 @@ class DragDropService
 		this.defaultTarget = target;
 	}
 
-	private createContainer(): HTMLElement
+	private createDragContainer(): HTMLElement
 	{
 		let container: HTMLElement|null = document.getElementById('drag-container');
 		if (null === container) {

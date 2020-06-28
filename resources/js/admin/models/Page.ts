@@ -123,7 +123,11 @@ export class Page implements PageContract
 
 	deleteBlock(blockId: string): void
 	{
-		delete this.blocks[blockId];
+		let blocks = this.getBlocksInOrder().filter((block: BlockContract) => {
+			return block.getId() !== blockId;
+		});
+
+		this.setBlocks(blocks);
 	}
 
 	getId(): string

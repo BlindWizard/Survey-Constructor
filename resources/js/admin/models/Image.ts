@@ -5,7 +5,7 @@ export class Image implements BlockContract {
 	public id: string;
 	public position: number;
 	public parentId: string;
-	public imageUrl: string;
+	public imageUrl: string|null;
 
 	getType(): string
 	{

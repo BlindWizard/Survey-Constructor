@@ -7,11 +7,11 @@ import {bem} from "../../common/bem-helper";
 import {ReorderElement} from "../api/requests/ReorderElement";
 import {BaseBlock} from "../components/editables/BaseBlock";
 
-let dragElement: BaseBlock|null = null;
+let dragElement: BaseBlock;
+let handler: HTMLElement|null = null;
 let spawned = false;
 let newElement = false;
 let threshold = 0;
-let originalParent: HTMLElement|null = null;
 
 const ComponentDrag: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
@@ -25,6 +25,8 @@ const ComponentDrag: DirectiveOptions = {
 				newElement = false;
 
 				if (dragElement.draggable()) {
+					handler = dragElement.$el.cloneNode(true) as HTMLElement;
+					handler.classList.add(bem('draggable').classes());
 					dragDropService.setDragState(true);
 					e.stopPropagation();
 				}
@@ -51,29 +53,27 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			threshold = 0;
+
 			if (newElement && !spawned) {
-				dragElement = ComponentsFactory.create(binding.value, dragDropService.getContainer());
-				dragElement.$el.classList.add(bem('draggable').classes());
+				dragElement = ComponentsFactory.create(binding.value, dragDropService.getDragContainer());
+				dragElement.toggleSelect(false);
+				handler = dragElement.$el.cloneNode(true) as HTMLElement;
+				handler.classList.add(bem('draggable').classes());
 				spawned = true;
 			}
 
-			threshold = 0;
-
-			if (!dragElement) {
+			if (!handler) {
 				return;
 			}
 
-			if (null === originalParent) {
-				originalParent = dragElement.$el.parentNode as HTMLElement;
-			}
+			(dragElement.$el as HTMLElement).style.display = 'none';
 
-			dragElement.toggleSelect(false);
-			dragElement.$el.classList.add(bem('draggable').classes());
-			(dragElement.$el as HTMLElement).style.left = e.x + 'px';
-			(dragElement.$el as HTMLElement).style.top = e.y + 'px';
-			dragDropService.getContainer().appendChild(dragElement.$el);
+			handler.style.left = e.x + 'px';
+			handler.style.top = e.y + 'px';
 
-			dragDropService.handleDrag(dragElement.$el as HTMLElement);
+			dragDropService.getDragContainer().appendChild(handler);
+			dragDropService.handleDrag(handler as HTMLElement);
 		};
 
 		document.addEventListener('mouseup', (e: MouseEvent) => {
@@ -81,13 +81,14 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			if (!dragElement) {
-				dragDropService.setDragState(false);
+			if (!handler) {
 				return;
 			}
 
 			let blockId = dragDropService.getDropBlockId();
 			let position = dragDropService.getDropPosition(e);
+
+			dragDropService.setDragState(false);
 
 			if (newElement) {
 				if (null !== position) {
@@ -104,33 +105,26 @@ const ComponentDrag: DirectiveOptions = {
 
 				dragElement.$destroy();
 				dragElement.$el.remove();
-				dragElement = null;
 				spawned = false;
 			}
 			else {
+				let $store = (vnode.context as Vue).$store;
+				let request = new ReorderElement();
+				request.blockId = dragElement.$props.block.id;
+				request.parentBlockId = blockId;
+
 				if (null !== position) {
-					let $store = (vnode.context as Vue).$store;
-
-					let request = new ReorderElement();
-					request.blockId = dragElement.$props.block.id;
-					request.position = position;
-					request.parentBlockId = blockId;
-
-					$store.dispatch(actions.REORDER_ELEMENT, request);
+					request.position = position > dragElement.$props.block.position ? position - 1 : position;
 				}
+				else {
+					request.position = dragElement.$props.block.position;
+				}
+
+				$store.dispatch(actions.REORDER_ELEMENT, request);
 
 				dragElement.$el.classList.remove(bem('draggable').classes());
 				(dragElement.$el as HTMLElement).removeAttribute('style');
-
-				if (null !== originalParent) {
-					originalParent.append(dragElement.$el);
-				}
-
-				dragElement = null;
 			}
-
-			dragDropService.setDragState(false);
-			threshold = 0;
 		});
 	},
 };

@@ -9,6 +9,7 @@ import {OptionBlockWrapper} from "./option/OptionBlockWrapper";
 import {HeaderBlockWrapper} from "./header/HeaderBlockWrapper";
 import {TextBlockWrapper} from "./text/TextBlockWrapper";
 import {TextFieldBlockWrapper} from "./text-field/TextFieldBlockWrapper";
+import {ImageBlockWrapper} from "./image/ImageBlockWrapper";
 
 @Component({
 	template: `
@@ -22,6 +23,7 @@ import {TextFieldBlockWrapper} from "./text-field/TextFieldBlockWrapper";
 		HeaderBlockWrapper,
 		TextBlockWrapper,
 		TextFieldBlockWrapper,
+		ImageBlockWrapper,
 	}
 })
 export class PageBlockWrapper extends Vue {

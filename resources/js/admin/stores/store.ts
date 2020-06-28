@@ -130,8 +130,6 @@ const store = new Vuex.Store({
 
 				page.setBlocks(plain);
 			}
-
-			pages[page.getId()] = page;
 		},
 		[mutations.SAVE_ELEMENT_DATA](state, request: SaveBlockData) {
 			let pages = state.survey.pages;
@@ -181,8 +179,6 @@ const store = new Vuex.Store({
 
 				page.setBlocks(plain);
 			}
-
-			pages[page.getId()] = page;
 		},
 		[mutations.CHANGE_ELEMENT_POSITION](state, request: ReorderElement) {
 			let pages = state.survey.pages;
@@ -291,7 +287,7 @@ const store = new Vuex.Store({
 				}
 			}
 
-			pages[page.getId()] = page;
+			console.log('muta');
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
 			let pages = state.survey.pages;
@@ -305,9 +301,7 @@ const store = new Vuex.Store({
 			let container: PageContract|Container|null = null;
 			if (pages[targetBlock.getParentId()]) {
 				container = pages[targetBlock.getParentId()];
-				let blocks: BlockContract[] = (container as PageContract).getBlocksInOrder();
-				blocks.splice(targetBlock.getPosition(), 1);
-				pages[targetBlock.getParentId()].setBlocks(blocks);
+				(container as PageContract).deleteBlock(blockId);
 			}
 			else {
 				container = page.getContainerBySlotId(targetBlock.getParentId());
@@ -337,8 +331,6 @@ const store = new Vuex.Store({
 
 				page.setBlocks(plain);
 			}
-
-			pages[page.getId()] = page;
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {
 			let pages = state.survey.pages;
@@ -522,6 +514,8 @@ const store = new Vuex.Store({
 			return state.survey;
 		},
 		[getters.CURRENT_PAGE](state): PageContract|null {
+			console.log('Get page');
+
 			return state.survey.pages[state.pageId] || null;
 		},
 		[getters.PAGE_BY_STEP](state): Function {

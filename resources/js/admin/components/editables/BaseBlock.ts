@@ -8,6 +8,7 @@ import {EditingModes} from "../../contracts/EditingModes";
 import {ComponentsFactory} from "../../services/ComponentsFactory";
 import Component from "vue-class-component";
 import {bem} from "../../../common/bem-helper";
+import {dragDropService} from "../../services/DragDropService";
 
 @Component({})
 export class BaseBlock extends Vue implements Draggable {

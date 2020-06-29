@@ -2,6 +2,7 @@ import {BlockContract} from "../contracts/BlockContract";
 import {PageContract} from "../contracts/PageContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {Container} from "./Container";
+import {ComponentsFactory} from "../services/ComponentsFactory";
 
 export class Page implements PageContract
 {
@@ -117,7 +118,7 @@ export class Page implements PageContract
 	{
 		this.blocks = {};
 		for (let block of blocks) {
-			this.blocks[block.getId()] = block;
+			this.blocks[block.getId()] = ComponentsFactory.cloneElement(block);
 		}
 	}
 

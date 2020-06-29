@@ -224,10 +224,8 @@ const store = new Vuex.Store({
 				//delete
 				let container: PageContract|Container|null = null;
 				if (pages[targetBlock.getParentId()]) {
-					container = pages[targetBlock.getParentId()];
-					let blocks: BlockContract[] = (container as PageContract).getBlocksInOrder();
-					blocks.splice(targetBlock.getPosition(), 1);
-					pages[targetBlock.getParentId()].setBlocks(blocks);
+					container = pages[targetBlock.getParentId()] as PageContract;
+					container.deleteBlock(targetBlock.getId());
 				}
 				else {
 					container = page.getContainerBySlotId(targetBlock.getParentId());
@@ -242,6 +240,7 @@ const store = new Vuex.Store({
 				if (pages[request.parentBlockId]) {
 					let blocks: BlockContract[] = page.getBlocksInOrder();
 					blocks.splice(request.position, 0, targetBlock);
+					targetBlock.setParentId(request.parentBlockId);
 
 					for (let i = 0; i < blocks.length; i++) {
 						blocks[i].setPosition(i);
@@ -257,13 +256,14 @@ const store = new Vuex.Store({
 
 					let containerBlocks: BlockContract[] = container.getBlocksInOrder(request.parentBlockId);
 					containerBlocks.splice(request.position, 0, targetBlock);
+					targetBlock.setParentId(request.parentBlockId);
 
 					for (let i = 0; i < containerBlocks.length; i++) {
 						containerBlocks[i].setPosition(i);
 					}
 
-					container.setBlocks(request.parentBlockId, containerBlocks);
 					container = ComponentsFactory.cloneElement(container) as Container;
+					container.setBlocks(request.parentBlockId, containerBlocks);
 
 					while (true) {
 						let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
@@ -286,8 +286,6 @@ const store = new Vuex.Store({
 					page.setBlocks(plain);
 				}
 			}
-
-			console.log('muta');
 		},
 		[mutations.DELETE_ELEMENT](state, blockId: string) {
 			let pages = state.survey.pages;
@@ -514,8 +512,6 @@ const store = new Vuex.Store({
 			return state.survey;
 		},
 		[getters.CURRENT_PAGE](state): PageContract|null {
-			console.log('Get page');
-
 			return state.survey.pages[state.pageId] || null;
 		},
 		[getters.PAGE_BY_STEP](state): Function {

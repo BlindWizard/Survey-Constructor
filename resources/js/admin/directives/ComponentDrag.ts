@@ -114,17 +114,22 @@ const ComponentDrag: DirectiveOptions = {
 				request.parentBlockId = blockId;
 
 				if (null !== position) {
-					request.position = position > dragElement.$props.block.position ? position - 1 : position;
+					request.position = dragElement.$props.block.parentId === request.parentBlockId && position > dragElement.$props.block.position
+						? position - 1
+						: position;
 				}
 				else {
 					request.position = dragElement.$props.block.position;
 				}
 
-				$store.dispatch(actions.REORDER_ELEMENT, request);
-
 				dragElement.$el.classList.remove(bem('draggable').classes());
 				(dragElement.$el as HTMLElement).removeAttribute('style');
+
+				$store.dispatch(actions.REORDER_ELEMENT, request);
 			}
+
+			handler.remove();
+			handler = null;
 		});
 	},
 };

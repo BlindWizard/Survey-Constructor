@@ -79,7 +79,7 @@ export class Container implements BlockContract {
 		this.children[slotId] = {};
 		for (let block of blocks) {
 			block.setParentId(slotId);
-			this.children[slotId][block.getId()] = block;
+			this.children[slotId][block.getId()] = ComponentsFactory.cloneElement(block);
 		}
 	}
 

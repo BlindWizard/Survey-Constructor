@@ -12,6 +12,7 @@ import {axios} from "../common/axios";
 import {ComponentDrag} from "./directives/ComponentDrag";
 import {ComponentDrop} from "./directives/ComponentDrop";
 import {ComponentDropTarget} from "./directives/ComponentDropTarget";
+import {DropFileUpload} from "./directives/DropFileUpload";
 
 import $ from 'jquery';
 window['$'] = window['jQuery'] = $;
@@ -23,6 +24,7 @@ Vue.use(PortalVue);
 Vue.directive('component-drag', ComponentDrag);
 Vue.directive('component-drop', ComponentDrop);
 Vue.directive('component-drop-target', ComponentDropTarget);
+Vue.directive('drop-file-upload', DropFileUpload);
 
 if (process.env.NODE_ENV === 'production') {
 	window.onerror = errorHandler;

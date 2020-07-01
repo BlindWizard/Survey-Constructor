@@ -7,7 +7,9 @@ import {Image} from "../../models/Image";
 	template: `
         <div :class="bem('image').classes()">
             <img v-if="block.imageUrl" :src="block.imageUrl" :class="bem('image').el('value').classes()">
-            <div v-if="!block.imageUrl" :class="bem('image').el('placeholder').classes()"></div>
+            <div v-if="!block.imageUrl" :class="bem('image').el('placeholder').classes()">
+                No image
+            </div>
         </div>
 	`,
 })

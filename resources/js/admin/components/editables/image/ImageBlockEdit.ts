@@ -9,6 +9,10 @@ import {Image} from "../../../models/Image";
 	template: `
         <portal to="edit-modal">
             <div :class="bem('image').add('edit-modal reveal').classes()">
+                <div :class="bem('image').el('dropzone').is(!block.imageUrl ? 'empty' : '').classes()" v-drop-file-upload=""></div>
+                <button :class="bem('button').add('primary').classes()" @click="onSave">
+                    <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
+                </button>
             </div>
         </portal>
 	`,

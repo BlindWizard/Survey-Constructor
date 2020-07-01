@@ -48,7 +48,7 @@ class DragDropService
 				let el: HTMLElement = targets[i];
 				var zoneRect = el.getBoundingClientRect();
 
-				if ((e.y > zoneRect.top + 20 && e.y < zoneRect.bottom - 20) || i === targets.length - 1) {
+				if ((e.y > zoneRect.top + 25 && e.y < zoneRect.bottom - 25) || i === targets.length - 1) {
 					this.setActiveTarget(el);
 					break;
 				}
@@ -87,8 +87,6 @@ class DragDropService
 			} else {
 				dropPlace = null;
 			}
-
-			console.log(dropPlace);
 
 			if (dropPlace === this.placeholder) {
 				return;

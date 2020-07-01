@@ -12937,3 +12937,8 @@ html.is-reveal-open body {
   margin: 0;
 }
 
+.image__dropzone_empty {
+  min-height: 10rem;
+  border: 0.18rem #fd5b15 dashed;
+}
+

@@ -6,7 +6,7 @@ class SelectDispatcher {
 	private elements: BaseBlock[] = [];
 
 	constructor() {
-		document.addEventListener('mousedown', (e: MouseEvent) => {
+		document.addEventListener('click', (e: MouseEvent) => {
 			this.selected = null;
 
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];

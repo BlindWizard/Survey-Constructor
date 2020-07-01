@@ -20,6 +20,10 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			if ((e.target as HTMLElement).closest('.block-edit-menu')) {
+				return;
+			}
+
 			if (!binding.modifiers['create']) {
 				dragElement = vnode.context as BaseBlock;
 				newElement = false;

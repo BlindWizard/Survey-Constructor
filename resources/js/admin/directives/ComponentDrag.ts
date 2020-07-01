@@ -81,7 +81,10 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			threshold = 0;
+
 			if (!handler) {
+				dragDropService.setDragState(false);
 				return;
 			}
 

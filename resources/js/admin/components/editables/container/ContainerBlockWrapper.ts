@@ -20,6 +20,8 @@ import {TextFieldBlock} from "../../controls/TextFieldBlock";
 import {TextFieldBlockWrapper} from "../text-field/TextFieldBlockWrapper";
 import {Container} from "../../../models/Container";
 import {selectDispatcher} from "../../../services/SelectDispatcher";
+import {ImageBlock} from "../../controls/ImageBlock";
+import {ImageBlockWrapper} from "../image/ImageBlockWrapper";
 
 @Component({
 	template: `
@@ -52,6 +54,8 @@ import {selectDispatcher} from "../../../services/SelectDispatcher";
 		TextBlockWrapper,
 		TextFieldBlock,
 		TextFieldBlockWrapper,
+		ImageBlock,
+		ImageBlockWrapper,
 		ContainerBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,

@@ -35,10 +35,20 @@ class DragDropService
 				return;
 			}
 
+			let targets = [];
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
-			for(let i = 0; i < possibleTargets.length - 1; i++) {
+			for (let i = 0; i < possibleTargets.length; i++) {
 				let el: HTMLElement = possibleTargets[i];
 				if (-1 !== this.targets.indexOf(el)) {
+					targets.push(el);
+				}
+			}
+
+			for(let i = 0; i < targets.length; i++) {
+				let el: HTMLElement = targets[i];
+				var zoneRect = el.getBoundingClientRect();
+
+				if ((e.y > zoneRect.top + 20 && e.y < zoneRect.bottom - 20) || i === targets.length - 1) {
 					this.setActiveTarget(el);
 					break;
 				}
@@ -46,7 +56,7 @@ class DragDropService
 
 			var dropPlace: HTMLElement|null = null;
 			let target: HTMLElement|null = null;
-			for(let i = 0; i < possibleTargets.length - 1; i++) {
+			for(let i = 0; i < possibleTargets.length; i++) {
 				let el: HTMLElement = possibleTargets[i];
 
 				if (-1 !== this.dropTargets.indexOf(el)) {
@@ -72,15 +82,22 @@ class DragDropService
 
 			if (e.y < rect.top + target.offsetHeight / 2) {
 				dropPlace = target;
-			} else {
+			} else if (e.y > rect.top + target.offsetHeight / 2) {
 				dropPlace = target.nextElementSibling as HTMLElement;
+			} else {
+				dropPlace = null;
 			}
+
+			console.log(dropPlace);
 
 			if (dropPlace === this.placeholder) {
 				return;
 			}
 
-			if (null !== dropPlace && dropPlace.parentNode === this.activeTarget) {
+			if (null === dropPlace) {
+				this.activeTarget.insertBefore(this.placeholder as Node, null);
+			}
+			else if (dropPlace.parentNode === this.activeTarget) {
 				this.activeTarget.insertBefore(this.placeholder as Node, dropPlace as Node);
 			}
 		});

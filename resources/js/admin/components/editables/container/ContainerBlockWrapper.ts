@@ -25,12 +25,11 @@ import {ImageBlockWrapper} from "../image/ImageBlockWrapper";
 
 @Component({
 	template: `
-        <div ref="selectable" :class="bem('container-wrapper').classes()" v-component-drag v-component-drop-target>
+        <div ref="selectable" :class="bem('container-wrapper').add(this.selected ? 'selected' : '').classes()" v-component-drag v-component-drop-target>
             <div :class="bem('container').classes()">
                 <div class="grid-container full">
                     <div class="grid-x">
-                        <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-' + (12 / block.slots.length) + ' '+ (0 === block.getBlocksInOrder(slotId).length ? bem('container').el('slot').is('empty').classes() : '')" v-component-drop="slotId">
-                            <h4 v-if="0 === block.getBlocksInOrder(slotId).length">Slot</h4>
+                        <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-' + (12 / block.slots.length) + ' '+ bem('container').el('slot').is(0 === block.getBlocksInOrder(slotId).length ? 'empty' : '').classes()" v-component-drop="slotId">
                             <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
                         </div>
                     </div>

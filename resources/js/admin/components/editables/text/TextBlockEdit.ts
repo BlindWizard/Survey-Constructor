@@ -8,9 +8,9 @@ import {getters} from "../../../stores/types";
 @Component({
 	template: `
         <portal to="edit-modal">
-            <div :class="bem('text').add('edit-modal reveal').classes()">
+            <div :class="bem('edit-modal').add('reveal').classes()">
                 <input type="text" v-model="block.text" />
-                <button :class="bem('button').add('primary').classes()" @click="onSave">
+                <button :class="bem('button').add('primary').classes()" v-on:click.stopЗ="onSave">
                     <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
                 </button>
             </div>

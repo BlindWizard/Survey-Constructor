@@ -73,7 +73,7 @@ class SurveyStatisticRepository implements SurveyStatisticRepositoryContract
             }
         }
 
-        $object->lastUpdated = (new Carbon($statistic->updated_at))->format(Carbon::DEFAULT_TO_STRING_FORMAT);
+        $object->lastUpdated = !empty($statistic) ? (new Carbon($statistic->updated_at))->format(Carbon::DEFAULT_TO_STRING_FORMAT): null;
 
         return $object;
     }

@@ -8,7 +8,7 @@ import {getters} from "../../../stores/types";
 @Component({
 	template: `
         <portal to="edit-modal">
-            <div :class="bem('text-field').add('edit-modal reveal').classes()">
+            <div :class="bem('edit-modal').add('reveal').classes()">
                 <label>
                     Label
                     <input type="text" :class="bem('text-field').el('value').classes()" v-model="block.label" />

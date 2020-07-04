@@ -57,8 +57,6 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			threshold = 0;
-
 			if (newElement && !spawned) {
 				dragElement = ComponentsFactory.create(binding.value, dragDropService.getDragContainer());
 				dragElement.toggleSelect(false);
@@ -85,12 +83,18 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			threshold = 0;
+			if (threshold < 10) {
+				dragDropService.setDragState(false);
+				handler = null;
+				return;
+			}
 
 			if (!handler) {
 				dragDropService.setDragState(false);
 				return;
 			}
+
+			threshold = 0;
 
 			let blockId = dragDropService.getDropBlockId();
 			let position = dragDropService.getDropPosition(e);

@@ -128,6 +128,10 @@ export class Page implements PageContract
 			return block.getId() !== blockId;
 		});
 
+		for (let i = 0; i < blocks.length; i++) {
+			blocks[i].setPosition(i);
+		}
+
 		this.setBlocks(blocks);
 	}
 

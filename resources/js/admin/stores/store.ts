@@ -207,6 +207,7 @@ const store = new Vuex.Store({
 
 				blocks.splice(targetBlock.getPosition(), 1);
 				blocks.splice(request.position, 0, targetBlock);
+				targetBlock.setParentId(request.parentBlockId);
 
 				for (let i = 0; i < blocks.length; i++) {
 					blocks[i].setPosition(i);

@@ -67,6 +67,10 @@ export class Container implements BlockContract {
 			blocks.push(block);
 		}
 
+		for (let i = 0; i < blocks.length; i++) {
+			blocks[i].setPosition(i);
+		}
+
 		blocks.sort((a: BlockContract, b: BlockContract) => {
 			return a.getPosition() - b.getPosition();
 		});

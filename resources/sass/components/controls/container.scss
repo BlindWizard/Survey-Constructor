@@ -13,16 +13,19 @@
 
     .container__slot_empty {
         border: 0.18rem dashed $medium-gray;
-
-        h4 {
-            font-size: 1rem;
-            text-align: center;
-            color: $medium-gray;
-            line-height: 4rem;
-        }
+        min-height: 2rem;
     }
 }
 
 .container {
     background-color: $white;
+}
+
+body.dragging {
+    .container-wrapper {
+        .container__slot {
+            border: 0.18rem dashed $medium-gray;
+            min-height: 6rem;
+        }
+    }
 }

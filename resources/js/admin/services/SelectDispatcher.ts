@@ -43,6 +43,13 @@ class SelectDispatcher {
 	{
 		this.elements.push(component);
 	}
+
+	public unselectAll(): void
+	{
+		for (let element of this.elements) {
+			element.toggleSelect(false);
+		}
+	}
 }
 
 const selectDispatcher = new SelectDispatcher();

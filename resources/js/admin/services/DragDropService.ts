@@ -1,6 +1,7 @@
 import {store} from "../stores/store";
 import {getters} from "../stores/types";
 import {bem} from "../../common/bem-helper";
+import {selectDispatcher} from "./SelectDispatcher";
 
 class DragDropService
 {
@@ -48,7 +49,7 @@ class DragDropService
 				let el: HTMLElement = targets[i];
 				var zoneRect = el.getBoundingClientRect();
 
-				if ((e.y > zoneRect.top + 25 && e.y < zoneRect.bottom - 25) || i === targets.length - 1) {
+				if ((e.y > zoneRect.top - (zoneRect.height * 0.2) && e.y < zoneRect.bottom - (zoneRect.height * 0.2)) || i === targets.length - 1) {
 					this.setActiveTarget(el);
 					break;
 				}
@@ -120,6 +121,9 @@ class DragDropService
 		this.createPlaceholder();
 
 		document.addEventListener('mousemove', this.drag);
+
+		document.body.classList.add(bem('dragging').classes());
+		selectDispatcher.unselectAll();
 	}
 
 	public drag(e: MouseEvent): void
@@ -151,6 +155,8 @@ class DragDropService
 			if (null !== this.dragContainer) {
 				this.dragContainer.innerHTML = '';
 			}
+
+			document.body.classList.remove(bem('dragging').classes());
 		}
 	}
 

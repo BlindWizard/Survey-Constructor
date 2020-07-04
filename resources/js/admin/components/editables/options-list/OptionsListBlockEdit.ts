@@ -11,7 +11,7 @@ const uuidv4 = require('uuid/v4');
 @Component({
 	template: `
         <portal to="edit-modal">
-            <div :class="bem('options-list').add('edit-modal reveal').classes()" v-component-drop-target>
+            <div :class="bem('edit-modal').add('reveal').classes()" v-component-drop-target>
                 <label>
                     Header
                     <input @input="changeBlockText" :value="block.text" type="text" />
@@ -30,7 +30,7 @@ const uuidv4 = require('uuid/v4');
                         <span :class="bem('button').el('label').classes()">Add option</span>
                     </button>
                 </div>
-                <button :class="bem('button').add('primary').classes()" @click="onSave">
+                <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
                     <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
                 </button>
             </div>

@@ -11,6 +11,9 @@ const ComponentDrop: DirectiveOptions = {
 
 		el.setAttribute('data-drop-id', binding.value);
 	},
+	update: (el, binding, vnode) => {
+		el.setAttribute('data-drop-id', binding.value);
+	},
 };
 
 export {ComponentDrop};

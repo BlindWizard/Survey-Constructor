@@ -16,6 +16,10 @@ class SelectDispatcher {
 						continue;
 					}
 
+					if (el.classList.contains('reveal-overlay')) {
+						return;
+					}
+
 					for (let element of this.elements) {
 						if (this.selected && element !== this.selected) {
 							element.toggleSelect(false);

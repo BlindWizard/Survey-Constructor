@@ -35,9 +35,9 @@ import {ImageBlockWrapper} from "../image/ImageBlockWrapper";
                     </div>
                 </div>
             </div>
-            <ContainerBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
+            <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected || editing" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected || editing"/>
+            <BlockResizeFrame v-if="selected"/>
         </div>
 	`,
 	components: {

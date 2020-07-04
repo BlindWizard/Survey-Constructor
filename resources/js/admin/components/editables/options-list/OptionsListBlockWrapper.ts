@@ -14,7 +14,7 @@ import {selectDispatcher} from "../../../services/SelectDispatcher";
             <OptionsListBlock :block="block"/>
             <OptionsListBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected && !editing"/>
+            <BlockResizeFrame v-if="selected"/>
         </div>
 	`,
 	components: {

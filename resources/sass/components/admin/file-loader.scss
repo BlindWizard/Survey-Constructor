@@ -1,6 +1,8 @@
-&__dropzone {
-    &_empty {
-        min-height: 10rem;
-        border: 0.18rem $primary dashed;
+.file-loader {
+    &__dropzone {
+        &_empty {
+            min-height: 10rem;
+            border: 0.18rem $primary dashed;
+        }
     }
 }

@@ -13,7 +13,7 @@ import {ImageBlockEdit} from "./ImageBlockEdit";
             <ImageBlock :block="block"/>
             <ImageBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected && !editing"/>
+            <BlockResizeFrame v-if="selected"/>
         </div>
 	`,
 	components: {

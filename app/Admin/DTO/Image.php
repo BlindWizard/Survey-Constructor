@@ -15,6 +15,8 @@ class Image implements BlockContract
     /** @var int */
     public $position;
     /** @var string|null */
+    public $imageId = null;
+    /** @var string|null */
     public $imageUrl = null;
 
     /**
@@ -87,7 +89,7 @@ class Image implements BlockContract
     public function getData(): array
     {
         return [
-            'imageUrl' => $this->imageUrl,
+            'imageId' => $this->imageId,
         ];
     }
 }

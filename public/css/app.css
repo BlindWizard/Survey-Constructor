@@ -11974,6 +11974,1386 @@ html.is-reveal-open body {
   background-color: #2d1e45;
 }
 
+.radial-progressbar {
+  width: 100px;
+  height: 100px;
+  background-color: #d6dadc;
+  border-radius: 50%;
+}
+
+.radial-progressbar .circle .mask,
+.radial-progressbar .circle .fill {
+  width: 100px;
+  height: 100px;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.radial-progressbar .circle .mask,
+.radial-progressbar .circle .fill {
+  -webkit-backface-visibility: hidden;
+  transition: transform 1s;
+  border-radius: 50%;
+}
+
+.radial-progressbar .circle .mask {
+  clip: rect(0px, 100px, 100px, 50px);
+}
+
+.radial-progressbar .circle .mask .fill {
+  clip: rect(0px, 50px, 100px, 0px);
+  background-color: #fd5b15;
+}
+
+.radial-progressbar .inset {
+  width: 85px;
+  height: 85px;
+  position: absolute;
+  margin-left: 7.5px;
+  margin-top: 7.5px;
+  background-color: #fbfbfb;
+  border-radius: 50%;
+}
+
+.radial-progressbar .inset .percentage {
+  height: 22px;
+  width: 57px;
+  overflow: hidden;
+  position: absolute;
+  top: 31.5px;
+  left: 14px;
+  line-height: 1;
+}
+
+.radial-progressbar .inset .percentage .numbers {
+  margin-top: -22px;
+  transition: width 1s;
+}
+
+.radial-progressbar .inset .percentage .numbers span {
+  width: 57px;
+  display: inline-block;
+  vertical-align: top;
+  text-align: center;
+  font-weight: 800;
+  font-size: 22px;
+  font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: #fd5b15;
+}
+
+.radial-progressbar[data-progress="0"] .circle .mask.full,
+.radial-progressbar[data-progress="0"] .circle .fill {
+  transform: rotate(0deg);
+}
+
+.radial-progressbar[data-progress="0"] .circle .fill.fix {
+  transform: rotate(0deg);
+}
+
+.radial-progressbar[data-progress="0"] .inset .percentage .numbers {
+  width: 57px;
+}
+
+.radial-progressbar[data-progress="1"] .circle .mask.full,
+.radial-progressbar[data-progress="1"] .circle .fill {
+  transform: rotate(1.8deg);
+}
+
+.radial-progressbar[data-progress="1"] .circle .fill.fix {
+  transform: rotate(3.6deg);
+}
+
+.radial-progressbar[data-progress="1"] .inset .percentage .numbers {
+  width: 114px;
+}
+
+.radial-progressbar[data-progress="2"] .circle .mask.full,
+.radial-progressbar[data-progress="2"] .circle .fill {
+  transform: rotate(3.6deg);
+}
+
+.radial-progressbar[data-progress="2"] .circle .fill.fix {
+  transform: rotate(7.2deg);
+}
+
+.radial-progressbar[data-progress="2"] .inset .percentage .numbers {
+  width: 171px;
+}
+
+.radial-progressbar[data-progress="3"] .circle .mask.full,
+.radial-progressbar[data-progress="3"] .circle .fill {
+  transform: rotate(5.4deg);
+}
+
+.radial-progressbar[data-progress="3"] .circle .fill.fix {
+  transform: rotate(10.8deg);
+}
+
+.radial-progressbar[data-progress="3"] .inset .percentage .numbers {
+  width: 228px;
+}
+
+.radial-progressbar[data-progress="4"] .circle .mask.full,
+.radial-progressbar[data-progress="4"] .circle .fill {
+  transform: rotate(7.2deg);
+}
+
+.radial-progressbar[data-progress="4"] .circle .fill.fix {
+  transform: rotate(14.4deg);
+}
+
+.radial-progressbar[data-progress="4"] .inset .percentage .numbers {
+  width: 285px;
+}
+
+.radial-progressbar[data-progress="5"] .circle .mask.full,
+.radial-progressbar[data-progress="5"] .circle .fill {
+  transform: rotate(9deg);
+}
+
+.radial-progressbar[data-progress="5"] .circle .fill.fix {
+  transform: rotate(18deg);
+}
+
+.radial-progressbar[data-progress="5"] .inset .percentage .numbers {
+  width: 342px;
+}
+
+.radial-progressbar[data-progress="6"] .circle .mask.full,
+.radial-progressbar[data-progress="6"] .circle .fill {
+  transform: rotate(10.8deg);
+}
+
+.radial-progressbar[data-progress="6"] .circle .fill.fix {
+  transform: rotate(21.6deg);
+}
+
+.radial-progressbar[data-progress="6"] .inset .percentage .numbers {
+  width: 399px;
+}
+
+.radial-progressbar[data-progress="7"] .circle .mask.full,
+.radial-progressbar[data-progress="7"] .circle .fill {
+  transform: rotate(12.6deg);
+}
+
+.radial-progressbar[data-progress="7"] .circle .fill.fix {
+  transform: rotate(25.2deg);
+}
+
+.radial-progressbar[data-progress="7"] .inset .percentage .numbers {
+  width: 456px;
+}
+
+.radial-progressbar[data-progress="8"] .circle .mask.full,
+.radial-progressbar[data-progress="8"] .circle .fill {
+  transform: rotate(14.4deg);
+}
+
+.radial-progressbar[data-progress="8"] .circle .fill.fix {
+  transform: rotate(28.8deg);
+}
+
+.radial-progressbar[data-progress="8"] .inset .percentage .numbers {
+  width: 513px;
+}
+
+.radial-progressbar[data-progress="9"] .circle .mask.full,
+.radial-progressbar[data-progress="9"] .circle .fill {
+  transform: rotate(16.2deg);
+}
+
+.radial-progressbar[data-progress="9"] .circle .fill.fix {
+  transform: rotate(32.4deg);
+}
+
+.radial-progressbar[data-progress="9"] .inset .percentage .numbers {
+  width: 570px;
+}
+
+.radial-progressbar[data-progress="10"] .circle .mask.full,
+.radial-progressbar[data-progress="10"] .circle .fill {
+  transform: rotate(18deg);
+}
+
+.radial-progressbar[data-progress="10"] .circle .fill.fix {
+  transform: rotate(36deg);
+}
+
+.radial-progressbar[data-progress="10"] .inset .percentage .numbers {
+  width: 627px;
+}
+
+.radial-progressbar[data-progress="11"] .circle .mask.full,
+.radial-progressbar[data-progress="11"] .circle .fill {
+  transform: rotate(19.8deg);
+}
+
+.radial-progressbar[data-progress="11"] .circle .fill.fix {
+  transform: rotate(39.6deg);
+}
+
+.radial-progressbar[data-progress="11"] .inset .percentage .numbers {
+  width: 684px;
+}
+
+.radial-progressbar[data-progress="12"] .circle .mask.full,
+.radial-progressbar[data-progress="12"] .circle .fill {
+  transform: rotate(21.6deg);
+}
+
+.radial-progressbar[data-progress="12"] .circle .fill.fix {
+  transform: rotate(43.2deg);
+}
+
+.radial-progressbar[data-progress="12"] .inset .percentage .numbers {
+  width: 741px;
+}
+
+.radial-progressbar[data-progress="13"] .circle .mask.full,
+.radial-progressbar[data-progress="13"] .circle .fill {
+  transform: rotate(23.4deg);
+}
+
+.radial-progressbar[data-progress="13"] .circle .fill.fix {
+  transform: rotate(46.8deg);
+}
+
+.radial-progressbar[data-progress="13"] .inset .percentage .numbers {
+  width: 798px;
+}
+
+.radial-progressbar[data-progress="14"] .circle .mask.full,
+.radial-progressbar[data-progress="14"] .circle .fill {
+  transform: rotate(25.2deg);
+}
+
+.radial-progressbar[data-progress="14"] .circle .fill.fix {
+  transform: rotate(50.4deg);
+}
+
+.radial-progressbar[data-progress="14"] .inset .percentage .numbers {
+  width: 855px;
+}
+
+.radial-progressbar[data-progress="15"] .circle .mask.full,
+.radial-progressbar[data-progress="15"] .circle .fill {
+  transform: rotate(27deg);
+}
+
+.radial-progressbar[data-progress="15"] .circle .fill.fix {
+  transform: rotate(54deg);
+}
+
+.radial-progressbar[data-progress="15"] .inset .percentage .numbers {
+  width: 912px;
+}
+
+.radial-progressbar[data-progress="16"] .circle .mask.full,
+.radial-progressbar[data-progress="16"] .circle .fill {
+  transform: rotate(28.8deg);
+}
+
+.radial-progressbar[data-progress="16"] .circle .fill.fix {
+  transform: rotate(57.6deg);
+}
+
+.radial-progressbar[data-progress="16"] .inset .percentage .numbers {
+  width: 969px;
+}
+
+.radial-progressbar[data-progress="17"] .circle .mask.full,
+.radial-progressbar[data-progress="17"] .circle .fill {
+  transform: rotate(30.6deg);
+}
+
+.radial-progressbar[data-progress="17"] .circle .fill.fix {
+  transform: rotate(61.2deg);
+}
+
+.radial-progressbar[data-progress="17"] .inset .percentage .numbers {
+  width: 1026px;
+}
+
+.radial-progressbar[data-progress="18"] .circle .mask.full,
+.radial-progressbar[data-progress="18"] .circle .fill {
+  transform: rotate(32.4deg);
+}
+
+.radial-progressbar[data-progress="18"] .circle .fill.fix {
+  transform: rotate(64.8deg);
+}
+
+.radial-progressbar[data-progress="18"] .inset .percentage .numbers {
+  width: 1083px;
+}
+
+.radial-progressbar[data-progress="19"] .circle .mask.full,
+.radial-progressbar[data-progress="19"] .circle .fill {
+  transform: rotate(34.2deg);
+}
+
+.radial-progressbar[data-progress="19"] .circle .fill.fix {
+  transform: rotate(68.4deg);
+}
+
+.radial-progressbar[data-progress="19"] .inset .percentage .numbers {
+  width: 1140px;
+}
+
+.radial-progressbar[data-progress="20"] .circle .mask.full,
+.radial-progressbar[data-progress="20"] .circle .fill {
+  transform: rotate(36deg);
+}
+
+.radial-progressbar[data-progress="20"] .circle .fill.fix {
+  transform: rotate(72deg);
+}
+
+.radial-progressbar[data-progress="20"] .inset .percentage .numbers {
+  width: 1197px;
+}
+
+.radial-progressbar[data-progress="21"] .circle .mask.full,
+.radial-progressbar[data-progress="21"] .circle .fill {
+  transform: rotate(37.8deg);
+}
+
+.radial-progressbar[data-progress="21"] .circle .fill.fix {
+  transform: rotate(75.6deg);
+}
+
+.radial-progressbar[data-progress="21"] .inset .percentage .numbers {
+  width: 1254px;
+}
+
+.radial-progressbar[data-progress="22"] .circle .mask.full,
+.radial-progressbar[data-progress="22"] .circle .fill {
+  transform: rotate(39.6deg);
+}
+
+.radial-progressbar[data-progress="22"] .circle .fill.fix {
+  transform: rotate(79.2deg);
+}
+
+.radial-progressbar[data-progress="22"] .inset .percentage .numbers {
+  width: 1311px;
+}
+
+.radial-progressbar[data-progress="23"] .circle .mask.full,
+.radial-progressbar[data-progress="23"] .circle .fill {
+  transform: rotate(41.4deg);
+}
+
+.radial-progressbar[data-progress="23"] .circle .fill.fix {
+  transform: rotate(82.8deg);
+}
+
+.radial-progressbar[data-progress="23"] .inset .percentage .numbers {
+  width: 1368px;
+}
+
+.radial-progressbar[data-progress="24"] .circle .mask.full,
+.radial-progressbar[data-progress="24"] .circle .fill {
+  transform: rotate(43.2deg);
+}
+
+.radial-progressbar[data-progress="24"] .circle .fill.fix {
+  transform: rotate(86.4deg);
+}
+
+.radial-progressbar[data-progress="24"] .inset .percentage .numbers {
+  width: 1425px;
+}
+
+.radial-progressbar[data-progress="25"] .circle .mask.full,
+.radial-progressbar[data-progress="25"] .circle .fill {
+  transform: rotate(45deg);
+}
+
+.radial-progressbar[data-progress="25"] .circle .fill.fix {
+  transform: rotate(90deg);
+}
+
+.radial-progressbar[data-progress="25"] .inset .percentage .numbers {
+  width: 1482px;
+}
+
+.radial-progressbar[data-progress="26"] .circle .mask.full,
+.radial-progressbar[data-progress="26"] .circle .fill {
+  transform: rotate(46.8deg);
+}
+
+.radial-progressbar[data-progress="26"] .circle .fill.fix {
+  transform: rotate(93.6deg);
+}
+
+.radial-progressbar[data-progress="26"] .inset .percentage .numbers {
+  width: 1539px;
+}
+
+.radial-progressbar[data-progress="27"] .circle .mask.full,
+.radial-progressbar[data-progress="27"] .circle .fill {
+  transform: rotate(48.6deg);
+}
+
+.radial-progressbar[data-progress="27"] .circle .fill.fix {
+  transform: rotate(97.2deg);
+}
+
+.radial-progressbar[data-progress="27"] .inset .percentage .numbers {
+  width: 1596px;
+}
+
+.radial-progressbar[data-progress="28"] .circle .mask.full,
+.radial-progressbar[data-progress="28"] .circle .fill {
+  transform: rotate(50.4deg);
+}
+
+.radial-progressbar[data-progress="28"] .circle .fill.fix {
+  transform: rotate(100.8deg);
+}
+
+.radial-progressbar[data-progress="28"] .inset .percentage .numbers {
+  width: 1653px;
+}
+
+.radial-progressbar[data-progress="29"] .circle .mask.full,
+.radial-progressbar[data-progress="29"] .circle .fill {
+  transform: rotate(52.2deg);
+}
+
+.radial-progressbar[data-progress="29"] .circle .fill.fix {
+  transform: rotate(104.4deg);
+}
+
+.radial-progressbar[data-progress="29"] .inset .percentage .numbers {
+  width: 1710px;
+}
+
+.radial-progressbar[data-progress="30"] .circle .mask.full,
+.radial-progressbar[data-progress="30"] .circle .fill {
+  transform: rotate(54deg);
+}
+
+.radial-progressbar[data-progress="30"] .circle .fill.fix {
+  transform: rotate(108deg);
+}
+
+.radial-progressbar[data-progress="30"] .inset .percentage .numbers {
+  width: 1767px;
+}
+
+.radial-progressbar[data-progress="31"] .circle .mask.full,
+.radial-progressbar[data-progress="31"] .circle .fill {
+  transform: rotate(55.8deg);
+}
+
+.radial-progressbar[data-progress="31"] .circle .fill.fix {
+  transform: rotate(111.6deg);
+}
+
+.radial-progressbar[data-progress="31"] .inset .percentage .numbers {
+  width: 1824px;
+}
+
+.radial-progressbar[data-progress="32"] .circle .mask.full,
+.radial-progressbar[data-progress="32"] .circle .fill {
+  transform: rotate(57.6deg);
+}
+
+.radial-progressbar[data-progress="32"] .circle .fill.fix {
+  transform: rotate(115.2deg);
+}
+
+.radial-progressbar[data-progress="32"] .inset .percentage .numbers {
+  width: 1881px;
+}
+
+.radial-progressbar[data-progress="33"] .circle .mask.full,
+.radial-progressbar[data-progress="33"] .circle .fill {
+  transform: rotate(59.4deg);
+}
+
+.radial-progressbar[data-progress="33"] .circle .fill.fix {
+  transform: rotate(118.8deg);
+}
+
+.radial-progressbar[data-progress="33"] .inset .percentage .numbers {
+  width: 1938px;
+}
+
+.radial-progressbar[data-progress="34"] .circle .mask.full,
+.radial-progressbar[data-progress="34"] .circle .fill {
+  transform: rotate(61.2deg);
+}
+
+.radial-progressbar[data-progress="34"] .circle .fill.fix {
+  transform: rotate(122.4deg);
+}
+
+.radial-progressbar[data-progress="34"] .inset .percentage .numbers {
+  width: 1995px;
+}
+
+.radial-progressbar[data-progress="35"] .circle .mask.full,
+.radial-progressbar[data-progress="35"] .circle .fill {
+  transform: rotate(63deg);
+}
+
+.radial-progressbar[data-progress="35"] .circle .fill.fix {
+  transform: rotate(126deg);
+}
+
+.radial-progressbar[data-progress="35"] .inset .percentage .numbers {
+  width: 2052px;
+}
+
+.radial-progressbar[data-progress="36"] .circle .mask.full,
+.radial-progressbar[data-progress="36"] .circle .fill {
+  transform: rotate(64.8deg);
+}
+
+.radial-progressbar[data-progress="36"] .circle .fill.fix {
+  transform: rotate(129.6deg);
+}
+
+.radial-progressbar[data-progress="36"] .inset .percentage .numbers {
+  width: 2109px;
+}
+
+.radial-progressbar[data-progress="37"] .circle .mask.full,
+.radial-progressbar[data-progress="37"] .circle .fill {
+  transform: rotate(66.6deg);
+}
+
+.radial-progressbar[data-progress="37"] .circle .fill.fix {
+  transform: rotate(133.2deg);
+}
+
+.radial-progressbar[data-progress="37"] .inset .percentage .numbers {
+  width: 2166px;
+}
+
+.radial-progressbar[data-progress="38"] .circle .mask.full,
+.radial-progressbar[data-progress="38"] .circle .fill {
+  transform: rotate(68.4deg);
+}
+
+.radial-progressbar[data-progress="38"] .circle .fill.fix {
+  transform: rotate(136.8deg);
+}
+
+.radial-progressbar[data-progress="38"] .inset .percentage .numbers {
+  width: 2223px;
+}
+
+.radial-progressbar[data-progress="39"] .circle .mask.full,
+.radial-progressbar[data-progress="39"] .circle .fill {
+  transform: rotate(70.2deg);
+}
+
+.radial-progressbar[data-progress="39"] .circle .fill.fix {
+  transform: rotate(140.4deg);
+}
+
+.radial-progressbar[data-progress="39"] .inset .percentage .numbers {
+  width: 2280px;
+}
+
+.radial-progressbar[data-progress="40"] .circle .mask.full,
+.radial-progressbar[data-progress="40"] .circle .fill {
+  transform: rotate(72deg);
+}
+
+.radial-progressbar[data-progress="40"] .circle .fill.fix {
+  transform: rotate(144deg);
+}
+
+.radial-progressbar[data-progress="40"] .inset .percentage .numbers {
+  width: 2337px;
+}
+
+.radial-progressbar[data-progress="41"] .circle .mask.full,
+.radial-progressbar[data-progress="41"] .circle .fill {
+  transform: rotate(73.8deg);
+}
+
+.radial-progressbar[data-progress="41"] .circle .fill.fix {
+  transform: rotate(147.6deg);
+}
+
+.radial-progressbar[data-progress="41"] .inset .percentage .numbers {
+  width: 2394px;
+}
+
+.radial-progressbar[data-progress="42"] .circle .mask.full,
+.radial-progressbar[data-progress="42"] .circle .fill {
+  transform: rotate(75.6deg);
+}
+
+.radial-progressbar[data-progress="42"] .circle .fill.fix {
+  transform: rotate(151.2deg);
+}
+
+.radial-progressbar[data-progress="42"] .inset .percentage .numbers {
+  width: 2451px;
+}
+
+.radial-progressbar[data-progress="43"] .circle .mask.full,
+.radial-progressbar[data-progress="43"] .circle .fill {
+  transform: rotate(77.4deg);
+}
+
+.radial-progressbar[data-progress="43"] .circle .fill.fix {
+  transform: rotate(154.8deg);
+}
+
+.radial-progressbar[data-progress="43"] .inset .percentage .numbers {
+  width: 2508px;
+}
+
+.radial-progressbar[data-progress="44"] .circle .mask.full,
+.radial-progressbar[data-progress="44"] .circle .fill {
+  transform: rotate(79.2deg);
+}
+
+.radial-progressbar[data-progress="44"] .circle .fill.fix {
+  transform: rotate(158.4deg);
+}
+
+.radial-progressbar[data-progress="44"] .inset .percentage .numbers {
+  width: 2565px;
+}
+
+.radial-progressbar[data-progress="45"] .circle .mask.full,
+.radial-progressbar[data-progress="45"] .circle .fill {
+  transform: rotate(81deg);
+}
+
+.radial-progressbar[data-progress="45"] .circle .fill.fix {
+  transform: rotate(162deg);
+}
+
+.radial-progressbar[data-progress="45"] .inset .percentage .numbers {
+  width: 2622px;
+}
+
+.radial-progressbar[data-progress="46"] .circle .mask.full,
+.radial-progressbar[data-progress="46"] .circle .fill {
+  transform: rotate(82.8deg);
+}
+
+.radial-progressbar[data-progress="46"] .circle .fill.fix {
+  transform: rotate(165.6deg);
+}
+
+.radial-progressbar[data-progress="46"] .inset .percentage .numbers {
+  width: 2679px;
+}
+
+.radial-progressbar[data-progress="47"] .circle .mask.full,
+.radial-progressbar[data-progress="47"] .circle .fill {
+  transform: rotate(84.6deg);
+}
+
+.radial-progressbar[data-progress="47"] .circle .fill.fix {
+  transform: rotate(169.2deg);
+}
+
+.radial-progressbar[data-progress="47"] .inset .percentage .numbers {
+  width: 2736px;
+}
+
+.radial-progressbar[data-progress="48"] .circle .mask.full,
+.radial-progressbar[data-progress="48"] .circle .fill {
+  transform: rotate(86.4deg);
+}
+
+.radial-progressbar[data-progress="48"] .circle .fill.fix {
+  transform: rotate(172.8deg);
+}
+
+.radial-progressbar[data-progress="48"] .inset .percentage .numbers {
+  width: 2793px;
+}
+
+.radial-progressbar[data-progress="49"] .circle .mask.full,
+.radial-progressbar[data-progress="49"] .circle .fill {
+  transform: rotate(88.2deg);
+}
+
+.radial-progressbar[data-progress="49"] .circle .fill.fix {
+  transform: rotate(176.4deg);
+}
+
+.radial-progressbar[data-progress="49"] .inset .percentage .numbers {
+  width: 2850px;
+}
+
+.radial-progressbar[data-progress="50"] .circle .mask.full,
+.radial-progressbar[data-progress="50"] .circle .fill {
+  transform: rotate(90deg);
+}
+
+.radial-progressbar[data-progress="50"] .circle .fill.fix {
+  transform: rotate(180deg);
+}
+
+.radial-progressbar[data-progress="50"] .inset .percentage .numbers {
+  width: 2907px;
+}
+
+.radial-progressbar[data-progress="51"] .circle .mask.full,
+.radial-progressbar[data-progress="51"] .circle .fill {
+  transform: rotate(91.8deg);
+}
+
+.radial-progressbar[data-progress="51"] .circle .fill.fix {
+  transform: rotate(183.6deg);
+}
+
+.radial-progressbar[data-progress="51"] .inset .percentage .numbers {
+  width: 2964px;
+}
+
+.radial-progressbar[data-progress="52"] .circle .mask.full,
+.radial-progressbar[data-progress="52"] .circle .fill {
+  transform: rotate(93.6deg);
+}
+
+.radial-progressbar[data-progress="52"] .circle .fill.fix {
+  transform: rotate(187.2deg);
+}
+
+.radial-progressbar[data-progress="52"] .inset .percentage .numbers {
+  width: 3021px;
+}
+
+.radial-progressbar[data-progress="53"] .circle .mask.full,
+.radial-progressbar[data-progress="53"] .circle .fill {
+  transform: rotate(95.4deg);
+}
+
+.radial-progressbar[data-progress="53"] .circle .fill.fix {
+  transform: rotate(190.8deg);
+}
+
+.radial-progressbar[data-progress="53"] .inset .percentage .numbers {
+  width: 3078px;
+}
+
+.radial-progressbar[data-progress="54"] .circle .mask.full,
+.radial-progressbar[data-progress="54"] .circle .fill {
+  transform: rotate(97.2deg);
+}
+
+.radial-progressbar[data-progress="54"] .circle .fill.fix {
+  transform: rotate(194.4deg);
+}
+
+.radial-progressbar[data-progress="54"] .inset .percentage .numbers {
+  width: 3135px;
+}
+
+.radial-progressbar[data-progress="55"] .circle .mask.full,
+.radial-progressbar[data-progress="55"] .circle .fill {
+  transform: rotate(99deg);
+}
+
+.radial-progressbar[data-progress="55"] .circle .fill.fix {
+  transform: rotate(198deg);
+}
+
+.radial-progressbar[data-progress="55"] .inset .percentage .numbers {
+  width: 3192px;
+}
+
+.radial-progressbar[data-progress="56"] .circle .mask.full,
+.radial-progressbar[data-progress="56"] .circle .fill {
+  transform: rotate(100.8deg);
+}
+
+.radial-progressbar[data-progress="56"] .circle .fill.fix {
+  transform: rotate(201.6deg);
+}
+
+.radial-progressbar[data-progress="56"] .inset .percentage .numbers {
+  width: 3249px;
+}
+
+.radial-progressbar[data-progress="57"] .circle .mask.full,
+.radial-progressbar[data-progress="57"] .circle .fill {
+  transform: rotate(102.6deg);
+}
+
+.radial-progressbar[data-progress="57"] .circle .fill.fix {
+  transform: rotate(205.2deg);
+}
+
+.radial-progressbar[data-progress="57"] .inset .percentage .numbers {
+  width: 3306px;
+}
+
+.radial-progressbar[data-progress="58"] .circle .mask.full,
+.radial-progressbar[data-progress="58"] .circle .fill {
+  transform: rotate(104.4deg);
+}
+
+.radial-progressbar[data-progress="58"] .circle .fill.fix {
+  transform: rotate(208.8deg);
+}
+
+.radial-progressbar[data-progress="58"] .inset .percentage .numbers {
+  width: 3363px;
+}
+
+.radial-progressbar[data-progress="59"] .circle .mask.full,
+.radial-progressbar[data-progress="59"] .circle .fill {
+  transform: rotate(106.2deg);
+}
+
+.radial-progressbar[data-progress="59"] .circle .fill.fix {
+  transform: rotate(212.4deg);
+}
+
+.radial-progressbar[data-progress="59"] .inset .percentage .numbers {
+  width: 3420px;
+}
+
+.radial-progressbar[data-progress="60"] .circle .mask.full,
+.radial-progressbar[data-progress="60"] .circle .fill {
+  transform: rotate(108deg);
+}
+
+.radial-progressbar[data-progress="60"] .circle .fill.fix {
+  transform: rotate(216deg);
+}
+
+.radial-progressbar[data-progress="60"] .inset .percentage .numbers {
+  width: 3477px;
+}
+
+.radial-progressbar[data-progress="61"] .circle .mask.full,
+.radial-progressbar[data-progress="61"] .circle .fill {
+  transform: rotate(109.8deg);
+}
+
+.radial-progressbar[data-progress="61"] .circle .fill.fix {
+  transform: rotate(219.6deg);
+}
+
+.radial-progressbar[data-progress="61"] .inset .percentage .numbers {
+  width: 3534px;
+}
+
+.radial-progressbar[data-progress="62"] .circle .mask.full,
+.radial-progressbar[data-progress="62"] .circle .fill {
+  transform: rotate(111.6deg);
+}
+
+.radial-progressbar[data-progress="62"] .circle .fill.fix {
+  transform: rotate(223.2deg);
+}
+
+.radial-progressbar[data-progress="62"] .inset .percentage .numbers {
+  width: 3591px;
+}
+
+.radial-progressbar[data-progress="63"] .circle .mask.full,
+.radial-progressbar[data-progress="63"] .circle .fill {
+  transform: rotate(113.4deg);
+}
+
+.radial-progressbar[data-progress="63"] .circle .fill.fix {
+  transform: rotate(226.8deg);
+}
+
+.radial-progressbar[data-progress="63"] .inset .percentage .numbers {
+  width: 3648px;
+}
+
+.radial-progressbar[data-progress="64"] .circle .mask.full,
+.radial-progressbar[data-progress="64"] .circle .fill {
+  transform: rotate(115.2deg);
+}
+
+.radial-progressbar[data-progress="64"] .circle .fill.fix {
+  transform: rotate(230.4deg);
+}
+
+.radial-progressbar[data-progress="64"] .inset .percentage .numbers {
+  width: 3705px;
+}
+
+.radial-progressbar[data-progress="65"] .circle .mask.full,
+.radial-progressbar[data-progress="65"] .circle .fill {
+  transform: rotate(117deg);
+}
+
+.radial-progressbar[data-progress="65"] .circle .fill.fix {
+  transform: rotate(234deg);
+}
+
+.radial-progressbar[data-progress="65"] .inset .percentage .numbers {
+  width: 3762px;
+}
+
+.radial-progressbar[data-progress="66"] .circle .mask.full,
+.radial-progressbar[data-progress="66"] .circle .fill {
+  transform: rotate(118.8deg);
+}
+
+.radial-progressbar[data-progress="66"] .circle .fill.fix {
+  transform: rotate(237.6deg);
+}
+
+.radial-progressbar[data-progress="66"] .inset .percentage .numbers {
+  width: 3819px;
+}
+
+.radial-progressbar[data-progress="67"] .circle .mask.full,
+.radial-progressbar[data-progress="67"] .circle .fill {
+  transform: rotate(120.6deg);
+}
+
+.radial-progressbar[data-progress="67"] .circle .fill.fix {
+  transform: rotate(241.2deg);
+}
+
+.radial-progressbar[data-progress="67"] .inset .percentage .numbers {
+  width: 3876px;
+}
+
+.radial-progressbar[data-progress="68"] .circle .mask.full,
+.radial-progressbar[data-progress="68"] .circle .fill {
+  transform: rotate(122.4deg);
+}
+
+.radial-progressbar[data-progress="68"] .circle .fill.fix {
+  transform: rotate(244.8deg);
+}
+
+.radial-progressbar[data-progress="68"] .inset .percentage .numbers {
+  width: 3933px;
+}
+
+.radial-progressbar[data-progress="69"] .circle .mask.full,
+.radial-progressbar[data-progress="69"] .circle .fill {
+  transform: rotate(124.2deg);
+}
+
+.radial-progressbar[data-progress="69"] .circle .fill.fix {
+  transform: rotate(248.4deg);
+}
+
+.radial-progressbar[data-progress="69"] .inset .percentage .numbers {
+  width: 3990px;
+}
+
+.radial-progressbar[data-progress="70"] .circle .mask.full,
+.radial-progressbar[data-progress="70"] .circle .fill {
+  transform: rotate(126deg);
+}
+
+.radial-progressbar[data-progress="70"] .circle .fill.fix {
+  transform: rotate(252deg);
+}
+
+.radial-progressbar[data-progress="70"] .inset .percentage .numbers {
+  width: 4047px;
+}
+
+.radial-progressbar[data-progress="71"] .circle .mask.full,
+.radial-progressbar[data-progress="71"] .circle .fill {
+  transform: rotate(127.8deg);
+}
+
+.radial-progressbar[data-progress="71"] .circle .fill.fix {
+  transform: rotate(255.6deg);
+}
+
+.radial-progressbar[data-progress="71"] .inset .percentage .numbers {
+  width: 4104px;
+}
+
+.radial-progressbar[data-progress="72"] .circle .mask.full,
+.radial-progressbar[data-progress="72"] .circle .fill {
+  transform: rotate(129.6deg);
+}
+
+.radial-progressbar[data-progress="72"] .circle .fill.fix {
+  transform: rotate(259.2deg);
+}
+
+.radial-progressbar[data-progress="72"] .inset .percentage .numbers {
+  width: 4161px;
+}
+
+.radial-progressbar[data-progress="73"] .circle .mask.full,
+.radial-progressbar[data-progress="73"] .circle .fill {
+  transform: rotate(131.4deg);
+}
+
+.radial-progressbar[data-progress="73"] .circle .fill.fix {
+  transform: rotate(262.8deg);
+}
+
+.radial-progressbar[data-progress="73"] .inset .percentage .numbers {
+  width: 4218px;
+}
+
+.radial-progressbar[data-progress="74"] .circle .mask.full,
+.radial-progressbar[data-progress="74"] .circle .fill {
+  transform: rotate(133.2deg);
+}
+
+.radial-progressbar[data-progress="74"] .circle .fill.fix {
+  transform: rotate(266.4deg);
+}
+
+.radial-progressbar[data-progress="74"] .inset .percentage .numbers {
+  width: 4275px;
+}
+
+.radial-progressbar[data-progress="75"] .circle .mask.full,
+.radial-progressbar[data-progress="75"] .circle .fill {
+  transform: rotate(135deg);
+}
+
+.radial-progressbar[data-progress="75"] .circle .fill.fix {
+  transform: rotate(270deg);
+}
+
+.radial-progressbar[data-progress="75"] .inset .percentage .numbers {
+  width: 4332px;
+}
+
+.radial-progressbar[data-progress="76"] .circle .mask.full,
+.radial-progressbar[data-progress="76"] .circle .fill {
+  transform: rotate(136.8deg);
+}
+
+.radial-progressbar[data-progress="76"] .circle .fill.fix {
+  transform: rotate(273.6deg);
+}
+
+.radial-progressbar[data-progress="76"] .inset .percentage .numbers {
+  width: 4389px;
+}
+
+.radial-progressbar[data-progress="77"] .circle .mask.full,
+.radial-progressbar[data-progress="77"] .circle .fill {
+  transform: rotate(138.6deg);
+}
+
+.radial-progressbar[data-progress="77"] .circle .fill.fix {
+  transform: rotate(277.2deg);
+}
+
+.radial-progressbar[data-progress="77"] .inset .percentage .numbers {
+  width: 4446px;
+}
+
+.radial-progressbar[data-progress="78"] .circle .mask.full,
+.radial-progressbar[data-progress="78"] .circle .fill {
+  transform: rotate(140.4deg);
+}
+
+.radial-progressbar[data-progress="78"] .circle .fill.fix {
+  transform: rotate(280.8deg);
+}
+
+.radial-progressbar[data-progress="78"] .inset .percentage .numbers {
+  width: 4503px;
+}
+
+.radial-progressbar[data-progress="79"] .circle .mask.full,
+.radial-progressbar[data-progress="79"] .circle .fill {
+  transform: rotate(142.2deg);
+}
+
+.radial-progressbar[data-progress="79"] .circle .fill.fix {
+  transform: rotate(284.4deg);
+}
+
+.radial-progressbar[data-progress="79"] .inset .percentage .numbers {
+  width: 4560px;
+}
+
+.radial-progressbar[data-progress="80"] .circle .mask.full,
+.radial-progressbar[data-progress="80"] .circle .fill {
+  transform: rotate(144deg);
+}
+
+.radial-progressbar[data-progress="80"] .circle .fill.fix {
+  transform: rotate(288deg);
+}
+
+.radial-progressbar[data-progress="80"] .inset .percentage .numbers {
+  width: 4617px;
+}
+
+.radial-progressbar[data-progress="81"] .circle .mask.full,
+.radial-progressbar[data-progress="81"] .circle .fill {
+  transform: rotate(145.8deg);
+}
+
+.radial-progressbar[data-progress="81"] .circle .fill.fix {
+  transform: rotate(291.6deg);
+}
+
+.radial-progressbar[data-progress="81"] .inset .percentage .numbers {
+  width: 4674px;
+}
+
+.radial-progressbar[data-progress="82"] .circle .mask.full,
+.radial-progressbar[data-progress="82"] .circle .fill {
+  transform: rotate(147.6deg);
+}
+
+.radial-progressbar[data-progress="82"] .circle .fill.fix {
+  transform: rotate(295.2deg);
+}
+
+.radial-progressbar[data-progress="82"] .inset .percentage .numbers {
+  width: 4731px;
+}
+
+.radial-progressbar[data-progress="83"] .circle .mask.full,
+.radial-progressbar[data-progress="83"] .circle .fill {
+  transform: rotate(149.4deg);
+}
+
+.radial-progressbar[data-progress="83"] .circle .fill.fix {
+  transform: rotate(298.8deg);
+}
+
+.radial-progressbar[data-progress="83"] .inset .percentage .numbers {
+  width: 4788px;
+}
+
+.radial-progressbar[data-progress="84"] .circle .mask.full,
+.radial-progressbar[data-progress="84"] .circle .fill {
+  transform: rotate(151.2deg);
+}
+
+.radial-progressbar[data-progress="84"] .circle .fill.fix {
+  transform: rotate(302.4deg);
+}
+
+.radial-progressbar[data-progress="84"] .inset .percentage .numbers {
+  width: 4845px;
+}
+
+.radial-progressbar[data-progress="85"] .circle .mask.full,
+.radial-progressbar[data-progress="85"] .circle .fill {
+  transform: rotate(153deg);
+}
+
+.radial-progressbar[data-progress="85"] .circle .fill.fix {
+  transform: rotate(306deg);
+}
+
+.radial-progressbar[data-progress="85"] .inset .percentage .numbers {
+  width: 4902px;
+}
+
+.radial-progressbar[data-progress="86"] .circle .mask.full,
+.radial-progressbar[data-progress="86"] .circle .fill {
+  transform: rotate(154.8deg);
+}
+
+.radial-progressbar[data-progress="86"] .circle .fill.fix {
+  transform: rotate(309.6deg);
+}
+
+.radial-progressbar[data-progress="86"] .inset .percentage .numbers {
+  width: 4959px;
+}
+
+.radial-progressbar[data-progress="87"] .circle .mask.full,
+.radial-progressbar[data-progress="87"] .circle .fill {
+  transform: rotate(156.6deg);
+}
+
+.radial-progressbar[data-progress="87"] .circle .fill.fix {
+  transform: rotate(313.2deg);
+}
+
+.radial-progressbar[data-progress="87"] .inset .percentage .numbers {
+  width: 5016px;
+}
+
+.radial-progressbar[data-progress="88"] .circle .mask.full,
+.radial-progressbar[data-progress="88"] .circle .fill {
+  transform: rotate(158.4deg);
+}
+
+.radial-progressbar[data-progress="88"] .circle .fill.fix {
+  transform: rotate(316.8deg);
+}
+
+.radial-progressbar[data-progress="88"] .inset .percentage .numbers {
+  width: 5073px;
+}
+
+.radial-progressbar[data-progress="89"] .circle .mask.full,
+.radial-progressbar[data-progress="89"] .circle .fill {
+  transform: rotate(160.2deg);
+}
+
+.radial-progressbar[data-progress="89"] .circle .fill.fix {
+  transform: rotate(320.4deg);
+}
+
+.radial-progressbar[data-progress="89"] .inset .percentage .numbers {
+  width: 5130px;
+}
+
+.radial-progressbar[data-progress="90"] .circle .mask.full,
+.radial-progressbar[data-progress="90"] .circle .fill {
+  transform: rotate(162deg);
+}
+
+.radial-progressbar[data-progress="90"] .circle .fill.fix {
+  transform: rotate(324deg);
+}
+
+.radial-progressbar[data-progress="90"] .inset .percentage .numbers {
+  width: 5187px;
+}
+
+.radial-progressbar[data-progress="91"] .circle .mask.full,
+.radial-progressbar[data-progress="91"] .circle .fill {
+  transform: rotate(163.8deg);
+}
+
+.radial-progressbar[data-progress="91"] .circle .fill.fix {
+  transform: rotate(327.6deg);
+}
+
+.radial-progressbar[data-progress="91"] .inset .percentage .numbers {
+  width: 5244px;
+}
+
+.radial-progressbar[data-progress="92"] .circle .mask.full,
+.radial-progressbar[data-progress="92"] .circle .fill {
+  transform: rotate(165.6deg);
+}
+
+.radial-progressbar[data-progress="92"] .circle .fill.fix {
+  transform: rotate(331.2deg);
+}
+
+.radial-progressbar[data-progress="92"] .inset .percentage .numbers {
+  width: 5301px;
+}
+
+.radial-progressbar[data-progress="93"] .circle .mask.full,
+.radial-progressbar[data-progress="93"] .circle .fill {
+  transform: rotate(167.4deg);
+}
+
+.radial-progressbar[data-progress="93"] .circle .fill.fix {
+  transform: rotate(334.8deg);
+}
+
+.radial-progressbar[data-progress="93"] .inset .percentage .numbers {
+  width: 5358px;
+}
+
+.radial-progressbar[data-progress="94"] .circle .mask.full,
+.radial-progressbar[data-progress="94"] .circle .fill {
+  transform: rotate(169.2deg);
+}
+
+.radial-progressbar[data-progress="94"] .circle .fill.fix {
+  transform: rotate(338.4deg);
+}
+
+.radial-progressbar[data-progress="94"] .inset .percentage .numbers {
+  width: 5415px;
+}
+
+.radial-progressbar[data-progress="95"] .circle .mask.full,
+.radial-progressbar[data-progress="95"] .circle .fill {
+  transform: rotate(171deg);
+}
+
+.radial-progressbar[data-progress="95"] .circle .fill.fix {
+  transform: rotate(342deg);
+}
+
+.radial-progressbar[data-progress="95"] .inset .percentage .numbers {
+  width: 5472px;
+}
+
+.radial-progressbar[data-progress="96"] .circle .mask.full,
+.radial-progressbar[data-progress="96"] .circle .fill {
+  transform: rotate(172.8deg);
+}
+
+.radial-progressbar[data-progress="96"] .circle .fill.fix {
+  transform: rotate(345.6deg);
+}
+
+.radial-progressbar[data-progress="96"] .inset .percentage .numbers {
+  width: 5529px;
+}
+
+.radial-progressbar[data-progress="97"] .circle .mask.full,
+.radial-progressbar[data-progress="97"] .circle .fill {
+  transform: rotate(174.6deg);
+}
+
+.radial-progressbar[data-progress="97"] .circle .fill.fix {
+  transform: rotate(349.2deg);
+}
+
+.radial-progressbar[data-progress="97"] .inset .percentage .numbers {
+  width: 5586px;
+}
+
+.radial-progressbar[data-progress="98"] .circle .mask.full,
+.radial-progressbar[data-progress="98"] .circle .fill {
+  transform: rotate(176.4deg);
+}
+
+.radial-progressbar[data-progress="98"] .circle .fill.fix {
+  transform: rotate(352.8deg);
+}
+
+.radial-progressbar[data-progress="98"] .inset .percentage .numbers {
+  width: 5643px;
+}
+
+.radial-progressbar[data-progress="99"] .circle .mask.full,
+.radial-progressbar[data-progress="99"] .circle .fill {
+  transform: rotate(178.2deg);
+}
+
+.radial-progressbar[data-progress="99"] .circle .fill.fix {
+  transform: rotate(356.4deg);
+}
+
+.radial-progressbar[data-progress="99"] .inset .percentage .numbers {
+  width: 5700px;
+}
+
+.radial-progressbar[data-progress="100"] .circle .mask.full,
+.radial-progressbar[data-progress="100"] .circle .fill {
+  transform: rotate(180deg);
+}
+
+.radial-progressbar[data-progress="100"] .circle .fill.fix {
+  transform: rotate(360deg);
+}
+
+.radial-progressbar[data-progress="100"] .inset .percentage .numbers {
+  width: 5757px;
+}
+
 .app-page {
   background-color: #e6e6e6;
   height: 100%;
@@ -12417,9 +13797,16 @@ html.is-reveal-open body {
   margin-top: 0.75rem;
 }
 
-.file-loader__dropzone_empty {
-  min-height: 10rem;
+.file-uploader__dropzone {
+  text-align: center;
   border: 0.18rem #fd5b15 dashed;
+}
+
+.file-uploader__dropzone-title {
+  color: #fd5b15;
+  display: inline-block;
+  font-size: 1.25rem;
+  margin: 1.25rem;
 }
 
 .home-page__body {

@@ -35,6 +35,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('/admin/settings/addToken', 'SettingsController@addToken');
     Route::post('/admin/settings/deleteToken', 'SettingsController@deleteToken');
 
+    Route::post('/admin/file/upload', 'FileController@upload');
+
     Route::get('/admin/{any}', function () {
         return redirect('/admin');
     });

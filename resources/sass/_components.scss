@@ -8,6 +8,7 @@
 @import 'components/toolkit/survey-preview';
 @import 'components/toolkit/draggable';
 @import 'components/toolkit/dark';
+@import 'components/toolkit/radial-progressbar';
 
 @import "components/api/app-page";
 
@@ -28,7 +29,7 @@
 @import "components/admin/screens-pager";
 @import "components/admin/statistics-report";
 @import "components/admin/statistics-sample";
-@import "components/admin/file-loader";
+@import "components/admin/file-uploader";
 
 @import "components/landing/home-page";
 @import 'components/landing/description';

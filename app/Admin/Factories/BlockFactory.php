@@ -131,7 +131,8 @@ class BlockFactory implements BlockFactoryContract
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
                 $dto->position = $model->getPosition();
-                $dto->imageUrl = $model->getData()['imageUrl'];
+                $dto->imageId = $model->getData()['imageId'];
+                $dto->imageUrl = '';
 
                 break;
             default:

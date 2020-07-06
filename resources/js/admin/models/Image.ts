@@ -5,6 +5,7 @@ export class Image implements BlockContract {
 	public id: string;
 	public position: number;
 	public parentId: string;
+	public imageId: string|null;
 	public imageUrl: string|null;
 
 	getType(): string
@@ -38,12 +39,14 @@ export class Image implements BlockContract {
 	getData(): Object
 	{
 		return {
+			'imageId': this.imageId,
 			'imageUrl': this.imageUrl,
 		};
 	}
 
 	setData(data: Object): void
 	{
+		this.imageId = data['imageId'];
 		this.imageUrl = data['imageUrl'];
 	}
 }

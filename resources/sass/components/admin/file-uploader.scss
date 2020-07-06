@@ -1,0 +1,13 @@
+.file-uploader {
+    &__dropzone {
+        text-align: center;
+        border: 0.18rem $primary dashed;
+    }
+
+    &__dropzone-title {
+        color: $primary;
+        display: inline-block;
+        font-size: 1.25rem;
+        margin: 1.25rem;
+    }
+}

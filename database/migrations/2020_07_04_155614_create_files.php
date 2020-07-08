@@ -15,6 +15,7 @@ class CreateFiles extends Migration
         Schema::create('files', function (Blueprint $table) {
             $table->uuid(File::ATTR_ID)->primary()->unique()->default(DB::raw('uuid_generate_v4()'));
             $table->string(File::ATTR_NAME, 255);
+            $table->string(File::ATTR_ORIGINAL_NAME, 255);
             $table->string(File::ATTR_TYPE, 64);
             $table->integer(File::ATTR_SIZE);
             $table->string(File::ATTR_HASH, 32);

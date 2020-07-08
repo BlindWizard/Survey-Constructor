@@ -9,6 +9,7 @@ use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
@@ -20,6 +21,7 @@ use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Contracts\Services\TemplateServiceContract;
 use App\Admin\Database\Repositories\ApiTokenRepository;
 use App\Admin\Database\Repositories\BlockRepository;
+use App\Admin\Database\Repositories\FileRepository;
 use App\Admin\Database\Repositories\PageRepository;
 use App\Admin\Database\Repositories\SurveyRepository;
 use App\Admin\Database\Repositories\SurveyStatisticRepository;
@@ -53,6 +55,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->singleton(ApiTokenRepositoryContract::class, ApiTokenRepository::class);
         $this->app->singleton(UserRepositoryContract::class, UserRepository::class);
         $this->app->singleton(SurveyStatisticRepositoryContract::class, SurveyStatisticRepository::class);
+        $this->app->singleton(FileRepositoryContract::class, FileRepository::class);
 
         // services
         $this->app->bind(TemplateServiceContract::class, TemplateService::class);

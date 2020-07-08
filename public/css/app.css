@@ -12028,6 +12028,7 @@ html.is-reveal-open body {
 .radial-progressbar .inset .percentage .numbers {
   margin-top: -22px;
   transition: width 1s;
+  text-align: left;
 }
 
 .radial-progressbar .inset .percentage .numbers span {
@@ -13800,13 +13801,24 @@ html.is-reveal-open body {
 .file-uploader__dropzone {
   text-align: center;
   border: 0.18rem #fd5b15 dashed;
+  color: #fd5b15;
+}
+
+.file-uploader__dropzone_error {
+  color: #ed0672;
+  border-color: #ed0672;
+}
+
+.file-uploader__progress .radial-progressbar {
+  margin: 1.25rem auto;
 }
 
 .file-uploader__dropzone-title {
-  color: #fd5b15;
   display: inline-block;
   font-size: 1.25rem;
   margin: 1.25rem;
+  height: 50px;
+  line-height: 50px;
 }
 
 .home-page__body {

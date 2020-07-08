@@ -15,9 +15,6 @@ export class FileApi {
 			onUploadProgress: request.onUpload,
 		};
 
-		return axios.post('/admin/file/upload', form, setting)
-			.then((response) => {
-				console.log(response);
-			});
+		return axios.post('/admin/file/upload', form, setting);
 	}
 }

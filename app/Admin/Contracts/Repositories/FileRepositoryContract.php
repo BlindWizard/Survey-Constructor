@@ -1,0 +1,12 @@
+<?php
+declare(strict_types=1);
+
+namespace App\Admin\Contracts\Repositories;
+
+use App\Admin\Contracts\Entities\FileContract;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+
+interface FileRepositoryContract
+{
+    public function upload(UploadedFile $file): FileContract;
+}

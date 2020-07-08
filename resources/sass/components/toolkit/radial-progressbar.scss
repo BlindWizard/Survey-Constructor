@@ -65,6 +65,7 @@
             .numbers {
                 margin-top: -$percentage-font-size;
                 transition: width $transition-length;
+                text-align: left;
 
                 span {
                     width:          $percentage-text-width;

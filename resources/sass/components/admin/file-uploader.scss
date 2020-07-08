@@ -2,12 +2,25 @@
     &__dropzone {
         text-align: center;
         border: 0.18rem $primary dashed;
+        color: $primary;
+
+        &_error {
+            color: $secondary;
+            border-color: $secondary;
+        }
+    }
+
+    &__progress {
+        .radial-progressbar {
+            margin: 1.25rem auto;
+        }
     }
 
     &__dropzone-title {
-        color: $primary;
         display: inline-block;
         font-size: 1.25rem;
         margin: 1.25rem;
+        height: 50px;
+        line-height: 50px;
     }
 }

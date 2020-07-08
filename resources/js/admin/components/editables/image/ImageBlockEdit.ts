@@ -16,14 +16,18 @@ import {RadialProgressbar} from "../../RadialProgressbar";
                     <div class="grid-container full">
                         <div class="grid-x">
                             <div class="cell small-6">
-                                <div :class="bem('file-uploader').el('dropzone').is(!block.imageId ? 'empty' : '').is(over ? 'over' : '').classes()"
+                                <div :class="bem('file-uploader').el('dropzone').is(!block.imageId ? 'empty' : '').is(over ? 'over' : '').is(error ? 'error' : '').classes()"
                                      v-on:dragenter.prevent.stop="handleOver"
                                      v-on:dragover.prevent.stop="handleOver"
                                      v-on:dragleave.prevent.stop="handleLeave"
                                      v-on:drop.prevent.stop="handleDrop"
                                 >
-                                    <div v-if="(!block.imageId || over) && !uploading" :class="bem('file-uploader').el('dropzone-title').classes()">{{ over ? 'Drop here' : 'No image' }}</div>
-                                    <RadialProgressbar v-if="uploading" :progress="currentProgress"/>
+                                    <div v-if="(!block.imageId || over) && !uploading" :class="bem('file-uploader').el('dropzone-title').classes()">
+                                        {{ over ? 'Drop here' : (error ? error : 'No image') }}
+                                    </div>
+                                    <div v-if="uploading && !error" :class="bem('file-uploader').el('progress').classes()">
+                                        <RadialProgressbar :progress="currentProgress"/>
+                                    </div>
                                 </div>
                             </div>
                             <div class="cell small-6">
@@ -50,6 +54,7 @@ export class ImageBlockEdit extends Vue {
 	private over: boolean = false;
 	private uploading: boolean = false;
 	private currentProgress: number = 0;
+	private error: string|null = null;
 
 	public handleOver()
 	{
@@ -71,9 +76,19 @@ export class ImageBlockEdit extends Vue {
 			request.onUpload = this.handleProgress;
 
 			this.uploading = true;
+			this.error = null;
 			FileApi.upload(request).then(() => {
 				this.uploading = false;
 				this.currentProgress = 0;
+			}, (result: Error) => {
+				this.uploading = false;
+
+				if (result.message === 'Request failed with status code 413') {
+					this.error = 'File is too large';
+				}
+				else {
+					this.error = result.message;
+				}
 			});
 		}
 	}

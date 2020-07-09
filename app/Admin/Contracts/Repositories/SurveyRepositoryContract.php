@@ -23,6 +23,11 @@ interface SurveyRepositoryContract
     public function save(SurveyContract $survey): void;
 
     /**
+     * @param string $id
+     */
+    public function delete(string $id): void;
+
+    /**
      * @param string $ownerId
      *
      * @return SurveyContract[]

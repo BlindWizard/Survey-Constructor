@@ -82,6 +82,33 @@ class SurveyRepository implements SurveyRepositoryContract
     /**
      * @inheritDoc
      */
+    public function delete(string $id): void
+    {
+        DB::beginTransaction();
+        try {
+            $pages = Page::query()->where(Page::ATTR_SURVEY_ID, '=', $id)->get()->all();
+            $pageIds = array_column($pages, Page::ATTR_ID);
+
+            $blocks = Page::query()->whereIn(Block::ATTR_PARENT_ID, $pageIds)->get()->all();
+            $blockIds = array_column($blocks, Block::ATTR_ID);
+
+            Survey::query()->where(Survey::ATTR_ID, '=', $id)->delete();
+            Page::query()->whereIn(Page::ATTR_ID, $pageIds)->delete();
+            Block::query()->whereIn(Block::ATTR_ID, $blockIds)->delete();
+            BlockData::query()->whereIn(BlockData::ATTR_ID, $blockIds)->delete();
+
+            DB::commit();
+        }
+        catch (\Throwable $e) {
+            DB::rollBack();
+
+            throw $e;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getAvailableSurveys(string $ownerId): array
     {
         $surveys = Survey::query()->where(Survey::ATTR_OWNER_ID, '=', $ownerId)->get()->all();/** @var Survey[] $surveys */

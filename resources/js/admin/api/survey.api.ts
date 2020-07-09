@@ -7,6 +7,7 @@ import {BlockWrapper} from "../models/BlockWrapper";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {Page} from "../models/Page";
 import {SurveyStatistics} from "../models/SurveyStatistics";
+import {DeleteSurvey} from "./requests/DeleteSurvey";
 
 export class SurveyApi
 {
@@ -114,5 +115,14 @@ export class SurveyApi
 
 				return survey;
 			});
+	}
+
+	public static deleteSurvey(request: DeleteSurvey): Promise<boolean>
+	{
+		return axios.post('/admin/survey/delete', request).then(
+			(response) => {
+				let result: AjaxHelper = response.data as AjaxHelper;
+				return result.result as boolean;
+		});
 	}
 }

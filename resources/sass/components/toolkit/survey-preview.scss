@@ -4,6 +4,7 @@
     cursor: pointer;
     transition: box-shadow $animation-fast;
     border: 1px $medium-gray solid;
+    position: relative;
 
     &_filled {
         border-color: $primary;
@@ -81,5 +82,16 @@
                 opacity: 0;
             }
         }
+    }
+
+    &__delete {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 50%;
+        color: $white;
+        padding: 0;
     }
 }

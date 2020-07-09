@@ -29,6 +29,8 @@ import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {StatisticAction} from "../models/StatisticAction";
 import {Container} from "../models/Container";
 import {Page} from "../models/Page";
+import {DeleteSurvey} from "../api/requests/DeleteSurvey";
+import {SurveyContract} from "../contracts/SurveyContract";
 
 Vue.use(Vuex);
 
@@ -70,6 +72,13 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_SURVEYS](state, surveys) {
 			state.surveys = surveys;
+		},
+		[mutations.DELETE_SURVEY](state, request: DeleteSurvey) {
+			let surveys = state.surveys.filter((survey: SurveyContract) => {
+				return survey.getId() !== request.surveyId;
+			});
+
+			Vue.set(state, 'surveys', surveys);
 		},
 		[mutations.SET_TEMPLATES](state, templates) {
 			state.templates = templates;
@@ -379,6 +388,10 @@ const store = new Vuex.Store({
 			}
 
 			return id;
+		},
+		async [actions.DELETE_SURVEY]({commit}, request: DeleteSurvey) {
+			commit(mutations.DELETE_SURVEY, request);
+			await SurveyApi.deleteSurvey(request);
 		},
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
 			let survey: Survey = await SurveyApi.getSurvey(request);

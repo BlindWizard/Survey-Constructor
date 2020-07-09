@@ -11879,6 +11879,7 @@ html.is-reveal-open body {
   cursor: pointer;
   transition: box-shadow 0.2s;
   border: 1px #cacaca solid;
+  position: relative;
 }
 
 .survey-preview_filled {
@@ -11955,6 +11956,17 @@ html.is-reveal-open body {
 
 .survey-preview:hover .survey-preview__label {
   opacity: 0;
+}
+
+.survey-preview__delete {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  color: #fefefe;
+  padding: 0;
 }
 
 .draggable {

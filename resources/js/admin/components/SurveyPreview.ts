@@ -2,9 +2,11 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Survey} from "../models/Survey";
-import {actions} from "../stores/types";
+import {actions, getters} from "../stores/types";
 import {GetSurvey} from "../api/requests/GetSurvey";
 import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
+import {Locale} from "../models/Locale";
+import {DeleteSurvey} from "../api/requests/DeleteSurvey";
 
 @Component({
 	template: `
@@ -22,15 +24,27 @@ import {GetSurveyStatistics} from "../api/requests/GetSurveyStatistics";
                                     <span :class="bem('button').el('label').classes()">Statistics</span>
                                 </button>
                             </p>
+                            <button :class="bem('survey-preview').el('delete').add('button secondary').classes()" v-on:click.stop="deleteSurveyModal()">
+                                <i class="fi-x"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <portal v-if="deleteModal" to="edit-modal">
+                <div :class="bem('edit-modal').add('reveal').classes()">
+                    <p>Delete survey and all it's data?</p>
+                    <button :class="bem('button').add('primary').classes()" v-on:click.stop="deleteSurvey">
+                        <span :class="bem('button').el('label').classes()">{{ locale.deleteLabel }}</span>
+                    </button>
+                </div>
+            </portal>
         </div>
 	`,
 })
 export class SurveyPreview extends Vue {
 	@Prop(Survey) readonly survey: Survey;
+	private deleteModal: boolean = false;
 
 	public openSurvey() {
 		let request = new GetSurvey();
@@ -48,5 +62,24 @@ export class SurveyPreview extends Vue {
 		this.$store.dispatch(actions.LOAD_SURVEY_STATISTICS, request).then(() => {
 			this.$router.push({name: 'survey-statistics', params: {surveyId: this.survey.id}});
 		});
+	}
+
+	public deleteSurveyModal() {
+		this.deleteModal = true;
+		this.$store.dispatch(actions.SET_EDITING, this.deleteModal);
+	}
+
+	public deleteSurvey() {
+		let request = new DeleteSurvey();
+		request.surveyId = this.survey.getId();
+
+		this.$store.dispatch(actions.DELETE_SURVEY, request);
+
+		this.deleteModal = false;
+		this.$store.dispatch(actions.SET_EDITING, this.deleteModal);
+	}
+
+	get locale(): Locale {
+		return this.$store.getters[getters.LOCALE];
 	}
 }

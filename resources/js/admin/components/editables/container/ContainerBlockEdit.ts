@@ -9,8 +9,9 @@ const uuidv4 = require('uuid/v4');
 
 @Component({
 template: `
-    <portal to="edit-modal">
-        <div :class="bem('edit-modal').add('reveal').classes()">
+    <portal to="edit-block">
+        <div :class="bem('edit-modal').classes()">
+            <h4>Container</h4>
             <label>
                 Slots count
                 <select @change="changeSlotsCount" :value="blockData.slots.length">
@@ -64,6 +65,7 @@ export class ContainerBlockEdit extends Vue {
 		}
 
 		this.onUpdate(this.blockData);
+		this.onSave();
 	}
 
 	get locale(): Locale {

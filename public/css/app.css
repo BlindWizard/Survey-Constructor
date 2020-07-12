@@ -13833,6 +13833,21 @@ html.is-reveal-open body {
   line-height: 50px;
 }
 
+.edit-modal {
+  padding: 0.7rem 1rem;
+  color: #fefefe;
+}
+
+.edit-modal label {
+  color: #fefefe;
+}
+
+.edit-modal h4 {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fefefe;
+}
+
 .home-page__body {
   background-image: url(/images/sky-bg-1.jpg?459ebd03579e0bac258eb4dfa88bf424);
   background-repeat: no-repeat;
@@ -14009,9 +14024,26 @@ html.is-reveal-open body {
   outline: none;
 }
 
-.container-wrapper .container__slot_empty {
-  border: 0.18rem dashed #cacaca;
-  min-height: 2rem;
+.container-wrapper:after {
+  content: " ";
+  width: 1rem;
+  height: 1rem;
+  position: absolute;
+  background-color: #ed0672;
+  outline: 2px dashed #fd5b15;
+  cursor: pointer;
+  display: block;
+  border-radius: 50%;
+  left: calc(100% + 0.5rem);
+  top: calc(50% - 0.5rem);
+}
+
+.container-wrapper:hover:after {
+  background-color: #fd5b15;
+}
+
+.container-wrapper.selected:after {
+  background-color: #fd5b15;
 }
 
 .container {
@@ -14020,7 +14052,7 @@ html.is-reveal-open body {
 
 body.dragging .container-wrapper .container__slot {
   border: 0.18rem dashed #cacaca;
-  min-height: 6rem;
+  min-height: 3rem;
 }
 
 .options-list-wrapper {
@@ -14350,5 +14382,19 @@ body.dragging .container-wrapper .container__slot {
 .text-field__value {
   display: block;
   margin: 0;
+}
+
+.image-wrapper {
+  position: relative;
+}
+
+.image-wrapper .block-edit-menu {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.image-wrapper:focus {
+  outline: none;
 }
 

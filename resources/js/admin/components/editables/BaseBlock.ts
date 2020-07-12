@@ -9,6 +9,7 @@ import {ComponentsFactory} from "../../services/ComponentsFactory";
 import Component from "vue-class-component";
 import {bem} from "../../../common/bem-helper";
 import {dragDropService} from "../../services/DragDropService";
+import {store} from "../../stores/store";
 
 @Component({})
 export class BaseBlock extends Vue implements Draggable {
@@ -24,7 +25,7 @@ export class BaseBlock extends Vue implements Draggable {
 
 	public draggable(): boolean
 	{
-		return this.selected && !this.editing;
+		return this.selected && this.editing;
 	}
 
 	public getType(): string
@@ -37,7 +38,7 @@ export class BaseBlock extends Vue implements Draggable {
 		this.blockData = newData;
 	}
 
-	public saveData()
+	public saveData(final: boolean = false)
 	{
 		if (null === this.blockData) {
 			return;
@@ -48,7 +49,12 @@ export class BaseBlock extends Vue implements Draggable {
 		request.data = this.blockData.getData();
 
 		this.$store.dispatch(actions.SAVE_ELEMENT_DATA, request);
-		this.toggleEdit();
+
+		if (final) {
+			this.$store.dispatch(actions.SET_EDITING, false);
+			this.toggleSelect(false);
+			this.toggleEdit(false);
+		}
 	}
 
 	public deleteElement()
@@ -79,7 +85,5 @@ export class BaseBlock extends Vue implements Draggable {
 		else {
 			this.editing = editing;
 		}
-
-		this.$store.dispatch(actions.SET_EDITING, this.editing);
 	}
 }

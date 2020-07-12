@@ -1,7 +1,6 @@
 import {store} from "../stores/store";
 import {getters} from "../stores/types";
 import {bem} from "../../common/bem-helper";
-import {selectDispatcher} from "./SelectDispatcher";
 
 class DragDropService
 {
@@ -123,7 +122,6 @@ class DragDropService
 		document.addEventListener('mousemove', this.drag);
 
 		document.body.classList.add(bem('dragging').classes());
-		selectDispatcher.unselectAll();
 	}
 
 	public drag(e: MouseEvent): void

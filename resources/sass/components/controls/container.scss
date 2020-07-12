@@ -11,9 +11,30 @@
         outline: none;
     }
 
-    .container__slot_empty {
-        border: 0.18rem dashed $medium-gray;
-        min-height: 2rem;
+    &:after {
+        content: ' ';
+        width: 1rem;
+        height: 1rem;
+        position: absolute;
+        background-color: $secondary;
+        outline: 2px dashed $primary;
+        cursor: pointer;
+        display: block;
+        border-radius: 50%;
+        left: calc(100% + 0.5rem);
+        top: calc(50% - 0.5rem);
+    }
+
+    &:hover {
+        &:after {
+            background-color: $primary;
+        }
+    }
+
+    &.selected {
+        &:after {
+            background-color: $primary;
+        }
     }
 }
 
@@ -25,7 +46,7 @@ body.dragging {
     .container-wrapper {
         .container__slot {
             border: 0.18rem dashed $medium-gray;
-            min-height: 6rem;
+            min-height: 3rem;
         }
     }
 }

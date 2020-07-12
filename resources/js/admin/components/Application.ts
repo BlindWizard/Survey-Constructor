@@ -15,15 +15,11 @@ import {getters} from "../stores/types";
                     <router-view />
                 </div>
             </div>
-            <portal-target name="edit-modal" class="reveal-overlay" :style="(modalEditing ? 'display: block' : '')"></portal-target>
+            <portal-target name="modal" class="reveal-overlay"></portal-target>
         </div>
 	`,
 	components: {
 		AppHeader,
 	}
 })
-export class Application extends Vue {
-	get modalEditing(): boolean {
-		return this.$store.getters[getters.EDITING];
-	}
-}
+export class Application extends Vue {}

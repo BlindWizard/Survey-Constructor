@@ -145,7 +145,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
                 $dto->imageId = $model->getData()['imageId'];
 
-                $fileModel = $this->fileRepository->findById($dto->imageId);
+                $fileModel = null !== $dto->imageId ? $this->fileRepository->findById($dto->imageId) : null;
                 $dto->imageUrl = (null !== $fileModel ? $fileModel->getUrl() : null);
 
                 break;

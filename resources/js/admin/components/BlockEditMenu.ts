@@ -8,7 +8,6 @@ import {EditingModes} from "../contracts/EditingModes";
 @Component({
 	template: `
         <div :class="bem('block-edit-menu').classes()">
-            <button v-if="-1 !== activeButtons().indexOf('edit')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onEdit">{{ locale.editLabel }}</button>
             <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onDelete">{{ locale.deleteLabel }}</button>
         </div>
 	`,
@@ -26,7 +25,7 @@ export class BlockEditMenu extends Vue {
 	public activeButtons(): string[]
 	{
 		if (EditingModes.EDIT === this.mode) {
-			return ['edit', 'delete'];
+			return ['delete'];
 		}
 
 		return [];

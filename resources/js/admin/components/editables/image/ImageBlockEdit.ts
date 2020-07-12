@@ -2,23 +2,22 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Locale} from "../../../models/Locale";
-import {actions, getters} from "../../../stores/types";
+import {getters} from "../../../stores/types";
 import {Image} from "../../../models/Image";
 import {FileUpload} from "../../../api/requests/FileUpload";
 import {FileApi} from "../../../api/file.api";
 import {RadialProgressbar} from "../../RadialProgressbar";
-import {SaveBlockData} from "../../../api/requests/SaveBlockData";
-import {OptionsList} from "../../../models/OptionsList";
 import {ComponentsFactory} from "../../../services/ComponentsFactory";
 import {File} from "../../../models/File";
 
 @Component({
 	template: `
-        <portal to="edit-modal">
-            <div :class="bem('edit-modal').add('reveal').classes()">
+        <portal to="edit-block">
+            <div :class="bem('edit-modal').classes()">
+                <h4>Image</h4>
                 <div :class="bem('image-upload').classes()">
                     <div class="grid-container full">
-                        <div class="grid-x">
+                        <div class="grid-x grid-margin-x">
                             <div class="cell small-6">
                                 <div :class="bem('file-uploader').el('dropzone').is(!blockData.imageId ? 'empty' : '').is(over ? 'over' : '').is(error ? 'error' : '').classes()"
                                      v-on:dragenter.prevent.stop="handleOver"
@@ -102,6 +101,7 @@ export class ImageBlockEdit extends Vue {
 				this.blockData.imageUrl = result.url;
 
 				this.onUpdate(this.blockData);
+				this.onSave();
 			}, (result: Error) => {
 				this.uploading = false;
 

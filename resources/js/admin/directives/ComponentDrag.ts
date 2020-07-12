@@ -3,7 +3,6 @@ import {dragDropService} from "../services/DragDropService";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {actions, getters} from "../stores/types";
 import {CreateElement} from "../api/requests/CreateElement";
-import {bem} from "../../common/bem-helper";
 import {ReorderElement} from "../api/requests/ReorderElement";
 import {BaseBlock} from "../components/editables/BaseBlock";
 
@@ -30,7 +29,7 @@ const ComponentDrag: DirectiveOptions = {
 
 				if (dragElement.draggable()) {
 					handler = dragElement.$el.cloneNode(true) as HTMLElement;
-					handler.classList.add(bem('draggable').classes());
+					handler.classList.add('draggable');
 					dragDropService.setDragState(true);
 					e.stopPropagation();
 				}
@@ -59,9 +58,8 @@ const ComponentDrag: DirectiveOptions = {
 
 			if (newElement && !spawned) {
 				dragElement = ComponentsFactory.create(binding.value, dragDropService.getDragContainer());
-				dragElement.toggleSelect(false);
 				handler = dragElement.$el.cloneNode(true) as HTMLElement;
-				handler.classList.add(bem('draggable').classes());
+				handler.classList.add('draggable');
 				spawned = true;
 			}
 
@@ -133,7 +131,7 @@ const ComponentDrag: DirectiveOptions = {
 					request.position = dragElement.$props.block.position;
 				}
 
-				dragElement.$el.classList.remove(bem('draggable').classes());
+				dragElement.$el.classList.remove('draggable');
 				(dragElement.$el as HTMLElement).removeAttribute('style');
 
 				$store.dispatch(actions.REORDER_ELEMENT, request);

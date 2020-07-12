@@ -12,7 +12,7 @@ import {selectDispatcher} from "../../../services/SelectDispatcher";
 	template: `
         <div ref="selectable" :class="bem('text-wrapper').classes()" v-component-drag v-component-drop-target>
             <TextBlock :block="block"/>
-            <TextBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
+            <TextBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected"/>
         </div>

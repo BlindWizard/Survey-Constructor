@@ -1,5 +1,6 @@
 import {BaseBlock} from "../components/editables/BaseBlock";
-import {bem} from "../../common/bem-helper";
+import {store} from "../stores/store";
+import {actions} from "../stores/types";
 
 class SelectDispatcher {
 	private selected: BaseBlock|null = null;
@@ -12,7 +13,7 @@ class SelectDispatcher {
 			let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
 			targets:
 				for (let el of possibleTargets) {
-					if (el.classList.contains((bem('block-resize-frame').classes()))) {
+					if (el.classList.contains('block-resize-frame')) {
 						continue;
 					}
 
@@ -20,15 +21,21 @@ class SelectDispatcher {
 						return;
 					}
 
+					if (el.classList.contains('edit-modal')) {
+						return;
+					}
+
 					for (let element of this.elements) {
 						if (this.selected && element !== this.selected) {
 							element.toggleSelect(false);
+							element.toggleEdit(false);
 						}
 
 						var clickOnThis = (el === element.$refs.selectable);
 						if (clickOnThis) {
 							this.selected = element;
 							element.toggleSelect(true);
+							element.toggleEdit(true);
 
 							break targets;
 						}
@@ -38,21 +45,17 @@ class SelectDispatcher {
 			for (let element of this.elements) {
 				if (element !== this.selected) {
 					element.toggleSelect(false);
+					element.toggleEdit(false);
 				}
 			}
+
+			store.dispatch(actions.SET_EDITING, null !== this.selected);
 		});
 	}
 
 	public handleElement(component: BaseBlock): void
 	{
 		this.elements.push(component);
-	}
-
-	public unselectAll(): void
-	{
-		for (let element of this.elements) {
-			element.toggleSelect(false);
-		}
 	}
 }
 

@@ -10,8 +10,9 @@ const uuidv4 = require('uuid/v4');
 
 @Component({
 	template: `
-        <portal to="edit-modal">
-            <div :class="bem('edit-modal').add('reveal').classes()" v-component-drop-target>
+        <portal to="edit-block">
+            <div :class="bem('edit-modal').classes()">
+                <h4>Options list</h4>
                 <label>
                     Header
                     <input @input="changeBlockText" :value="block.text" type="text" />
@@ -62,6 +63,7 @@ export class OptionsListBlockEdit extends Vue {
 		this.blockData.options.push(option);
 
 		this.onUpdate(this.blockData);
+		this.onSave();
 	}
 
 	public deleteOption(id: string): void
@@ -77,6 +79,7 @@ export class OptionsListBlockEdit extends Vue {
 
 		this.blockData.options = options;
 		this.onUpdate(this.blockData);
+		this.onSave();
 	}
 
 	public changeBlockText(event: KeyboardEvent)
@@ -87,6 +90,7 @@ export class OptionsListBlockEdit extends Vue {
 
 		this.blockData.text = (event.target as any).value;
 		this.onUpdate(this.blockData);
+		this.onSave();
 	}
 
 	public changeOptionText(optionId: string, event: KeyboardEvent)
@@ -104,6 +108,7 @@ export class OptionsListBlockEdit extends Vue {
 
 		this.blockData.options = options;
 		this.onUpdate(this.blockData);
+		this.onSave();
 	}
 
 	get locale(): Locale

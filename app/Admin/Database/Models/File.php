@@ -5,6 +5,7 @@ namespace App\Admin\Database\Models;
 
 use App\Admin\Contracts\Entities\FileContract;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @property string $id
@@ -43,5 +44,13 @@ class File extends Model implements FileContract
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUrl(): string
+    {
+        return asset('storage/' . $this->name);
     }
 }

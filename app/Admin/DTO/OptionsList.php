@@ -14,6 +14,8 @@ class OptionsList implements BlockContract
     public $text;
     /** @var string */
     public $parentId;
+    /** @var string */
+    public $pageId;
     /** @var int */
     public $position;
     /** @var Option[] */
@@ -43,6 +45,24 @@ class OptionsList implements BlockContract
     public function getParentId(): string
     {
         return $this->parentId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageId(): string
+    {
+        return $this->pageId;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function setPageId(string $pageId): void
+    {
+        $this->pageId = $pageId;
+        foreach ($this->options as $option) {
+            $option->setPageId($pageId);
+        }
     }
 
     /**

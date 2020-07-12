@@ -10,13 +10,14 @@ interface BlockServiceContract
 {
     /**
      * @param string $parentId
+     * @param string $pageId
      * @param string $blockId
      * @param string $type
      * @param int    $position
      *
      * @return BlockContract
      */
-    public function addEmptyElement(string $parentId, string $blockId, string $type, int $position): BlockContract;
+    public function addEmptyElement(string $parentId, string $pageId, string $blockId, string $type, int $position): BlockContract;
 
     /**
      * @param string $blockId

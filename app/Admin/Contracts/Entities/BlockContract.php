@@ -28,9 +28,19 @@ interface BlockContract
     public function getParentId(): string;
 
     /**
+     * @return string
+     */
+    public function getPageId(): string;
+
+    /**
      * @param string $parentId
      */
     public function setParentId(string $parentId): void;
+
+    /**
+     * @param string $pageId
+     */
+    public function setPageId(string $pageId): void;
 
     /**
      * @return BlockContract[]|null

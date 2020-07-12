@@ -2,11 +2,15 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Locale} from "../../../models/Locale";
-import {getters} from "../../../stores/types";
+import {actions, getters} from "../../../stores/types";
 import {Image} from "../../../models/Image";
 import {FileUpload} from "../../../api/requests/FileUpload";
 import {FileApi} from "../../../api/file.api";
 import {RadialProgressbar} from "../../RadialProgressbar";
+import {SaveBlockData} from "../../../api/requests/SaveBlockData";
+import {OptionsList} from "../../../models/OptionsList";
+import {ComponentsFactory} from "../../../services/ComponentsFactory";
+import {File} from "../../../models/File";
 
 @Component({
 	template: `
@@ -16,15 +20,16 @@ import {RadialProgressbar} from "../../RadialProgressbar";
                     <div class="grid-container full">
                         <div class="grid-x">
                             <div class="cell small-6">
-                                <div :class="bem('file-uploader').el('dropzone').is(!block.imageId ? 'empty' : '').is(over ? 'over' : '').is(error ? 'error' : '').classes()"
+                                <div :class="bem('file-uploader').el('dropzone').is(!blockData.imageId ? 'empty' : '').is(over ? 'over' : '').is(error ? 'error' : '').classes()"
                                      v-on:dragenter.prevent.stop="handleOver"
                                      v-on:dragover.prevent.stop="handleOver"
                                      v-on:dragleave.prevent.stop="handleLeave"
                                      v-on:drop.prevent.stop="handleDrop"
                                 >
-                                    <div v-if="(!block.imageId || over) && !uploading" :class="bem('file-uploader').el('dropzone-title').classes()">
+                                    <div v-if="(!blockData.imageId || over) && !uploading" :class="bem('file-uploader').el('dropzone-title').classes()">
                                         {{ over ? 'Drop here' : (error ? error : 'No image') }}
                                     </div>
+                                    <img v-if="blockData.imageId && !over" :src="blockData.imageUrl">
                                     <div v-if="uploading && !error" :class="bem('file-uploader').el('progress').classes()">
                                         <RadialProgressbar :progress="currentProgress"/>
                                     </div>
@@ -49,12 +54,20 @@ import {RadialProgressbar} from "../../RadialProgressbar";
 })
 export class ImageBlockEdit extends Vue {
 	@Prop(Image) readonly block: Image;
+	@Prop(Function) readonly onUpdate: Function;
 	@Prop(Function) onSave: Function;
+
+	private blockData: Image|null = null;
 
 	private over: boolean = false;
 	private uploading: boolean = false;
 	private currentProgress: number = 0;
 	private error: string|null = null;
+
+	public created()
+	{
+		this.blockData = ComponentsFactory.cloneElement(this.block) as Image;
+	}
 
 	public handleOver()
 	{
@@ -77,9 +90,18 @@ export class ImageBlockEdit extends Vue {
 
 			this.uploading = true;
 			this.error = null;
-			FileApi.upload(request).then(() => {
+			FileApi.upload(request).then((result: File) => {
 				this.uploading = false;
 				this.currentProgress = 0;
+
+				if (null === this.blockData) {
+					return;
+				}
+
+				this.blockData.imageId = result.id;
+				this.blockData.imageUrl = result.url;
+
+				this.onUpdate(this.blockData);
 			}, (result: Error) => {
 				this.uploading = false;
 

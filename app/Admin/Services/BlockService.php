@@ -33,7 +33,7 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function addEmptyElement(string $parentId, string $blockId, string $type, ?int $position): BlockContract
+    public function addEmptyElement(string $parentId, string $pageId, string $blockId, string $type, ?int $position): BlockContract
     {
         $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
@@ -41,6 +41,7 @@ class BlockService implements BlockServiceContract
         $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() + 1 : 0);
 
         $element->setParentId($parentId);
+        $element->setPageId($pageId);
         $element->setPosition($lastBlockPosition);
 
         $element = $this->blockRepository->save($element);

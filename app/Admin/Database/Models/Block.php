@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property        string         $id
  * @property        string         $parent_id
+ * @property        string         $page_id
  * @property        string         $type
  * @property        int            $position
  * @property        string         $created_at
@@ -21,10 +22,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Block extends Model implements BlockContract
 {
-    public const ATTR_ID        = 'id';
-    public const ATTR_PARENT_ID = 'parent_id';
-    public const ATTR_TYPE      = 'type';
-    public const ATTR_POSITION = 'position';
+    public const ATTR_ID         = 'id';
+    public const ATTR_PARENT_ID  = 'parent_id';
+    public const ATTR_PAGE_ID    = 'page_id';
+    public const ATTR_TYPE       = 'type';
+    public const ATTR_POSITION   = 'position';
     public const ATTR_CREATED_AT = 'created_at';
     public const ATTR_UPDATED_AT = 'updated_at';
 
@@ -125,4 +127,14 @@ class Block extends Model implements BlockContract
         return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PARENT_ID);
     }
     public const REL_PAGE = 'page';
+
+    public function getPageId(): string
+    {
+        return $this->page_id;
+    }
+
+    public function setPageId(string $pageId): void
+    {
+        $this->page_id = $pageId;
+    }
 }

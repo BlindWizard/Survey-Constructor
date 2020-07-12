@@ -14,4 +14,9 @@ interface FileContract
      * @return string
      */
     public function getName(): string;
+
+    /**
+     * @return string
+     */
+    public function getUrl(): string;
 }

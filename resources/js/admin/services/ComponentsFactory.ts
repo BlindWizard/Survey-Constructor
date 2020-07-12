@@ -129,6 +129,7 @@ export class ComponentsFactory
 				block.position = blockData.position;
 				block.parentId = blockData.parentId;
 				block.imageId = blockData.imageId;
+				block.imageUrl = blockData.imageUrl;
 
 				break;
 			default:

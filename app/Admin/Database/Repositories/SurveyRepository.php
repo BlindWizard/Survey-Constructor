@@ -89,7 +89,7 @@ class SurveyRepository implements SurveyRepositoryContract
             $pages = Page::query()->where(Page::ATTR_SURVEY_ID, '=', $id)->get()->all();
             $pageIds = array_column($pages, Page::ATTR_ID);
 
-            $blocks = Page::query()->whereIn(Block::ATTR_PARENT_ID, $pageIds)->get()->all();
+            $blocks = Block::query()->whereIn(Block::ATTR_PAGE_ID, $pageIds)->get()->all();
             $blockIds = array_column($blocks, Block::ATTR_ID);
 
             Survey::query()->where(Survey::ATTR_ID, '=', $id)->delete();

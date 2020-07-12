@@ -50,6 +50,7 @@ class BlockRepository implements BlockRepositoryContract
             $model           = new Block();
             $model->id       = $element->getId();
             $model->parent_id  = $element->getParentId();
+            $model->page_id = $element->getPageId();
             $model->position = $element->getPosition();
             $model->type     = $element->getType();
             $model->saveOrFail();

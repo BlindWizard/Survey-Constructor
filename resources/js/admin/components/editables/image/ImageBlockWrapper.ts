@@ -11,7 +11,7 @@ import {ImageBlockEdit} from "./ImageBlockEdit";
 	template: `
         <div ref="selectable" :class="bem('text-wrapper').classes()" v-component-drag v-component-drop-target>
             <ImageBlock :block="block"/>
-            <ImageBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
+            <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected"/>
         </div>

@@ -12,12 +12,15 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileRepository implements FileRepositoryContract
 {
+    /**
+     * @inheritDoc
+     */
     public function upload(UploadedFile $file): FileContract {
         $id = Uuid::uuid4()->toString();
         $name = $id . '.' . $file->guessExtension();
         $content = file_get_contents($file->getFileInfo()->getPathname());
 
-        Storage::disk('local')->put($name, $content);
+        Storage::disk('public')->put($name, $content);
 
         $model = new File();
         $model->id = $id;
@@ -29,5 +32,14 @@ class FileRepository implements FileRepositoryContract
         $model->save();
 
         return $model;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findById(string $fileId): FileContract {
+        $file = File::query()->find($fileId);/** @var File $file */
+
+        return  $file;
     }
 }

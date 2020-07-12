@@ -6,6 +6,7 @@ namespace App\Admin\Factories;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
+use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
 use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\Container;
@@ -23,9 +24,13 @@ class BlockFactory implements BlockFactoryContract
     /** @var BlockRepositoryContract */
     protected $blockRepository;
 
-    public function __construct(BlockRepositoryContract $blockRepository)
+    /** @var FileRepositoryContract */
+    protected $fileRepository;
+
+    public function __construct(BlockRepositoryContract $blockRepository, FileRepositoryContract $fileRepository)
     {
         $this->blockRepository = $blockRepository;
+        $this->fileRepository = $fileRepository;
     }
 
     /**
@@ -63,6 +68,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new Container();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
                 $dto->slots = $model->getData()['slots'] ?? [];
                 foreach ($model->getData()['slots'] as $slotId) {
@@ -77,6 +83,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->id = $model->getId();
                 $dto->text = $model->getData()['text'] ?? null;
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
 
                 foreach ($model->getData()['options'] as $optionData) {
@@ -94,6 +101,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new Option();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -104,6 +112,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new Header();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -112,6 +121,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new Text();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
 
@@ -120,6 +130,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new TextField();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->label = $model->getData()['label'];
                 $dto->placeholder = $model->getData()['placeholder'];
                 $dto->position = $model->getPosition();
@@ -130,9 +141,12 @@ class BlockFactory implements BlockFactoryContract
                 $dto = new Image();
                 $dto->id = $model->getId();
                 $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
                 $dto->imageId = $model->getData()['imageId'];
-                $dto->imageUrl = '';
+
+                $fileModel = $this->fileRepository->findById($dto->imageId);
+                $dto->imageUrl = (null !== $fileModel ? $fileModel->getUrl() : null);
 
                 break;
             default:

@@ -4,8 +4,6 @@ declare(strict_types=1);
 namespace App\Admin\Commands;
 
 use App\Admin\Contracts\Command;
-use App\Admin\Contracts\Entities\FileContract;
-use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\DTO\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -36,6 +34,7 @@ class FileUploadCommand implements Command
         $dto = new File();
         $dto->id = $file->getId();
         $dto->name = $file->getName();
+        $dto->url = $file->getUrl();
         $this->result = $dto;
 
         return $this;

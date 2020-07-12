@@ -72,7 +72,7 @@ class CreateElementCommand implements Command
             }
         }
 
-        $block = $this->blockService->addEmptyElement($this->request->getParentBlockId() ?? $page->getId(), $this->request->getBlockId(), $this->request->getType(), $this->request->getPosition());
+        $block = $this->blockService->addEmptyElement($this->request->getParentBlockId() ?? $page->getId(), $page->getId(), $this->request->getBlockId(), $this->request->getType(), $this->request->getPosition());
         $this->block = new BlockWrapper($block);
 
         return $this;

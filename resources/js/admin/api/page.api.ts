@@ -3,7 +3,7 @@ import {Page} from "../models/Page";
 import {AjaxHelper} from "../contracts/AjaxHelper";
 
 export class PageApi {
-	public static add(surveyId: string)
+	public static add(surveyId: string): Promise<Page>
 	{
 		return axios.post('/admin/page/add', {surveyId})
 			.then((response) => {
@@ -17,7 +17,7 @@ export class PageApi {
 			});
 	}
 
-	public static delete(pageId: string)
+	public static delete(pageId: string): Promise<any>
 	{
 		return axios.post('/admin/page/delete', {pageId});
 	}

@@ -11,6 +11,8 @@ class File implements FileContract
     public $id;
     /** @var string */
     public $name;
+    /** @var string */
+    public $url;
 
     /**
      * @inheritDoc
@@ -26,5 +28,13 @@ class File implements FileContract
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getUrl(): string
+    {
+        return $this->url;
     }
 }

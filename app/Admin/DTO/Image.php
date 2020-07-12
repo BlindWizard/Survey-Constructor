@@ -12,6 +12,8 @@ class Image implements BlockContract
     public $id;
     /** @var string */
     public $parentId;
+    /** @var string */
+    public $pageId;
     /** @var int */
     public $position;
     /** @var string|null */
@@ -41,6 +43,21 @@ class Image implements BlockContract
     public function setParentId(string $parentId): void
     {
         $this->parentId = $parentId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getPageId(): string
+    {
+        return $this->pageId;
+    }
+    /**
+     * @inheritDoc
+     */
+    public function setPageId(string $pageId): void
+    {
+        $this->pageId = $pageId;
     }
 
     /**

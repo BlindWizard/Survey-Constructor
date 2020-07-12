@@ -48,6 +48,21 @@ class BlockWrapper implements BlockContract
     /**
      * @inheritDoc
      */
+    public function getPageId(): string
+    {
+        return $this->data->getPageId();
+    }
+    /**
+     * @inheritDoc
+     */
+    public function setPageId(string $pageId): void
+    {
+        $this->data->setPageId($pageId);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getChildren(): ?array
     {
         return $this->data->getChildren();

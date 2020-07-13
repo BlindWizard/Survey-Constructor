@@ -56,19 +56,15 @@ export class Container implements BlockContract {
 
 	getBlocksInOrder(slotId: string): BlockContract[]
 	{
-		let blocks: BlockContract[] = [];
-
 		if (!this.children[slotId] || 0 === this.children[slotId].length) {
-			return blocks;
+			return [];
 		}
+
+		let blocks: BlockContract[] = [];
 
 		for (let blockId of Object.keys(this.children[slotId])) {
 			let block: BlockContract = this.children[slotId][blockId];
 			blocks.push(block);
-		}
-
-		for (let i = 0; i < blocks.length; i++) {
-			blocks[i].setPosition(i);
 		}
 
 		blocks.sort((a: BlockContract, b: BlockContract) => {

@@ -24,19 +24,21 @@ import {DeleteSurvey} from "../api/requests/DeleteSurvey";
                                     <span :class="bem('button').el('label').classes()">Statistics</span>
                                 </button>
                             </p>
-                            <button :class="bem('survey-preview').el('delete').add('button secondary').classes()" v-on:click.stop="deleteSurveyModal()">
+                            <button :class="bem('survey-preview').el('delete').add('button secondary').classes()" v-on:click.stop="deleteSurveyModal(true)">
                                 <i class="fi-x"></i>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <portal v-if="deleteModal" to="edit-modal">
-                <div :class="bem('edit-modal').add('reveal').classes()">
-                    <p>Delete survey and all it's data?</p>
-                    <button :class="bem('button').add('primary').classes()" v-on:click.stop="deleteSurvey">
-                        <span :class="bem('button').el('label').classes()">{{ locale.deleteLabel }}</span>
-                    </button>
+            <portal v-if="deleteModal" to="modal">
+                <div class="reveal-overlay" style="display: block" v-on:click.stop="deleteSurveyModal(false)">
+                    <div class="reveal" style="display: block">
+                        <p>Delete survey and all it's data?</p>
+                        <button :class="bem('button').add('primary').classes()" v-on:click.stop="deleteSurvey">
+                            <span :class="bem('button').el('label').classes()">{{ locale.deleteLabel }}</span>
+                        </button>
+                    </div>
                 </div>
             </portal>
         </div>
@@ -64,9 +66,8 @@ export class SurveyPreview extends Vue {
 		});
 	}
 
-	public deleteSurveyModal() {
-		this.deleteModal = true;
-		this.$store.dispatch(actions.SET_EDITING, this.deleteModal);
+	public deleteSurveyModal(open: boolean) {
+		this.deleteModal = open;
 	}
 
 	public deleteSurvey() {
@@ -76,7 +77,6 @@ export class SurveyPreview extends Vue {
 		this.$store.dispatch(actions.DELETE_SURVEY, request);
 
 		this.deleteModal = false;
-		this.$store.dispatch(actions.SET_EDITING, this.deleteModal);
 	}
 
 	get locale(): Locale {

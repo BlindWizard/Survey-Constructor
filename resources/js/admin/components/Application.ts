@@ -15,7 +15,7 @@ import {getters} from "../stores/types";
                     <router-view />
                 </div>
             </div>
-            <portal-target name="modal" class="reveal-overlay"></portal-target>
+            <portal-target name="modal"></portal-target>
         </div>
 	`,
 	components: {

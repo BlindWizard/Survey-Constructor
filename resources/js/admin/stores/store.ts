@@ -227,6 +227,26 @@ const store = new Vuex.Store({
 				}
 				else if (container instanceof Container) {
 					container.setBlocks(request.parentBlockId, blocks);
+
+					while (true) {
+						let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+						if (null === upperContainer) {
+							break;
+						}
+
+						upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+						container = upperContainer;
+					}
+
+					blocks = page.getBlocks();
+					blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+					let plain = [];
+					for (let blockId of Object.keys(blocks)) {
+						plain.push(blocks[blockId]);
+					}
+
+					page.setBlocks(plain);
 				}
 			}
 

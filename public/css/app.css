@@ -13810,6 +13810,10 @@ html.is-reveal-open body {
   margin-top: 0.75rem;
 }
 
+.file-uploader {
+  margin-bottom: 1rem;
+}
+
 .file-uploader__dropzone {
   text-align: center;
   border: 0.18rem #fd5b15 dashed;

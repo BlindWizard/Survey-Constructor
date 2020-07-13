@@ -1,10 +1,10 @@
 import {axios} from "../../common/axios";
 import {FileUpload} from "./requests/FileUpload";
 import {AxiosRequestConfig} from "axios";
-import {File} from "../models/File";
+import {FileModel} from "../models/FileModel";
 
 export class FileApi {
-	public static upload(request: FileUpload): Promise<File>
+	public static upload(request: FileUpload): Promise<FileModel>
 	{
 		let form = new FormData();
 		form.append('file', request.file, request.file.name);
@@ -17,7 +17,7 @@ export class FileApi {
 		};
 
 		return axios.post('/admin/file/upload', form, setting).then((result) => {
-			let file = new File();
+			let file = new FileModel();
 			file.id = result.data.data.id;
 			file.name = result.data.data.name;
 			file.url = result.data.data.url;

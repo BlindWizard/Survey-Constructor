@@ -13668,21 +13668,25 @@ html.is-reveal-open body {
 .block-resize-frame__pin_top {
   top: -0.5rem;
   left: calc(50% - 0.5rem);
+  cursor: row-resize;
 }
 
 .block-resize-frame__pin_right {
   right: -0.5rem;
   top: calc(50% - 0.5rem);
+  cursor: col-resize;
 }
 
 .block-resize-frame__pin_bottom {
   bottom: -0.5rem;
   left: calc(50% - 0.5rem);
+  cursor: row-resize;
 }
 
 .block-resize-frame__pin_left {
   left: -0.5rem;
   top: calc(50% - 0.5rem);
+  cursor: col-resize;
 }
 
 .placeholder {
@@ -13876,7 +13880,6 @@ html.is-reveal-open body {
 
 .file-uploader__dropzone-title {
   display: inline-block;
-  font-size: 1.25rem;
   margin: 1.25rem;
   height: 50px;
   line-height: 50px;

@@ -7,7 +7,7 @@ import {actions} from "../../stores/types";
 import {EditingModes} from "../../contracts/EditingModes";
 import {ComponentsFactory} from "../../services/ComponentsFactory";
 import Component from "vue-class-component";
-import {FrameModes} from "../../contracts/FrameModes";
+import {ResizeModes} from "../../contracts/ResizeModes";
 
 @Component({})
 export class BaseBlock extends Vue implements Draggable {
@@ -15,7 +15,7 @@ export class BaseBlock extends Vue implements Draggable {
 	public selected: boolean = false;
 	public editing: boolean = false;
 	public blockData: BlockContract|null = null;
-	public frameMode: string = FrameModes.SELECT;
+	public resizeMode: ResizeModes|null = null;
 
 	public created()
 	{
@@ -86,23 +86,19 @@ export class BaseBlock extends Vue implements Draggable {
 		}
 	}
 
-	public selectFrameMode(mode: string) {
-		this.frameMode = mode;
+	public selectFrameMode(mode: ResizeModes) {
+		this.resizeMode = mode;
 	}
 
-	public getFrameSelect(): string {
-		return FrameModes.SELECT;
+	get isFrameMargin(): boolean {
+		return this.resizeMode === ResizeModes.MARGIN;
 	}
 
-	public getFrameMargin(): string {
-		return FrameModes.MARGIN;
+	get isFramePadding(): boolean {
+		return this.resizeMode === ResizeModes.PADDING;
 	}
 
-	public getFramePadding(): string {
-		return FrameModes.PADDING;
-	}
-
-	public getFrameResize(): string {
-		return FrameModes.RESIZE;
+	get isFrameResize(): boolean {
+		return this.resizeMode === ResizeModes.RESIZE;
 	}
 }

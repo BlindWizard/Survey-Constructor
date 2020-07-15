@@ -31,6 +31,7 @@ import {Container} from "../models/Container";
 import {Page} from "../models/Page";
 import {DeleteSurvey} from "../api/requests/DeleteSurvey";
 import {SurveyContract} from "../contracts/SurveyContract";
+import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 
 Vue.use(Vuex);
 
@@ -455,6 +456,9 @@ const store = new Vuex.Store({
 		async [actions.SAVE_ELEMENT_DATA]({commit, state}, request: SaveBlockData) {
 			commit(mutations.SAVE_ELEMENT_DATA, request);
 			await BlockApi.saveData(request);
+		},
+		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
+			commit(mutations.SAVE_ELEMENT_STYLE, request);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);

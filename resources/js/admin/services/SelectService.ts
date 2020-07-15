@@ -1,8 +1,9 @@
 import {BaseBlock} from "../components/editables/BaseBlock";
 import {store} from "../stores/store";
 import {actions} from "../stores/types";
+import {ResizeModes} from "../contracts/ResizeModes";
 
-class SelectDispatcher {
+class SelectService {
 	private selected: BaseBlock|null = null;
 	private elements: BaseBlock[] = [];
 
@@ -21,7 +22,7 @@ class SelectDispatcher {
 						return;
 					}
 
-					if (el.classList.contains('edit-modal')) {
+					if (el.classList.contains('edit-modal') || el.closest('.edit-modal')) {
 						return;
 					}
 
@@ -36,7 +37,7 @@ class SelectDispatcher {
 							this.selected = element;
 							element.toggleSelect(true);
 							element.toggleEdit(true);
-							element.frameMode = element.getFrameSelect();
+							element.resizeMode = null;
 
 							break targets;
 						}
@@ -54,11 +55,16 @@ class SelectDispatcher {
 		});
 	}
 
+	public getSelected(): BaseBlock|null
+	{
+		return this.selected;
+	}
+
 	public handleElement(component: BaseBlock): void
 	{
 		this.elements.push(component);
 	}
 }
 
-const selectDispatcher = new SelectDispatcher();
-export {selectDispatcher};
+const selectService = new SelectService();
+export {selectService};

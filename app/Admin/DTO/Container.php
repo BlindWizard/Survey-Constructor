@@ -21,6 +21,11 @@ class Container implements BlockContract
     /** @var BlockContract[] */
     public $children = [];
 
+    /** @var BlockStyle */
+    public $style;
+    /** @var BlockStyle[] */
+    public $slotsStyle = [];
+
     /**
      * @return string
      */

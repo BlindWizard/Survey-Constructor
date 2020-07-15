@@ -6,7 +6,7 @@ import {BaseBlock} from "../BaseBlock";
 import {Draggable} from "../../../contracts/Draggable";
 import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
-import {selectDispatcher} from "../../../services/SelectDispatcher";
+import {selectService} from "../../../services/SelectService";
 
 @Component({
 	template: `
@@ -27,6 +27,6 @@ import {selectDispatcher} from "../../../services/SelectDispatcher";
 export class TextBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
-		selectDispatcher.handleElement(this);
+		selectService.handleElement(this);
 	}
 }

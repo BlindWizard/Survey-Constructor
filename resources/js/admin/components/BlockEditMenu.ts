@@ -4,7 +4,7 @@ import {getters} from "../stores/types";
 import {Locale} from "../models/Locale";
 import {Prop} from "vue-property-decorator";
 import {EditingModes} from "../contracts/EditingModes";
-import {FrameModes} from "../contracts/FrameModes";
+import {ResizeModes} from "../contracts/ResizeModes";
 
 @Component({
 	template: `
@@ -12,14 +12,14 @@ import {FrameModes} from "../contracts/FrameModes";
             <button v-if="-1 !== activeButtons().indexOf('resize')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onResize">{{ locale.resize }}</button>
             <button v-if="-1 !== activeButtons().indexOf('margin')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onMargin">{{ locale.margin }}</button>
             <button v-if="-1 !== activeButtons().indexOf('padding')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onPadding">{{ locale.padding }}</button>
-            <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onDelete || (() => {})">{{ locale.delete }}</button>
+            <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onDelete">{{ locale.delete }}</button>
         </div>
 	`,
 })
 export class BlockEditMenu extends Vue {
 	@Prop(String) mode: string;
 	@Prop(Function) onSelectMode: Function|null;
-	@Prop(Function) onDelete: Function|null;
+	@Prop(Function) onDelete: Function;
 
 	get locale(): Locale
 	{
@@ -41,7 +41,7 @@ export class BlockEditMenu extends Vue {
 			return;
 		}
 
-		this.onSelectMode(FrameModes.MARGIN);
+		this.onSelectMode(ResizeModes.MARGIN);
 	}
 
 	public onPadding()
@@ -50,7 +50,7 @@ export class BlockEditMenu extends Vue {
 			return;
 		}
 
-		this.onSelectMode(FrameModes.PADDING);
+		this.onSelectMode(ResizeModes.PADDING);
 	}
 
 	public onResize()
@@ -59,6 +59,6 @@ export class BlockEditMenu extends Vue {
 			return;
 		}
 
-		this.onSelectMode(FrameModes.RESIZE);
+		this.onSelectMode(ResizeModes.RESIZE);
 	}
 }

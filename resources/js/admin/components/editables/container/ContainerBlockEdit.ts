@@ -14,7 +14,7 @@ template: `
             <h4>Container</h4>
             <label>
                 Slots count
-                <select @change="changeSlotsCount" :value="blockData.slots.length">
+                <select v-on:click.stop @change="changeSlotsCount" :value="blockData.slots.length">
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>

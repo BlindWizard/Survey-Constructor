@@ -3,7 +3,7 @@ import {BlockEditMenu} from "../../BlockEditMenu";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
 import {BaseBlock} from "../BaseBlock";
 import {Draggable} from "../../../contracts/Draggable";
-import {selectDispatcher} from "../../../services/SelectDispatcher";
+import {selectService} from "../../../services/SelectService";
 import {ImageBlock} from "../../controls/ImageBlock";
 import {ImageBlockEdit} from "./ImageBlockEdit";
 
@@ -26,6 +26,6 @@ import {ImageBlockEdit} from "./ImageBlockEdit";
 export class ImageBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
-		selectDispatcher.handleElement(this);
+		selectService.handleElement(this);
 	}
 }

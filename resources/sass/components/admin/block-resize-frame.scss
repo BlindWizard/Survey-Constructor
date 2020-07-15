@@ -34,21 +34,25 @@
         &_top {
             top: -0.5rem;
             left: calc(50% - 0.5rem);
+            cursor: row-resize;
         }
 
         &_right {
             right: -0.5rem;
             top: calc(50% - 0.5rem);
+            cursor: col-resize;
         }
 
         &_bottom {
             bottom: -0.5rem;
             left: calc(50% - 0.5rem);
+            cursor: row-resize;
         }
 
         &_left {
             left: -0.5rem;
             top: calc(50% - 0.5rem);
+            cursor: col-resize;
         }
     }
 }

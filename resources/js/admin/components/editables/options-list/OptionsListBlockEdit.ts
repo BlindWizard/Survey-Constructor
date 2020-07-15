@@ -21,7 +21,8 @@ const uuidv4 = require('uuid/v4');
                     <label>
                         Option text
                         <input @input="changeOptionText(option.id, $event)" :value="option.text" type="text" /><!--
-                     --><button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteOption(option.id)">
+                     -->
+                        <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteOption(option.id)">
                             <span :class="bem('button').el('label').classes()">-</span>
                         </button>
                     </label>
@@ -32,7 +33,7 @@ const uuidv4 = require('uuid/v4');
                     </button>
                 </div>
                 <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
+                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
                 </button>
             </div>
         </portal>

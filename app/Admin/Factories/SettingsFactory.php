@@ -45,10 +45,13 @@ class SettingsFactory implements SettingsFactoryContract
 
         $locale = new Locale();
         $locale->appName = config('app.name');
-        $locale->editLabel = __('Edit');
-        $locale->saveLabel = __('Save');
-        $locale->deleteLabel = __('Delete');
-        $locale->dropPlaceholderLabel = __('Drop here');
+        $locale->margin = __('Margin');
+        $locale->padding = __('Padding');
+        $locale->resize = __('Resize');
+        $locale->edit = __('Edit');
+        $locale->save = __('Save');
+        $locale->delete = __('Delete');
+        $locale->dropPlaceholder = __('Drop here');
         $settings->locale = $locale;
 
         foreach (BlockContract::TYPES as $type) {

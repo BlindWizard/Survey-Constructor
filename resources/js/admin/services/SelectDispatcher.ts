@@ -36,6 +36,7 @@ class SelectDispatcher {
 							this.selected = element;
 							element.toggleSelect(true);
 							element.toggleEdit(true);
+							element.frameMode = element.getFrameSelect();
 
 							break targets;
 						}

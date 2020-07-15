@@ -7,11 +7,17 @@ class Locale
     /** @var string */
     public $appName;
     /** @var string */
-    public $editLabel;
+    public $margin;
     /** @var string */
-    public $saveLabel;
+    public $padding;
     /** @var string */
-    public $deleteLabel;
+    public $resize;
     /** @var string */
-    public $dropPlaceholderLabel;
+    public $edit;
+    /** @var string */
+    public $save;
+    /** @var string */
+    public $delete;
+    /** @var string */
+    public $dropPlaceholder;
 }

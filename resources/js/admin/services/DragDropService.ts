@@ -252,7 +252,7 @@ class DragDropService
 
 		let placeholder = document.createElement('div');
 		placeholder.classList.add(bem('placeholder').classes());
-		placeholder.innerHTML = '<span class="' + bem('placeholder').el('label').classes() + '">' + store.getters[getters.LOCALE].dropPlaceholderLabel + '</span>';
+		placeholder.innerHTML = '<span class="' + bem('placeholder').el('label').classes() + '">' + store.getters[getters.LOCALE].dropPlaceholder + '</span>';
 
 		if (this.activeTarget.lastChild) {
 			this.activeTarget.insertBefore(placeholder, this.activeTarget.lastChild.nextSibling);

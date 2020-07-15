@@ -30,12 +30,12 @@ import {FileModel} from "../../../models/FileModel";
                                     </div>
                                     <img v-if="blockData.imageId && !over && !uploading" :src="blockData.imageUrl">
                                     <div v-if="uploading && !error" :class="bem('file-uploader').el('progress').classes()">
-                                        <RadialProgressbar :progress="currentProgress"/>
+                                        <RadialProgressbar :progress="currentProgress" />
                                     </div>
                                 </div>
                             </div>
                             <div class="cell small-6">
-                                <input type="file" v-on:change="handleFileSet"/>
+                                <input type="file" v-on:change="handleFileSet" />
                                 <button :class="bem('button').is('primary').add(!file ? 'disabled' : '').classes()" v-on:click.stop="handleUpload">
                                     <span :class="bem('button').el('label').classes()">Upload</span>
                                 </button>
@@ -44,7 +44,7 @@ import {FileModel} from "../../../models/FileModel";
                     </div>
                 </div>
                 <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
+                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
                 </button>
             </div>
         </portal>

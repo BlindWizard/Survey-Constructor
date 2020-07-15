@@ -16,9 +16,12 @@ import {DeleteSurvey} from "../api/requests/DeleteSurvey";
                     <div>
                         <h4>{{ survey.title }}</h4>
                         <div :class="bem('survey-preview').el('statistics').classes()">
-                            <p :class="bem('survey-preview').el('statistics-item').classes()">Runs: {{ survey.statistics.runsCount }}</p>
-                            <p :class="bem('survey-preview').el('statistics-item').classes()">Completed: {{ survey.statistics.completesCount }}</p>
-                            <p :class="bem('survey-preview').el('statistics-item').classes()">Last update: {{ survey.statistics.lastUpdated || 'Never' }}</p>
+                            <p :class="bem('survey-preview').el('statistics-item').classes()">
+                                Runs: {{ survey.statistics.runsCount }}</p>
+                            <p :class="bem('survey-preview').el('statistics-item').classes()">
+                                Completed: {{ survey.statistics.completesCount }}</p>
+                            <p :class="bem('survey-preview').el('statistics-item').classes()">Last
+                                update: {{ survey.statistics.lastUpdated || 'Never' }}</p>
                             <p>
                                 <button :class="bem('button').is('rounded').classes()" v-on:click.stop="openStats()">
                                     <span :class="bem('button').el('label').classes()">Statistics</span>
@@ -36,7 +39,7 @@ import {DeleteSurvey} from "../api/requests/DeleteSurvey";
                     <div class="reveal" style="display: block">
                         <p>Delete survey and all it's data?</p>
                         <button :class="bem('button').add('primary').classes()" v-on:click.stop="deleteSurvey">
-                            <span :class="bem('button').el('label').classes()">{{ locale.deleteLabel }}</span>
+                            <span :class="bem('button').el('label').classes()">{{ locale.delete }}</span>
                         </button>
                     </div>
                 </div>

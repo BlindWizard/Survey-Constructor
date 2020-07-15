@@ -13,9 +13,9 @@ import {OptionsList} from "../../../models/OptionsList";
         <portal to="edit-block">
             <div :class="bem('edit-modal').classes()">
                 <h4>Header</h4>
-                <input :value="block.text" type="text" @input="updateText"/>
+                <input :value="block.text" type="text" @input="updateText" />
                 <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.saveLabel }}</span>
+                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
                 </button>
             </div>
         </portal>

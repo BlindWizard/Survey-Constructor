@@ -1,9 +1,54 @@
 .block-resize-frame {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    outline: 2px dashed $primary;
-    left: 0;
-    top: 0;
+    left: 1px;
+    top: 1px;
+    width: calc(100% - 1px);
+    height: calc(100% - 1px);
     z-index: 10;
+    outline: 2px dashed $primary;
+
+    &_primary {
+        outline: 2px dashed $primary;
+
+        .block-resize-frame__pin {
+            background-color: $primary;
+        }
+    }
+
+    &_secondary {
+        outline: 2px dashed $secondary;
+
+        .block-resize-frame__pin {
+            background-color: $secondary;
+        }
+    }
+
+    &__pin {
+        width: 1rem;
+        height: 1rem;
+        border-radius: 50%;
+        position: absolute;
+        z-index: 20;
+        background-color: $primary;
+
+        &_top {
+            top: -0.5rem;
+            left: calc(50% - 0.5rem);
+        }
+
+        &_right {
+            right: -0.5rem;
+            top: calc(50% - 0.5rem);
+        }
+
+        &_bottom {
+            bottom: -0.5rem;
+            left: calc(50% - 0.5rem);
+        }
+
+        &_left {
+            left: -0.5rem;
+            top: calc(50% - 0.5rem);
+        }
+    }
 }

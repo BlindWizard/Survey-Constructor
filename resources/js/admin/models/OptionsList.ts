@@ -1,6 +1,7 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {Option} from "./Option";
+import {BlockStyle} from "./BlockStyle";
 
 export class OptionsList implements BlockContract {
 	public id: string;
@@ -9,6 +10,7 @@ export class OptionsList implements BlockContract {
 	public options: Option[] = [];
 	public text: string;
 	public multiple: boolean = false;
+	public style: BlockStyle;
 
 	getType(): string
 	{
@@ -56,5 +58,13 @@ export class OptionsList implements BlockContract {
 		data['options'].forEach((option: Option, i: number) => {
 			this.options.push(option)
 		});
+	}
+
+	getStyle(): Object {
+		return {'style': this.style};
+	}
+
+	setStyle(data: Object) {
+		this.style = data['style'];
 	}
 }

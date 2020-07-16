@@ -24,6 +24,7 @@ import {ImageBlock} from "../../controls/ImageBlock";
 import {ImageBlockWrapper} from "../image/ImageBlockWrapper";
 import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
+import {styleRenderer} from "../../../services/StyleRenderer";
 
 @Component({
 	template: `
@@ -31,7 +32,11 @@ import {ResizeDirection} from "../../../contracts/ResizeDirection";
             <div :class="bem('container').classes()">
                 <div class="grid-container full">
                     <div class="grid-x">
-                        <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-' + (12 / block.slots.length) + ' '+ bem('container').el('slot').is(0 === block.getBlocksInOrder(slotId).length ? 'empty' : '').classes()" v-component-drop="slotId">
+                        <div :key="slotId" v-for="slotId in block.slots" 
+                             :class="'cell ' + bem('container').el('slot').is(0 === block.getBlocksInOrder(slotId).length ? 'empty' : '').classes()" 
+                             :style="renderSlotStyle(slotId)"
+                             v-component-drop="slotId"
+                        >
                             <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver" />
                             <BlockResizeFrame v-if="selected && isFrameResize" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
                         </div>
@@ -86,5 +91,10 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 		else {
 			return ResizeDirection.RIGHT
 		}
+	}
+
+	public renderSlotStyle(slotId: string)
+	{
+		return styleRenderer.render(this.block.getStyle()['slotsStyle'][slotId]);
 	}
 }

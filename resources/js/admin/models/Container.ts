@@ -1,13 +1,16 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {ComponentsFactory} from "../services/ComponentsFactory";
+import {BlockStyle} from "./BlockStyle";
 
 export class Container implements BlockContract {
 	public id: string;
 	public position: number;
 	public parentId: string;
 	public slots: string[] = [];
-	public children: any = {};
+	public children: Object;
+	public style: BlockStyle;
+	public slotsStyle: Object;
 
 	getId(): string {
 		return this.id;
@@ -52,6 +55,18 @@ export class Container implements BlockContract {
 			'slots': this.slots,
 			'children': this.children,
 		};
+	}
+
+	getStyle(): Object {
+		return {
+			'style': this.style,
+			'slotsStyle': this.slotsStyle,
+		}
+	}
+
+	setStyle(data: Object) {
+		this.style = data['style'];
+		this.slotsStyle = data['slotsStyle'];
 	}
 
 	getBlocksInOrder(slotId: string): BlockContract[]

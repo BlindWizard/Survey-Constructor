@@ -18,6 +18,8 @@ class Text implements BlockContract
     public $pageId;
     /** @var int */
     public $position;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @inheritDoc
@@ -106,5 +108,13 @@ class Text implements BlockContract
         return [
             'text' => $this->text,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

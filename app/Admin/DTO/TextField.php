@@ -22,6 +22,8 @@ class TextField implements BlockContract
     public $position;
     /** @var bool */
     public $multiline;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @inheritDoc
@@ -112,5 +114,13 @@ class TextField implements BlockContract
             'placeholder' => $this->placeholder,
             'multiline' => $this->multiline,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

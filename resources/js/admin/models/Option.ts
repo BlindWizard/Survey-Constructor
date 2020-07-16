@@ -1,11 +1,13 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
+import {BlockStyle} from "./BlockStyle";
 
 export class Option implements BlockContract {
 	public id: string;
 	public position: number;
 	public parentId: string;
 	public text: string;
+	public style: BlockStyle;
 
 	getType(): string
 	{
@@ -45,5 +47,13 @@ export class Option implements BlockContract {
 	setData(data: Object): void
 	{
 		this.text = data['text'];
+	}
+
+	getStyle(): Object {
+		return {'style': this.style};
+	}
+
+	setStyle(data: Object) {
+		this.style = data['style'];
 	}
 }

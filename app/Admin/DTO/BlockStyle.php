@@ -15,4 +15,10 @@ class BlockStyle
     public $margin;
     /** @var ResizeOffset */
     public $padding;
+
+    public function __construct()
+    {
+        $this->margin = new ResizeOffset();
+        $this->padding = new ResizeOffset();
+    }
 }

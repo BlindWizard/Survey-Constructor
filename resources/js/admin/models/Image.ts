@@ -1,5 +1,6 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
+import {BlockStyle} from "./BlockStyle";
 
 export class Image implements BlockContract {
 	public id: string;
@@ -7,6 +8,7 @@ export class Image implements BlockContract {
 	public parentId: string;
 	public imageId: string|null;
 	public imageUrl: string|null;
+	public style: BlockStyle;
 
 	getType(): string
 	{
@@ -48,5 +50,13 @@ export class Image implements BlockContract {
 	{
 		this.imageId = data['imageId'];
 		this.imageUrl = data['imageUrl'];
+	}
+
+	getStyle(): Object {
+		return {'style': this.style};
+	}
+
+	setStyle(data: Object) {
+		this.style = data['style'];
 	}
 }

@@ -18,6 +18,8 @@ class Header implements BlockContract
     public $pageId;
     /** @var int */
     public $position;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @inheritDoc
@@ -106,5 +108,13 @@ class Header implements BlockContract
         return [
             'text' => $this->text,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

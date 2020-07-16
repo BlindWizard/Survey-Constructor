@@ -114,4 +114,12 @@ class Container implements BlockContract
             'slots' => $this->slots,
         ];
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style, 'slotsStyle' => $this->slotsStyle];
+    }
 }

@@ -20,6 +20,8 @@ class Image implements BlockContract
     public $imageId = null;
     /** @var string|null */
     public $imageUrl = null;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @inheritDoc
@@ -108,5 +110,13 @@ class Image implements BlockContract
         return [
             'imageId' => $this->imageId,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

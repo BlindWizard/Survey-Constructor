@@ -1,6 +1,6 @@
 import {ResizeOffset} from "./ResizeOffset";
 
-export class Style {
+export class BlockStyle {
 	public width: number;
 	public height: number;
 	public textAlign: number;

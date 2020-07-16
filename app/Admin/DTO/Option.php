@@ -18,6 +18,8 @@ class Option implements BlockContract
     public $pageId;
     /** @var int */
     public $position;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @return string
@@ -106,5 +108,13 @@ class Option implements BlockContract
         return [
             'text' => $this->text,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

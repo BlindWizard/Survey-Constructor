@@ -58,6 +58,7 @@ class BlockRepository implements BlockRepositoryContract
             $data = new BlockData();
             $data->id = $model->id;
             $data->data = \GuzzleHttp\json_encode($element->getData());
+            $data->style = json_encode($element->getStyle());
             $data->saveOrFail();
 
             DB::commit();

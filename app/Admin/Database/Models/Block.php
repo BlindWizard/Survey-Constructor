@@ -4,6 +4,8 @@ declare(strict_types=1);
 namespace App\Admin\Database\Models;
 
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\DTO\BlockStyle;
+use DemeterChain\B;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -136,5 +138,42 @@ class Block extends Model implements BlockContract
     public function setPageId(string $pageId): void
     {
         $this->page_id = $pageId;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        if (null === $this->data) {
+            $style = ['style' => new BlockStyle()];
+            if ($this->getType() === BlockContract::TYPE_CONTAINER) {
+                $style['slotsStyle'] = [];
+                foreach ($this->getData()['slots'] as $slotId) {
+                    $style['slotsStyle'][$slotId] = new BlockStyle();
+                }
+            }
+
+            return $style;
+        }
+
+        $rawStyle = \GuzzleHttp\json_decode($this->data->style, true);
+        $style = ['style' => new BlockStyle()];
+
+        foreach($rawStyle['style'] as $key => $value) {
+            $style['style']->{$key} = $value;
+        }
+
+        if ($this->getType() === BlockContract::TYPE_CONTAINER) {
+            $style['slotsStyle'] = [];
+            foreach ($this->getData()['slots'] as $slotId) {
+                $style['slotsStyle'][$slotId] = new BlockStyle();
+                foreach($rawStyle['slotsStyle'][$slotId] as $key => $value) {
+                    $style['slotsStyle'][$slotId]->{$key} = $value;
+                }
+            }
+        }
+
+        return $style;
     }
 }

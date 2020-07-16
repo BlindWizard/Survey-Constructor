@@ -10,7 +10,7 @@ import {resizeService} from "../services/ResizeService";
         <div :class="bem('block-resize-frame').is(mode || 'select').classes()">
             <span v-if="mode && (isDirectionAll || isDirectionVertical || isDirectionTop)"
                   :class="bem('block-resize-frame').el('pin').is('top').classes()"
-                  v-on:mousedown.stop="handleDown($event, resizeTop)">
+                  v-on:mousedown.stop="handleDown($event, resizeTop)" v-on:click.prevent>
             </span>
             <span v-if="mode && (isDirectionAll || isDirectionHorizontal || isDirectionRight)"
                   :class="bem('block-resize-frame').el('pin').is('right').classes()"

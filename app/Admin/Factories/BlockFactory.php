@@ -8,6 +8,7 @@ use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
+use App\Admin\DTO\BlockStyle;
 use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\Container;
 use App\Admin\DTO\Header;
@@ -76,6 +77,8 @@ class BlockFactory implements BlockFactoryContract
                         $dto->children[] = new BlockWrapper($this->getDTO($innerModel));
                     }
                 }
+                $dto->style = $model->getStyle()['style'];
+                $dto->slotsStyle = $model->getStyle()['slotsStyle'];
 
                 break;
             case BlockContract::TYPE_OPTIONS_LIST:
@@ -85,6 +88,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->parentId = $model->getParentId();
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
 
                 foreach ($model->getData()['options'] as $optionData) {
                     $option = new Option();
@@ -92,6 +96,7 @@ class BlockFactory implements BlockFactoryContract
                     $option->text = $optionData['text'];
                     $option->parentId = $dto->parentId;
                     $option->position = $optionData['position'];
+                    $option->style = $optionData['style'];
 
                     $dto->options[] = $option;
                 }
@@ -104,6 +109,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
 
                 $result[] = $dto;
 
@@ -115,6 +121,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
 
                 break;
             case BlockContract::TYPE_TEXT:
@@ -124,6 +131,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
 
                 break;
             case BlockContract::TYPE_TEXT_FIELD:
@@ -135,6 +143,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->placeholder = $model->getData()['placeholder'];
                 $dto->position = $model->getPosition();
                 $dto->multiline = $model->getData()['multiline'];
+                $dto->style = $model->getStyle()['style'];
 
                 break;
             case BlockContract::TYPE_IMAGE:
@@ -144,6 +153,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
                 $dto->imageId = $model->getData()['imageId'];
+                $dto->style = $model->getStyle()['style'];
 
                 $fileModel = null !== $dto->imageId ? $this->fileRepository->findById($dto->imageId) : null;
                 $dto->imageUrl = (null !== $fileModel ? $fileModel->getUrl() : null);
@@ -168,7 +178,14 @@ class BlockFactory implements BlockFactoryContract
         $block = new Container();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
-        $block->slots= [Uuid::uuid4()->toString(), Uuid::uuid4()->toString(), Uuid::uuid4()->toString()];
+        $block->slots= [Uuid::uuid4()->toString(), Uuid::uuid4()->toString()];
+
+        $block->style = new BlockStyle();
+
+        foreach ($block->slots as $slotId) {
+            $block->slotsStyle[$slotId] = new BlockStyle();
+            $block->slotsStyle[$slotId]->width = 100 / count($block->slots);
+        }
 
         return $block;
     }
@@ -190,19 +207,24 @@ class BlockFactory implements BlockFactoryContract
         $option->id = Uuid::uuid4()->toString();
         $option->text = __('First option');
         $option->position = 0;
+        $option->style = new BlockStyle();
         $block->options[] = $option;
 
         $option = new Option();
         $option->id = Uuid::uuid4()->toString();
         $option->text = __('Second option');
         $option->position = 1;
+        $option->style = new BlockStyle();
         $block->options[] = $option;
 
         $option = new Option();
         $option->id = Uuid::uuid4()->toString();
         $option->text = __('Third option');
         $option->position = 2;
+        $option->style = new BlockStyle();
         $block->options[] = $option;
+
+        $block->style = new BlockStyle();
 
         return $block;
     }
@@ -221,6 +243,8 @@ class BlockFactory implements BlockFactoryContract
         $block->text = __('Single option');
         $block->position = 0;
 
+        $block->style = new BlockStyle();
+
         return $block;
     }
 
@@ -238,6 +262,8 @@ class BlockFactory implements BlockFactoryContract
         $block->position = 0;
         $block->text = config('app.name');
 
+        $block->style = new BlockStyle();
+
         return $block;
     }
 
@@ -254,6 +280,8 @@ class BlockFactory implements BlockFactoryContract
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
         $block->text = __('Default text');
+
+        $block->style = new BlockStyle();
 
         return $block;
     }
@@ -274,6 +302,8 @@ class BlockFactory implements BlockFactoryContract
         $block->placeholder = __('Placeholder text');
         $block->multiline = false;
 
+        $block->style = new BlockStyle();
+
         return $block;
     }
 
@@ -289,6 +319,8 @@ class BlockFactory implements BlockFactoryContract
         $block = new Image();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
+
+        $block->style = new BlockStyle();
 
         return $block;
     }

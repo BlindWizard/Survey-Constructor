@@ -7,4 +7,6 @@ export interface BlockContract {
 	setParentId(id: string): void;
 	getData(): Object;
 	setData(data: Object): void;
+	getStyle(): Object;
+	setStyle(data: Object): void;
 }

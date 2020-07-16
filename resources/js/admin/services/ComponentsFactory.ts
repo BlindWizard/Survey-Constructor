@@ -12,6 +12,7 @@ import {Text} from "../models/Text";
 import {TextField} from "../models/TextField";
 import {Container} from "../models/Container";
 import {Image} from "../models/Image";
+import {BlockStyle} from "../models/BlockStyle";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -75,6 +76,20 @@ export class ComponentsFactory
 					block.children[innerBlock.getParentId()][innerBlock.getId()] = innerBlock;
 				}
 
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
+
+				block.slotsStyle = {};
+				for (let slotId of block.slots) {
+					block.slotsStyle[slotId] = new BlockStyle();
+
+					Object.keys(blockData.slotsStyle[slotId]).forEach((field: string) => {
+						block.slotsStyle[slotId][field] = blockData.slotsStyle[slotId][field];
+					});
+				}
+
 				break;
 			case BlockTypes.OPTIONS_LIST:
 				block = new OptionsList();
@@ -88,6 +103,11 @@ export class ComponentsFactory
 				});
 				block.multiple = blockData.multiple;
 
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
+
 				break;
 			case BlockTypes.OPTION:
 				block = new Option();
@@ -95,6 +115,11 @@ export class ComponentsFactory
 				block.position = blockData.position;
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
+
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
 
 				break;
 			case BlockTypes.HEADER:
@@ -104,6 +129,11 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
 
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
+
 				break;
 			case BlockTypes.TEXT:
 				block = new Text();
@@ -111,6 +141,11 @@ export class ComponentsFactory
 				block.position = blockData.position;
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
+
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
 
 				break;
 			case BlockTypes.TEXT_FIELD:
@@ -122,6 +157,11 @@ export class ComponentsFactory
 				block.placeholder = blockData.placeholder;
 				block.multiline = blockData.multiline;
 
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
+
 				break;
 			case BlockTypes.IMAGE:
 				block = new Image();
@@ -130,6 +170,11 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.imageId = blockData.imageId;
 				block.imageUrl = blockData.imageUrl;
+
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
 
 				break;
 			default:
@@ -179,6 +224,7 @@ export class ComponentsFactory
 		block.setPosition(blockData.getPosition());
 		block.setParentId(blockData.getParentId());
 		block.setData(blockData.getData());
+		block.setStyle(blockData.getStyle());
 
 		return block;
 	}

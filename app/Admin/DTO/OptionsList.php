@@ -22,6 +22,8 @@ class OptionsList implements BlockContract
     public $options = [];
     /** @var bool */
     public $multiple = false;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @return string
@@ -112,7 +114,7 @@ class OptionsList implements BlockContract
     {
         $optionsData = [];
         foreach ($this->options as $option) {
-            $optionsData[] = array_merge(['id' => $option->getId()], $option->getData(), ['position' => $option->getPosition()]);
+            $optionsData[] = array_merge(['id' => $option->getId()], $option->getData(), ['position' => $option->getPosition()], $option->getStyle());
         }
 
         return [
@@ -120,5 +122,13 @@ class OptionsList implements BlockContract
             'options' => $optionsData,
             'multiple' => $this->multiple,
         ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

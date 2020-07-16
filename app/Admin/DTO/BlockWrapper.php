@@ -11,6 +11,8 @@ class BlockWrapper implements BlockContract
     public $data;
     /** @var string */
     public $type;
+    /** @var BlockStyle */
+    public $style;
 
     /**
      * @param BlockContract $block
@@ -18,6 +20,7 @@ class BlockWrapper implements BlockContract
     public function __construct(BlockContract $block)
     {
         $this->data = $block;
+        $this->style = $block->getStyle();
         $this->type = $block->getType();
     }
 
@@ -101,8 +104,19 @@ class BlockWrapper implements BlockContract
         $this->data->setPosition($position);
     }
 
+    /**
+     * @inheritDoc
+     */
     public function getData(): array
     {
         return $this->data->getData();
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getStyle(): array
+    {
+        return ['style' => $this->style];
     }
 }

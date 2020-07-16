@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Entities;
 
+use App\Admin\DTO\BlockStyle;
 use App\Admin\Exceptions\BlockTypeException;
 
 interface BlockContract
@@ -73,4 +74,9 @@ interface BlockContract
      * @return mixed[]
      */
     public function getData(): array;
+
+    /**
+     * @return mixed[]
+     */
+    public function getStyle(): array;
 }

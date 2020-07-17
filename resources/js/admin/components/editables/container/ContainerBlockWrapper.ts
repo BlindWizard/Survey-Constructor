@@ -38,14 +38,14 @@ import {styleRenderer} from "../../../services/StyleRenderer";
                              v-component-drop="slotId"
                         >
                             <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver" />
-                            <BlockResizeFrame v-if="selected && isFrameResize" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
+                            <BlockResizeFrame v-if="selected && isFrameResize" :blockId="block.getId()" :slotId="slotId" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
                         </div>
                     </div>
                 </div>
             </div>
             <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
-            <BlockResizeFrame v-if="selected && !isFrameResize" :mode="resizeMode" />
+            <BlockResizeFrame v-if="selected && !isFrameResize" :blockId="block.getId()" :mode="resizeMode" />
         </div>
 	`,
 	components: {
@@ -79,18 +79,17 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 		selectService.handleElement(this);
 	}
 
-	public getSlotResizeDirection(slotId: string): string
+	public getSlotResizeDirection(slotId: string): string|null
 	{
 		if (this.resizeMode !== ResizeModes.RESIZE) {
 			return ResizeDirection.ALL;
 		}
 
-		if (this.block.slots.indexOf(slotId) === this.block.slots.length - 1) {
-			return ResizeDirection.LEFT;
-		}
-		else {
+		if (this.block.slots.indexOf(slotId) !== this.block.slots.length - 1) {
 			return ResizeDirection.RIGHT
 		}
+
+		return null;
 	}
 
 	public renderSlotStyle(slotId: string)

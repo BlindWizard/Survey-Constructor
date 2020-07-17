@@ -13,8 +13,8 @@ import {selectService} from "../../../services/SelectService";
         <div ref="selectable" :class="bem('text-field-wrapper').classes()" v-component-drag v-component-drop-target>
             <TextFieldBlock :block="block"/>
             <TextFieldBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
-            <BlockEditMenu v-if="selected" :onEdit="toggleEdit"  :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected"/>
+            <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit"  :onDelete="deleteElement" :mode="getMenuMode()"/>
+            <BlockResizeFrame v-if="selected" :blockId="block.getId()"/>
         </div>
     `,
 	components: {

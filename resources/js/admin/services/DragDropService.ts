@@ -1,6 +1,7 @@
 import {store} from "../stores/store";
 import {getters} from "../stores/types";
 import {bem} from "../../common/bem-helper";
+import {selectService} from "./SelectService";
 
 class DragDropService
 {
@@ -155,6 +156,12 @@ class DragDropService
 			}
 
 			document.body.classList.remove(bem('dragging').classes());
+
+			setTimeout(() => {
+				selectService.enable();
+			}, 0);		}
+		else {
+			selectService.disable();
 		}
 	}
 

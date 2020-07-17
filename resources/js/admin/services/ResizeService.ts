@@ -1,10 +1,17 @@
 import {ResizeOffset} from "../models/ResizeOffset";
 import {ResizeDirection} from "../contracts/ResizeDirection";
 import {selectService} from "./SelectService";
+import {actions} from "../stores/types";
+import {ResizeBlockData} from "../api/requests/ResizeBlockData";
+import {ResizeModes} from "../contracts/ResizeModes";
 
 class ResizeService {
+	private blockId: string;
+	private slotId: string|null;
 	private offset: ResizeOffset|null = null;
-	private direction?: ResizeDirection;
+	private direction: ResizeDirection;
+	private mode: ResizeModes;
+
 	private startX: number;
 	private startY: number;
 	private offsetX: number;
@@ -33,7 +40,7 @@ class ResizeService {
 		document.removeEventListener('mouseup', this.handleUp);
 	}
 
-	public startResize(event: MouseEvent, direction: ResizeDirection)
+	public startResize(blockId: string, slotId: string|null, event: MouseEvent, mode: ResizeModes, direction: ResizeDirection)
 	{
 		if (-1 === [ResizeDirection.TOP, ResizeDirection.RIGHT, ResizeDirection.BOTTOM, ResizeDirection.LEFT].indexOf(direction)) {
 			return;
@@ -41,8 +48,12 @@ class ResizeService {
 
 		selectService.disable();
 
-		this.offset = new ResizeOffset();
+		this.blockId = blockId;
+		this.slotId = slotId;
+		this.mode = mode;
 		this.direction = direction;
+
+		this.offset = new ResizeOffset();
 		this.startX = event.pageX;
 		this.startY = event.pageY;
 	}
@@ -69,15 +80,23 @@ class ResizeService {
 				this.offset.left = this.offsetX;
 				break;
 		}
+
+		let element = selectService.getSelected();
+		if (null === element) {
+			return;
+		}
+
+		let request = new ResizeBlockData();
+		request.blockId = this.blockId;
+		request.slotId = this.slotId;
+		request.mode = this.mode;
+		request.offset = this.offset;
+
+		element.$store.dispatch(actions.RESIZE_ELEMENT, request);
 	}
 
 	public handleUp() {
 		if (!this.offset) {
-			return;
-		}
-
-		let element = selectService.getSelected();
-		if (null === element) {
 			return;
 		}
 

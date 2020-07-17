@@ -59,6 +59,7 @@ export class BaseBlock extends Vue implements Draggable {
 	public deleteElement()
 	{
 		this.$store.dispatch(actions.DELETE_ELEMENT, this.block.getId());
+		this.$store.dispatch(actions.SET_EDITING, false);
 	}
 
 	public getMenuMode(): string

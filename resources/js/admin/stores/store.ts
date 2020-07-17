@@ -32,6 +32,7 @@ import {Page} from "../models/Page";
 import {DeleteSurvey} from "../api/requests/DeleteSurvey";
 import {SurveyContract} from "../contracts/SurveyContract";
 import {ResizeBlockData} from "../api/requests/ResizeBlockData";
+import {ResizeModes} from "../contracts/ResizeModes";
 
 Vue.use(Vuex);
 
@@ -359,6 +360,30 @@ const store = new Vuex.Store({
 				}
 
 				page.setBlocks(plain);
+			}
+		},
+		[mutations.SAVE_ELEMENT_STYLE](state, request: ResizeBlockData) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let targetBlock: BlockContract|null = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			switch (request.mode) {
+				case ResizeModes.RESIZE:
+					let style;
+					if (null !== request.slotId) {
+						style = targetBlock.getStyle()['slotsStyle'][request.slotId];
+					}
+					else {
+						style = targetBlock.getStyle()['style'];
+					}
+
+					console.log(request, style);
+					break;
+				default:
+					return;
 			}
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {

@@ -28,12 +28,14 @@ import {resizeService} from "../services/ResizeService";
 	`,
 })
 export class BlockResizeFrame extends Vue {
+	@Prop(String) blockId: string;
+	@Prop(String) slotId: string|null;
 	@Prop(String) mode: ResizeModes|null;
 	@Prop(String) direction: ResizeDirection;
 	@Prop(Function) onResize: Function;
 
 	public handleDown(event: MouseEvent, direction: ResizeDirection) {
-		resizeService.startResize(event, direction);
+		resizeService.startResize(this.blockId, this.slotId, event, this.mode || ResizeModes.SELECT, direction);
 	}
 
 	get isFrameMargin(): boolean {

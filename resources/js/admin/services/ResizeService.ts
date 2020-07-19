@@ -1,14 +1,17 @@
-import {ResizeOffset} from "../models/ResizeOffset";
+import {Rectangle} from "../models/Rectangle";
 import {ResizeDirection} from "../contracts/ResizeDirection";
 import {selectService} from "./SelectService";
 import {actions} from "../stores/types";
 import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
+import {Size} from "../models/Size";
+import {BlockStyle} from "../models/BlockStyle";
+import {BaseBlock} from "../components/editables/BaseBlock";
 
 class ResizeService {
 	private blockId: string;
 	private slotId: string|null;
-	private offset: ResizeOffset|null = null;
+	private offset: Rectangle|null = null;
 	private direction: ResizeDirection;
 	private mode: ResizeModes;
 
@@ -16,6 +19,8 @@ class ResizeService {
 	private startY: number;
 	private offsetX: number;
 	private offsetY: number;
+
+	private originalStyle: Object;
 
 	constructor() {
 		this.handleMove = this.handleMove.bind(this);
@@ -46,6 +51,11 @@ class ResizeService {
 			return;
 		}
 
+		let element = selectService.getSelected();
+		if (null === element) {
+			return;
+		}
+
 		selectService.disable();
 
 		this.blockId = blockId;
@@ -53,9 +63,26 @@ class ResizeService {
 		this.mode = mode;
 		this.direction = direction;
 
-		this.offset = new ResizeOffset();
+		this.offset = new Rectangle();
 		this.startX = event.pageX;
 		this.startY = event.pageY;
+
+		let originalStyle: any = {};
+		originalStyle.style = new BlockStyle();
+		Object.keys(element.block.getStyle()['style']).forEach((field: string) => {
+			originalStyle['style'][field] = (element as BaseBlock).block.getStyle()['style'][field];
+		});
+
+		originalStyle.slotsStyle = {};
+		for (let slotId of element.block.getData()['slots']) {
+			originalStyle.slotsStyle[slotId] = new BlockStyle();
+
+			Object.keys(element.block.getStyle()['slotsStyle'][slotId]).forEach((field: string) => {
+				originalStyle.slotsStyle[slotId][field] = (element as BaseBlock).block.getStyle()['slotsStyle'][slotId][field];
+			});
+		}
+
+		this.originalStyle = originalStyle;
 	}
 
 	public handleMove(e: MouseEvent) {
@@ -90,6 +117,7 @@ class ResizeService {
 		request.blockId = this.blockId;
 		request.slotId = this.slotId;
 		request.mode = this.mode;
+		request.originalStyle = this.originalStyle;
 		request.offset = this.offset;
 
 		element.$store.dispatch(actions.RESIZE_ELEMENT, request);

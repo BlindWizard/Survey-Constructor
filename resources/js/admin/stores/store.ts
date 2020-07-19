@@ -33,6 +33,7 @@ import {DeleteSurvey} from "../api/requests/DeleteSurvey";
 import {SurveyContract} from "../contracts/SurveyContract";
 import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
+import {selectService} from "../services/SelectService";
 
 Vue.use(Vuex);
 
@@ -370,17 +371,26 @@ const store = new Vuex.Store({
 				throw new Error('Block not found');
 			}
 
+			let element = selectService.getSelected();
+			if (null === element) {
+				throw new Error('No selected element');
+			}
+
 			switch (request.mode) {
 				case ResizeModes.RESIZE:
-					let style;
 					if (null !== request.slotId) {
-						style = targetBlock.getStyle()['slotsStyle'][request.slotId];
-					}
-					else {
-						style = targetBlock.getStyle()['style'];
-					}
+						let slots = targetBlock.getData()['slots'];
+						let nextSlot = slots[slots.indexOf(request.slotId) + 1];
 
-					console.log(request, style);
+						let targetStyle = targetBlock.getStyle()['slotsStyle'][request.slotId];
+						let nextSlotStyle = targetBlock.getStyle()['slotsStyle'][nextSlot];
+
+						let slotWidth = (element.$el.clientWidth * request.originalStyle['slotsStyle'][request.slotId].width / 100);
+						let offset = request.originalStyle['slotsStyle'][request.slotId].width * (request.offset.right / slotWidth);
+
+						targetStyle.width = request.originalStyle['slotsStyle'][request.slotId].width + offset;
+						nextSlotStyle.width = request.originalStyle['slotsStyle'][nextSlot].width - offset;
+					}
 					break;
 				default:
 					return;

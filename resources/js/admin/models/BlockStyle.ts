@@ -1,9 +1,9 @@
-import {ResizeOffset} from "./ResizeOffset";
+import {Rectangle} from "./Rectangle";
 
 export class BlockStyle {
 	public width: number;
 	public height: number;
 	public textAlign: number;
-	public margin: ResizeOffset;
-	public padding: ResizeOffset;
+	public margin: Rectangle;
+	public padding: Rectangle;
 }

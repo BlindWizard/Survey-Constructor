@@ -8,13 +8,14 @@ import {OptionBlock} from "./OptionBlock";
 import {HeaderBlock} from "./HeaderBlock";
 import {TextBlock} from "./TextBlock";
 import {TextFieldBlock} from "./TextFieldBlock";
+import {styleRenderer} from "../../services/StyleRenderer";
 
 @Component({
 	template: `
         <div :class="bem('container').classes()">
             <div class="grid-container full">
                 <div class="grid-x">
-                    <div :key="slotId" v-for="slotId in block.slots" :class="'cell small-' + (12 / block.slots.length)">
+                    <div :key="slotId" v-for="slotId in block.slots" class="cell" :style="renderSlotStyle(slotId)">
                         <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver"/>
                     </div>
                 </div>
@@ -36,4 +37,9 @@ export class ContainerBlock extends Vue {
 	@Prop(Container) readonly block: Container;
 	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
 	@Prop(Function) readonly handler: Function|null;
+
+	public renderSlotStyle(slotId: string)
+	{
+		return styleRenderer.render(this.block.getStyle()['slotsStyle'][slotId]);
+	}
 }

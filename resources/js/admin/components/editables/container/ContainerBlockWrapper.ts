@@ -92,8 +92,13 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 		return null;
 	}
 
-	public renderSlotStyle(slotId: string)
+	public renderSlotStyle(slotId: string): string
 	{
-		return styleRenderer.render(this.block.getStyle()['slotsStyle'][slotId]);
+		let style = this.block.getStyle()['slotsStyle'][slotId] || null;
+		if (!style) {
+			return '';
+		}
+
+		return styleRenderer.render(style);
 	}
 }

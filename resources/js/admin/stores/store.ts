@@ -34,6 +34,7 @@ import {SurveyContract} from "../contracts/SurveyContract";
 import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
 import {selectService} from "../services/SelectService";
+import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
 
 Vue.use(Vuex);
 
@@ -363,7 +364,18 @@ const store = new Vuex.Store({
 				page.setBlocks(plain);
 			}
 		},
-		[mutations.SAVE_ELEMENT_STYLE](state, request: ResizeBlockData) {
+		[mutations.SAVE_ELEMENT_STYLE](state, request: SaveBlockStyle) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			targetBlock.setStyle(request.style);
+		},
+		[mutations.RESIZE_ELEMENT](state, request: ResizeBlockData) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
 			let targetBlock: BlockContract|null = page.getBlockById(request.blockId);
@@ -474,6 +486,11 @@ const store = new Vuex.Store({
 			newData.data = block.getData();
 			commit(mutations.SAVE_ELEMENT_DATA, newData);
 
+			let newStyle: SaveBlockStyle = new SaveBlockStyle();
+			newStyle.blockId = block.getId();
+			newStyle.style = block.getStyle();
+			commit(mutations.SAVE_ELEMENT_STYLE, newStyle);
+
 			let reorderData: ReorderElement = new ReorderElement();
 			reorderData.blockId = block.getId();
 			reorderData.position = block.getPosition();
@@ -493,7 +510,7 @@ const store = new Vuex.Store({
 			await BlockApi.saveData(request);
 		},
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
-			commit(mutations.SAVE_ELEMENT_STYLE, request);
+			commit(mutations.RESIZE_ELEMENT, request);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);

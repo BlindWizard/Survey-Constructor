@@ -14,6 +14,7 @@ export enum mutations
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	SAVE_ELEMENT_STYLE = 'saveElementStyle',
+	RESIZE_ELEMENT = 'resizeElement',
 	DELETE_ELEMENT = 'deleteElement',
 	ADD_PAGE = 'addPage',
 	DELETE_PAGE = 'deletePage',

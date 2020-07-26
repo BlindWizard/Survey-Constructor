@@ -1,12 +1,6 @@
 .header-wrapper {
     position: relative;
 
-    .block-edit-menu {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
     &:focus {
         outline: none;
     }

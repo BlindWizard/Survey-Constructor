@@ -1,4 +1,8 @@
 .block-edit-menu {
     display: inline-block;
     z-index: 20;
+    white-space: nowrap;
+    position: absolute;
+    right: 0;
+    top: 0;
 }

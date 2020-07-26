@@ -12,11 +12,12 @@ import {BaseBlock} from "../components/editables/BaseBlock";
 import {actions} from "../../client/stores/types";
 import {TextFieldBlockWrapper} from "../components/editables/text-field/TextFieldBlockWrapper";
 import {TextFieldBlock} from "../components/controls/TextFieldBlock";
-import {Container} from "../models/Container";
 import {ContainerBlockWrapper} from "../components/editables/container/ContainerBlockWrapper";
 import {ContainerBlock} from "../components/controls/ContainerBlock";
 import {ImageBlockWrapper} from "../components/editables/image/ImageBlockWrapper";
 import {ImageBlock} from "../components/controls/ImageBlock";
+import {ButtonBlockWrapper} from "../components/editables/button/ButtonBlockWrapper";
+import {ButtonBlock} from "../components/controls/ButtonBlock";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -38,6 +39,8 @@ export class ComponentsResolver {
 				return this.editable ? TextFieldBlockWrapper : TextFieldBlock;
 			case BlockTypes.IMAGE:
 				return this.editable ? ImageBlockWrapper : ImageBlock;
+			case BlockTypes.BUTTON:
+				return this.editable ? ButtonBlockWrapper : ButtonBlock;
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -77,6 +80,7 @@ export class ComponentsResolver {
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:
 			case BlockTypes.IMAGE:
+			case BlockTypes.BUTTON:
 				return null;
 			default:
 				throw new Error('Undefined block type');

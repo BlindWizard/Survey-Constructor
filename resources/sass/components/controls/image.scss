@@ -6,17 +6,14 @@
         display: block;
     }
 
-    .block-edit-menu {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
     &:focus {
         outline: none;
     }
 }
 
 .image {
-
+    &__value {
+        width: 100%;
+        height: auto;
+    }
 }

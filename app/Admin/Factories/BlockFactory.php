@@ -8,8 +8,10 @@ use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Contracts\Repositories\PageRepositoryContract;
+use App\Admin\Database\Models\Block;
 use App\Admin\DTO\BlockStyle;
 use App\Admin\DTO\BlockWrapper;
+use App\Admin\DTO\Button;
 use App\Admin\DTO\Container;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Image;
@@ -54,6 +56,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getTextField($blockId);
             case BlockContract::TYPE_IMAGE:
                 return $this->getImage($blockId);
+            case BlockContract::TYPE_BUTTON:
+                return $this->getButton($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -157,6 +161,16 @@ class BlockFactory implements BlockFactoryContract
 
                 $fileModel = null !== $dto->imageId ? $this->fileRepository->findById($dto->imageId) : null;
                 $dto->imageUrl = (null !== $fileModel ? $fileModel->getUrl() : null);
+
+                break;
+            case Block::TYPE_BUTTON:
+                $dto = new Button();
+                $dto->id = $model->getId();
+                $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
+                $dto->text = $model->getData()['text'];
+                $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
 
                 break;
             default:
@@ -317,7 +331,7 @@ class BlockFactory implements BlockFactoryContract
     /**
      * @param string|null $blockId
      *
-     * @return TextField
+     * @return Image
      *
      * @throws \Exception
      */
@@ -326,6 +340,26 @@ class BlockFactory implements BlockFactoryContract
         $block = new Image();
         $block->id = $blockId ?? Uuid::uuid4()->toString();
         $block->position = 0;
+
+        $block->style = new BlockStyle();
+        $block->style->sizeMeasure = 'px';
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return Button
+     *
+     * @throws \Exception
+     */
+    public function getButton(string $blockId = null): Button
+    {
+        $block = new Button();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+        $block->text = __('Button');
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';

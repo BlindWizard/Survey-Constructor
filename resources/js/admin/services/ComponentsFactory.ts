@@ -13,6 +13,7 @@ import {TextField} from "../models/TextField";
 import {Container} from "../models/Container";
 import {Image} from "../models/Image";
 import {BlockStyle} from "../models/BlockStyle";
+import {Button} from "../models/Button";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -177,6 +178,19 @@ export class ComponentsFactory
 				});
 
 				break;
+			case BlockTypes.BUTTON:
+				block = new Button();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.parentId = blockData.parentId;
+				block.text = blockData.text;
+
+				block.style = new BlockStyle();
+				Object.keys(blockData.style).forEach((field: string) => {
+					block.style[field] = blockData.style[field];
+				});
+
+				break;
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -214,6 +228,10 @@ export class ComponentsFactory
 				break;
 			case BlockTypes.IMAGE:
 				block = new Image();
+
+				break;
+			case BlockTypes.BUTTON:
+				block = new Button();
 
 				break;
 			default:

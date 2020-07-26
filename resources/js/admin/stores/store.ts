@@ -406,7 +406,8 @@ const store = new Vuex.Store({
 					}
 					else {
 						let targetStyle = targetBlock.getStyle()['style'];
-						targetStyle.width = request.originalStyle['style'].width + request.offset.right;
+						targetStyle.width = request.originalStyle['style'].width + request.offset.left + request.offset.right;
+						targetStyle.height = request.originalStyle['style'].height + request.offset.top + request.offset.bottom;
 					}
 
 					break;

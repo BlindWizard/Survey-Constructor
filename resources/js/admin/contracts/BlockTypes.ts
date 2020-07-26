@@ -6,4 +6,5 @@ export enum BlockTypes {
 	TEXT = 'text',
 	TEXT_FIELD = 'text-field',
 	IMAGE = 'image',
+	BUTTON = 'button',
 }

@@ -35,6 +35,7 @@ import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
 import {selectService} from "../services/SelectService";
 import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
+import {dragDropService} from "../services/DragDropService";
 
 Vue.use(Vuex);
 
@@ -403,6 +404,11 @@ const store = new Vuex.Store({
 						targetStyle.width = request.originalStyle['slotsStyle'][request.slotId].width + offset;
 						nextSlotStyle.width = request.originalStyle['slotsStyle'][nextSlot].width - offset;
 					}
+					else {
+						let targetStyle = targetBlock.getStyle()['style'];
+						targetStyle.width = request.originalStyle['style'].width + request.offset.right;
+					}
+
 					break;
 				default:
 					return;
@@ -511,6 +517,9 @@ const store = new Vuex.Store({
 		},
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
 			commit(mutations.RESIZE_ELEMENT, request);
+		},
+		async [actions.SAVE_STYLE]({commit, state}, request: SaveBlockStyle) {
+			await BlockApi.saveStyle(request);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);

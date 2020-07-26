@@ -99,10 +99,10 @@ const ComponentDrag: DirectiveOptions = {
 
 			dragDropService.setDragState(false);
 
+			let $store = (vnode.context as Vue).$store;
+
 			if (newElement) {
 				if (null !== position) {
-					let $store = (vnode.context as Vue).$store;
-
 					let request = new CreateElement();
 					request.pageId = $store.getters[getters.CURRENT_PAGE].id;
 					request.type = dragElement.getType();
@@ -117,7 +117,6 @@ const ComponentDrag: DirectiveOptions = {
 				spawned = false;
 			}
 			else {
-				let $store = (vnode.context as Vue).$store;
 				let request = new ReorderElement();
 				request.blockId = dragElement.$props.block.id;
 				request.parentBlockId = blockId;

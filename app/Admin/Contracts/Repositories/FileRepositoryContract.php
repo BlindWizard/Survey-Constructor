@@ -21,4 +21,11 @@ interface FileRepositoryContract
      * @return FileContract
      */
     public function findById(string $fileId): FileContract;
+
+    /**
+     * @param string $fileId
+     *
+     * @return array
+     */
+    public function getData(string $fileId): array;
 }

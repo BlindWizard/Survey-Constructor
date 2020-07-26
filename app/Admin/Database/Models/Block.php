@@ -146,11 +146,15 @@ class Block extends Model implements BlockContract
     public function getStyle(): array
     {
         if (null === $this->data) {
-            $style = ['style' => new BlockStyle()];
+            $model = new BlockStyle();
+            $model->sizeMeasure = 'px';
+
+            $style = ['style' => $model];
             if ($this->getType() === BlockContract::TYPE_CONTAINER) {
                 $style['slotsStyle'] = [];
                 foreach ($this->getData()['slots'] as $slotId) {
                     $style['slotsStyle'][$slotId] = new BlockStyle();
+                    $style['slotsStyle'][$slotId]->sizeMeasure = '%';
                 }
             }
 
@@ -158,7 +162,8 @@ class Block extends Model implements BlockContract
         }
 
         $rawStyle = \GuzzleHttp\json_decode($this->data->style, true);
-        $style = ['style' => new BlockStyle()];
+
+        $style = ['style' =>  new BlockStyle()];
 
         foreach($rawStyle['style'] as $key => $value) {
             $style['style']->{$key} = $value;
@@ -167,7 +172,7 @@ class Block extends Model implements BlockContract
         if ($this->getType() === BlockContract::TYPE_CONTAINER) {
             $style['slotsStyle'] = [];
             foreach ($this->getData()['slots'] as $slotId) {
-                $style['slotsStyle'][$slotId] = new BlockStyle();
+                $style['slotsStyle'][$slotId] =  new BlockStyle();
                 foreach($rawStyle['slotsStyle'][$slotId] as $key => $value) {
                     $style['slotsStyle'][$slotId]->{$key} = $value;
                 }

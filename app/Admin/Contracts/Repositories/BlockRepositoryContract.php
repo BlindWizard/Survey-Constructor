@@ -56,6 +56,14 @@ interface BlockRepositoryContract
     public function setElementData(string $blockId, array $data): BlockContract;
 
     /**
+     * @param string $blockId
+     * @param array  $style
+     *
+     * @return BlockContract
+     */
+    public function setElementStyle(string $blockId, array $style): BlockContract;
+
+    /**
      * @param int[] $blockPosition
      *
      * @throws Throwable

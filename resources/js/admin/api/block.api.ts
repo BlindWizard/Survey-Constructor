@@ -5,6 +5,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {CreateElement} from "./requests/CreateElement";
 import {ReorderElement} from "./requests/ReorderElement";
 import {SaveBlockData} from "./requests/SaveBlockData";
+import {SaveBlockStyle} from "./requests/SaveBlockStyle";
 
 export class BlockApi
 {
@@ -41,6 +42,16 @@ export class BlockApi
 	public static saveData(request: SaveBlockData): Promise<any>
 	{
 		return axios.post('/admin/block/saveData', request);
+	}
+
+	/**
+	 * @TODO-19.12.2019-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
+	public static saveStyle(request: SaveBlockStyle): Promise<any>
+	{
+		return axios.post('/admin/block/saveStyle', request);
 	}
 
 	/**

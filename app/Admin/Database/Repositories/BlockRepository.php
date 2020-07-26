@@ -124,6 +124,22 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
+    public function setElementStyle(string $blockId, array $style): BlockContract
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
+        $blockData->style = \GuzzleHttp\json_encode($style);
+        $blockData->save();
+
+        $block->refresh();
+
+        return $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setElementsPositions(array $blockPosition): void
     {
         DB::beginTransaction();

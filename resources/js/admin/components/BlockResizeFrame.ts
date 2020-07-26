@@ -35,7 +35,7 @@ export class BlockResizeFrame extends Vue {
 	@Prop(Function) onResize: Function;
 
 	public handleDown(event: MouseEvent, direction: ResizeDirection) {
-		resizeService.startResize(this.blockId, this.slotId, event, this.mode || ResizeModes.SELECT, direction);
+		resizeService.startResize(this.blockId, this.slotId || null, event, this.mode || ResizeModes.SELECT, direction);
 	}
 
 	get isFrameMargin(): boolean {

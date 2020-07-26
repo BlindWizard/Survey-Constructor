@@ -11,6 +11,7 @@ import {ComponentsResolver} from "../../admin/services/ComponentsResolver";
 import {ScreensPager} from "./ScreensPager";
 import {TextFieldBlock} from "../../admin/components/controls/TextFieldBlock";
 import {ContainerBlock} from "../../admin/components/controls/ContainerBlock";
+import {ImageBlock} from "../../admin/components/controls/ImageBlock";
 
 @Component({
 	template: `
@@ -32,6 +33,7 @@ import {ContainerBlock} from "../../admin/components/controls/ContainerBlock";
 		HeaderBlock,
 		TextBlock,
 		TextFieldBlock,
+		ImageBlock,
 		ScreensPager,
 	}
 })

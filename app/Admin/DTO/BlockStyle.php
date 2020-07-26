@@ -15,6 +15,8 @@ class BlockStyle
     public $margin;
     /** @var ResizeOffset */
     public $padding;
+    /** @var string */
+    public $sizeMeasure;
 
     public function __construct()
     {

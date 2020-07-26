@@ -9,6 +9,7 @@ import {HeaderBlock} from "./HeaderBlock";
 import {TextBlock} from "./TextBlock";
 import {TextFieldBlock} from "./TextFieldBlock";
 import {styleRenderer} from "../../services/StyleRenderer";
+import {ImageBlock} from "./ImageBlock";
 
 @Component({
 	template: `
@@ -29,6 +30,7 @@ import {styleRenderer} from "../../services/StyleRenderer";
 		HeaderBlock,
 		TextBlock,
 		TextFieldBlock,
+		ImageBlock
 	}
 })
 export class ContainerBlock extends Vue {

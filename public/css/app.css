@@ -13380,6 +13380,9 @@ html.is-reveal-open body {
 .app {
   position: relative;
   z-index: 1;
+}
+
+.app .survey-block {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
 }
 
@@ -14053,6 +14056,8 @@ html.is-reveal-open body {
 }
 
 .survey-block {
+  max-width: 1180px;
+  margin: 0 auto;
   background-color: #fefefe;
 }
 
@@ -14443,6 +14448,11 @@ body.dragging .container-wrapper .container__slot {
 
 .image-wrapper {
   position: relative;
+  display: inline-block;
+}
+
+.image-wrapper_no-image {
+  display: block;
 }
 
 .image-wrapper .block-edit-menu {

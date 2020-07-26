@@ -6,4 +6,5 @@ export class BlockStyle {
 	public textAlign: number;
 	public margin: Rectangle;
 	public padding: Rectangle;
+	public sizeMeasure: string;
 }

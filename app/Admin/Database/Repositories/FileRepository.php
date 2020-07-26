@@ -42,4 +42,15 @@ class FileRepository implements FileRepositoryContract
 
         return  $file;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getData(string $fileId): array {
+        $file = $this->findById($fileId);
+
+        $data = getimagesize(Storage::disk('public')->path($file->getName()));
+
+        return $data;
+    }
 }

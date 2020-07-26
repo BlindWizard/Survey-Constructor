@@ -159,7 +159,8 @@ class DragDropService
 
 			setTimeout(() => {
 				selectService.enable();
-			}, 0);		}
+			}, 0);
+		}
 		else {
 			selectService.disable();
 		}

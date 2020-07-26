@@ -38,6 +38,7 @@ export enum actions
 	REORDER_ELEMENT = 'reorderElement',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	RESIZE_ELEMENT = 'resizeElement',
+	SAVE_STYLE = 'saveStyle',
 	DELETE_ELEMENT = 'deleteElement',
 	ADD_PAGE = 'addPage',
 	DELETE_PAGE = 'deletePage',

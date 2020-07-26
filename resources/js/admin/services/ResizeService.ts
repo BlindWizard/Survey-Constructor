@@ -7,10 +7,11 @@ import {ResizeModes} from "../contracts/ResizeModes";
 import {Size} from "../models/Size";
 import {BlockStyle} from "../models/BlockStyle";
 import {BaseBlock} from "../components/editables/BaseBlock";
+import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
 
 class ResizeService {
 	private blockId: string;
-	private slotId: string|null;
+	private slotId: string|null = null;
 	private offset: Rectangle|null = null;
 	private direction: ResizeDirection;
 	private mode: ResizeModes;
@@ -73,13 +74,15 @@ class ResizeService {
 			originalStyle['style'][field] = (element as BaseBlock).block.getStyle()['style'][field];
 		});
 
-		originalStyle.slotsStyle = {};
-		for (let slotId of element.block.getData()['slots']) {
-			originalStyle.slotsStyle[slotId] = new BlockStyle();
+		if (element.block.getStyle()['slotsStyle']) {
+			originalStyle.slotsStyle = {};
+			for (let slotId of element.block.getData()['slots']) {
+				originalStyle.slotsStyle[slotId] = new BlockStyle();
 
-			Object.keys(element.block.getStyle()['slotsStyle'][slotId]).forEach((field: string) => {
-				originalStyle.slotsStyle[slotId][field] = (element as BaseBlock).block.getStyle()['slotsStyle'][slotId][field];
-			});
+				Object.keys(element.block.getStyle()['slotsStyle'][slotId]).forEach((field: string) => {
+					originalStyle.slotsStyle[slotId][field] = (element as BaseBlock).block.getStyle()['slotsStyle'][slotId][field];
+				});
+			}
 		}
 
 		this.originalStyle = originalStyle;
@@ -127,6 +130,25 @@ class ResizeService {
 		if (!this.offset) {
 			return;
 		}
+
+		let element = selectService.getSelected();
+		if (null === element) {
+			return;
+		}
+
+		let resizeRequest = new ResizeBlockData();
+		resizeRequest.blockId = this.blockId;
+		resizeRequest.slotId = this.slotId;
+		resizeRequest.mode = this.mode;
+		resizeRequest.originalStyle = this.originalStyle;
+		resizeRequest.offset = this.offset;
+
+		element.$store.dispatch(actions.RESIZE_ELEMENT, resizeRequest);
+
+		let styleRequest = new SaveBlockStyle();
+		styleRequest.blockId = this.blockId;
+		styleRequest.style = element.block.getStyle();
+		element.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 
 		this.offset = null;
 

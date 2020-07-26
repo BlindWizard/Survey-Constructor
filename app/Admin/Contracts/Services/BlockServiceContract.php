@@ -38,6 +38,14 @@ interface BlockServiceContract
 
     /**
      * @param string $blockId
+     * @param array  $style
+     *
+     * @return BlockContract
+     */
+    public function setElementStyle(string $blockId, array $style): BlockContract;
+
+    /**
+     * @param string $blockId
      *
      * @return void
      *

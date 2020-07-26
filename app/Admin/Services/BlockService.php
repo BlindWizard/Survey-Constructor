@@ -99,6 +99,14 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
+    public function setElementStyle(string $blockId, array $style): BlockContract
+    {
+        return $this->blockRepository->setElementStyle($blockId, $style);
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function deleteElement(string $blockId): void
     {
         $blockToDelete = $this->blockRepository->findById($blockId);

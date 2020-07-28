@@ -8,10 +8,13 @@ import {EditingModes} from "../../contracts/EditingModes";
 import {ComponentsFactory} from "../../services/ComponentsFactory";
 import Component from "vue-class-component";
 import {ResizeModes} from "../../contracts/ResizeModes";
+import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({})
 export class BaseBlock extends Vue implements Draggable {
 	@Prop(Object) readonly block: BlockContract;
+	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
+
 	public selected: boolean = false;
 	public editing: boolean = false;
 	public blockData: BlockContract|null = null;
@@ -51,6 +54,8 @@ export class BaseBlock extends Vue implements Draggable {
 
 		if (final) {
 			this.$store.dispatch(actions.SET_EDITING, false);
+			this.$store.dispatch(actions.SET_RESIZING, false);
+
 			this.toggleSelect(false);
 			this.toggleEdit(false);
 		}

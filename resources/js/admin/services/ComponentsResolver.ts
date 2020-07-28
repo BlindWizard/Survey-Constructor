@@ -92,4 +92,9 @@ export class ComponentsResolver {
 		this.editable = editable;
 		return this;
 	}
+
+	public isEditable(): boolean
+	{
+		return this.editable;
+	}
 }

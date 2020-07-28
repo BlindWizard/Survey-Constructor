@@ -68,4 +68,10 @@
     &_run {
         width: 100%;
     }
+
+    &-group.primary {
+        &_active {
+            background-color: #d94302;
+        }
+    }
 }

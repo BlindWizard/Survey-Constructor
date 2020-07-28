@@ -1,5 +1,6 @@
 .container-wrapper {
     position: relative;
+    max-width: 100%;
 
     &:focus {
         outline: none;
@@ -33,6 +34,7 @@
 }
 
 .container {
+    max-width: 100%;
     background-color: $white;
     position: relative;
 

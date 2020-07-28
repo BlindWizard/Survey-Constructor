@@ -36,6 +36,7 @@ import {ResizeModes} from "../contracts/ResizeModes";
 import {selectService} from "../services/SelectService";
 import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
 import {dragDropService} from "../services/DragDropService";
+import {ChangeSizeMeasureData} from "../api/requests/ChangeSizeMeasureData";
 
 Vue.use(Vuex);
 
@@ -47,6 +48,7 @@ const store = new Vuex.Store({
 		locale: null as any,
 		section: null as string|null,
 		editing: false as boolean,
+		resizing: false as boolean,
 		defaultBlockData: [],
 		survey: null as any,
 		pageId: null as any,
@@ -71,6 +73,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_EDITING](state, editing: boolean) {
 			state.editing = editing;
+		},
+		[mutations.SET_RESIZING](state, resizing: boolean) {
+			state.resizing = resizing;
 		},
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
@@ -392,28 +397,69 @@ const store = new Vuex.Store({
 			switch (request.mode) {
 				case ResizeModes.RESIZE:
 					if (null !== request.slotId) {
+						let parentWidth = element.$el.clientWidth;
+
+						let originalStyle = request.originalStyle['slotsStyle'][request.slotId];
 						let slots = targetBlock.getData()['slots'];
 						let nextSlot = slots[slots.indexOf(request.slotId) + 1];
 
 						let targetStyle = targetBlock.getStyle()['slotsStyle'][request.slotId];
 						let nextSlotStyle = targetBlock.getStyle()['slotsStyle'][nextSlot];
 
-						let slotWidth = (element.$el.clientWidth * request.originalStyle['slotsStyle'][request.slotId].width / 100);
-						let offset = request.originalStyle['slotsStyle'][request.slotId].width * (request.offset.right / slotWidth);
+						let slotWidth = (parentWidth * originalStyle.width / 100);
+						let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / slotWidth);
 
-						targetStyle.width = request.originalStyle['slotsStyle'][request.slotId].width + offset;
+						targetStyle.width = originalStyle.width + offset;
 						nextSlotStyle.width = request.originalStyle['slotsStyle'][nextSlot].width - offset;
 					}
 					else {
+						let originalStyle = request.originalStyle['style'];
 						let targetStyle = targetBlock.getStyle()['style'];
-						targetStyle.width = request.originalStyle['style'].width + request.offset.left + request.offset.right;
-						targetStyle.height = request.originalStyle['style'].height + request.offset.top + request.offset.bottom;
+
+						if ('px' === targetStyle.sizeMeasure) {
+							targetStyle.width = ('auto' !== originalStyle.width ? originalStyle.width - request.offset.left + request.offset.right : 'auto');
+							targetStyle.height = ('auto' !== originalStyle.height ? originalStyle.height + request.offset.top + request.offset.bottom : 'auto');
+						}
+
+						if ('%' === targetStyle.sizeMeasure) {
+							let parentWidth = (element.$el.parentElement as HTMLElement).clientWidth;
+
+							let width = (parentWidth * originalStyle.width / 100);
+							let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / width);
+
+							targetStyle.width = originalStyle.width + offset;
+							targetStyle.height = 'auto';
+						}
 					}
 
 					break;
 				default:
 					return;
 			}
+		},
+		[mutations.CHANGE_SIZE_MEASURE](state, request: ChangeSizeMeasureData) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let targetBlock: BlockContract|null = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			let element = selectService.getSelected();
+			if (null === element) {
+				throw new Error('No selected element');
+			}
+
+			if ('%' === request.measure) {
+				targetBlock.getStyle()['style'].width = 100;
+				targetBlock.getStyle()['style'].height = 'auto';
+			}
+			else {
+				targetBlock.getStyle()['style'].width = element.$el.clientWidth;
+				targetBlock.getStyle()['style'].height = element.$el.clientHeight;
+			}
+
+			targetBlock.getStyle()['style'].sizeMeasure = request.measure;
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {
 			let pages = state.survey.pages;
@@ -443,6 +489,9 @@ const store = new Vuex.Store({
 	actions: {
 		[actions.SET_EDITING]({commit}, editing: boolean) {
 			commit(mutations.SET_EDITING, editing);
+		},
+		[actions.SET_RESIZING]({commit}, resizing: boolean) {
+			commit(mutations.SET_RESIZING, resizing);
 		},
 		[actions.LOAD_SETTINGS]({commit}, setting: Settings) {
 			commit(mutations.SET_CSRF, setting.csrf);
@@ -518,6 +567,9 @@ const store = new Vuex.Store({
 		},
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
 			commit(mutations.RESIZE_ELEMENT, request);
+		},
+		async [actions.CHANGE_SIZE_MEASURE]({commit, state}, request: ChangeSizeMeasureData) {
+			commit(mutations.CHANGE_SIZE_MEASURE, request);
 		},
 		async [actions.SAVE_STYLE]({commit, state}, request: SaveBlockStyle) {
 			await BlockApi.saveStyle(request);
@@ -601,6 +653,9 @@ const store = new Vuex.Store({
 		},
 		[getters.EDITING](state): boolean {
 			return state.editing;
+		},
+		[getters.RESIZING](state): boolean {
+			return state.resizing;
 		},
 		[getters.SURVEYS](state): Survey[]|null {
 			return state.surveys;

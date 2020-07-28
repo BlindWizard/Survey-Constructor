@@ -1,6 +1,6 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {getters} from "../stores/types";
+import {actions, getters} from "../stores/types";
 import {Locale} from "../models/Locale";
 import {Prop} from "vue-property-decorator";
 import {EditingModes} from "../contracts/EditingModes";
@@ -58,6 +58,8 @@ export class BlockEditMenu extends Vue {
 		if (null === this.onSelectMode) {
 			return;
 		}
+
+		this.$store.dispatch(actions.SET_RESIZING, true);
 
 		this.onSelectMode(ResizeModes.RESIZE);
 	}

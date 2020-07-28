@@ -8,12 +8,15 @@ import {ImageBlock} from "../../controls/ImageBlock";
 import {ImageBlockEdit} from "./ImageBlockEdit";
 import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
+import {ImageResizeEdit} from "./ImageResizeEdit";
+import {styleRenderer} from "../../../services/StyleRenderer";
 
 @Component({
 	template: `
-        <div ref="selectable" :class="bem('image-wrapper').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" v-component-drag v-component-drop-target>
-            <ImageBlock :block="block" />
+        <div ref="selectable" :class="bem('image-wrapper').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" :style="renderImageStyle()" v-component-drag v-component-drop-target>
+            <ImageBlock :block="block" :resolver="resolver" />
             <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
+            <ImageResizeEdit :block="block" :blockStyle="this.block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :blockId="block.getId()" :mode="resizeMode" :direction="getResizeDirection()" />
         </div>
@@ -21,6 +24,7 @@ import {ResizeDirection} from "../../../contracts/ResizeDirection";
 	components: {
 		ImageBlock,
 		ImageBlockEdit,
+		ImageResizeEdit,
 		BlockEditMenu,
 		BlockResizeFrame
 	}
@@ -42,5 +46,10 @@ export class ImageBlockWrapper extends BaseBlock implements Draggable {
 		}
 
 		return null;
+	}
+
+	public renderImageStyle(): string
+	{
+		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 }

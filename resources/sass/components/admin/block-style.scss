@@ -1,0 +1,15 @@
+.block-style {
+    color: $white;
+
+    &__size-label {
+        font-weight: bold;
+    }
+
+    &__size-value {
+        display: inline-block;
+    }
+
+    &__size-setting {
+        display: inline-block;
+    }
+}

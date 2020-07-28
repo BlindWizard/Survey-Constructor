@@ -38,10 +38,15 @@ class SelectService {
 					return;
 				}
 
+				if (el.classList.contains('block-style') || el.closest('.block-style')) {
+					return;
+				}
+
 				for (let element of this.elements) {
 					if (this.selected && element !== this.selected) {
 						element.toggleSelect(false);
 						element.toggleEdit(false);
+						element.$store.dispatch(actions.SET_RESIZING, false);
 					}
 
 					var clickOnThis = (el === element.$refs.selectable);
@@ -64,6 +69,10 @@ class SelectService {
 		}
 
 		store.dispatch(actions.SET_EDITING, null !== this.selected);
+
+		if (null === this.selected) {
+			store.dispatch(actions.SET_RESIZING, false);
+		}
 	}
 
 	public getSelected(): BaseBlock|null

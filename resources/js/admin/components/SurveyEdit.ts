@@ -18,6 +18,7 @@ import {Sections} from "../contracts/Sections";
                 <div class="grid-y grid-padding-y medium-2 dark">
                     <ComponentsMenu v-if="!editing" />
                     <portal-target v-if="editing" name="edit-block"></portal-target>
+                    <portal-target v-if="resizing" name="resize-block"></portal-target>
                     <a v-if="token && !editing" :href="runUrl" target="_blank">
                         <button :class="bem('button').is('run').classes()">
                             <span :class="bem('button').el('label').classes()">Run Survey!</span>
@@ -72,5 +73,9 @@ export class SurveyEdit extends Vue {
 
 	get editing(): boolean {
 		return this.$store.getters[getters.EDITING];
+	}
+
+	get resizing(): boolean {
+		return this.$store.getters[getters.RESIZING];
 	}
 }

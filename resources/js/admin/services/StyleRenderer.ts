@@ -6,8 +6,8 @@ class StyleRenderer {
 			+ (null !== style.width ? 'width:' + style.width + ('auto' !== style.width ? style.sizeMeasure + ';' : ';') : '')
 			+ (null !== style.height ? 'height:' + style.height + ('auto' !== style.height ? style.sizeMeasure + ';' : ';') : '')
 			+ (null !== style.textAlign ? 'text-align:' + style.textAlign + ';' : '')
-			+ 'margin:' + style.margin.top + 'px ' + style.margin.right + 'px ' + style.margin.bottom + 'px ' + style.margin.left + 'px;'
-			+ 'padding:' + style.padding.top + 'px ' + style.padding.right + 'px ' + style.padding.bottom + 'px ' + style.padding.left + 'px;'
+			+ 'margin:' + (style.margin.top || 0) + 'px ' + (style.margin.right || 0) + 'px ' + (style.margin.bottom || 0) + 'px ' + (style.margin.left || 0) + 'px;'
+			+ 'padding:' + (style.padding.top || 0) + 'px ' + (style.padding.right || 0) + 'px ' + (style.padding.bottom || 0) + 'px ' + (style.padding.left || 0) + 'px;'
 		;
 
 		return string;

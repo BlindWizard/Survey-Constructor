@@ -35,7 +35,6 @@ import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
 import {selectService} from "../services/SelectService";
 import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
-import {dragDropService} from "../services/DragDropService";
 import {ChangeSizeMeasureData} from "../api/requests/ChangeSizeMeasureData";
 
 Vue.use(Vuex);
@@ -429,6 +428,50 @@ const store = new Vuex.Store({
 
 							targetStyle.width = originalStyle.width + offset;
 							targetStyle.height = 'auto';
+						}
+					}
+
+					break;
+
+				case ResizeModes.MARGIN:
+					{
+						let targetStyle = targetBlock.getStyle()['style'];
+						if (request.offset.top) {
+							targetStyle.margin.top = request.offset.top;
+						}
+
+						if (request.offset.right) {
+							targetStyle.margin.right = -request.offset.right;
+						}
+
+						if (request.offset.bottom) {
+							targetStyle.margin.bottom = -request.offset.bottom;
+						}
+
+						if (request.offset.left) {
+							targetStyle.margin.left = request.offset.left;
+						}
+					}
+
+					break;
+
+				case ResizeModes.PADDING:
+					{
+						let targetStyle = targetBlock.getStyle()['style'];
+						if (request.offset.top) {
+							targetStyle.padding.top = request.offset.top;
+						}
+
+						if (request.offset.right) {
+							targetStyle.padding.right = -request.offset.right;
+						}
+
+						if (request.offset.bottom) {
+							targetStyle.padding.bottom = -request.offset.bottom;
+						}
+
+						if (request.offset.left) {
+							targetStyle.padding.left = request.offset.left;
 						}
 					}
 

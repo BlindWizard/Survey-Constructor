@@ -436,20 +436,22 @@ const store = new Vuex.Store({
 				case ResizeModes.MARGIN:
 					{
 						let targetStyle = targetBlock.getStyle()['style'];
+						let originalStyle = request.originalStyle['style'];
+
 						if (request.offset.top) {
-							targetStyle.margin.top = request.offset.top;
+							targetStyle.margin.top = originalStyle.margin.top + request.offset.top;
 						}
 
 						if (request.offset.right) {
-							targetStyle.margin.right = -request.offset.right;
+							targetStyle.margin.right = originalStyle.margin.right - request.offset.right;
 						}
 
 						if (request.offset.bottom) {
-							targetStyle.margin.bottom = -request.offset.bottom;
+							targetStyle.margin.bottom = originalStyle.margin.bottom + request.offset.bottom;
 						}
 
 						if (request.offset.left) {
-							targetStyle.margin.left = request.offset.left;
+							targetStyle.margin.left = originalStyle.margin.left + request.offset.left;
 						}
 					}
 
@@ -458,20 +460,34 @@ const store = new Vuex.Store({
 				case ResizeModes.PADDING:
 					{
 						let targetStyle = targetBlock.getStyle()['style'];
+						let originalStyle = request.originalStyle['style'];
+
 						if (request.offset.top) {
-							targetStyle.padding.top = request.offset.top;
+							targetStyle.padding.top = originalStyle.padding.top + request.offset.top;
+							if (targetStyle.padding.top < 0) {
+								targetStyle.padding.top = 0;
+							}
 						}
 
 						if (request.offset.right) {
-							targetStyle.padding.right = -request.offset.right;
+							targetStyle.padding.right = originalStyle.padding.right - request.offset.right;
+							if (targetStyle.padding.right < 0) {
+								targetStyle.padding.right = 0;
+							}
 						}
 
 						if (request.offset.bottom) {
-							targetStyle.padding.bottom = -request.offset.bottom;
+							targetStyle.padding.bottom = originalStyle.padding.bottom - (targetStyle.sizeMeasure === 'px' ? request.offset.bottom : -request.offset.bottom);
+							if (targetStyle.padding.bottom < 0) {
+								targetStyle.padding.bottom = 0;
+							}
 						}
 
 						if (request.offset.left) {
-							targetStyle.padding.left = request.offset.left;
+							targetStyle.padding.left = originalStyle.padding.left + request.offset.left;
+							if (targetStyle.padding.left < 0) {
+								targetStyle.padding.left = 0;
+							}
 						}
 					}
 

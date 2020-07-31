@@ -13645,8 +13645,8 @@ html.is-reveal-open body {
   position: absolute;
   left: 1px;
   top: 1px;
-  width: calc(100% - 1px);
-  height: calc(100% - 1px);
+  right: 1px;
+  bottom: 1px;
   z-index: 10;
   outline: 2px dashed #fd5b15;
 }
@@ -13677,27 +13677,51 @@ html.is-reveal-open body {
 }
 
 .block-resize-frame__pin_top {
-  top: -0.5rem;
+  top: calc(-0.5rem - 1px);
   left: calc(50% - 0.5rem);
   cursor: row-resize;
 }
 
 .block-resize-frame__pin_right {
-  right: -0.5rem;
+  right: calc(-0.5rem - 1px);
   top: calc(50% - 0.5rem);
   cursor: col-resize;
 }
 
 .block-resize-frame__pin_bottom {
-  bottom: -0.5rem;
+  bottom: calc(-0.5rem - 1px);
   left: calc(50% - 0.5rem);
   cursor: row-resize;
 }
 
 .block-resize-frame__pin_left {
-  left: -0.5rem;
+  left: calc(-0.5rem - 1px);
   top: calc(50% - 0.5rem);
   cursor: col-resize;
+}
+
+.block-resize-frame__pin_top-right {
+  top: calc(-0.5rem - 1px);
+  right: calc(-0.5rem - 1px);
+  cursor: nesw-resize;
+}
+
+.block-resize-frame__pin_top-left {
+  left: calc(-0.5rem - 1px);
+  top: calc(-0.5rem - 1px);
+  cursor: nwse-resize;
+}
+
+.block-resize-frame__pin_bottom-right {
+  bottom: calc(-0.5rem - 1px);
+  right: calc(-0.5rem - 1px);
+  cursor: nwse-resize;
+}
+
+.block-resize-frame__pin_bottom-left {
+  left: calc(-0.5rem - 1px);
+  bottom: calc(-0.5rem - 1px);
+  cursor: nesw-resize;
 }
 
 .placeholder {
@@ -13915,6 +13939,10 @@ html.is-reveal-open body {
   color: #fefefe;
 }
 
+.block-style__size {
+  margin-bottom: 1rem;
+}
+
 .block-style__size-label {
   font-weight: bold;
 }
@@ -13925,6 +13953,10 @@ html.is-reveal-open body {
 
 .block-style__size-setting {
   display: inline-block;
+}
+
+.block-style .button-group {
+  margin-bottom: 0;
 }
 
 .home-page__body {

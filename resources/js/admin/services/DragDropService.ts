@@ -6,6 +6,8 @@ import {selectService} from "./SelectService";
 class DragDropService
 {
 	private dragState: boolean = false;
+	private dragNow: boolean = false;
+
 	private dragElement: HTMLElement|null = null;
 	private dragContainer: HTMLElement;
 	private activeTarget: HTMLElement|null = null;
@@ -156,13 +158,17 @@ class DragDropService
 			}
 
 			document.body.classList.remove(bem('dragging').classes());
+		}
+	}
 
+	public setDragNow(state: boolean): void{
+		if (state) {
+			selectService.disable();
+		}
+		else {
 			setTimeout(() => {
 				selectService.enable();
 			}, 0);
-		}
-		else {
-			selectService.disable();
 		}
 	}
 

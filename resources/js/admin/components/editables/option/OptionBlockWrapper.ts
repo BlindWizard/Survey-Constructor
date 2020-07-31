@@ -14,7 +14,7 @@ import {selectService} from "../../../services/SelectService";
             <OptionBlock :block="block"/>
             <OptionBlockEdit v-if="editing" :block="blockData" :onSave="saveData"/>
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected" :blockId="block.getId()"/>
+            <BlockResizeFrame v-if="selected" :block="block"/>
         </div>
 	`,
 	components: {

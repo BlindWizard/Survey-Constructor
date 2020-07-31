@@ -1,15 +1,23 @@
 .block-style {
     color: $white;
 
-    &__size-label {
-        font-weight: bold;
+    &__size {
+        margin-bottom: 1rem;
+
+        &-label {
+            font-weight: bold;
+        }
+
+        &-value {
+            display: inline-block;
+        }
+
+        &-setting {
+            display: inline-block;
+        }
     }
 
-    &__size-value {
-        display: inline-block;
-    }
-
-    &__size-setting {
-        display: inline-block;
+    .button-group {
+        margin-bottom: 0;
     }
 }

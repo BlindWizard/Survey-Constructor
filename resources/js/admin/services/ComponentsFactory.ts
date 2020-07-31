@@ -14,6 +14,7 @@ import {Container} from "../models/Container";
 import {Image} from "../models/Image";
 import {BlockStyle} from "../models/BlockStyle";
 import {Button} from "../models/Button";
+import {Rectangle} from "../models/Rectangle";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -24,7 +25,7 @@ export class ComponentsFactory
 
 		let ComponentClass = Vue.extend(resolver.resolveComponentClass(type));
 		let defaultData = store.getters[getters.ELEMENT_DEFAULT_DATA](type);
-		let instance = new ComponentClass({propsData: {block: defaultData}, store});
+		let instance = new ComponentClass({propsData: {block: defaultData, resolver: resolver}, store});
 		instance.$mount();
 
 		container.appendChild(instance.$el);
@@ -77,18 +78,10 @@ export class ComponentsFactory
 					block.children[innerBlock.getParentId()][innerBlock.getId()] = innerBlock;
 				}
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
-
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 				block.slotsStyle = {};
 				for (let slotId of block.slots) {
-					block.slotsStyle[slotId] = new BlockStyle();
-
-					Object.keys(blockData.slotsStyle[slotId]).forEach((field: string) => {
-						block.slotsStyle[slotId][field] = blockData.slotsStyle[slotId][field];
-					});
+					block.slotsStyle[slotId] = ComponentsFactory.cloneStyle(blockData.slotsStyle[slotId]);
 				}
 
 				break;
@@ -104,10 +97,7 @@ export class ComponentsFactory
 				});
 				block.multiple = blockData.multiple;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			case BlockTypes.OPTION:
@@ -117,10 +107,7 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			case BlockTypes.HEADER:
@@ -130,10 +117,7 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			case BlockTypes.TEXT:
@@ -143,10 +127,7 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			case BlockTypes.TEXT_FIELD:
@@ -158,10 +139,7 @@ export class ComponentsFactory
 				block.placeholder = blockData.placeholder;
 				block.multiline = blockData.multiline;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			case BlockTypes.IMAGE:
@@ -172,10 +150,8 @@ export class ComponentsFactory
 				block.imageId = blockData.imageId;
 				block.imageUrl = blockData.imageUrl;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
+
 
 				break;
 			case BlockTypes.BUTTON:
@@ -185,10 +161,7 @@ export class ComponentsFactory
 				block.parentId = blockData.parentId;
 				block.text = blockData.text;
 
-				block.style = new BlockStyle();
-				Object.keys(blockData.style).forEach((field: string) => {
-					block.style[field] = blockData.style[field];
-				});
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
 			default:
@@ -245,5 +218,27 @@ export class ComponentsFactory
 		block.setStyle(blockData.getStyle());
 
 		return block;
+	}
+
+	public static cloneStyle(original: BlockStyle): BlockStyle {
+		let style = new BlockStyle();
+		style.width = original.width;
+		style.height = original.height;
+		style.textAlign = original.textAlign;
+		style.sizeMeasure = original.sizeMeasure;
+
+		style.margin = new Rectangle();
+		style.margin.top = original.margin.top;
+		style.margin.right = original.margin.right;
+		style.margin.bottom = original.margin.bottom;
+		style.margin.left = original.margin.left;
+
+		style.padding = new Rectangle();
+		style.padding.top = original.padding.top;
+		style.padding.right = original.padding.right;
+		style.padding.bottom = original.padding.bottom;
+		style.padding.left = original.padding.left;
+
+		return style;
 	}
 }

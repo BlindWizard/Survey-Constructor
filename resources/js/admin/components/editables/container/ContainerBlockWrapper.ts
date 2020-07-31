@@ -38,14 +38,14 @@ import {styleRenderer} from "../../../services/StyleRenderer";
                              v-component-drop="slotId"
                         >
                             <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver" />
-                            <BlockResizeFrame v-if="selected && isFrameResize" :blockId="block.getId()" :slotId="slotId" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
+                            <BlockResizeFrame v-if="selected && isFrameResize" :block="block" :slotId="slotId" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
                         </div>
                     </div>
                 </div>
             </div>
             <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
-            <BlockResizeFrame v-if="selected && !isFrameResize" :blockId="block.getId()" :mode="resizeMode" />
+            <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" />
         </div>
 	`,
 	components: {

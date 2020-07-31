@@ -41,6 +41,8 @@ export class BlockEditMenu extends Vue {
 			return;
 		}
 
+		this.$store.dispatch(actions.SET_RESIZING, true);
+
 		this.onSelectMode(ResizeModes.MARGIN);
 	}
 
@@ -49,6 +51,8 @@ export class BlockEditMenu extends Vue {
 		if (null === this.onSelectMode) {
 			return;
 		}
+
+		this.$store.dispatch(actions.SET_RESIZING, true);
 
 		this.onSelectMode(ResizeModes.PADDING);
 	}

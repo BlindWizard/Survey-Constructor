@@ -24,6 +24,7 @@ class SelectService {
 		this.selected = null;
 
 		let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
+		console.log(possibleTargets);
 		targets:
 			for (let el of possibleTargets) {
 				if (el.classList.contains('block-resize-frame')) {

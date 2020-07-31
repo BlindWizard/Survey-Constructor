@@ -74,6 +74,7 @@ const ComponentDrag: DirectiveOptions = {
 
 			dragDropService.getDragContainer().appendChild(handler);
 			dragDropService.handleDrag(handler as HTMLElement);
+			dragDropService.setDragNow(true);
 		};
 
 		document.addEventListener('mouseup', (e: MouseEvent) => {
@@ -91,6 +92,8 @@ const ComponentDrag: DirectiveOptions = {
 				dragDropService.setDragState(false);
 				return;
 			}
+
+			dragDropService.setDragNow(false);
 
 			threshold = 0;
 

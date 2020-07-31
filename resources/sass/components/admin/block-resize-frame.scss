@@ -2,8 +2,8 @@
     position: absolute;
     left: 1px;
     top: 1px;
-    width: calc(100% - 1px);
-    height: calc(100% - 1px);
+    right: 1px;
+    bottom: 1px;
     z-index: 10;
     outline: 2px dashed $primary;
 
@@ -32,27 +32,51 @@
         background-color: $primary;
 
         &_top {
-            top: -0.5rem;
+            top: calc(-0.5rem - 1px);
             left: calc(50% - 0.5rem);
             cursor: row-resize;
         }
 
         &_right {
-            right: -0.5rem;
+            right: calc(-0.5rem - 1px);
             top: calc(50% - 0.5rem);
             cursor: col-resize;
         }
 
         &_bottom {
-            bottom: -0.5rem;
+            bottom: calc(-0.5rem - 1px);
             left: calc(50% - 0.5rem);
             cursor: row-resize;
         }
 
         &_left {
-            left: -0.5rem;
+            left: calc(-0.5rem - 1px);
             top: calc(50% - 0.5rem);
             cursor: col-resize;
+        }
+
+        &_top-right {
+            top: calc(-0.5rem - 1px);
+            right: calc(-0.5rem - 1px);
+            cursor: nesw-resize;
+        }
+
+        &_top-left {
+            left: calc(-0.5rem - 1px);
+            top: calc(-0.5rem - 1px);
+            cursor: nwse-resize;
+        }
+
+        &_bottom-right {
+            bottom: calc(-0.5rem - 1px);
+            right: calc(-0.5rem - 1px);
+            cursor: nwse-resize;
+        }
+
+        &_bottom-left {
+            left: calc(-0.5rem - 1px);
+            bottom: calc(-0.5rem - 1px);
+            cursor: nesw-resize;
         }
     }
 }

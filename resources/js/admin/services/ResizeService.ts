@@ -4,10 +4,8 @@ import {selectService} from "./SelectService";
 import {actions} from "../stores/types";
 import {ResizeBlockData} from "../api/requests/ResizeBlockData";
 import {ResizeModes} from "../contracts/ResizeModes";
-import {Size} from "../models/Size";
-import {BlockStyle} from "../models/BlockStyle";
-import {BaseBlock} from "../components/editables/BaseBlock";
 import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
+import {ComponentsFactory} from "./ComponentsFactory";
 
 class ResizeService {
 	private blockId: string;
@@ -48,7 +46,16 @@ class ResizeService {
 
 	public startResize(blockId: string, slotId: string|null, event: MouseEvent, mode: ResizeModes, direction: ResizeDirection)
 	{
-		if (-1 === [ResizeDirection.TOP, ResizeDirection.RIGHT, ResizeDirection.BOTTOM, ResizeDirection.LEFT].indexOf(direction)) {
+		if (-1 === [
+			ResizeDirection.TOP,
+			ResizeDirection.RIGHT,
+			ResizeDirection.BOTTOM,
+			ResizeDirection.LEFT,
+			ResizeDirection.TOP_LEFT,
+			ResizeDirection.TOP_RIGHT,
+			ResizeDirection.BOTTOM_LEFT,
+			ResizeDirection.BOTTOM_RIGHT,
+		].indexOf(direction)) {
 			return;
 		}
 
@@ -69,19 +76,12 @@ class ResizeService {
 		this.startY = event.pageY;
 
 		let originalStyle: any = {};
-		originalStyle.style = new BlockStyle();
-		Object.keys(element.block.getStyle()['style']).forEach((field: string) => {
-			originalStyle['style'][field] = (element as BaseBlock).block.getStyle()['style'][field];
-		});
+		originalStyle.style = ComponentsFactory.cloneStyle(element.block.getStyle()['style']);
 
 		if (element.block.getStyle()['slotsStyle']) {
 			originalStyle.slotsStyle = {};
 			for (let slotId of element.block.getData()['slots']) {
-				originalStyle.slotsStyle[slotId] = new BlockStyle();
-
-				Object.keys(element.block.getStyle()['slotsStyle'][slotId]).forEach((field: string) => {
-					originalStyle.slotsStyle[slotId][field] = (element as BaseBlock).block.getStyle()['slotsStyle'][slotId][field];
-				});
+				originalStyle.slotsStyle[slotId] = ComponentsFactory.cloneStyle(element.block.getStyle()['slotsStyle'][slotId]);
 			}
 		}
 
@@ -108,6 +108,22 @@ class ResizeService {
 				break;
 			case ResizeDirection.LEFT:
 				this.offset.left = this.offsetX;
+				break;
+			case ResizeDirection.TOP_LEFT:
+				this.offset.left = this.offsetX;
+				this.offset.top = this.offsetY;
+				break;
+			case ResizeDirection.TOP_RIGHT:
+				this.offset.left = this.offsetX;
+				this.offset.top = this.offsetY;
+				break;
+			case ResizeDirection.BOTTOM_LEFT:
+				this.offset.left = this.offsetX;
+				this.offset.bottom = this.offsetY;
+				break;
+			case ResizeDirection.BOTTOM_RIGHT:
+				this.offset.right = this.offsetX;
+				this.offset.bottom = this.offsetY;
 				break;
 		}
 

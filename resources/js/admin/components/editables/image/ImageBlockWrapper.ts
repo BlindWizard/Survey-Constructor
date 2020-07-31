@@ -18,7 +18,7 @@ import {styleRenderer} from "../../../services/StyleRenderer";
             <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
             <ImageResizeEdit :block="block" :blockStyle="this.block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
-            <BlockResizeFrame v-if="selected" :blockId="block.getId()" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
         </div>
 	`,
 	components: {

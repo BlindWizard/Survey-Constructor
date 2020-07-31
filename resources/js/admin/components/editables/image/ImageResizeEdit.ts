@@ -29,6 +29,22 @@ import {SaveBlockStyle} from "../../../api/requests/SaveBlockStyle";
                             </div>
                         </div>
                     </div>
+                    <div :class="bem('block-style').el('size').classes()">
+                        <div :class="bem('block-style').el('size-label').classes()">
+                            Margin
+                        </div>
+                        <div :class="bem('block-style').el('size-value').classes()">
+                            {{ blockStyle.margin.top }}px × {{ blockStyle.margin.right }}px × {{ blockStyle.margin.bottom }}px × {{ blockStyle.margin.left }}px
+                        </div>
+                    </div>
+                    <div :class="bem('block-style').el('size').classes()">
+                        <div :class="bem('block-style').el('size-label').classes()">
+                            Padding
+                        </div>
+                        <div :class="bem('block-style').el('size-value').classes()">
+                            {{ blockStyle.padding.top }}px × {{ blockStyle.padding.right }}px × {{ blockStyle.padding.bottom }}px × {{ blockStyle.padding.left }}px
+                        </div>
+                    </div>
                 </div>
             </div>
         </portal>

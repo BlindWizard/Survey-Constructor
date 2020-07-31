@@ -20,6 +20,8 @@
 
 .image {
     max-width: 100%;
+    position: relative;
+    z-index: 20;
 
     &__value {
         width: 100%;

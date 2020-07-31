@@ -439,11 +439,11 @@ const store = new Vuex.Store({
 						let originalStyle = request.originalStyle['style'];
 
 						if (request.offset.top) {
-							targetStyle.margin.top = originalStyle.margin.top + request.offset.top;
+							targetStyle.margin.top = originalStyle.margin.top - request.offset.top;
 						}
 
 						if (request.offset.right) {
-							targetStyle.margin.right = originalStyle.margin.right - request.offset.right;
+							targetStyle.margin.right = originalStyle.margin.right + request.offset.right;
 						}
 
 						if (request.offset.bottom) {
@@ -451,7 +451,7 @@ const store = new Vuex.Store({
 						}
 
 						if (request.offset.left) {
-							targetStyle.margin.left = originalStyle.margin.left + request.offset.left;
+							targetStyle.margin.left = originalStyle.margin.left - request.offset.left;
 						}
 					}
 

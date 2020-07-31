@@ -4,7 +4,8 @@
     z-index: 1000;
     background-color: $white;
     border: 0.18rem $primary dashed;
-    min-width: 10rem;
+    min-width: 10rem !important;
+    max-width: 20rem !important;
 }
 
 .drop-active.container__slot_empty {

@@ -9,6 +9,7 @@ import {BlockContract} from "../contracts/BlockContract";
 @Component({
 	template: `
         <div :class="bem('block-resize-frame').is(mode || 'select').classes()" :style="renderFrameStyle()">
+            <div :class="bem('block-resize-frame').el('background').classes()"></div>
             <span v-if="mode && (isDirectionAll || isDirectionVertical || isDirectionTop)"
                   :class="bem('block-resize-frame').el('pin').is('top').classes()"
                   v-on:mousedown.stop="handleDown($event, resizeTop)" v-on:click.prevent>
@@ -63,6 +64,13 @@ export class BlockResizeFrame extends Vue {
 			string += 'right:' + this.block.getStyle()['style'].padding.right + 'px;';
 			string += 'bottom:' + this.block.getStyle()['style'].padding.bottom + 'px;';
 			string += 'left:' + this.block.getStyle()['style'].padding.left + 'px;';
+		}
+
+		if (this.isFrameMargin) {
+			string += 'top:' + (-this.block.getStyle()['style'].margin.top) + 'px;';
+			string += 'right:' + (-this.block.getStyle()['style'].margin.right) + 'px;';
+			string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom) + 'px;';
+			string += 'left:' + (-this.block.getStyle()['style'].margin.left) + 'px;';
 		}
 
 		return string;

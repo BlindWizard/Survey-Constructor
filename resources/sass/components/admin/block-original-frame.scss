@@ -1,0 +1,18 @@
+.block-original-frame {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    outline: 2px dashed $secondary;
+
+    &_margin {
+        z-index: 15;
+        background-color: $white;
+    }
+
+    &_padding {
+        z-index: 5;
+        background-color: #c9c7ff;
+    }
+}

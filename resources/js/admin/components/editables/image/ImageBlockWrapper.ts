@@ -10,6 +10,7 @@ import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {ImageResizeEdit} from "./ImageResizeEdit";
 import {styleRenderer} from "../../../services/StyleRenderer";
+import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 
 @Component({
 	template: `
@@ -19,6 +20,7 @@ import {styleRenderer} from "../../../services/StyleRenderer";
             <ImageResizeEdit :block="block" :blockStyle="this.block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
         </div>
 	`,
 	components: {
@@ -26,7 +28,8 @@ import {styleRenderer} from "../../../services/StyleRenderer";
 		ImageBlockEdit,
 		ImageResizeEdit,
 		BlockEditMenu,
-		BlockResizeFrame
+		BlockResizeFrame,
+		BlockOriginalFrame
 	}
 })
 export class ImageBlockWrapper extends BaseBlock implements Draggable {
@@ -50,6 +53,7 @@ export class ImageBlockWrapper extends BaseBlock implements Draggable {
 
 	public renderImageStyle(): string
 	{
+		console.log(styleRenderer.render(this.block.getStyle()['style']));
 		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 }

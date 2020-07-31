@@ -114,7 +114,7 @@ class ResizeService {
 				this.offset.top = this.offsetY;
 				break;
 			case ResizeDirection.TOP_RIGHT:
-				this.offset.left = this.offsetX;
+				this.offset.right = this.offsetX;
 				this.offset.top = this.offsetY;
 				break;
 			case ResizeDirection.BOTTOM_LEFT:

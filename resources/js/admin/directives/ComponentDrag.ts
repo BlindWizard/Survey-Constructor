@@ -11,6 +11,7 @@ let handler: HTMLElement|null = null;
 let spawned = false;
 let newElement = false;
 let threshold = 0;
+let originalDisplay: string|null = null;
 
 const ComponentDrag: DirectiveOptions = {
 	bind: (el, binding, vnode) => {
@@ -67,6 +68,7 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
+			originalDisplay = (dragElement.$el as HTMLElement).style.display;
 			(dragElement.$el as HTMLElement).style.display = 'none';
 
 			handler.style.left = e.x + 'px';
@@ -134,7 +136,10 @@ const ComponentDrag: DirectiveOptions = {
 				}
 
 				dragElement.$el.classList.remove('draggable');
-				(dragElement.$el as HTMLElement).removeAttribute('style');
+
+				if (null !== originalDisplay) {
+					(dragElement.$el as HTMLElement).style.display = originalDisplay;
+				}
 
 				$store.dispatch(actions.REORDER_ELEMENT, request);
 			}

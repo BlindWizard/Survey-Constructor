@@ -29,6 +29,7 @@ const ComponentDrag: DirectiveOptions = {
 				newElement = false;
 
 				if (dragElement.draggable()) {
+					originalDisplay = (dragElement.$el as HTMLElement).style.display;
 					handler = dragElement.$el.cloneNode(true) as HTMLElement;
 					handler.classList.add('draggable');
 					dragDropService.setDragState(true);
@@ -59,6 +60,8 @@ const ComponentDrag: DirectiveOptions = {
 
 			if (newElement && !spawned) {
 				dragElement = ComponentsFactory.create(binding.value, dragDropService.getDragContainer());
+				originalDisplay = (dragElement.$el as HTMLElement).style.display;
+
 				handler = dragElement.$el.cloneNode(true) as HTMLElement;
 				handler.classList.add('draggable');
 				spawned = true;
@@ -68,7 +71,6 @@ const ComponentDrag: DirectiveOptions = {
 				return;
 			}
 
-			originalDisplay = (dragElement.$el as HTMLElement).style.display;
 			(dragElement.$el as HTMLElement).style.display = 'none';
 
 			handler.style.left = e.x + 'px';

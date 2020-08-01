@@ -477,7 +477,7 @@ const store = new Vuex.Store({
 						}
 
 						if (request.offset.bottom) {
-							targetStyle.padding.bottom = originalStyle.padding.bottom - (targetStyle.sizeMeasure === 'px' ? request.offset.bottom : -request.offset.bottom);
+							targetStyle.padding.bottom = originalStyle.padding.bottom - request.offset.bottom;
 							if (targetStyle.padding.bottom < 0) {
 								targetStyle.padding.bottom = 0;
 							}

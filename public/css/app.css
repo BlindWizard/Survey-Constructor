@@ -13639,7 +13639,7 @@ html.is-reveal-open body {
   white-space: nowrap;
   position: absolute;
   right: 0;
-  top: 0;
+  top: -2rem;
 }
 
 .block-resize-frame {
@@ -14503,12 +14503,6 @@ body.dragging .container-wrapper .container__slot {
   position: relative;
 }
 
-.text-field-wrapper .block-edit-menu {
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
 .text-field-wrapper:focus {
   outline: none;
 }
@@ -14521,6 +14515,8 @@ body.dragging .container-wrapper .container__slot {
   font-size: 1rem;
   line-height: 1.25rem;
   padding: 1rem;
+  position: relative;
+  z-index: 20;
 }
 
 .text-field__value {

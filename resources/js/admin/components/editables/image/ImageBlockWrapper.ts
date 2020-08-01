@@ -17,7 +17,7 @@ import {BlockOriginalFrame} from "../../BlockOriginalFrame";
         <div ref="selectable" :class="bem('image-wrapper').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" :style="renderImageStyle()" v-component-drag v-component-drop-target>
             <ImageBlock :block="block" :resolver="resolver" />
             <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
-            <ImageResizeEdit :block="block" :blockStyle="this.block.getStyle()['style']"/>
+            <ImageResizeEdit v-if="editing && (isFrameMargin || isFramePadding)" :block="block" :blockStyle="this.block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
@@ -53,7 +53,6 @@ export class ImageBlockWrapper extends BaseBlock implements Draggable {
 
 	public renderImageStyle(): string
 	{
-		console.log(styleRenderer.render(this.block.getStyle()['style']));
 		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 }

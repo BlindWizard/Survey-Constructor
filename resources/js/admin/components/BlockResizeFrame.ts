@@ -137,7 +137,7 @@ export class BlockResizeFrame extends Vue {
 	}
 
 	get resizeTopRight(): ResizeDirection {
-		return ResizeDirection.TOP_LEFT;
+		return ResizeDirection.TOP_RIGHT;
 	}
 
 	get resizeBottomRight(): ResizeDirection {

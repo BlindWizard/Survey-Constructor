@@ -2,10 +2,12 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Option} from "../../models/Option";
+import {styleRenderer} from "../../services/StyleRenderer";
+import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('option').classes()">
+        <div :class="bem('option').classes()" :style="!resolver.isEditable() ? renderOptionStyle() : ''">
             <input :class="bem('option').el('control').classes()" :id="block.id" :name="block.id + '[]'" :value="block.id" type="checkbox" @input="handle">
             <label :class="bem('option').el('checkbox').classes()" :for="block.id">
                 <span :class="bem('option').el('checkbox-inner').classes()">
@@ -21,6 +23,7 @@ import {Option} from "../../models/Option";
 export class OptionBlock extends Vue {
 	@Prop(Option) readonly block: Option;
 	@Prop(Function) readonly handler: Function|null;
+	@Prop(ComponentsResolver) readonly resolver: ComponentsResolver;
 
 	private handle(event: Event) {
 		if (!this.handler) {
@@ -28,5 +31,10 @@ export class OptionBlock extends Vue {
 		}
 
 		this.handler(this, event);
+	}
+
+	public renderOptionStyle(): string
+	{
+		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 }

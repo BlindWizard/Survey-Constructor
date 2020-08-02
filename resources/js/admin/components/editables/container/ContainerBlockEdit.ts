@@ -2,10 +2,10 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {Locale} from "../../../models/Locale";
-import {getters} from "../../../stores/types";
+import {actions, getters} from "../../../stores/types";
 import {Container} from "../../../models/Container";
 import {ComponentsFactory} from "../../../services/ComponentsFactory";
-const uuidv4 = require('uuid/v4');
+import {ChangeSlotsCount} from "../../../api/requests/ChangeSlotsCount";
 
 @Component({
 template: `
@@ -23,10 +23,6 @@ template: `
                     <option>12</option>
                 </select>
             </label>
-
-            <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
-            </button>
         </div>
     </portal>
 `,
@@ -48,24 +44,11 @@ export class ContainerBlockEdit extends Vue {
 			return;
 		}
 
-		let newSlotsCount = ((e.target as any).value) as number;
-		let oldSlotsCount = this.blockData.slots.length as number;
-		if (newSlotsCount > oldSlotsCount) {
-			for (let i = 0; i < newSlotsCount - oldSlotsCount; i++) {
-				let newSlot = uuidv4();
-				this.blockData.slots.push(newSlot);
-				this.blockData.children[newSlot] = {};
-			}
-		}
-		else {
-			for (let i = 0; i < oldSlotsCount - newSlotsCount; i++) {
-				let deleteSlot: string = this.blockData.slots.pop() as string;
-				delete this.blockData.children[deleteSlot];
-			}
-		}
+		let request = new ChangeSlotsCount();
+		request.blockId = this.blockData.getId();
+		request.count = ((e.target as any).value) as number;
 
-		this.onUpdate(this.blockData);
-		this.onSave();
+		this.$store.dispatch(actions.CHANGE_SLOTS_COUNT, request);
 	}
 
 	get locale(): Locale {

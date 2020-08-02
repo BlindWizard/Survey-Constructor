@@ -8,6 +8,8 @@
 
 .text {
     background-color: $white;
+    position: relative;
+    z-index: 20;
 
     &__value {
         display: inline-block;

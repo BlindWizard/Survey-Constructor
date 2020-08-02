@@ -8,16 +8,16 @@ import {ImageBlock} from "../../controls/ImageBlock";
 import {ImageBlockEdit} from "./ImageBlockEdit";
 import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
-import {ImageResizeEdit} from "./ImageResizeEdit";
 import {styleRenderer} from "../../../services/StyleRenderer";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
+import {StyleEdit} from "../../StyleEdit";
 
 @Component({
 	template: `
-        <div ref="selectable" :class="bem('image-wrapper').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" :style="renderImageStyle()" v-component-drag v-component-drop-target>
+        <div ref="selectable" :class="bem('image-wrapper').add(this.selected ? 'selected' : '').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" :style="renderImageStyle()" v-component-drag v-component-drop-target>
             <ImageBlock :block="block" :resolver="resolver" />
             <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
-            <ImageResizeEdit v-if="editing && (isFrameMargin || isFramePadding)" :block="block" :blockStyle="this.block.getStyle()['style']"/>
+            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="this.block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
@@ -26,10 +26,10 @@ import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 	components: {
 		ImageBlock,
 		ImageBlockEdit,
-		ImageResizeEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
-		BlockOriginalFrame
+		BlockOriginalFrame,
+		StyleEdit
 	}
 })
 export class ImageBlockWrapper extends BaseBlock implements Draggable {

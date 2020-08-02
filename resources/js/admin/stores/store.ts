@@ -36,6 +36,11 @@ import {ResizeModes} from "../contracts/ResizeModes";
 import {selectService} from "../services/SelectService";
 import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
 import {ChangeSizeMeasureData} from "../api/requests/ChangeSizeMeasureData";
+import {BlockStyle} from "../models/BlockStyle";
+import {Rectangle} from "../models/Rectangle";
+import {ChangeSlotsCount} from "../api/requests/ChangeSlotsCount";
+import {SaveSlotStyle} from "../api/requests/SaveSlotStyle";
+const uuidv4 = require('uuid/v4');
 
 Vue.use(Vuex);
 
@@ -163,10 +168,8 @@ const store = new Vuex.Store({
 			if (pages[targetBlock.getParentId()]) {
 				let blocks: BlockContract[] = page.getBlocksInOrder();
 				let targetBlock = page.getBlocks()[request.blockId];
-				let block = ComponentsFactory.cloneElement(targetBlock);
-				block.setData(request.data);
 
-				blocks[targetBlock.getPosition()] = block;
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
 				page.setBlocks(blocks);
 			}
 			else {
@@ -379,6 +382,53 @@ const store = new Vuex.Store({
 			}
 
 			targetBlock.setStyle(request.style);
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				let targetBlock = page.getBlocks()[request.blockId];
+
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				page.setBlocks(blocks);
+			}
+			else {
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
+		},
+		[mutations.SET_SLOT_STYLE](state, request: SaveSlotStyle) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			targetBlock.getStyle()['slotsStyle'][request.slotId].width = request.width;
 		},
 		[mutations.RESIZE_ELEMENT](state, request: ResizeBlockData) {
 			let pages = state.survey.pages;
@@ -400,16 +450,20 @@ const store = new Vuex.Store({
 
 						let originalStyle = request.originalStyle['slotsStyle'][request.slotId];
 						let slots = targetBlock.getData()['slots'];
-						let nextSlot = slots[slots.indexOf(request.slotId) + 1];
+						let prevSlot = slots[slots.indexOf(request.slotId) - 1];
 
 						let targetStyle = targetBlock.getStyle()['slotsStyle'][request.slotId];
-						let nextSlotStyle = targetBlock.getStyle()['slotsStyle'][nextSlot];
+						let prevSlotStyle = targetBlock.getStyle()['slotsStyle'][prevSlot];
 
 						let slotWidth = (parentWidth * originalStyle.width / 100);
 						let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / slotWidth);
 
-						targetStyle.width = originalStyle.width + offset;
-						nextSlotStyle.width = request.originalStyle['slotsStyle'][nextSlot].width - offset;
+						let slotNewWidth = originalStyle.width + offset;
+						let prevSlotNewWidth = request.originalStyle['slotsStyle'][prevSlot].width - offset;
+						if ((slotNewWidth >= 0 && prevSlotNewWidth <= 100) && (slotNewWidth <= 100 && prevSlotNewWidth >= 0)) {
+							targetStyle.width = slotNewWidth;
+							prevSlotStyle.width = prevSlotNewWidth;
+						}
 					}
 					else {
 						let originalStyle = request.originalStyle['style'];
@@ -427,6 +481,10 @@ const store = new Vuex.Store({
 							let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / width);
 
 							targetStyle.width = originalStyle.width + offset;
+							if (targetStyle.width > 100) {
+								targetStyle.width = 100;
+							}
+
 							targetStyle.height = 'auto';
 						}
 					}
@@ -627,10 +685,77 @@ const store = new Vuex.Store({
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
 			commit(mutations.RESIZE_ELEMENT, request);
 		},
+		async [actions.CHANGE_SLOTS_COUNT]({dispatch, commit, state}, request: ChangeSlotsCount) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let block: BlockContract|null = page.getBlockById(request.blockId);
+			if (null === block) {
+				throw new Error('Block not found');
+			}
+
+			let targetBlock: BlockContract = ComponentsFactory.cloneElement(block);
+			let targetStyle = targetBlock.getStyle()
+
+			let offsetSum = 0;
+			let newSlotsCount = request.count;
+			let oldSlotsCount = targetBlock.getData()['slots'].length as number;
+			if (newSlotsCount > oldSlotsCount) {
+				let newSlot: string|null = null;
+				for (let i = 0; i < newSlotsCount - oldSlotsCount; i++) {
+					newSlot = uuidv4() as string;
+					targetBlock.getData()['slots'].push(newSlot);
+					targetBlock.getData()['children'][newSlot] = {};
+					targetStyle['slotsStyle'][newSlot] = new BlockStyle();
+					targetStyle['slotsStyle'][newSlot].sizeMeasure = '%';
+					targetStyle['slotsStyle'][newSlot].width = 0.01;
+					targetStyle['slotsStyle'][newSlot].margin = new Rectangle();
+					targetStyle['slotsStyle'][newSlot].padding = new Rectangle();
+
+					offsetSum += 0.01;
+				}
+
+				if (null !== newSlot) {
+					let prevSlot = targetBlock.getData()['slots'][targetBlock.getData()['slots'].indexOf(newSlot) - 1];
+
+					//@TODO-02.08.2020-Чучманский Aндрей Improve reactive update
+					let slotRequest = new SaveSlotStyle();
+
+					slotRequest.blockId = targetBlock.getId();
+					slotRequest.slotId = prevSlot;
+					slotRequest.width = (targetStyle['slotsStyle'][prevSlot].width as number - offsetSum);
+					commit(mutations.SET_SLOT_STYLE, slotRequest);
+				}
+			}
+			else {
+				for (let i = 0; i < oldSlotsCount - newSlotsCount; i++) {
+					let deleteSlot: string = targetBlock.getData()['slots'].pop() as string;
+
+					offsetSum += targetStyle['slotsStyle'][deleteSlot].width;
+
+					delete targetBlock.getData()['children'][deleteSlot];
+					delete targetStyle['slotsStyle'][deleteSlot];
+				}
+
+				for (let slotId of targetBlock.getData()['slots']) {
+					targetStyle['slotsStyle'][slotId].width += (offsetSum / targetBlock.getData()['slots'].length);
+				}
+			}
+
+			let dataRequest = new SaveBlockData();
+			dataRequest.blockId = targetBlock.getId();
+			dataRequest.data = targetBlock.getData();
+			dispatch(actions.SAVE_ELEMENT_DATA, dataRequest);
+
+			let styleRequest = new SaveBlockStyle();
+			styleRequest.blockId = targetBlock.getId();
+			styleRequest.style = targetStyle;
+			dispatch(actions.SAVE_STYLE, styleRequest);
+		},
 		async [actions.CHANGE_SIZE_MEASURE]({commit, state}, request: ChangeSizeMeasureData) {
 			commit(mutations.CHANGE_SIZE_MEASURE, request);
 		},
 		async [actions.SAVE_STYLE]({commit, state}, request: SaveBlockStyle) {
+			commit(mutations.SAVE_ELEMENT_STYLE, request);
 			await BlockApi.saveStyle(request);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {

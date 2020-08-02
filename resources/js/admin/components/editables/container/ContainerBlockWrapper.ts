@@ -85,8 +85,8 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 			return ResizeDirection.ALL;
 		}
 
-		if (this.block.slots.indexOf(slotId) !== this.block.slots.length - 1) {
-			return ResizeDirection.RIGHT
+		if (this.block.slots.indexOf(slotId) !== 0) {
+			return ResizeDirection.LEFT;
 		}
 
 		return null;

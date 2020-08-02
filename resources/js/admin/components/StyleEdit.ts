@@ -1,12 +1,12 @@
 import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
-import {Locale} from "../../../models/Locale";
-import {actions, getters} from "../../../stores/types";
-import {BlockStyle} from "../../../models/BlockStyle";
-import {ChangeSizeMeasureData} from "../../../api/requests/ChangeSizeMeasureData";
-import {Image} from "../../../models/Image";
-import {SaveBlockStyle} from "../../../api/requests/SaveBlockStyle";
+import {BlockContract} from "../contracts/BlockContract";
+import {BlockStyle} from "../models/BlockStyle";
+import {Locale} from "../models/Locale";
+import {actions, getters} from "../stores/types";
+import {ChangeSizeMeasureData} from "../api/requests/ChangeSizeMeasureData";
+import {SaveBlockStyle} from "../api/requests/SaveBlockStyle";
 
 @Component({
 	template: `
@@ -50,8 +50,8 @@ import {SaveBlockStyle} from "../../../api/requests/SaveBlockStyle";
         </portal>
 	`
 })
-export class ImageResizeEdit extends Vue {
-	@Prop(Image) readonly block: Image;
+export class StyleEdit extends Vue {
+	@Prop(Object) readonly block: BlockContract;
 	@Prop(BlockStyle) readonly blockStyle: BlockStyle;
 
 	get locale(): Locale

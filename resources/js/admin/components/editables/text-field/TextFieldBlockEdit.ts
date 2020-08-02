@@ -24,9 +24,6 @@ import {ComponentsFactory} from "../../../services/ComponentsFactory";
                     Multiline?
                     <input type="checkbox" :checked="blockData.multiline" @input="updateMultiline" />
                 </label>
-                <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
-                </button>
             </div>
         </portal>
 	`,

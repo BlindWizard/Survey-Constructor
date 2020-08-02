@@ -9,6 +9,8 @@
 .option {
     background-color: $white;
     overflow: hidden;
+    position: relative;
+    z-index: 20;
 
     &__checkbox {
         -webkit-user-select: none;

@@ -1,9 +1,9 @@
 .block-resize-frame {
     position: absolute;
-    left: 1px;
-    top: 1px;
-    right: 1px;
-    bottom: 1px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     outline: 2px dashed $primary;
     z-index: 10;
 
@@ -87,6 +87,14 @@
         z-index: -1;
     }
 
+    &_select {
+        z-index: 40;
+
+        .block-resize-frame__background {
+            background-color: transparent;
+        }
+    }
+
     &_margin {
         z-index: 10;
 
@@ -96,7 +104,15 @@
     }
 
     &_padding {
-        z-index: 25;
+        z-index: 40;
+
+        .block-resize-frame__background {
+            background-color: transparent;
+        }
+    }
+
+    &_resize {
+        z-index: 40;
 
         .block-resize-frame__background {
             background-color: transparent;

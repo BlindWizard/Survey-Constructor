@@ -13644,10 +13644,10 @@ html.is-reveal-open body {
 
 .block-resize-frame {
   position: absolute;
-  left: 1px;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   outline: 2px dashed #fd5b15;
   z-index: 10;
 }
@@ -13732,6 +13732,14 @@ html.is-reveal-open body {
   z-index: -1;
 }
 
+.block-resize-frame_select {
+  z-index: 40;
+}
+
+.block-resize-frame_select .block-resize-frame__background {
+  background-color: transparent;
+}
+
 .block-resize-frame_margin {
   z-index: 10;
 }
@@ -13741,19 +13749,27 @@ html.is-reveal-open body {
 }
 
 .block-resize-frame_padding {
-  z-index: 25;
+  z-index: 40;
 }
 
 .block-resize-frame_padding .block-resize-frame__background {
   background-color: transparent;
 }
 
+.block-resize-frame_resize {
+  z-index: 40;
+}
+
+.block-resize-frame_resize .block-resize-frame__background {
+  background-color: transparent;
+}
+
 .block-original-frame {
   position: absolute;
-  left: 1px;
-  top: 1px;
-  right: 1px;
-  bottom: 1px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   outline: 2px dashed #ed0672;
 }
 
@@ -14002,6 +14018,10 @@ html.is-reveal-open body {
   margin-bottom: 0;
 }
 
+.selected {
+  z-index: 30;
+}
+
 .home-page__body {
   background-image: url(/images/sky-bg-1.jpg?459ebd03579e0bac258eb4dfa88bf424);
   background-repeat: no-repeat;
@@ -14223,6 +14243,8 @@ body.dragging .container-wrapper .container__slot {
 .options-list {
   background-color: #fefefe;
   overflow: hidden;
+  position: relative;
+  z-index: 20;
 }
 
 .options-list__header {
@@ -14319,6 +14341,8 @@ body.dragging .container-wrapper .container__slot {
 .option {
   background-color: #fefefe;
   overflow: hidden;
+  position: relative;
+  z-index: 20;
 }
 
 .option__checkbox {
@@ -14441,6 +14465,8 @@ body.dragging .container-wrapper .container__slot {
 
 .header-wrapper {
   max-width: 100%;
+  width: 100%;
+  display: inline-block;
   position: relative;
 }
 
@@ -14450,7 +14476,11 @@ body.dragging .container-wrapper .container__slot {
 
 .header {
   max-width: 100%;
+  width: 100%;
+  display: inline-block;
   background-color: #2d1e45;
+  position: relative;
+  z-index: 20;
 }
 
 .header__image {
@@ -14479,6 +14509,11 @@ body.dragging .container-wrapper .container__slot {
   outline: none;
 }
 
+.button {
+  position: relative;
+  z-index: 20;
+}
+
 .text-wrapper {
   position: relative;
 }
@@ -14489,6 +14524,8 @@ body.dragging .container-wrapper .container__slot {
 
 .text {
   background-color: #fefefe;
+  position: relative;
+  z-index: 20;
 }
 
 .text__value {

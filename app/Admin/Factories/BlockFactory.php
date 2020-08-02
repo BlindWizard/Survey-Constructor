@@ -195,7 +195,8 @@ class BlockFactory implements BlockFactoryContract
         $block->slots= [Uuid::uuid4()->toString(), Uuid::uuid4()->toString()];
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         foreach ($block->slots as $slotId) {
             $block->slotsStyle[$slotId] = new BlockStyle();
@@ -241,7 +242,8 @@ class BlockFactory implements BlockFactoryContract
         $block->options[] = $option;
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -261,7 +263,8 @@ class BlockFactory implements BlockFactoryContract
         $block->position = 0;
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -281,7 +284,8 @@ class BlockFactory implements BlockFactoryContract
         $block->text = config('app.name');
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -301,7 +305,8 @@ class BlockFactory implements BlockFactoryContract
         $block->text = __('Default text');
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -323,7 +328,8 @@ class BlockFactory implements BlockFactoryContract
         $block->multiline = false;
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -342,7 +348,8 @@ class BlockFactory implements BlockFactoryContract
         $block->position = 0;
 
         $block->style = new BlockStyle();
-        $block->style->sizeMeasure = 'px';
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }
@@ -363,6 +370,7 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';
+        $block->style->width = 'auto';
 
         return $block;
     }

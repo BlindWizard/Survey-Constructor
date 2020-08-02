@@ -13,9 +13,6 @@ import {ComponentsFactory} from "../../../services/ComponentsFactory";
             <div :class="bem('edit-modal').classes()">
                 <h4>Option</h4>
                 <input :value="blockData.text" @input="updateText" type="text" />
-                <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
-                </button>
             </div>
         </portal>
 	`,

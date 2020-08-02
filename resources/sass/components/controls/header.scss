@@ -1,5 +1,7 @@
 .header-wrapper {
     max-width: 100%;
+    width: 100%;
+    display: inline-block;
     position: relative;
 
     &:focus {
@@ -9,7 +11,11 @@
 
 .header {
     max-width: 100%;
+    width: 100%;
+    display: inline-block;
     background-color: $dark;
+    position: relative;
+    z-index: 20;
 
     &__image {
         width: 3rem;

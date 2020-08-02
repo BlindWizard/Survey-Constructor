@@ -43,9 +43,6 @@ import {FileModel} from "../../../models/FileModel";
                         </div>
                     </div>
                 </div>
-                <button :class="bem('button').add('primary').classes()" v-on:click.stop="onSave">
-                    <span :class="bem('button').el('label').classes()">{{ locale.save }}</span>
-                </button>
             </div>
         </portal>
 	`,

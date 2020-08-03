@@ -11,6 +11,7 @@ import {TextBlockWrapper} from "./text/TextBlockWrapper";
 import {TextFieldBlockWrapper} from "./text-field/TextFieldBlockWrapper";
 import {ImageBlockWrapper} from "./image/ImageBlockWrapper";
 import {ButtonBlockWrapper} from "./button/ButtonBlockWrapper";
+import {DelimiterBlockWrapper} from "./delimiter/DelimiterBlockWrapper";
 
 @Component({
 	template: `
@@ -25,7 +26,8 @@ import {ButtonBlockWrapper} from "./button/ButtonBlockWrapper";
 		TextBlockWrapper,
 		TextFieldBlockWrapper,
 		ImageBlockWrapper,
-		ButtonBlockWrapper
+		ButtonBlockWrapper,
+		DelimiterBlockWrapper
 	}
 })
 export class PageBlockWrapper extends Vue {

@@ -18,6 +18,8 @@ import {ImageBlockWrapper} from "../components/editables/image/ImageBlockWrapper
 import {ImageBlock} from "../components/controls/ImageBlock";
 import {ButtonBlockWrapper} from "../components/editables/button/ButtonBlockWrapper";
 import {ButtonBlock} from "../components/controls/ButtonBlock";
+import {DelimiterBlockWrapper} from "../components/editables/delimiter/DelimiterBlockWrapper";
+import {DelimiterBlock} from "../components/controls/DelimiterBlock";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -41,6 +43,8 @@ export class ComponentsResolver {
 				return this.editable ? ImageBlockWrapper : ImageBlock;
 			case BlockTypes.BUTTON:
 				return this.editable ? ButtonBlockWrapper : ButtonBlock;
+			case BlockTypes.DELIMITER:
+				return this.editable ? DelimiterBlockWrapper : DelimiterBlock;
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -81,6 +85,7 @@ export class ComponentsResolver {
 			case BlockTypes.TEXT:
 			case BlockTypes.IMAGE:
 			case BlockTypes.BUTTON:
+			case BlockTypes.DELIMITER:
 				return null;
 			default:
 				throw new Error('Undefined block type');

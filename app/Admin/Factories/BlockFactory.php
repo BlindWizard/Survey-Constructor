@@ -13,6 +13,7 @@ use App\Admin\DTO\BlockStyle;
 use App\Admin\DTO\BlockWrapper;
 use App\Admin\DTO\Button;
 use App\Admin\DTO\Container;
+use App\Admin\DTO\Delimiter;
 use App\Admin\DTO\Header;
 use App\Admin\DTO\Image;
 use App\Admin\DTO\Option;
@@ -58,6 +59,8 @@ class BlockFactory implements BlockFactoryContract
                 return $this->getImage($blockId);
             case BlockContract::TYPE_BUTTON:
                 return $this->getButton($blockId);
+            case BlockContract::TYPE_DELIMITER:
+                return $this->getDelimiter($blockId);
             default:
                 throw new BlockTypeException('Can\'t create empty block for type ' . $type);
         }
@@ -172,6 +175,14 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
 
+                break;
+            case Block::TYPE_DELIMITER:
+                $dto = new Delimiter();
+                $dto->id = $model->getId();
+                $dto->parentId = $model->getParentId();
+                $dto->pageId = $model->getPageId();
+                $dto->position = $model->getPosition();
+                $dto->style = $model->getStyle()['style'];
                 break;
             default:
                 throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));
@@ -371,6 +382,26 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';
         $block->style->width = 'auto';
+
+        return $block;
+    }
+
+    /**
+     * @param string|null $blockId
+     *
+     * @return Delimiter
+     *
+     * @throws \Exception
+     */
+    public function getDelimiter(string $blockId = null): Delimiter
+    {
+        $block = new Delimiter();
+        $block->id = $blockId ?? Uuid::uuid4()->toString();
+        $block->position = 0;
+
+        $block->style = new BlockStyle();
+        $block->style->sizeMeasure = '%';
+        $block->style->width = 100;
 
         return $block;
     }

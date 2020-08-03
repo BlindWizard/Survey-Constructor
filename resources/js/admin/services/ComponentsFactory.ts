@@ -15,6 +15,7 @@ import {Image} from "../models/Image";
 import {BlockStyle} from "../models/BlockStyle";
 import {Button} from "../models/Button";
 import {Rectangle} from "../models/Rectangle";
+import {Delimiter} from "../models/Delimiter";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory
@@ -164,6 +165,14 @@ export class ComponentsFactory
 				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
 				break;
+			case BlockTypes.DELIMITER:
+				block = new Delimiter();
+				block.id = blockData.id;
+				block.position = blockData.position;
+				block.parentId = blockData.parentId;
+
+				block.style = ComponentsFactory.cloneStyle(blockData.style);
+				break;
 			default:
 				throw new Error('Undefined block type');
 		}
@@ -205,6 +214,10 @@ export class ComponentsFactory
 				break;
 			case BlockTypes.BUTTON:
 				block = new Button();
+
+				break;
+			case BlockTypes.DELIMITER:
+				block = new Delimiter();
 
 				break;
 			default:

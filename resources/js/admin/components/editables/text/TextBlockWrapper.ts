@@ -11,6 +11,7 @@ import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 import {StyleEdit} from "../../StyleEdit";
+import {styleRenderer} from "../../../services/StyleRenderer";
 
 @Component({
 	template: `
@@ -36,6 +37,11 @@ export class TextBlockWrapper extends BaseBlock implements Draggable {
 	public created()
 	{
 		selectService.handleElement(this);
+	}
+
+	public renderTextStyle(): string
+	{
+		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 
 	public getResizeDirection(): string|null

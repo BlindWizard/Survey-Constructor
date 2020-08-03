@@ -7,4 +7,5 @@ export enum BlockTypes {
 	TEXT_FIELD = 'text-field',
 	IMAGE = 'image',
 	BUTTON = 'button',
+	DELIMITER = 'delimiter',
 }

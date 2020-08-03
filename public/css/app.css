@@ -14591,3 +14591,19 @@ body.dragging .container-wrapper .container__slot {
   height: 100%;
 }
 
+.delimiter-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.delimiter-wrapper:focus {
+  outline: none;
+}
+
+.delimiter {
+  position: relative;
+  z-index: 20;
+  margin: 0;
+  padding: 0;
+}
+

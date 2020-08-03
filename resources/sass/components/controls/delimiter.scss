@@ -1,0 +1,15 @@
+.delimiter-wrapper {
+    position: relative;
+    display: inline-block;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+.delimiter {
+    position: relative;
+    z-index: 20;
+    margin: 0;
+    padding: 0;
+}

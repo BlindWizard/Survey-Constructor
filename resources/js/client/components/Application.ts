@@ -1,9 +1,9 @@
 import Component from "vue-class-component";
 import Vue from "vue";
-import {PageBlock} from "./PageBlock";
 import {ComponentsResolver} from "../../admin/services/ComponentsResolver";
 import {PageContract} from "../../admin/contracts/PageContract";
 import {actions, getters} from "../stores/types";
+import {PageBlock} from "../../admin/components/controls/PageBlock";
 
 @Component({
 	template: `

@@ -66,42 +66,6 @@ const store = new Vuex.Store({
 
 			await EventsApi.run(runRequest);
 		},
-		async [actions.NEXT_PAGE]({commit, state}) {
-			let pages = state.survey.getPagesByStep();
-			var currentPage = state.survey.getPages()[state.pageId];
-			let setStep = currentPage.getStep() + 1;
-			if (!(setStep in pages)) {
-				return;
-			}
-
-			let newPage = pages[setStep];
-			let nextPageRequest = new NextPageRequest();
-			nextPageRequest.clientId = state.clientId;
-			nextPageRequest.surveyId = state.survey.getId();
-			nextPageRequest.pageId = newPage.getId();
-			nextPageRequest.token = state.token;
-			await EventsApi.nextPage(nextPageRequest);
-
-			commit(mutations.SET_PAGE, newPage);
-		},
-		async [actions.PREV_PAGE]({commit, state}) {
-			let pages = state.survey.getPagesByStep();
-			var currentPage = state.survey.getPages()[state.pageId];
-			let setStep = currentPage.getStep() - 1;
-			if (!(setStep in pages)) {
-				return;
-			}
-
-			let newPage = pages[setStep];
-			let prevPageRequest = new PrevPageRequest();
-			prevPageRequest.clientId = state.clientId;
-			prevPageRequest.surveyId = state.survey.getId();
-			prevPageRequest.pageId = newPage.getId();
-			prevPageRequest.token = state.token;
-			await EventsApi.prevPage(prevPageRequest);
-
-			commit(mutations.SET_PAGE, newPage);
-		},
 		async [actions.OPTIONS_LIST_SELECT]({commit, state}, data: any) {
 			let request = new OptionsListSelectRequest();
 			request.clientId = state.clientId;

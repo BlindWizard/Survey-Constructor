@@ -11,6 +11,8 @@ import {PageContract} from "../../contracts/PageContract";
 import {TextFieldBlock} from "./TextFieldBlock";
 import {ContainerBlock} from "./ContainerBlock";
 import {ImageBlock} from "./ImageBlock";
+import {DelimiterBlock} from "./DelimiterBlock";
+import {ButtonBlock} from "./ButtonBlock";
 
 @Component({
 	template: `
@@ -26,6 +28,8 @@ import {ImageBlock} from "./ImageBlock";
 		TextBlock,
 		TextFieldBlock,
 		ImageBlock,
+		ButtonBlock,
+		DelimiterBlock
 	}
 })
 export class PageBlock extends Vue {

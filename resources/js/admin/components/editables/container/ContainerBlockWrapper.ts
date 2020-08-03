@@ -25,6 +25,8 @@ import {ImageBlockWrapper} from "../image/ImageBlockWrapper";
 import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {styleRenderer} from "../../../services/StyleRenderer";
+import {DelimiterBlock} from "../../controls/DelimiterBlock";
+import {DelimiterBlockWrapper} from "../delimiter/DelimiterBlockWrapper";
 
 @Component({
 	template: `
@@ -66,6 +68,8 @@ import {styleRenderer} from "../../../services/StyleRenderer";
 		ContainerBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		DelimiterBlock,
+		DelimiterBlockWrapper,
 	}
 })
 export class ContainerBlockWrapper extends BaseBlock implements Draggable {

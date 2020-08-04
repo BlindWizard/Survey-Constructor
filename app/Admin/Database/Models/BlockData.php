@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $id
  * @property string $data
  * @property string $style
+ * @property string $actions
  */
 class BlockData extends Model
 {
@@ -16,6 +17,7 @@ class BlockData extends Model
     public const ATTR_ID = 'id';
     public const ATTR_DATA = 'data';
     public const ATTR_STYLE = 'style';
+    public const ATTR_ACTIONS = 'actions';
 
     public $incrementing = false;
     public $timestamps = false;
@@ -26,5 +28,9 @@ class BlockData extends Model
 
     public function getStyle(): array {
         return \GuzzleHttp\json_decode($this->style, true);
+    }
+
+    public function getActions(): array {
+        return \GuzzleHttp\json_decode($this->actions, true);
     }
 }

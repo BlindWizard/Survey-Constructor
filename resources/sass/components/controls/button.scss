@@ -1,6 +1,6 @@
 .button-wrapper {
     position: relative;
-    display: inline-block;
+    display: block;
 
     &:focus {
         outline: none;
@@ -9,5 +9,6 @@
 
 .button {
     position: relative;
+    display: block;
     z-index: 20;
 }

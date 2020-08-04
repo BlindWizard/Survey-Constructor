@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 use App\Admin\Database\Models\BlockData;
 
-class AddStylesIntoBlockData extends Migration
+class BlockDataAddActions extends Migration
 {
     /**
      * @return void

@@ -26,6 +26,9 @@ class Container implements BlockContract
     /** @var BlockStyle[] */
     public $slotsStyle = [];
 
+    /** @var BlockAction[] */
+    public $actions = [];
+
     /**
      * @return string
      */
@@ -121,5 +124,13 @@ class Container implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style, 'slotsStyle' => $this->slotsStyle];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

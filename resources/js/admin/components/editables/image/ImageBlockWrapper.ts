@@ -17,7 +17,7 @@ import {StyleEdit} from "../../StyleEdit";
         <div ref="selectable" :class="bem('image-wrapper').add(this.selected ? 'selected' : '').is(!block.getData()['imageId'] ? 'no-image' : '').classes()" :style="renderImageStyle()" v-component-drag v-component-drop-target>
             <ImageBlock :block="block" :resolver="resolver" />
             <ImageBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
-            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="this.block.getStyle()['style']"/>
+            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />

@@ -22,6 +22,8 @@ class Image implements BlockContract
     public $imageUrl = null;
     /** @var BlockStyle */
     public $style;
+    /** @var BlockAction[] */
+    public $actions = [];
 
     /**
      * @inheritDoc
@@ -118,5 +120,13 @@ class Image implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

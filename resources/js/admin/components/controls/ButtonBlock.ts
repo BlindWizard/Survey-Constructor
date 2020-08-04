@@ -7,9 +7,11 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <button :class="bem('button').is('primary').classes()" :style="!resolver.isEditable() ? renderButtonStyle() : ''">
-            <span :class="bem('button').el('label').classes()">{{ block.text }}</span>
-        </button>
+        <div :style="!resolver.isEditable() ? renderButtonStyle() : ''">
+            <button :class="bem('button').is('primary').classes()">
+                <span :class="bem('button').el('label').classes()">{{ block.text }}</span>
+            </button>
+        </div>
 	`,
 })
 export class ButtonBlock extends Vue {

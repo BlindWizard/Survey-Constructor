@@ -18,6 +18,8 @@ class Delimiter implements BlockContract
     public $position;
     /** @var BlockStyle */
     public $style;
+    /** @var BlockAction[] */
+    public $actions = [];
 
     /**
      * @inheritDoc
@@ -112,5 +114,13 @@ class Delimiter implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

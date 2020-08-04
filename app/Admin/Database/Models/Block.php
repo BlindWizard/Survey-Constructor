@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Admin\Database\Models;
 
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\DTO\BlockAction;
 use App\Admin\DTO\BlockStyle;
 use DemeterChain\B;
 use Illuminate\Database\Eloquent\Model;
@@ -180,5 +182,28 @@ class Block extends Model implements BlockContract
         }
 
         return $style;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        if (null === $this->data) {
+            return [];
+        }
+
+        $actions = [];
+        foreach (\GuzzleHttp\json_decode($this->data->style, true) as $actionData) {
+            $action = new BlockAction();
+
+            foreach ($actionData as $key => $value) {
+                $action->{$key} = $value;
+            }
+
+            $actions[] = $action;
+        }
+
+        return $actions;
     }
 }

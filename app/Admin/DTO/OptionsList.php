@@ -24,6 +24,8 @@ class OptionsList implements BlockContract
     public $multiple = false;
     /** @var BlockStyle */
     public $style;
+    /** @var BlockAction[] */
+    public $actions = [];
 
     /**
      * @return string
@@ -130,5 +132,13 @@ class OptionsList implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

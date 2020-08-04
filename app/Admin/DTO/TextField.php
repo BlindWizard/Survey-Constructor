@@ -24,6 +24,8 @@ class TextField implements BlockContract
     public $multiline;
     /** @var BlockStyle */
     public $style;
+    /** @var BlockAction[] */
+    public $actions = [];
 
     /**
      * @inheritDoc
@@ -122,5 +124,13 @@ class TextField implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

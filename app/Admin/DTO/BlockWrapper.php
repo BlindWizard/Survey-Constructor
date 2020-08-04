@@ -13,6 +13,8 @@ class BlockWrapper implements BlockContract
     public $type;
     /** @var BlockStyle */
     public $style;
+    /** @var BlockAction[] */
+    public $actions = [];
 
     /**
      * @param BlockContract $block
@@ -21,6 +23,7 @@ class BlockWrapper implements BlockContract
     {
         $this->data = $block;
         $this->style = $block->getStyle();
+        $this->actions = $block->getActions();
         $this->type = $block->getType();
     }
 
@@ -118,5 +121,10 @@ class BlockWrapper implements BlockContract
     public function getStyle(): array
     {
         return ['style' => $this->style];
+    }
+
+    public function getActions(): array
+    {
+        return $this->actions;
     }
 }

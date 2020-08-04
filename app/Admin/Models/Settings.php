@@ -18,6 +18,8 @@ class Settings implements \JsonSerializable
     public $locale;
     /** @var BlockContract[] */
     public $defaultBlockData;
+    /** @var string[] */
+    public $actionsType;
 
     /**
      * @return mixed[]

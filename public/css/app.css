@@ -11963,7 +11963,7 @@ html.is-reveal-open body {
 }
 
 .survey-preview__delete {
-  position: absolute;
+  position: absolute !important;
   top: 1rem;
   right: 1rem;
   width: 2rem;

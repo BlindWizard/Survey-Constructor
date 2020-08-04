@@ -553,6 +553,43 @@ const store = new Vuex.Store({
 				default:
 					return;
 			}
+
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				let targetBlock = page.getBlocks()[request.blockId];
+
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				page.setBlocks(blocks);
+			}
+			else {
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container|null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
 		},
 		[mutations.CHANGE_SIZE_MEASURE](state, request: ChangeSizeMeasureData) {
 			let pages = state.survey.pages;
@@ -701,6 +738,7 @@ const store = new Vuex.Store({
 			let oldSlotsCount = targetBlock.getData()['slots'].length as number;
 			if (newSlotsCount > oldSlotsCount) {
 				let newSlot: string|null = null;
+				let newSlots = [];
 				for (let i = 0; i < newSlotsCount - oldSlotsCount; i++) {
 					newSlot = uuidv4() as string;
 					targetBlock.getData()['slots'].push(newSlot);
@@ -711,6 +749,7 @@ const store = new Vuex.Store({
 					targetStyle['slotsStyle'][newSlot].margin = new Rectangle();
 					targetStyle['slotsStyle'][newSlot].padding = new Rectangle();
 
+					newSlots.push(newSlot);
 					offsetSum += 0.01;
 				}
 

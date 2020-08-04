@@ -17,7 +17,7 @@ import {DelimiterBlock} from "../../controls/DelimiterBlock";
 	template: `
         <div ref="selectable" :class="bem('delimiter-wrapper').add(this.selected ? 'selected' : '').classes()" :style="renderDelimiterStyle()" v-component-drag v-component-drop-target>
             <DelimiterBlock :block="block" :resolver="resolver" />
-            <ButtonBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
+            <DelimiterBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="this.block.getStyle()['style']" />
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />

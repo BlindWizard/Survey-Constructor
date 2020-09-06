@@ -16,12 +16,11 @@ import {BlockStyle} from "../models/BlockStyle";
 import {Button} from "../models/Button";
 import {Rectangle} from "../models/Rectangle";
 import {Delimiter} from "../models/Delimiter";
+import {BlockAction} from "../models/BlockAction";
 const uuidv4 = require('uuid/v4');
 
-export class ComponentsFactory
-{
-	public static create(type: string, container: HTMLElement): BaseBlock
-	{
+export class ComponentsFactory {
+	public static create(type: string, container: HTMLElement): BaseBlock {
 		const resolver = new ComponentsResolver().setEditable();
 
 		let ComponentClass = Vue.extend(resolver.resolveComponentClass(type));
@@ -34,8 +33,7 @@ export class ComponentsFactory
 		return instance as BaseBlock;
 	}
 
-	public static getDefaultData(type: string): BlockContract
-	{
+	public static getDefaultData(type: string): BlockContract {
 		let blockData: any = store.getters[getters.ELEMENT_DEFAULT_DATA](type);
 		let block: any = this.createElementFromData(type, blockData);
 		block.id = uuidv4();
@@ -44,7 +42,7 @@ export class ComponentsFactory
 
 			block.slots = [];
 			block.children = {};
-			for(let i of oldSlots) {
+			for (let i of oldSlots) {
 				let slotId: string = uuidv4();
 				block.slots.push(slotId);
 				block.children[slotId] = {};
@@ -54,8 +52,7 @@ export class ComponentsFactory
 		return block as BlockContract;
 	}
 
-	public static createElementFromData(type: string, blockData: any)
-	{
+	public static createElementFromData(type: string, blockData: any) {
 		let block: any;
 		switch (type) {
 			case BlockTypes.CONTAINER:
@@ -164,6 +161,10 @@ export class ComponentsFactory
 
 				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
+				for (let actionData of blockData.actions) {
+					block.actions.push(ComponentsFactory.cloneAction(actionData));
+				}
+
 				break;
 			case BlockTypes.DELIMITER:
 				block = new Delimiter();
@@ -180,8 +181,7 @@ export class ComponentsFactory
 		return block;
 	}
 
-	public static cloneElement(blockData: BlockContract)
-	{
+	public static cloneElement(blockData: BlockContract) {
 		let block: BlockContract;
 		switch (blockData.getType()) {
 			case BlockTypes.CONTAINER:
@@ -253,5 +253,14 @@ export class ComponentsFactory
 		style.padding.left = original.padding.left;
 
 		return style;
+	}
+
+	public static cloneAction(original: BlockAction): BlockAction {
+		let action = new BlockAction();
+		action.id = original.id;
+		action.type = original.type;
+		action.data = original.data;
+
+		return action;
 	}
 }

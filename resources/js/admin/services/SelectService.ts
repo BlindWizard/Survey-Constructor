@@ -23,6 +23,10 @@ class SelectService {
 	public handleClick(e: MouseEvent) {
 		this.selected = null;
 
+		if (0 === e.x && 0 === e.y) {
+			return;
+		}
+
 		let possibleTargets = document.elementsFromPoint(e.x, e.y) as HTMLElement[];
 		targets:
 			for (let el of possibleTargets) {

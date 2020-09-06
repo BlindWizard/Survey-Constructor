@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Services;
 
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use Throwable;
 
@@ -43,6 +44,14 @@ interface BlockServiceContract
      * @return BlockContract
      */
     public function setElementStyle(string $blockId, array $style): BlockContract;
+
+    /**
+     * @param string         $blockId
+     * @param ActionContract $action
+     *
+     * @return BlockContract
+     */
+    public function addAction(string $blockId, ActionContract $action): BlockContract;
 
     /**
      * @param string $blockId

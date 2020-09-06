@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class BlockService implements BlockServiceContract
 {
+
     /** @var BlockFactoryContract */
     protected $blockFactory;
 
@@ -37,7 +39,7 @@ class BlockService implements BlockServiceContract
     {
         $element = $this->blockFactory->getEmptyBlock($type, $blockId);
 
-        $lastBlock = $this->blockRepository->findLastBlock($parentId);
+        $lastBlock         = $this->blockRepository->findLastBlock($parentId);
         $lastBlockPosition = (null !== $lastBlock ? $lastBlock->getPosition() + 1 : 0);
 
         $element->setParentId($parentId);
@@ -63,7 +65,7 @@ class BlockService implements BlockServiceContract
         $reorderBlock = $this->blockRepository->findById($blockId);
         if ($reorderBlock->getParentId() !== $parentId) {
             $innerBlocks = $this->blockRepository->getBlocksByParentId($reorderBlock->getParentId());
-            $positions = array_values(array_column($innerBlocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
+            $positions   = array_values(array_column($innerBlocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
             array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
             $this->blockRepository->setElementsPositions(array_flip($positions));
 
@@ -72,7 +74,7 @@ class BlockService implements BlockServiceContract
             $this->blockRepository->setElementPosition($reorderBlock->getId(), count($blocks));
         }
 
-        $blocks = $this->blockRepository->getBlocksByParentId($parentId);
+        $blocks    = $this->blockRepository->getBlocksByParentId($parentId);
         $positions = array_values(array_column($blocks, BLOCK::ATTR_ID, Block::ATTR_POSITION));
         if (count($positions) > 0) {
             array_splice($positions, array_search($reorderBlock->getId(), $positions), 1);
@@ -102,6 +104,14 @@ class BlockService implements BlockServiceContract
     public function setElementStyle(string $blockId, array $style): BlockContract
     {
         return $this->blockRepository->setElementStyle($blockId, $style);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addAction(string $blockId, ActionContract $action): BlockContract
+    {
+        return $this->blockRepository->addAction($blockId, $action);
     }
 
     /**

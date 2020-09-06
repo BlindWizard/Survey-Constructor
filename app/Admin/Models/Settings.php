@@ -19,7 +19,7 @@ class Settings implements \JsonSerializable
     /** @var BlockContract[] */
     public $defaultBlockData;
     /** @var string[] */
-    public $actionsType;
+    public $actionsTypes;
 
     /**
      * @return mixed[]
@@ -31,6 +31,7 @@ class Settings implements \JsonSerializable
             'token'            => $this->token,
             'locale'           => $this->locale,
             'defaultBlockData' => $this->defaultBlockData,
+            'actionsTypes'     => $this->actionsTypes,
         ];
     }
 

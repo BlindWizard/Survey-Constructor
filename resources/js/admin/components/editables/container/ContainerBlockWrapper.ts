@@ -27,6 +27,8 @@ import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {styleRenderer} from "../../../services/StyleRenderer";
 import {DelimiterBlock} from "../../controls/DelimiterBlock";
 import {DelimiterBlockWrapper} from "../delimiter/DelimiterBlockWrapper";
+import {ButtonBlockWrapper} from "../button/ButtonBlockWrapper";
+import {ButtonBlock} from "../../controls/ButtonBlock";
 
 @Component({
 	template: `
@@ -65,6 +67,8 @@ import {DelimiterBlockWrapper} from "../delimiter/DelimiterBlockWrapper";
 		TextFieldBlockWrapper,
 		ImageBlock,
 		ImageBlockWrapper,
+		ButtonBlock,
+		ButtonBlockWrapper,
 		ContainerBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,

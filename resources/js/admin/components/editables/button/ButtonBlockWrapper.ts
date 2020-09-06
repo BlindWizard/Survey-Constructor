@@ -12,6 +12,7 @@ import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 import {styleRenderer} from "../../../services/StyleRenderer";
 import {StyleEdit} from "../../StyleEdit";
+import {ActionsEdit} from "../../ActionsEdit";
 
 @Component({
 	template: `
@@ -21,6 +22,7 @@ import {StyleEdit} from "../../StyleEdit";
             </button>
             <ButtonBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']"/>
+            <ActionsEdit v-if="selected" :block="block"/>
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
@@ -32,7 +34,8 @@ import {StyleEdit} from "../../StyleEdit";
 		BlockEditMenu,
 		BlockResizeFrame,
 		BlockOriginalFrame,
-		StyleEdit
+		StyleEdit,
+		ActionsEdit
 	}
 })
 export class ButtonBlockWrapper extends BaseBlock implements Draggable {

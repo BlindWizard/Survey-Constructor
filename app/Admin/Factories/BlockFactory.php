@@ -86,6 +86,7 @@ class BlockFactory implements BlockFactoryContract
                 }
                 $dto->style = $model->getStyle()['style'];
                 $dto->slotsStyle = $model->getStyle()['slotsStyle'];
+                $dto->actions = $model->getActions();
 
                 break;
             case BlockContract::TYPE_OPTIONS_LIST:
@@ -96,6 +97,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 foreach ($model->getData()['options'] as $optionData) {
                     $option = new Option();
@@ -104,6 +106,7 @@ class BlockFactory implements BlockFactoryContract
                     $option->parentId = $dto->parentId;
                     $option->position = $optionData['position'];
                     $option->style = $optionData['style'];
+                    $dto->actions = $model->getActions();
 
                     $dto->options[] = $option;
                 }
@@ -117,6 +120,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 $result[] = $dto;
 
@@ -129,6 +133,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 break;
             case BlockContract::TYPE_TEXT:
@@ -139,6 +144,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 break;
             case BlockContract::TYPE_TEXT_FIELD:
@@ -151,6 +157,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
                 $dto->multiline = $model->getData()['multiline'];
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 break;
             case BlockContract::TYPE_IMAGE:
@@ -161,6 +168,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->position = $model->getPosition();
                 $dto->imageId = $model->getData()['imageId'];
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 $fileModel = null !== $dto->imageId ? $this->fileRepository->findById($dto->imageId) : null;
                 $dto->imageUrl = (null !== $fileModel ? $fileModel->getUrl() : null);
@@ -174,6 +182,7 @@ class BlockFactory implements BlockFactoryContract
                 $dto->text = $model->getData()['text'];
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
 
                 break;
             case Block::TYPE_DELIMITER:
@@ -183,6 +192,8 @@ class BlockFactory implements BlockFactoryContract
                 $dto->pageId = $model->getPageId();
                 $dto->position = $model->getPosition();
                 $dto->style = $model->getStyle()['style'];
+                $dto->actions = $model->getActions();
+
                 break;
             default:
                 throw new BlockTypeException('Can\'t transform block from model ' . var_export($model, true));

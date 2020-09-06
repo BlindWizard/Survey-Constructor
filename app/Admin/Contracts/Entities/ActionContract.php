@@ -1,7 +1,7 @@
 <?php
+declare(strict_types=1);
 
 namespace App\Admin\Contracts\Entities;
-
 
 interface ActionContract
 {
@@ -13,10 +13,15 @@ interface ActionContract
     /**
      * @return string
      */
+    public function getId(): string;
+
+    /**
+     * @return string
+     */
     public function getType(): string;
 
     /**
-     * @return mixed[]
+     * @return ActionDataContract|null
      */
-    public function getData(): array;
+    public function getData(): ?ActionDataContract;
 }

@@ -1,12 +1,14 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {BlockStyle} from "./BlockStyle";
+import {BlockAction} from "./BlockAction";
 
 export class Delimiter implements BlockContract {
 	public id: string;
 	public position: number;
 	public parentId: string;
 	public style: BlockStyle;
+	public actions: BlockAction[] = [];
 
 	getType(): string
 	{
@@ -49,5 +51,13 @@ export class Delimiter implements BlockContract {
 
 	setStyle(data: Object) {
 		this.style = data['style'];
+	}
+
+	getActions(): BlockAction[] {
+		return this.actions;
+	}
+
+	setActions(data: BlockAction[]): void {
+		this.actions = data;
 	}
 }

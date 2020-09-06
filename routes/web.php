@@ -31,6 +31,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('/admin/block/saveStyle', 'BlockController@saveStyle');
     Route::post('/admin/block/reorderElement', 'BlockController@reorderElement');
     Route::post('/admin/block/deleteElement', 'BlockController@deleteElement');
+    Route::post('/admin/block/addAction', 'BlockController@addAction');
 
     Route::get('/admin/settings', 'SettingsController@index');
     Route::get('/admin/settings/getAvailableTokens', 'SettingsController@getAvailableTokens');

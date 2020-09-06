@@ -4,16 +4,22 @@ declare(strict_types=1);
 namespace App\Admin\Contracts\Repositories;
 
 use App\Admin\Contracts\Entities\SurveyContract;
-use App\Admin\Database\Models\Survey;
 
 interface SurveyRepositoryContract
 {
     /**
      * @param string $id
      *
-     * @return Survey|null
+     * @return SurveyContract|null
      */
     public function findById(string $id): ?SurveyContract;
+
+    /**
+     * @param string $blockId
+     *
+     * @return SurveyContract|null
+     */
+    public function findByBlockId(string $blockId): ?SurveyContract;
 
     /**
      * @param SurveyContract $survey

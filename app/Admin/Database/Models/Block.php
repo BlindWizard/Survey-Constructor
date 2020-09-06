@@ -128,7 +128,7 @@ class Block extends Model implements BlockContract
 
     public function page()
     {
-        return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PARENT_ID);
+        return $this->hasOne(Page::class, Page::ATTR_ID, static::ATTR_PAGE_ID);
     }
     public const REL_PAGE = 'page';
 
@@ -194,7 +194,7 @@ class Block extends Model implements BlockContract
         }
 
         $actions = [];
-        foreach (\GuzzleHttp\json_decode($this->data->style, true) as $actionData) {
+        foreach (\GuzzleHttp\json_decode($this->data->actions, true) as $actionData) {
             $action = new BlockAction();
 
             foreach ($actionData as $key => $value) {

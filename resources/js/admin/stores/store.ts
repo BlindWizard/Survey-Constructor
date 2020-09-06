@@ -40,6 +40,9 @@ import {BlockStyle} from "../models/BlockStyle";
 import {Rectangle} from "../models/Rectangle";
 import {ChangeSlotsCount} from "../api/requests/ChangeSlotsCount";
 import {SaveSlotStyle} from "../api/requests/SaveSlotStyle";
+import {AddBlockAction} from "../api/requests/AddBlockAction";
+import {SaveBlockActions} from "../api/requests/SaveBlockActions";
+import {BlockAction} from "../models/BlockAction";
 const uuidv4 = require('uuid/v4');
 
 Vue.use(Vuex);
@@ -54,6 +57,7 @@ const store = new Vuex.Store({
 		editing: false as boolean,
 		resizing: false as boolean,
 		defaultBlockData: [],
+		actionsTypes: null as any,
 		survey: null as any,
 		pageId: null as any,
 		surveys: null as any,
@@ -83,6 +87,9 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
+		},
+		[mutations.SET_ACTIONS_TYPES](state, data) {
+			state.actionsTypes = data;
 		},
 		[mutations.SET_SURVEYS](state, surveys) {
 			state.surveys = surveys;
@@ -638,6 +645,103 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_STATISTICS_SAMPLE] (state, data: StatisticAction[]) {
 			state.sample = data;
+		},
+		[mutations.ADD_ELEMENT_ACTION] (state, request: AddBlockAction) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			let actions = targetBlock.getActions();
+			let action = new BlockAction();
+			action.id = request.id;
+			action.type = request.type;
+			actions.push(action);
+			targetBlock.setActions(actions);
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				let targetBlock = page.getBlocks()[request.blockId];
+
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				page.setBlocks(blocks);
+			} else {
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container | null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
+		},
+		[mutations.SAVE_ELEMENT_ACTIONS] (state, request: SaveBlockActions) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			targetBlock.setActions(request.actions);
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				let targetBlock = page.getBlocks()[request.blockId];
+
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				page.setBlocks(blocks);
+			} else {
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container | null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
 		}
 	},
 	actions: {
@@ -652,6 +756,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_LOCALE, setting.locale);
 			commit(mutations.SET_TOKEN, setting.token);
 			commit(mutations.SET_DEFAULT_BLOCK_DATA, setting.defaultBlockData);
+			commit(mutations.SET_ACTIONS_TYPES, setting.actionsTypes);
 		},
 		async [actions.LOAD_SURVEYS]({commit}) {
 			commit(mutations.SET_SURVEYS, await SurveyApi.getAll());
@@ -859,6 +964,10 @@ const store = new Vuex.Store({
 		},
 		async [actions.SET_SECTION]({commit}, section: string|null) {
 			commit(mutations.SET_SECTION, section);
+		},
+		async [actions.ADD_ACTION]({commit}, request: AddBlockAction) {
+			commit(mutations.ADD_ELEMENT_ACTION, request);
+			await BlockApi.addAction(request);
 		}
 	},
 	getters: {
@@ -915,6 +1024,9 @@ const store = new Vuex.Store({
 
 				return state.defaultBlockData[type] as BlockContract;
 			};
+		},
+		[getters.ACTIONS_TYPES](state): string[] {
+			return state.actionsTypes;
 		},
 		[getters.TOKENS](state): ApiToken[] {
 			return state.tokens;

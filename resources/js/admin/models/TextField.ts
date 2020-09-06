@@ -1,6 +1,7 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {BlockStyle} from "./BlockStyle";
+import {BlockAction} from "./BlockAction";
 
 export class TextField implements BlockContract {
 	public id: string;
@@ -10,6 +11,7 @@ export class TextField implements BlockContract {
 	public placeholder: string;
 	public multiline: boolean;
 	public style: BlockStyle;
+	public actions: BlockAction[] = [];
 
 	getType(): string
 	{
@@ -61,5 +63,13 @@ export class TextField implements BlockContract {
 
 	setStyle(data: Object) {
 		this.style = data['style'];
+	}
+
+	getActions(): BlockAction[] {
+		return this.actions;
+	}
+
+	setActions(data: BlockAction[]): void {
+		this.actions = data;
 	}
 }

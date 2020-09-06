@@ -7,6 +7,7 @@ export interface Settings {
 	token: string|null;
 	locale: Locale;
 	defaultBlockData: BlockContract[];
+	actionsTypes: any;
 }
 
 let data: any = (<any> window).settings || null;
@@ -22,9 +23,15 @@ let defaultBlockData: BlockContract[] = [];
 	defaultBlockData[key] = ComponentsFactory.createElementFromData(key, blockData);
 });
 
+let actionsTypes: any = {};
+(<any> Object).keys(data.actionsTypes).forEach((key: string) => {
+	actionsTypes[key] = data.actionsTypes[key];
+});
+
 export const settings: Settings = {
 	csrf: data.csrf,
 	token: data.token,
 	locale: data.locale,
 	defaultBlockData: defaultBlockData,
+	actionsTypes: actionsTypes
 };

@@ -7,14 +7,17 @@ export enum mutations
 	SET_EDITING = 'setEditing',
 	SET_RESIZING = 'setResizing',
 	SET_DEFAULT_BLOCK_DATA = 'setDefaultBlockData',
+	SET_ACTIONS_TYPES = 'setActionsTypes',
 	SET_SURVEYS = 'setSurveys',
 	DELETE_SURVEY = 'deleteSurvey',
 	SET_TEMPLATES = 'setTemplates',
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
 	ADD_ELEMENT = 'addElement',
+	ADD_ELEMENT_ACTION = 'addElementAction',
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	SAVE_ELEMENT_STYLE = 'saveElementStyle',
+	SAVE_ELEMENT_ACTIONS = 'saveElementActions',
 	SET_SLOT_STYLE = 'setSlotStyle',
 	RESIZE_ELEMENT = 'resizeElement',
 	CHANGE_SIZE_MEASURE = 'changeSizeMeasure',
@@ -55,6 +58,7 @@ export enum actions
 	LOAD_SURVEY_STATISTICS = 'getSurveyStatistics',
 	LOAD_STATISTICS_SAMPLE = 'getStatisticsSample',
 	SET_SECTION = 'setSection',
+	ADD_ACTION = 'addAction',
 }
 
 export enum getters
@@ -66,6 +70,7 @@ export enum getters
 	EDITING = 'editing',
 	RESIZING = 'resizing',
 	ELEMENT_DEFAULT_DATA = 'elementDefaultData',
+	ACTIONS_TYPES = 'actionsTypes',
 	SURVEYS = 'surveys',
 	TEMPLATES = 'templates',
 	SURVEY = 'activeSurvey',

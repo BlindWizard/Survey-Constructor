@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Repositories;
 
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Database\Models\Block;
 use App\Admin\Exceptions\BlockTypeException;
@@ -62,6 +63,14 @@ interface BlockRepositoryContract
      * @return BlockContract
      */
     public function setElementStyle(string $blockId, array $style): BlockContract;
+
+    /**
+     * @param string         $blockId
+     * @param ActionContract $action
+     *
+     * @return BlockContract
+     */
+    public function addAction(string $blockId, ActionContract $action): BlockContract;
 
     /**
      * @param int[] $blockPosition

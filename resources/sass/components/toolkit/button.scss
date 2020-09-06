@@ -62,7 +62,7 @@
     }
 
     &.wide {
-        padding: 0.25rem 2rem;;
+        padding: 0.25rem 2rem;
     }
 
     &_run {
@@ -76,9 +76,17 @@
     }
 }
 
+.top-bar .button,
+.survey-preview .button,
+.login-form .button,
+.survey-block .button,
+.join-block .button
+{
+    display: inline-block;
+}
+
 .survey-block .button {
     transition: none;
-    display: inline-block;
     width: 100%;
     height: 100%;
 }

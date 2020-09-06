@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Database\Repositories;
 
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Repositories\BlockRepositoryContract;
@@ -131,6 +132,26 @@ class BlockRepository implements BlockRepositoryContract
 
         $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
         $blockData->style = \GuzzleHttp\json_encode($style);
+        $blockData->save();
+
+        $block->refresh();
+
+        return $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function addAction(string $blockId, ActionContract $action): BlockContract
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
+
+        $actions = $block->getActions();
+
+        $actions[] = $action;
+        $blockData->actions = \GuzzleHttp\json_encode($actions);
         $blockData->save();
 
         $block->refresh();

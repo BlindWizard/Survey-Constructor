@@ -1,6 +1,7 @@
 import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {BlockStyle} from "./BlockStyle";
+import {BlockAction} from "./BlockAction";
 
 export class Image implements BlockContract {
 	public id: string;
@@ -9,6 +10,7 @@ export class Image implements BlockContract {
 	public imageId: string|null;
 	public imageUrl: string|null;
 	public style: BlockStyle;
+	public actions: BlockAction[] = [];
 
 	getType(): string
 	{
@@ -58,5 +60,13 @@ export class Image implements BlockContract {
 
 	setStyle(data: Object) {
 		this.style = data['style'];
+	}
+
+	getActions(): BlockAction[] {
+		return this.actions;
+	}
+
+	setActions(data: BlockAction[]): void {
+		this.actions = data;
 	}
 }

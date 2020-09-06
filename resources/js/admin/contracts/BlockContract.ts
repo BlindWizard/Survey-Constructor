@@ -1,3 +1,5 @@
+import {BlockAction} from "../models/BlockAction";
+
 export interface BlockContract {
 	getId(): string;
 	getType(): string;
@@ -9,4 +11,6 @@ export interface BlockContract {
 	setData(data: Object): void;
 	getStyle(): Object;
 	setStyle(data: Object): void;
+	setActions(data: BlockAction[]): void;
+	getActions(): BlockAction[];
 }

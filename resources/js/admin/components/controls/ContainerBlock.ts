@@ -11,6 +11,7 @@ import {TextFieldBlock} from "./TextFieldBlock";
 import {styleRenderer} from "../../services/StyleRenderer";
 import {ImageBlock} from "./ImageBlock";
 import {DelimiterBlock} from "./DelimiterBlock";
+import {ButtonBlock} from "./ButtonBlock";
 
 @Component({
 	template: `
@@ -32,6 +33,7 @@ import {DelimiterBlock} from "./DelimiterBlock";
 		TextBlock,
 		TextFieldBlock,
 		ImageBlock,
+		ButtonBlock,
 		DelimiterBlock
 	}
 })

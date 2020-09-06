@@ -23,6 +23,20 @@ class SurveyRepository implements SurveyRepositoryContract
         return $survey;
     }
 
+    public function findByBlockId(string $blockId): ?SurveyContract
+    {
+        $block = Block::query()->where(Block::ATTR_ID, '=', $blockId)->first();/** @var Block $block */
+        if (null === $block) {
+            return null;
+        }
+
+        if (null === $block->page) {
+            return null;
+        }
+
+        return $block->page->survey;
+    }
+
     /**
      * @inheritDoc
      *

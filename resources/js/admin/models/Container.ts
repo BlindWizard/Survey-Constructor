@@ -2,6 +2,7 @@ import {BlockContract} from "../contracts/BlockContract";
 import {BlockTypes} from "../contracts/BlockTypes";
 import {ComponentsFactory} from "../services/ComponentsFactory";
 import {BlockStyle} from "./BlockStyle";
+import {BlockAction} from "./BlockAction";
 
 export class Container implements BlockContract {
 	public id: string;
@@ -11,6 +12,7 @@ export class Container implements BlockContract {
 	public children: Object;
 	public style: BlockStyle;
 	public slotsStyle: Object;
+	public actions: BlockAction[] = [];
 
 	getId(): string {
 		return this.id;
@@ -107,5 +109,13 @@ export class Container implements BlockContract {
 
 			this.setBlocks(slotId, blocks);
 		}
+	}
+
+	getActions(): BlockAction[] {
+		return this.actions;
+	}
+
+	setActions(data: BlockAction[]): void {
+		this.actions = data;
 	}
 }

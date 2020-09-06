@@ -162,6 +162,27 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
+    public function deleteAction(string $blockId, string $actionId): BlockContract
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
+
+        $actions = array_filter($block->getActions(), function (ActionContract $action) use ($actionId) {
+            return $action->getId() !== $actionId;
+        });
+
+        $blockData->actions = \GuzzleHttp\json_encode($actions);
+        $blockData->save();
+
+        $block->refresh();
+
+        return $block;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function setElementsPositions(array $blockPosition): void
     {
         DB::beginTransaction();

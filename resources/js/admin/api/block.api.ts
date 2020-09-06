@@ -7,6 +7,7 @@ import {ReorderElement} from "./requests/ReorderElement";
 import {SaveBlockData} from "./requests/SaveBlockData";
 import {SaveBlockStyle} from "./requests/SaveBlockStyle";
 import {AddBlockAction} from "./requests/AddBlockAction";
+import {DeleteBlockAction} from "./requests/DeleteBlockAction";
 
 export class BlockApi
 {
@@ -73,5 +74,15 @@ export class BlockApi
 	public static addAction(request: AddBlockAction): Promise<any>
 	{
 		return axios.post('/admin/block/addAction', request);
+	}
+
+	/**
+	 * @TODO-01.09.2020-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
+	public static deleteAction(request: DeleteBlockAction): Promise<any>
+	{
+		return axios.post('/admin/block/deleteAction', request);
 	}
 }

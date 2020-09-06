@@ -14,6 +14,7 @@ export enum mutations
 	SET_ACTIVE_SURVEY = 'setActiveSurvey',
 	ADD_ELEMENT = 'addElement',
 	ADD_ELEMENT_ACTION = 'addElementAction',
+	DELETE_ELEMENT_ACTION = 'deleteElementAction',
 	CHANGE_ELEMENT_POSITION = 'changeElementsPosition',
 	SAVE_ELEMENT_DATA = 'saveElementData',
 	SAVE_ELEMENT_STYLE = 'saveElementStyle',
@@ -59,6 +60,7 @@ export enum actions
 	LOAD_STATISTICS_SAMPLE = 'getStatisticsSample',
 	SET_SECTION = 'setSection',
 	ADD_ACTION = 'addAction',
+	DELETE_ACTION = 'deleteAction',
 }
 
 export enum getters

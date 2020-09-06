@@ -392,7 +392,8 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';
-        $block->style->width = 'auto';
+        $block->style->width = 250;
+        $block->style->height = 42;
 
         return $block;
     }

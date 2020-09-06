@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Admin\Commands\AddBlockActionCommand;
 use App\Admin\Commands\CreateElementCommand;
+use App\Admin\Commands\DeleteBlockActionCommand;
 use App\Admin\Commands\DeleteElementCommand;
 use App\Admin\Commands\ReorderElementCommand;
 use App\Admin\Commands\SaveElementDataCommand;
@@ -12,6 +13,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\AddBlockActionRequest;
 use App\Http\Requests\AddElementRequest;
+use App\Http\Requests\DeleteBlockActionRequest;
 use App\Http\Requests\ReorderElementRequest;
 use App\Http\Requests\SaveElementDataRequest;
 use App\Http\Requests\SaveElementStyleRequest;
@@ -80,6 +82,17 @@ class BlockController extends Controller
     }
 
     public function addAction(AddBlockActionRequest $request, AddBlockActionCommand $command)
+    {
+        $result = new AjaxResponse();
+
+        $command->userId = Auth::user()->getAuthIdentifier();
+        $command->request = $request;
+        $result->data = $command->perform()->getResult();
+
+        return response()->json($result);
+    }
+
+    public function deleteAction(DeleteBlockActionRequest $request, DeleteBlockActionCommand $command)
     {
         $result = new AjaxResponse();
 

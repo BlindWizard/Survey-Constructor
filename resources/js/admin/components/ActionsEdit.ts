@@ -6,6 +6,7 @@ import {BlockStyle} from "../models/BlockStyle";
 import {Locale} from "../models/Locale";
 import {actions, getters} from "../stores/types";
 import {AddBlockAction} from "../api/requests/AddBlockAction";
+import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
 const uuidv4 = require('uuid/v4');
 
 @Component({
@@ -28,6 +29,12 @@ const uuidv4 = require('uuid/v4');
                     </div>
                 </div>
             </div>
+            <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
+                <div>{{ action.type }}</div>
+                <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
+                    <span :class="bem('button').el('label').classes()">-</span>
+                </button>
+            </div>
         </portal>
 	`
 })
@@ -49,6 +56,15 @@ export class ActionsEdit extends Vue {
 		request.blockId = this.block.getId();
 
 		this.$store.dispatch(actions.ADD_ACTION, request);
+	}
+
+	public deleteAction(id: string)
+	{
+		let request = new DeleteBlockAction();
+		request.id = id;
+		request.blockId = this.block.getId();
+
+		this.$store.dispatch(actions.DELETE_ACTION, request);
 	}
 
 	get actionsTypes(): Locale

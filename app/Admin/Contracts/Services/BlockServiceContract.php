@@ -55,6 +55,14 @@ interface BlockServiceContract
 
     /**
      * @param string $blockId
+     * @param string $actionId
+     *
+     * @return BlockContract
+     */
+    public function deleteAction(string $blockId, string $actionId): BlockContract;
+
+    /**
+     * @param string $blockId
      *
      * @return void
      *

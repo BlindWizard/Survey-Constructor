@@ -114,6 +114,11 @@ class BlockService implements BlockServiceContract
         return $this->blockRepository->addAction($blockId, $action);
     }
 
+    public function deleteAction(string $blockId, string $actionId): BlockContract
+    {
+        return $this->blockRepository->deleteAction($blockId, $actionId);
+    }
+
     /**
      * @inheritDoc
      */

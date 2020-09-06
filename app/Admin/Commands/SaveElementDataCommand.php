@@ -42,6 +42,7 @@ class SaveElementDataCommand implements Command
 
             $style = $this->block->getStyle();
             [$style['style']->width, $style['style']->height] = [$data[0], $data[1]];
+            $style['style']->sizeMeasure = 'px';
 
             $this->blockService->setElementStyle($this->request->getId(), $style);
         }

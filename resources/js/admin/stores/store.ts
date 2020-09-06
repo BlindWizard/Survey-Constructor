@@ -43,6 +43,7 @@ import {SaveSlotStyle} from "../api/requests/SaveSlotStyle";
 import {AddBlockAction} from "../api/requests/AddBlockAction";
 import {SaveBlockActions} from "../api/requests/SaveBlockActions";
 import {BlockAction} from "../models/BlockAction";
+import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
 const uuidv4 = require('uuid/v4');
 
 Vue.use(Vuex);
@@ -697,6 +698,56 @@ const store = new Vuex.Store({
 				page.setBlocks(plain);
 			}
 		},
+		[mutations.DELETE_ELEMENT_ACTION] (state, request: DeleteBlockAction) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+
+			let targetBlock = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			let actions = targetBlock.getActions().filter((action: BlockAction) => {
+				return action.id !== request.id;
+			});
+
+			targetBlock.setActions(actions);
+
+			if (pages[targetBlock.getParentId()]) {
+				let blocks: BlockContract[] = page.getBlocksInOrder();
+				let targetBlock = page.getBlocks()[request.blockId];
+
+				blocks[targetBlock.getPosition()] = ComponentsFactory.cloneElement(targetBlock);
+				page.setBlocks(blocks);
+			} else {
+				let container = page.getContainerBySlotId(targetBlock.getParentId());
+				if (null === container) {
+					throw new Error('Container not found');
+				}
+
+				container.children[targetBlock.getParentId()][targetBlock.getId()] = ComponentsFactory.cloneElement(targetBlock);
+
+				while (true) {
+					let upperContainer: Container | null = page.getContainerBySlotId(container.getParentId());
+					if (null === upperContainer) {
+						break;
+					}
+
+					upperContainer.children[container.getParentId()][container.getId()] = ComponentsFactory.cloneElement(container);
+
+					container = upperContainer;
+				}
+
+				let blocks: BlockContract[] = page.getBlocks();
+				blocks[container.getId()] = ComponentsFactory.cloneElement(container);
+				let plain = [];
+				for (let blockId of Object.keys(blocks)) {
+					plain.push(blocks[blockId]);
+				}
+
+				page.setBlocks(plain);
+			}
+		},
 		[mutations.SAVE_ELEMENT_ACTIONS] (state, request: SaveBlockActions) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
@@ -968,6 +1019,10 @@ const store = new Vuex.Store({
 		async [actions.ADD_ACTION]({commit}, request: AddBlockAction) {
 			commit(mutations.ADD_ELEMENT_ACTION, request);
 			await BlockApi.addAction(request);
+		},
+		async [actions.DELETE_ACTION]({commit}, request: AddBlockAction) {
+			commit(mutations.DELETE_ELEMENT_ACTION, request);
+			await BlockApi.deleteAction(request);
 		}
 	},
 	getters: {

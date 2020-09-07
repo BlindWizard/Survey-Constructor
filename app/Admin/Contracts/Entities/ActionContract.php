@@ -7,7 +7,7 @@ interface ActionContract
 {
     public const TYPE_CLICK = 'click';
     public const TYPES = [
-        self::TYPE_CLICK,
+        self::TYPE_CLICK => 'Click',
     ];
 
     /**

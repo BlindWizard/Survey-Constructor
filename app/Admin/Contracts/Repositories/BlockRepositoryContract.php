@@ -81,6 +81,15 @@ interface BlockRepositoryContract
     public function deleteAction(string $blockId, string $actionId): BlockContract;
 
     /**
+     * @param string $blockId
+     * @param string $actionId
+     * @param array  $data
+     *
+     * @return BlockContract
+     */
+    public function saveAction(string $blockId, string $actionId, array $data): BlockContract;
+
+    /**
      * @param int[] $blockPosition
      *
      * @throws Throwable

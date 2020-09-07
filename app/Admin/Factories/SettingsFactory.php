@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Factories;
 
 use App\Admin\Contracts\Entities\ActionContract;
+use App\Admin\Contracts\Entities\ActionDataContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
@@ -59,8 +60,12 @@ class SettingsFactory implements SettingsFactoryContract
             $settings->defaultBlockData[$type] = $this->blockFactory->getEmptyBlock($type);
         }
 
-        foreach (ActionContract::TYPES as $type) {
-            $settings->actionsTypes[$type] = __(ucfirst($type));
+        foreach (ActionContract::TYPES as $type => $label) {
+            $settings->actionsTypes[$type] = __($label);
+        }
+
+        foreach (ActionDataContract::HANDLES as $type => $label) {
+            $settings->actionsHandles[$type] = __($label);
         }
 
         return $settings;

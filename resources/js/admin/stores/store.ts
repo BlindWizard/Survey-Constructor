@@ -41,9 +41,9 @@ import {Rectangle} from "../models/Rectangle";
 import {ChangeSlotsCount} from "../api/requests/ChangeSlotsCount";
 import {SaveSlotStyle} from "../api/requests/SaveSlotStyle";
 import {AddBlockAction} from "../api/requests/AddBlockAction";
-import {SaveBlockActions} from "../api/requests/SaveBlockActions";
 import {BlockAction} from "../models/BlockAction";
 import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
+import {SaveActionData} from "../api/requests/SaveActionData";
 const uuidv4 = require('uuid/v4');
 
 Vue.use(Vuex);
@@ -59,6 +59,7 @@ const store = new Vuex.Store({
 		resizing: false as boolean,
 		defaultBlockData: [],
 		actionsTypes: null as any,
+		actionsHandles: null as any,
 		survey: null as any,
 		pageId: null as any,
 		surveys: null as any,
@@ -89,8 +90,9 @@ const store = new Vuex.Store({
 		[mutations.SET_DEFAULT_BLOCK_DATA](state, data) {
 			state.defaultBlockData = data;
 		},
-		[mutations.SET_ACTIONS_TYPES](state, data) {
-			state.actionsTypes = data;
+		[mutations.SET_ACTIONS_DATA](state, data) {
+			state.actionsTypes = data.types;
+			state.actionsHandles = data.handles;
 		},
 		[mutations.SET_SURVEYS](state, surveys) {
 			state.surveys = surveys;
@@ -748,7 +750,7 @@ const store = new Vuex.Store({
 				page.setBlocks(plain);
 			}
 		},
-		[mutations.SAVE_ELEMENT_ACTIONS] (state, request: SaveBlockActions) {
+		[mutations.SAVE_ACTION_DATA] (state, request: SaveActionData) {
 			let pages = state.survey.pages;
 			let page = pages[state.pageId] as PageContract;
 
@@ -757,7 +759,22 @@ const store = new Vuex.Store({
 				throw new Error('Block not found');
 			}
 
-			targetBlock.setActions(request.actions);
+			let actions = targetBlock.getActions();
+			let action: BlockAction|null = null;
+			for (let currentAction of actions) {
+				if (request.id === currentAction.id) {
+					action = currentAction;
+					break;
+				}
+			}
+
+			if (null === action) {
+				throw new Error('Action not found');
+			}
+
+			action.data = request.data;
+
+			targetBlock.setActions(actions);
 
 			if (pages[targetBlock.getParentId()]) {
 				let blocks: BlockContract[] = page.getBlocksInOrder();
@@ -807,7 +824,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_LOCALE, setting.locale);
 			commit(mutations.SET_TOKEN, setting.token);
 			commit(mutations.SET_DEFAULT_BLOCK_DATA, setting.defaultBlockData);
-			commit(mutations.SET_ACTIONS_TYPES, setting.actionsTypes);
+			commit(mutations.SET_ACTIONS_DATA, {types: setting.actionsTypes, handles: setting.actionsHandles});
 		},
 		async [actions.LOAD_SURVEYS]({commit}) {
 			commit(mutations.SET_SURVEYS, await SurveyApi.getAll());
@@ -1023,7 +1040,11 @@ const store = new Vuex.Store({
 		async [actions.DELETE_ACTION]({commit}, request: AddBlockAction) {
 			commit(mutations.DELETE_ELEMENT_ACTION, request);
 			await BlockApi.deleteAction(request);
-		}
+		},
+		async [actions.SAVE_ACTION_DATA]({commit}, request: SaveActionData) {
+			commit(mutations.SAVE_ACTION_DATA, request);
+			await BlockApi.saveAction(request);
+		},
 	},
 	getters: {
 		[getters.CSRF](state): string {
@@ -1082,6 +1103,9 @@ const store = new Vuex.Store({
 		},
 		[getters.ACTIONS_TYPES](state): string[] {
 			return state.actionsTypes;
+		},
+		[getters.ACTIONS_HANDLES](state): string[] {
+			return state.actionsHandles;
 		},
 		[getters.TOKENS](state): ApiToken[] {
 			return state.tokens;

@@ -229,6 +229,7 @@ export class ComponentsFactory {
 		block.setParentId(blockData.getParentId());
 		block.setData(blockData.getData());
 		block.setStyle(blockData.getStyle());
+		block.setActions(blockData.getActions());
 
 		return block;
 	}

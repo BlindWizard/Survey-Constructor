@@ -7,6 +7,8 @@ import {Locale} from "../models/Locale";
 import {actions, getters} from "../stores/types";
 import {AddBlockAction} from "../api/requests/AddBlockAction";
 import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
+import {SaveActionData} from "../api/requests/SaveActionData";
+import {BlockAction} from "../models/BlockAction";
 const uuidv4 = require('uuid/v4');
 
 @Component({
@@ -23,17 +25,22 @@ const uuidv4 = require('uuid/v4');
                         <select v-model="type">
                             <option v-for="(label, type) in actionsTypes" :value="type">{{ label }}</option>
                         </select>
-                      <button :class="bem('button').is('secondary').classes()" v-on:click.stop="addAction">
-                          <span :class="bem('button').el('label').classes()">Add</span>
-                      </button>
+                        <button :class="bem('button').is('secondary').classes()" v-on:click.stop="addAction">
+                            <span :class="bem('button').el('label').classes()">Add</span>
+                        </button>
                     </div>
                 </div>
-            </div>
-            <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
-                <div>{{ action.type }}</div>
-                <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
-                    <span :class="bem('button').el('label').classes()">-</span>
-                </button>
+                <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
+                    <div>{{ action.type }}</div>
+                    <div>
+                        <select @change="updateActionHandle(action, $event)" :value="action.data ? action.data.handle : null">
+                            <option v-for="(label, type) in actionsHandles" :value="type">{{ label }}</option>
+                        </select>
+                    </div>
+                    <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
+                        <span :class="bem('button').el('label').classes()">-</span>
+                    </button>
+              </div>
             </div>
         </portal>
 	`
@@ -67,8 +74,23 @@ export class ActionsEdit extends Vue {
 		this.$store.dispatch(actions.DELETE_ACTION, request);
 	}
 
-	get actionsTypes(): Locale
+	public updateActionHandle(action: BlockAction, event: InputEvent)
+	{
+		let request = new SaveActionData();
+		request.id = action.id;
+		request.blockId = this.block.getId();
+		request.data = {...action.data, handle: (event.target as HTMLInputElement).value}
+
+		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
+	}
+
+	get actionsTypes(): Object
 	{
 		return this.$store.getters[getters.ACTIONS_TYPES];
+	}
+
+	get actionsHandles(): Object
+	{
+		return this.$store.getters[getters.ACTIONS_HANDLES];
 	}
 }

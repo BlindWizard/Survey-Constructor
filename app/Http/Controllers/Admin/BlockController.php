@@ -15,6 +15,7 @@ use App\Http\Requests\AddBlockActionRequest;
 use App\Http\Requests\AddElementRequest;
 use App\Http\Requests\DeleteBlockActionRequest;
 use App\Http\Requests\ReorderElementRequest;
+use App\Http\Requests\SaveBlockActionRequest;
 use App\Http\Requests\SaveElementDataRequest;
 use App\Http\Requests\SaveElementStyleRequest;
 use Illuminate\Support\Facades\Auth;
@@ -93,6 +94,17 @@ class BlockController extends Controller
     }
 
     public function deleteAction(DeleteBlockActionRequest $request, DeleteBlockActionCommand $command)
+    {
+        $result = new AjaxResponse();
+
+        $command->userId = Auth::user()->getAuthIdentifier();
+        $command->request = $request;
+        $result->data = $command->perform()->getResult();
+
+        return response()->json($result);
+    }
+
+    public function saveAction(SaveBlockActionRequest $request, DeleteBlockActionCommand $command)
     {
         $result = new AjaxResponse();
 

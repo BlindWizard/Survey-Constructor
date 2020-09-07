@@ -63,6 +63,15 @@ interface BlockServiceContract
 
     /**
      * @param string $blockId
+     * @param string $actionId
+     * @param array  $data
+     *
+     * @return BlockContract
+     */
+    public function saveAction(string $blockId, string $actionId, array $data): BlockContract;
+
+    /**
+     * @param string $blockId
      *
      * @return void
      *

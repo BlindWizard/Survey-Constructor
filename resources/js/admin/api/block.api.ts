@@ -8,6 +8,7 @@ import {SaveBlockData} from "./requests/SaveBlockData";
 import {SaveBlockStyle} from "./requests/SaveBlockStyle";
 import {AddBlockAction} from "./requests/AddBlockAction";
 import {DeleteBlockAction} from "./requests/DeleteBlockAction";
+import {SaveActionData} from "./requests/SaveActionData";
 
 export class BlockApi
 {
@@ -84,5 +85,15 @@ export class BlockApi
 	public static deleteAction(request: DeleteBlockAction): Promise<any>
 	{
 		return axios.post('/admin/block/deleteAction', request);
+	}
+
+	/**
+	 * @TODO-01.09.2020-Чучманский Aндрей
+	 *
+	 * @param request
+	 */
+	public static saveAction(request: SaveActionData): Promise<any>
+	{
+		return axios.post('/admin/block/saveAction', request);
 	}
 }

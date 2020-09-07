@@ -4,20 +4,23 @@ declare(strict_types=1);
 namespace App\Admin\Commands;
 
 use App\Admin\Contracts\Command;
+use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\BlockContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Contracts\Services\PageServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
+use App\Admin\DTO\BlockAction;
 use App\Admin\DTO\BlockWrapper;
-use App\Http\Requests\DeleteBlockActionRequest;
+use App\Http\Requests\AddBlockActionRequest;
+use App\Http\Requests\SaveBlockActionRequest;
 
-class DeleteBlockActionCommand implements Command
+class SaveBlockActionCommand implements Command
 {
     /** @var string */
     public $userId;
 
-    /** @var DeleteBlockActionRequest */
+    /** @var SaveBlockActionRequest */
     public $request;
 
     /** @var SurveyServiceContract */
@@ -50,9 +53,6 @@ class DeleteBlockActionCommand implements Command
         }
 
         $block = $this->blockService->deleteAction($this->request->getBlockId(), $this->request->getId());
-        $this->block = new BlockWrapper($block);
-
-        return $this;
     }
 
     public function getResult(): BlockContract

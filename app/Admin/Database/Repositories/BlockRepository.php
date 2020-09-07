@@ -180,6 +180,15 @@ class BlockRepository implements BlockRepositoryContract
         return $block;
     }
 
+    public function saveAction(string $blockId, string $actionId, array $data): BlockContract
+    {
+        $block = Block::query()->find($blockId);/** @var Block $block */
+
+        $block->refresh();
+
+        return $block;
+    }
+
     /**
      * @inheritDoc
      */

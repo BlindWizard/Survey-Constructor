@@ -33,8 +33,13 @@ const uuidv4 = require('uuid/v4');
                 <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
                     <div>{{ action.type }}</div>
                     <div>
-                        <select @change="updateActionHandle(action, $event)" :value="action.data ? action.data.handle : null">
+                        <select @change="updateActionHandle(action, $event)" :value="action.handle">
                             <option v-for="(label, type) in actionsHandles" :value="type">{{ label }}</option>
+                        </select>
+                    </div>
+                    <div v-if="'go-to-page' === action.handle">
+                        <select @change="updateActionPage(action, $event)" :value="action.data ? action.data.pageId : null">
+                            <option v-for="(step, pageId) in pagesSelector" :value="pageId">{{ step }}</option>
                         </select>
                     </div>
                     <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
@@ -79,7 +84,21 @@ export class ActionsEdit extends Vue {
 		let request = new SaveActionData();
 		request.id = action.id;
 		request.blockId = this.block.getId();
-		request.data = {...action.data, handle: (event.target as HTMLInputElement).value}
+		request.handle = (event.target as HTMLInputElement).value;
+		request.data = null;
+
+		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
+	}
+
+	public updateActionPage(action: BlockAction, event: InputEvent)
+	{
+		let request = new SaveActionData();
+		request.id = action.id;
+		request.blockId = this.block.getId();
+		request.handle = action.handle;
+		request.data = {
+			pageId: (event.target as HTMLInputElement).value
+		};
 
 		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
 	}
@@ -92,5 +111,16 @@ export class ActionsEdit extends Vue {
 	get actionsHandles(): Object
 	{
 		return this.$store.getters[getters.ACTIONS_HANDLES];
+	}
+
+	get pagesSelector(): Object
+	{
+		let pages = {};
+		let pagesByStep = this.$store.getters[getters.PAGES];
+		for (let step of Object.keys(pagesByStep)) {
+			pages[pagesByStep[step].getId()] = (Number(step) + 1);
+		}
+
+		return pages;
 	}
 }

@@ -52,7 +52,10 @@ class SaveBlockActionCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $block = $this->blockService->deleteAction($this->request->getBlockId(), $this->request->getId());
+        $block = $this->blockService->saveAction($this->request->getBlockId(), $this->request->getId(), $this->request->getHandle(), $this->request->getData());
+        $this->block = new BlockWrapper($block);
+
+        return $this;
     }
 
     public function getResult(): BlockContract

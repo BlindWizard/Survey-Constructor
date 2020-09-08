@@ -1,5 +1,6 @@
 export class SaveActionData {
 	public id: string;
 	public blockId: string;
-	public data: Object;
+	public handle: string|null = null;
+	public data: Object|null = null;
 }

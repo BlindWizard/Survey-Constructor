@@ -17,7 +17,13 @@ import {ButtonBlock} from "./ButtonBlock";
 @Component({
 	template: `
         <div :class="bem('survey-block').classes()">
-            <component :key="block.getId()" v-for="block in page.getBlocksInOrder()" :is="resolver.resolveComponentClass(block.getType()).name" :block="block" :resolver="resolver"/>
+            <component 
+                :key="block.getId()" 
+                v-for="block in page.getBlocksInOrder()" 
+                :is="resolver.resolveComponentClass(block.getType()).name" 
+                :block="block" 
+                :resolver="resolver" 
+                :handler="resolver.resolveComponentHandler(block.getType())"/>
         </div>
 	`,
 	components: {

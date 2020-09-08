@@ -11,7 +11,8 @@ class SaveBlockActionRequest extends FormRequest
         return [
             'id' => 'required|uuid',
             'blockId' => 'required|uuid',
-            'data' => 'required',
+            'handle' => '',
+            'data' => '',
         ];
     }
 
@@ -25,7 +26,12 @@ class SaveBlockActionRequest extends FormRequest
         return (string) $this->json('blockId');
     }
 
-    public function getData(): array
+    public function getHandle(): ?string
+    {
+        return $this->json('handle');
+    }
+
+    public function getData(): ?array
     {
         return $this->json('data');
     }

@@ -260,6 +260,7 @@ export class ComponentsFactory {
 		let action = new BlockAction();
 		action.id = original.id;
 		action.type = original.type;
+		action.handle = original.handle;
 		action.data = original.data;
 
 		return action;

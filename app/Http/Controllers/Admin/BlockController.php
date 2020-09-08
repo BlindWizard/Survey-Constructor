@@ -7,6 +7,7 @@ use App\Admin\Commands\CreateElementCommand;
 use App\Admin\Commands\DeleteBlockActionCommand;
 use App\Admin\Commands\DeleteElementCommand;
 use App\Admin\Commands\ReorderElementCommand;
+use App\Admin\Commands\SaveBlockActionCommand;
 use App\Admin\Commands\SaveElementDataCommand;
 use App\Admin\Commands\SaveElementStyleCommand;
 use App\Http\Controllers\Controller;
@@ -104,7 +105,7 @@ class BlockController extends Controller
         return response()->json($result);
     }
 
-    public function saveAction(SaveBlockActionRequest $request, DeleteBlockActionCommand $command)
+    public function saveAction(SaveBlockActionRequest $request, SaveBlockActionCommand $command)
     {
         $result = new AjaxResponse();
 

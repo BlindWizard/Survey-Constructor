@@ -125,9 +125,9 @@ class BlockService implements BlockServiceContract
     /**
      * @inheritDoc
      */
-    public function saveAction(string $blockId, string $actionId, array $data): BlockContract
+    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null): BlockContract
     {
-        return $this->blockRepository->saveAction($blockId, $actionId, $data);
+        return $this->blockRepository->saveAction($blockId, $actionId, $handle, $data);
     }
 
     /**

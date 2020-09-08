@@ -20,6 +20,7 @@ import {ButtonBlockWrapper} from "../components/editables/button/ButtonBlockWrap
 import {ButtonBlock} from "../components/controls/ButtonBlock";
 import {DelimiterBlockWrapper} from "../components/editables/delimiter/DelimiterBlockWrapper";
 import {DelimiterBlock} from "../components/controls/DelimiterBlock";
+import {BlockAction} from "../models/BlockAction";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -80,11 +81,16 @@ export class ComponentsResolver {
 
 					component.$store.dispatch(actions.ENTER_TEXT, data);
 				}
+			case BlockTypes.BUTTON:
+				return (component: BaseBlock, event: KeyboardEvent) => {
+					component.block.getActions().forEach((action: BlockAction) => {
+						
+					});
+				}
 			case BlockTypes.CONTAINER:
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:
 			case BlockTypes.IMAGE:
-			case BlockTypes.BUTTON:
 			case BlockTypes.DELIMITER:
 				return null;
 			default:

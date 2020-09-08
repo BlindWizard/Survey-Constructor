@@ -21,7 +21,22 @@ interface ActionContract
     public function getType(): string;
 
     /**
-     * @return ActionDataContract|null
+     * @return string|null
      */
-    public function getData(): ?ActionDataContract;
+    public function getHandle(): ?string;
+
+    /**
+     * @return array|null
+     */
+    public function getData(): ?array;
+
+    /**
+     * @param string|null $handle
+     */
+    public function setHandle(?string $handle = null): void;
+
+    /**
+     * @param array|null $data
+     */
+    public function setData(array $data = null): void;
 }

@@ -165,7 +165,6 @@ class BlockRepository implements BlockRepositoryContract
     public function deleteAction(string $blockId, string $actionId): BlockContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
-
         $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
 
         $actions = array_filter($block->getActions(), function (ActionContract $action) use ($actionId) {
@@ -180,9 +179,25 @@ class BlockRepository implements BlockRepositoryContract
         return $block;
     }
 
-    public function saveAction(string $blockId, string $actionId, array $data): BlockContract
+    /**
+     * @inheritDoc
+     */
+    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null): BlockContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
+        $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
+
+        $actions = $block->getActions();
+        foreach ($actions as $action) {
+            if ($action->getId() === $actionId) {
+                $action->setHandle($handle);
+                $action->setData($data);
+                break;
+            }
+        }
+
+        $blockData->actions = \GuzzleHttp\json_encode($actions);
+        $blockData->save();
 
         $block->refresh();
 

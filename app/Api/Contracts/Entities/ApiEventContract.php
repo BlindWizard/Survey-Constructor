@@ -11,6 +11,7 @@ interface ApiEventContract
     public const OPTIONS_LIST_SELECT = 'optionsListSelect';
     public const OPTION_SELECT = 'optionSelect';
     public const ENTER_TEXT = 'enterText';
+    public const SET_PAGE = 'setPage';
 
     public function getToken(): string;
     public function getSurveyId(): string;

@@ -5,6 +5,7 @@ import {OptionsListSelectRequest} from "./requests/OptionsListSelectRequest";
 import {OptionSelectRequest} from "./requests/OptionSelectRequest";
 import {RunRequest} from "./requests/RunRequest";
 import {EnterTextRequest} from "./requests/EnterTextRequest";
+import {PageSelectRequest} from "./requests/PageSelectRequest";
 
 export class EventsApi {
 	public static run(request: RunRequest)
@@ -35,5 +36,10 @@ export class EventsApi {
 	public static enterText(request: EnterTextRequest)
 	{
 		return axios.post('/api/event/enterText', request)
+	}
+
+	public static setPage(request: PageSelectRequest)
+	{
+		return axios.post('/api/event/setPage', request)
 	}
 }

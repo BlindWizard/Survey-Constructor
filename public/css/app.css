@@ -11616,6 +11616,10 @@ html.is-reveal-open body {
   height: 100%;
 }
 
+select:invalid {
+  color: gray !important;
+}
+
 .tabs-selector__item {
   color: rgba(254, 254, 254, 0.5);
   display: inline-block;
@@ -14035,6 +14039,22 @@ html.is-reveal-open body {
 
 .block-style .button-group {
   margin-bottom: 0;
+}
+
+.block-style__add-row {
+  margin-top: 1rem;
+}
+
+.block-style__add-row select {
+  width: calc(100% - 67px);
+}
+
+.block-style__add-row button {
+  max-width: 62px;
+  max-height: 39px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0.2rem 1rem;
 }
 
 .selected {

@@ -772,6 +772,7 @@ const store = new Vuex.Store({
 				throw new Error('Action not found');
 			}
 
+			action.handle = request.handle;
 			action.data = request.data;
 
 			targetBlock.setActions(actions);

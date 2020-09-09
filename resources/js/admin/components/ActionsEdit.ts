@@ -21,8 +21,31 @@ const uuidv4 = require('uuid/v4');
                             Actions
                         </div>
                     </div>
-                    <div>
+                <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
+                    <div :class="bem('block-style').el('size-label').classes()">On: {{ action.type }}</div>
+                    <div :class="bem('block-style').el('action-row').classes()">
+                        <select @change="updateActionHandle(action, $event)" :value="action.handle">
+                            <option value="null" disabled selected>Select event type</option>
+                            <option v-for="(label, type) in actionsHandles" :value="type">{{ label }}</option>
+                        </select>
+                    </div>
+                    <div v-if="'go-to-page' === action.handle">
+                        <select @change="updateActionPage(action, $event)" :value="action.data ? action.data.pageId : null">
+                            <option value="null" disabled selected>Select page</option>
+                            <option v-for="(step, pageId) in pagesSelector" :value="pageId">{{ step }}</option>
+                        </select>
+                    </div>
+                    <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
+                        <span :class="bem('button').el('label').classes()">Delete</span>
+                    </button>
+                </div>
+                <div :class="bem('block-style').el('size').classes()">
+                    <div :class="bem('block-style').el('add-row').classes()">
+                        <div :class="bem('block-style').el('size-label').classes()">
+                          New action
+                        </div>
                         <select v-model="type">
+                            <option value="null" disabled selected>Select action type</option>
                             <option v-for="(label, type) in actionsTypes" :value="type">{{ label }}</option>
                         </select>
                         <button :class="bem('button').is('secondary').classes()" v-on:click.stop="addAction">
@@ -30,21 +53,6 @@ const uuidv4 = require('uuid/v4');
                         </button>
                     </div>
                 </div>
-                <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
-                    <div>{{ action.type }}</div>
-                    <div>
-                        <select @change="updateActionHandle(action, $event)" :value="action.handle">
-                            <option v-for="(label, type) in actionsHandles" :value="type">{{ label }}</option>
-                        </select>
-                    </div>
-                    <div v-if="'go-to-page' === action.handle">
-                        <select @change="updateActionPage(action, $event)" :value="action.data ? action.data.pageId : null">
-                            <option v-for="(step, pageId) in pagesSelector" :value="pageId">{{ step }}</option>
-                        </select>
-                    </div>
-                    <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteAction(action.id)">
-                        <span :class="bem('button').el('label').classes()">-</span>
-                    </button>
               </div>
             </div>
         </portal>

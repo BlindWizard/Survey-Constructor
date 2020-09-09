@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Api;
 
 use App\Api\Commands\HandleEventCommand;
-use App\Api\Entities\EnterTextEventPayload;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\EnterTextRequest;
@@ -12,6 +11,7 @@ use App\Http\Requests\OptionSelectRequest;
 use App\Http\Requests\OptionsListSelectRequest;
 use App\Http\Requests\PrevPageRequest;
 use App\Http\Requests\RunRequest;
+use App\Http\Requests\SetPageRequest;
 
 class EventController extends Controller
 {
@@ -72,6 +72,15 @@ class EventController extends Controller
     }
 
     public function enterText(EnterTextRequest $request)
+    {
+        $result = new AjaxResponse();
+        $this->command->event = $request;
+        $this->command->perform();
+
+        return response()->json($result);
+    }
+
+    public function setPage(SetPageRequest $request)
     {
         $result = new AjaxResponse();
         $this->command->event = $request;

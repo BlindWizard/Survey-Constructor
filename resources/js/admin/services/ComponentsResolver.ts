@@ -21,6 +21,8 @@ import {ButtonBlock} from "../components/controls/ButtonBlock";
 import {DelimiterBlockWrapper} from "../components/editables/delimiter/DelimiterBlockWrapper";
 import {DelimiterBlock} from "../components/controls/DelimiterBlock";
 import {BlockAction} from "../models/BlockAction";
+import {ActionTypes} from "../contracts/ActionTypes";
+import {ActionHandles} from "../contracts/ActionHandles";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -84,7 +86,11 @@ export class ComponentsResolver {
 			case BlockTypes.BUTTON:
 				return (component: BaseBlock, event: KeyboardEvent) => {
 					component.block.getActions().forEach((action: BlockAction) => {
-						
+						if (action.type === ActionTypes.TYPE_CLICK) {
+							if (action.handle === ActionHandles.TYPE_GO_TO_PAGE) {
+								component.$store.dispatch(actions.SET_PAGE, (action.data as any).pageId);
+							}
+						}
 					});
 				}
 			case BlockTypes.CONTAINER:

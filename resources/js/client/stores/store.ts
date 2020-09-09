@@ -14,6 +14,7 @@ import {RunRequest} from "../api/requests/RunRequest";
 import {RunSettings} from "../models/RunSettings";
 import {GetSurveyRequest} from "../api/requests/GetSurveyRequest";
 import {EnterTextRequest} from "../api/requests/EnterTextRequest";
+import {PageSelectRequest} from "../api/requests/PageSelectRequest";
 
 Vue.use(Vuex);
 
@@ -96,7 +97,23 @@ const store = new Vuex.Store({
 			request.token = state.token;
 
 			await EventsApi.enterText(request);
-		}
+		},
+		async [actions.SET_PAGE]({commit, state}, pageId: string) {
+			let pages = state.survey.getPagesByStep();
+			for (let page of pages) {
+				if (pageId === page.getId()) {
+					commit(mutations.SET_PAGE, page);
+
+					let request = new PageSelectRequest();
+					request.clientId = state.clientId;
+					request.surveyId = state.survey.getId();
+					request.pageId = pageId;
+					request.token = state.token;
+
+					await EventsApi.setPage(request);
+				}
+			}
+		},
 	},
 	getters: {
 		[getters.CURRENT_PAGE](state): PageContract|null {

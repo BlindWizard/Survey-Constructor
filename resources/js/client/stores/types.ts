@@ -12,6 +12,7 @@ export enum actions {
 	OPTIONS_LIST_SELECT = 'optionsListSelect',
 	OPTION_SELECT = 'optionSelect',
 	ENTER_TEXT = 'enterText',
+	SET_PAGE = 'setPage',
 }
 
 export enum getters

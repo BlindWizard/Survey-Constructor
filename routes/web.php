@@ -77,4 +77,5 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('/api/event/optionsListSelect', 'EventController@optionsListSelect');
     Route::post('/api/event/optionSelect', 'EventController@optionSelect');
     Route::post('/api/event/enterText', 'EventController@enterText');
+    Route::post('/api/event/setPage', 'EventController@setPage');
 });

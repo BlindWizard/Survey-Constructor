@@ -12,6 +12,7 @@ use App\Api\Services\OptionHandler;
 use App\Api\Services\OptionsListHandler;
 use App\Api\Services\PrevPageHandler;
 use App\Api\Services\RunHandler;
+use App\Api\Services\SetPageHandler;
 
 class ApiEventHandlersFactory implements ApiEventHandlersFactoryContract
 {
@@ -30,6 +31,8 @@ class ApiEventHandlersFactory implements ApiEventHandlersFactoryContract
                 return app()->make(OptionHandler::class);
             case ApiEventContract::ENTER_TEXT:
                 return app()->make(EnterTextHandler::class);
+            case ApiEventContract::SET_PAGE:
+                return app()->make(SetPageHandler::class);
             default:
                 throw new \Exception('Event handler for ' . $event->getType() . ' not found');
         }

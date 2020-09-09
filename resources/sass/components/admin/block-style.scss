@@ -20,4 +20,20 @@
     .button-group {
         margin-bottom: 0;
     }
+
+    &__add-row {
+        margin-top: 1rem;
+
+        select {
+            width: calc(100% - 67px);
+        }
+
+        button {
+            max-width: 62px;
+            max-height: 39px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 0.2rem 1rem;
+        }
+    }
 }

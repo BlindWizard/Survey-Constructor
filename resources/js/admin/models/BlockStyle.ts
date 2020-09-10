@@ -7,4 +7,5 @@ export class BlockStyle {
 	public margin: Rectangle;
 	public padding: Rectangle;
 	public sizeMeasure: string;
+	public backgroundColor: string;
 }

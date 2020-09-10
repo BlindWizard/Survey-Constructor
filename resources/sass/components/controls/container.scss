@@ -37,6 +37,7 @@
     max-width: 100%;
     background-color: $white;
     position: relative;
+    z-index: 20;
 
     &__slot {
         position: relative;

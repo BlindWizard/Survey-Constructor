@@ -14017,6 +14017,24 @@ select:invalid {
   color: #fefefe;
 }
 
+.edit-modal__delete-row {
+  margin-top: 1rem;
+}
+
+.edit-modal__delete-row select,
+.edit-modal__delete-row input {
+  width: calc(100% - 43px);
+  display: inline-block;
+}
+
+.edit-modal__delete-row button {
+  max-width: 43px;
+  max-height: 39px;
+  display: inline-block;
+  vertical-align: top;
+  padding: 0.2rem 1rem;
+}
+
 .block-style {
   color: #fefefe;
 }
@@ -14045,7 +14063,8 @@ select:invalid {
   margin-top: 1rem;
 }
 
-.block-style__add-row select {
+.block-style__add-row select,
+.block-style__add-row input {
   width: calc(100% - 67px);
 }
 
@@ -14216,7 +14235,6 @@ select:invalid {
 .survey-block {
   max-width: 1180px;
   margin: 0 auto;
-  background-color: #fefefe;
 }
 
 .survey-block__footer {
@@ -14260,6 +14278,7 @@ select:invalid {
   max-width: 100%;
   background-color: #fefefe;
   position: relative;
+  z-index: 20;
 }
 
 .container__slot {
@@ -14280,7 +14299,6 @@ body.dragging .container-wrapper .container__slot {
 }
 
 .options-list {
-  background-color: #fefefe;
   overflow: hidden;
   position: relative;
   z-index: 20;
@@ -14378,7 +14396,6 @@ body.dragging .container-wrapper .container__slot {
 }
 
 .option {
-  background-color: #fefefe;
   overflow: hidden;
   position: relative;
   z-index: 20;
@@ -14517,7 +14534,6 @@ body.dragging .container-wrapper .container__slot {
   max-width: 100%;
   width: 100%;
   display: inline-block;
-  background-color: #2d1e45;
   position: relative;
   z-index: 20;
 }
@@ -14563,7 +14579,6 @@ body.dragging .container-wrapper .container__slot {
 }
 
 .text {
-  background-color: #fefefe;
   position: relative;
   z-index: 20;
 }
@@ -14585,7 +14600,6 @@ body.dragging .container-wrapper .container__slot {
 }
 
 .text-field {
-  background-color: #fefefe;
   display: inline-block;
   width: 100%;
   color: #0a0a0a;

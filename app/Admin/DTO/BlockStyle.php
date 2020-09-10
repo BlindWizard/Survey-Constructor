@@ -17,6 +17,8 @@ class BlockStyle
     public $padding;
     /** @var string */
     public $sizeMeasure;
+    /** @var string */
+    public $backgroundColor;
 
     public function __construct()
     {

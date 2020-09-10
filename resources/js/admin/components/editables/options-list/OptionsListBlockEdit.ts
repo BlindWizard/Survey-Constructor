@@ -17,16 +17,15 @@ const uuidv4 = require('uuid/v4');
                     Header
                     <input @input="changeBlockText" :value="block.text" type="text" />
                 </label>
-                <p :key="option.id" v-for="option in blockData.options">
+                <div :key="option.id" v-for="option in blockData.options" :class="bem('edit-modal').el('delete-row').classes()">
                     <label>
                         Option text
-                        <input @input="changeOptionText(option.id, $event)" :value="option.text" type="text" /><!--
-                     -->
+                        <input @input="changeOptionText(option.id, $event)" :value="option.text" type="text" />
                         <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteOption(option.id)">
                             <span :class="bem('button').el('label').classes()">-</span>
                         </button>
                     </label>
-                </p>
+                </div>
                 <div :class="bem('options-list').el('add-wrapper').classes()">
                     <button :class="bem('button').add('secondary').classes()" v-on:click.stop="addOption">
                         <span :class="bem('button').el('label').classes()">Add option</span>

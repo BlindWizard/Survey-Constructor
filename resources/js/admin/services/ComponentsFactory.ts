@@ -240,6 +240,7 @@ export class ComponentsFactory {
 		style.height = original.height;
 		style.textAlign = original.textAlign;
 		style.sizeMeasure = original.sizeMeasure;
+		style.backgroundColor = original.backgroundColor;
 
 		style.margin = new Rectangle();
 		style.margin.top = original.margin.top;

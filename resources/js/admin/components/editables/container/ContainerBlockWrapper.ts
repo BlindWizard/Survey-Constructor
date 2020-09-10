@@ -29,10 +29,12 @@ import {DelimiterBlock} from "../../controls/DelimiterBlock";
 import {DelimiterBlockWrapper} from "../delimiter/DelimiterBlockWrapper";
 import {ButtonBlockWrapper} from "../button/ButtonBlockWrapper";
 import {ButtonBlock} from "../../controls/ButtonBlock";
+import {BlockOriginalFrame} from "../../BlockOriginalFrame";
+import {StyleEdit} from "../../StyleEdit";
 
 @Component({
 	template: `
-        <div ref="selectable" :class="bem('container-wrapper').add(this.selected ? 'selected' : '').classes()" v-component-drag v-component-drop-target>
+        <div ref="selectable" :class="bem('container-wrapper').add(this.selected ? 'selected' : '').classes()" :style="renderContainerStyle()" v-component-drag v-component-drop-target>
             <div :class="bem('container').classes()">
                 <div class="grid-container full">
                     <div class="grid-x">
@@ -48,8 +50,10 @@ import {ButtonBlock} from "../../controls/ButtonBlock";
                 </div>
             </div>
             <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData" />
+            <StyleEdit v-if="editing && !isFrameResize && (isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
-            <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" />
+            <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockOriginalFrame v-if="selected && !isFrameResize && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
         </div>
 	`,
 	components: {
@@ -74,6 +78,8 @@ import {ButtonBlock} from "../../controls/ButtonBlock";
 		BlockResizeFrame,
 		DelimiterBlock,
 		DelimiterBlockWrapper,
+		BlockOriginalFrame,
+		StyleEdit,
 	}
 })
 export class ContainerBlockWrapper extends BaseBlock implements Draggable {
@@ -87,6 +93,15 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 		selectService.handleElement(this);
 	}
 
+	public getResizeDirection(): string|null
+	{
+		if (this.resizeMode !== ResizeModes.SELECT) {
+			return ResizeDirection.ALL;
+		}
+
+		return null;
+	}
+
 	public getSlotResizeDirection(slotId: string): string|null
 	{
 		if (this.resizeMode !== ResizeModes.RESIZE) {
@@ -98,6 +113,11 @@ export class ContainerBlockWrapper extends BaseBlock implements Draggable {
 		}
 
 		return null;
+	}
+
+	public renderContainerStyle(): string
+	{
+		return styleRenderer.render(this.block.getStyle()['style']);
 	}
 
 	public renderSlotStyle(slotId: string): string

@@ -11,4 +11,21 @@
         font-weight: bold;
         color: $white;
     }
+
+    &__delete-row {
+        margin-top: 1rem;
+
+        select, input {
+            width: calc(100% - 43px);
+            display: inline-block;
+        }
+
+        button {
+            max-width: 43px;
+            max-height: 39px;
+            display: inline-block;
+            vertical-align: top;
+            padding: 0.2rem 1rem;
+        }
+    }
 }

@@ -219,11 +219,13 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         foreach ($block->slots as $slotId) {
             $block->slotsStyle[$slotId] = new BlockStyle();
             $block->slotsStyle[$slotId]->width = 100 / count($block->slots);
             $block->slotsStyle[$slotId]->sizeMeasure = '%';
+            $block->slotsStyle[$slotId]->backgroundColor = 'transparent';
         }
 
         return $block;
@@ -266,6 +268,7 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }
@@ -287,6 +290,7 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }
@@ -307,6 +311,7 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
+        $block->style->backgroundColor = 'rgba(45, 30, 69, 1)';
         $block->style->width = 100;
 
         return $block;
@@ -329,6 +334,7 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }
@@ -351,7 +357,9 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
+        $block->style->backgroundColor = 'transparent';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }
@@ -372,6 +380,7 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }
@@ -392,6 +401,8 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';
+        $block->style->backgroundColor = 'transparent';
+
         $block->style->width = 250;
         $block->style->height = 42;
 
@@ -414,6 +425,7 @@ class BlockFactory implements BlockFactoryContract
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = '%';
         $block->style->width = 100;
+        $block->style->backgroundColor = 'transparent';
 
         return $block;
     }

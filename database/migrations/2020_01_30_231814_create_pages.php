@@ -23,11 +23,6 @@ class CreatePages extends Migration
             $table->timestamp(Page::ATTR_CREATED_AT)->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
             $table->timestamp(Page::ATTR_UPDATED_AT)->default(DB::raw('(NOW() AT TIME ZONE \'UTC\')'));
         });
-
-        Schema::table('blocks', function (Blueprint $table) {
-            $table->dropColumn('survey_id');
-            $table->uuid(Block::ATTR_PARENT_ID);
-        });
     }
 
     /**
@@ -36,10 +31,5 @@ class CreatePages extends Migration
     public function down()
     {
         Schema::dropIfExists('pages');
-
-        Schema::table('blocks', function (Blueprint $table) {
-            $table->dropColumn(Block::ATTR_PARENT_ID);
-            $table->uuid('survey_id');
-        });
     }
 }

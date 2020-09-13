@@ -21,7 +21,7 @@ import {ActionsEdit} from "../../ActionsEdit";
                 <span :class="bem('button').el('label').classes()">{{ block.getData()['text'] }}</span>
             </button>
             <ButtonBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData"/>
-            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']"/>
+            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']"/>
             <ActionsEdit v-if="selected" :block="block"/>
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />

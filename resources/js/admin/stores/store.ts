@@ -504,6 +504,27 @@ const store = new Vuex.Store({
 
 					break;
 
+				case ResizeModes.MOVE:
+					let targetStyle = targetBlock.getStyle()['style'];
+					let originalStyle = request.originalStyle['style'];
+
+					if (request.offset.top) {
+						targetStyle.inset.top = originalStyle.inset.top + request.offset.top;
+					}
+
+					if (request.offset.right) {
+						targetStyle.inset.left = originalStyle.inset.left + request.offset.right;
+					}
+
+					if (request.offset.bottom) {
+						targetStyle.inset.top = originalStyle.inset.top + request.offset.bottom;
+					}
+
+					if (request.offset.left) {
+						targetStyle.inset.left = originalStyle.inset.left + request.offset.left;
+					}
+					break;
+
 				case ResizeModes.MARGIN:
 					{
 						let targetStyle = targetBlock.getStyle()['style'];
@@ -925,6 +946,7 @@ const store = new Vuex.Store({
 					targetStyle['slotsStyle'][newSlot].width = 0.01;
 					targetStyle['slotsStyle'][newSlot].margin = new Rectangle();
 					targetStyle['slotsStyle'][newSlot].padding = new Rectangle();
+					targetStyle['slotsStyle'][newSlot].inset = new Rectangle();
 
 					newSlots.push(newSlot);
 					offsetSum += 0.01;

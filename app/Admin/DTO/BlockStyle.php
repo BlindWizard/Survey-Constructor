@@ -12,6 +12,8 @@ class BlockStyle
     /** @var string */
     public $textAlign;
     /** @var ResizeOffset */
+    public $inset;
+    /** @var ResizeOffset */
     public $margin;
     /** @var ResizeOffset */
     public $padding;
@@ -24,5 +26,6 @@ class BlockStyle
     {
         $this->margin = new ResizeOffset();
         $this->padding = new ResizeOffset();
+        $this->inset = new ResizeOffset();
     }
 }

@@ -7,6 +7,8 @@ class Locale
     /** @var string */
     public $appName;
     /** @var string */
+    public $move;
+    /** @var string */
     public $margin;
     /** @var string */
     public $padding;

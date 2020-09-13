@@ -16,12 +16,12 @@ import {styleRenderer} from "../../../services/StyleRenderer";
 @Component({
 	template: `
         <div ref="selectable" :class="bem('header-wrapper').add(this.selected ? 'selected' : '').classes()" :style="renderHeaderStyle()" v-component-drag v-component-drop-target>
-        <HeaderBlock :block="block" :resolver="resolver" />
-        <HeaderBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
-        <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']" />
-        <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
-        <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
-        <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
+            <HeaderBlock :block="block" :resolver="resolver" />
+            <HeaderBlockEdit v-if="editing" :block="blockData" :onUpdate="changeData" :onSave="saveData" />
+            <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
+            <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
+            <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
         </div>
 	`,
 	components: {

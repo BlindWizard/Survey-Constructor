@@ -35,11 +35,14 @@
     .container {
         background-color: inherit !important;
     }
+
+    .container {
+        background-color: inherit;
+    }
 }
 
 .container {
     max-width: 100%;
-    background-color: $white;
     position: relative;
     z-index: 20;
 

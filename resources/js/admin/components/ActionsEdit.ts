@@ -14,13 +14,12 @@ const uuidv4 = require('uuid/v4');
 @Component({
 	template: `
         <portal to="actions-block">
-            <div class="grid-container">
-                <div :class="bem('block-style').classes()">
-                    <div :class="bem('block-style').el('size').classes()">
-                        <div :class="bem('block-style').el('size-label').classes()">
-                            Actions
-                        </div>
+	        <div :class="bem('block-style').classes()">
+                <div :class="bem('block-style').el('size').classes()">
+                    <div :class="bem('block-style').el('size-label').classes()">
+                        Actions
                     </div>
+                </div>
                 <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
                     <div :class="bem('block-style').el('size-label').classes()">On: {{ action.type }}</div>
                     <div :class="bem('block-style').el('action-row').classes()">
@@ -53,7 +52,6 @@ const uuidv4 = require('uuid/v4');
                         </button>
                     </div>
                 </div>
-              </div>
             </div>
         </portal>
 	`

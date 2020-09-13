@@ -50,10 +50,10 @@ import {StyleEdit} from "../../StyleEdit";
                 </div>
             </div>
             <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData" />
-            <StyleEdit v-if="editing && !isFrameResize && (isFrameMargin || isFramePadding)" :block="block" :blockStyle="block.getStyle()['style']" />
+            <StyleEdit v-if="editing && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
-            <BlockOriginalFrame v-if="selected && !isFrameResize && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
+            <BlockOriginalFrame v-if="selected && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :mode="resizeMode" />
         </div>
 	`,
 	components: {

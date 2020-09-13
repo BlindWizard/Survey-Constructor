@@ -10,6 +10,7 @@ import {ResizeModes} from "../contracts/ResizeModes";
 	template: `
         <div :class="bem('block-edit-menu').classes()">
             <button v-if="-1 !== activeButtons().indexOf('resize')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onResize">{{ locale.resize }}</button>
+            <button v-if="-1 !== activeButtons().indexOf('move')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onMove">{{ locale.move }}</button>
             <button v-if="-1 !== activeButtons().indexOf('margin')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onMargin">{{ locale.margin }}</button>
             <button v-if="-1 !== activeButtons().indexOf('padding')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onPadding">{{ locale.padding }}</button>
             <button v-if="-1 !== activeButtons().indexOf('delete')" :class="bem('button').is('rounded').classes()" v-on:click.stop="onDelete">{{ locale.delete }}</button>
@@ -29,10 +30,21 @@ export class BlockEditMenu extends Vue {
 	public activeButtons(): string[]
 	{
 		if (EditingModes.EDIT === this.mode) {
-			return ['resize', 'margin', 'padding', 'delete'];
+			return ['resize', 'move', 'margin', 'padding', 'delete'];
 		}
 
 		return [];
+	}
+
+	public onMove()
+	{
+		if (null === this.onSelectMode) {
+			return;
+		}
+
+		this.$store.dispatch(actions.SET_RESIZING, true);
+
+		this.onSelectMode(ResizeModes.MOVE);
 	}
 
 	public onMargin()

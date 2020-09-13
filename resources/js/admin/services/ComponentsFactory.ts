@@ -242,6 +242,12 @@ export class ComponentsFactory {
 		style.sizeMeasure = original.sizeMeasure;
 		style.backgroundColor = original.backgroundColor;
 
+		style.inset = new Rectangle();
+		style.inset.top = original.inset.top;
+		style.inset.right = original.inset.right;
+		style.inset.bottom = original.inset.bottom;
+		style.inset.left = original.inset.left;
+
 		style.margin = new Rectangle();
 		style.margin.top = original.margin.top;
 		style.margin.right = original.margin.right;

@@ -100,6 +100,10 @@ export class BaseBlock extends Vue implements Draggable {
 		return this.resizeMode === ResizeModes.MARGIN;
 	}
 
+	get isFrameMove(): boolean {
+		return this.resizeMode === ResizeModes.MOVE;
+	}
+
 	get isFramePadding(): boolean {
 		return this.resizeMode === ResizeModes.PADDING;
 	}

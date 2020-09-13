@@ -13,7 +13,7 @@ class AddStylesIntoBlockData extends Migration
     public function up()
     {
         Schema::table('blocks_data', function (Blueprint $table) {
-            $table->jsonb(BlockData::ATTR_ACTIONS);
+            $table->jsonb(BlockData::ATTR_STYLE);
         });
     }
 
@@ -23,7 +23,7 @@ class AddStylesIntoBlockData extends Migration
     public function down()
     {
         Schema::table('blocks_data', function (Blueprint $table) {
-            $table->dropColumn(BlockData::ATTR_ACTIONS);
+            $table->dropColumn(BlockData::ATTR_STYLE);
         });
     }
 }

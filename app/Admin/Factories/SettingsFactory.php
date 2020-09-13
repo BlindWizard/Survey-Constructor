@@ -47,6 +47,7 @@ class SettingsFactory implements SettingsFactoryContract
 
         $locale = new Locale();
         $locale->appName = config('app.name');
+        $locale->move = __('Move');
         $locale->margin = __('Margin');
         $locale->padding = __('Padding');
         $locale->resize = __('Resize');

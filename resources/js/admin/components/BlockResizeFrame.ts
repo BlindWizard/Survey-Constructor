@@ -66,6 +66,10 @@ export class BlockResizeFrame extends Vue {
 			string += 'left:' + this.block.getStyle()['style'].padding.left + 'px;';
 		}
 
+		if (this.isFrameMove) {
+			string += 'top:0;right:0;bottom:0;left:0;';
+		}
+
 		if (this.isFrameMargin) {
 			string += 'top:' + (-this.block.getStyle()['style'].margin.top) + 'px;';
 			string += 'right:' + (-this.block.getStyle()['style'].margin.right) + 'px;';
@@ -78,6 +82,10 @@ export class BlockResizeFrame extends Vue {
 
 	get isFrameMargin(): boolean {
 		return this.mode === ResizeModes.MARGIN;
+	}
+
+	get isFrameMove(): boolean {
+		return this.mode === ResizeModes.MOVE;
 	}
 
 	get isFramePadding(): boolean {

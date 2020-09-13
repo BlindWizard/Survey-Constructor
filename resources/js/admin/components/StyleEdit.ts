@@ -28,6 +28,14 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                         </div>
                     </div>
                 </div>
+                <div :class="bem('block-style').el('inset').classes()">
+                    <div :class="bem('block-style').el('inset-label').classes()">
+                        Inset
+                    </div>
+                    <div :class="bem('block-style').el('inset-value').classes()">
+                        {{ blockStyle.inset.left }}px × {{ blockStyle.inset.top }}px
+                    </div>
+                </div>
                 <div :class="bem('block-style').el('margin').classes()">
                     <div :class="bem('block-style').el('margin-label').classes()">
                         Margin

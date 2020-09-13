@@ -23,7 +23,7 @@ class SelectService {
 	public handleClick(e: MouseEvent) {
 		this.selected = null;
 
-		if (0 === e.x && 0 === e.y) {
+		if (0 >= e.x || 0 >=e.y) {
 			return;
 		}
 

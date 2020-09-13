@@ -17,7 +17,7 @@ import {Sections} from "../contracts/Sections";
             <div class="grid-x grid-padding-x">
                 <div class="grid-y grid-padding-y medium-2 dark">
                     <ComponentsMenu v-if="!editing" />
-                    <portal-target v-if="editing" name="edit-block"></portal-target>
+                    <portal-target v-if="editing && !resizing" name="edit-block"></portal-target>
                     <portal-target v-if="resizing" name="resize-block"></portal-target>
                     <portal-target v-if="editing && !resizing" name="actions-block"></portal-target>
                     <a v-if="token && !editing" :href="runUrl" target="_blank">

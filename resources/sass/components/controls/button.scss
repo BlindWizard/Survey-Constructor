@@ -5,6 +5,10 @@
     &:focus {
         outline: none;
     }
+
+    .button {
+        background-color: inherit !important;
+    }
 }
 
 .button {

@@ -44,7 +44,10 @@ import {AddBlockAction} from "../api/requests/AddBlockAction";
 import {BlockAction} from "../models/BlockAction";
 import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
 import {SaveActionData} from "../api/requests/SaveActionData";
+import Timeout = NodeJS.Timeout;
 const uuidv4 = require('uuid/v4');
+
+let debounceSaveStyle: Timeout|null = null;
 
 Vue.use(Vuex);
 
@@ -969,11 +972,18 @@ const store = new Vuex.Store({
 		},
 		async [actions.SAVE_STYLE]({commit, state}, request: SaveBlockStyle) {
 			commit(mutations.SAVE_ELEMENT_STYLE, request);
-			await BlockApi.saveStyle(request);
+
+			if (null !== debounceSaveStyle) {
+				clearTimeout(debounceSaveStyle);
+			}
+
+			debounceSaveStyle = setTimeout(() => {
+				BlockApi.saveStyle(request);
+			}, 100);
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);
-			await BlockApi.deleteElement(blockId);
+			BlockApi.deleteElement(blockId);
 		},
 		async [actions.ADD_PAGE]({commit, state}) {
 			let page = await PageApi.add(state.survey.id);

@@ -4,6 +4,10 @@
     &:focus {
         outline: none;
     }
+
+    .text {
+        background-color: inherit !important;
+    }
 }
 
 .text {

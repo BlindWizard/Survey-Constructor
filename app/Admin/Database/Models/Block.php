@@ -150,7 +150,7 @@ class Block extends Model implements BlockContract
         if (null === $this->data) {
             $model = new BlockStyle();
             $model->sizeMeasure = 'px';
-            $model->backgroundColor = 'transparent';
+            $model->backgroundColor = '#fefefe';
 
             $style = ['style' => $model];
             if ($this->getType() === BlockContract::TYPE_CONTAINER) {

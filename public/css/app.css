@@ -14036,23 +14036,52 @@ select:invalid {
 }
 
 .block-style {
+  padding: 0.7rem 1rem;
   color: #fefefe;
 }
 
-.block-style__size {
+.block-style__size,
+.block-style__margin,
+.block-style__padding,
+.block-style__bg-color {
   margin-bottom: 1rem;
 }
 
-.block-style__size-label {
+.block-style__size-label,
+.block-style__margin-label,
+.block-style__padding-label,
+.block-style__bg-color-label {
   font-weight: bold;
 }
 
-.block-style__size-value {
+.block-style__size-value,
+.block-style__margin-value,
+.block-style__padding-value,
+.block-style__bg-color-value {
   display: inline-block;
 }
 
-.block-style__size-setting {
+.block-style__size-setting,
+.block-style__margin-setting,
+.block-style__padding-setting,
+.block-style__bg-color-setting {
   display: inline-block;
+}
+
+.block-style__size .button,
+.block-style__margin .button,
+.block-style__padding .button,
+.block-style__bg-color .button {
+  display: inline-block !important;
+}
+
+.block-style__bg-color-value {
+  position: relative;
+}
+
+.block-style__bg-color-value-popup {
+  position: absolute;
+  top: 2rem;
 }
 
 .block-style .button-group {
@@ -14274,6 +14303,10 @@ select:invalid {
   background-color: #fd5b15;
 }
 
+.container-wrapper .container {
+  background-color: inherit !important;
+}
+
 .container {
   max-width: 100%;
   background-color: #fefefe;
@@ -14296,6 +14329,10 @@ body.dragging .container-wrapper .container__slot {
 
 .options-list-wrapper:focus {
   outline: none;
+}
+
+.options-list-wrapper .options-list {
+  background-color: inherit !important;
 }
 
 .options-list {
@@ -14393,6 +14430,10 @@ body.dragging .container-wrapper .container__slot {
 
 .option-wrapper:focus {
   outline: none;
+}
+
+.option-wrapper .option {
+  background-color: inherit !important;
 }
 
 .option {
@@ -14530,6 +14571,10 @@ body.dragging .container-wrapper .container__slot {
   outline: none;
 }
 
+.header-wrapper .header {
+  background-color: inherit !important;
+}
+
 .header {
   max-width: 100%;
   width: 100%;
@@ -14564,6 +14609,10 @@ body.dragging .container-wrapper .container__slot {
   outline: none;
 }
 
+.button-wrapper .button {
+  background-color: inherit !important;
+}
+
 .button {
   position: relative;
   display: block;
@@ -14576,6 +14625,10 @@ body.dragging .container-wrapper .container__slot {
 
 .text-wrapper:focus {
   outline: none;
+}
+
+.text-wrapper .text {
+  background-color: inherit !important;
 }
 
 .text {
@@ -14597,6 +14650,10 @@ body.dragging .container-wrapper .container__slot {
 
 .text-field-wrapper:focus {
   outline: none;
+}
+
+.text-field-wrapper .text-field {
+  background-color: inherit !important;
 }
 
 .text-field {
@@ -14632,6 +14689,7 @@ body.dragging .container-wrapper .container__slot {
 .image-wrapper .image {
   width: 100%;
   height: 100%;
+  background-color: inherit !important;
 }
 
 .image {

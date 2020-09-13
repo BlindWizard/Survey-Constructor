@@ -1,7 +1,8 @@
 .block-style {
+    padding: 0.7rem 1rem;
     color: $white;
 
-    &__size {
+    &__size, &__margin, &__padding, &__bg-color {
         margin-bottom: 1rem;
 
         &-label {
@@ -14,6 +15,19 @@
 
         &-setting {
             display: inline-block;
+        }
+
+        .button {
+            display: inline-block !important;
+        }
+    }
+
+    &__bg-color-value {
+        position: relative;
+
+        &-popup {
+            position: absolute;
+            top: 2rem;
         }
     }
 

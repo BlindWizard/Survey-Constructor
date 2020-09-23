@@ -10,6 +10,7 @@ use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\Exceptions\TemplateNotFoundException;
 use App\Admin\Rules\TemplateRules;
 use App\Http\Requests\CreateSurveyRequest;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CreateSurveyCommand implements Command
 {
@@ -54,6 +55,10 @@ class CreateSurveyCommand implements Command
                 $template = $this->templateRepository->findById($this->request->getId());
             }
 
+            if (null === $template) {
+                throw new NotFoundHttpException();
+            }
+
             $survey         = $this->surveyService->createFromTemplate($this->ownerId, $template);
             $this->surveyId = $survey->getId();
 
@@ -63,7 +68,7 @@ class CreateSurveyCommand implements Command
             $this->errors[] = __('Template not found');
         }
         catch (\Throwable $e) {
-            $this->errors[] = $e->getMessage();
+            $this->errors[] = __('Service is temporary unavailable');
         }
 
         return $this;

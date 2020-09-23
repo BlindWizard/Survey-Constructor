@@ -24,7 +24,7 @@ interface TemplateRepositoryContract
     /**
      * @param string $id
      *
-     * @return Template
+     * @return Template|null
      */
-    public function findById(string $id): Template;
+    public function findById(string $id): ?Template;
 }

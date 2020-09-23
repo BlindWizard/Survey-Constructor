@@ -42,6 +42,7 @@ class TemplateService implements TemplateServiceContract
 
         return array_merge(
             [$this->templatesFactory->getBlank()],
+            [$this->templatesFactory->getPoll()],
             $objects
         );
     }

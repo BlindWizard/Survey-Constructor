@@ -13,6 +13,7 @@ class TemplateRules
     {
         return in_array($id, [
             TemplatesFactoryContract::BLANK_UUID,
+            TemplatesFactoryContract::POLL_UUID,
         ]);
     }
 }

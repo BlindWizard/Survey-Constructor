@@ -28,7 +28,7 @@ class TemplateRepository implements TemplateRepositoryContract
     /**
      * @inheritDoc
      */
-    public function findById(string $id): Template
+    public function findById(string $id): ?Template
     {
         return Template::query()->find($id)->first();
     }

@@ -9,6 +9,7 @@ use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\BlockData;
 use App\Admin\Database\Models\Page;
 use App\Admin\Database\Models\Survey;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class SurveyRepository implements SurveyRepositoryContract
@@ -69,18 +70,20 @@ class SurveyRepository implements SurveyRepositoryContract
                 foreach ($page->getBlocks() as $block) {
                     $blockModel = new Block();
                     $blockModel->id = $block->getId();
+                    $blockModel->page_id = $block->getPageId();
                     $blockModel->parent_id = $block->getParentId();
                     $blockModel->type = $block->getType();
                     $blockModel->position = $block->getPosition();
-                    $blockModel->created_at = $block->getCreatedAt();
-                    $blockModel->updated_at = $block->getUpdatedAt();
+                    $blockModel->created_at = (string) Carbon::now('UTC');
+                    $blockModel->updated_at = (string) Carbon::now('UTC');
+                    $blockModel->saveOrFail();
 
                     $blockData = new BlockData();
-                    $blockData->id = $model->id;
+                    $blockData->id = $blockModel->id;
                     $blockData->data = \GuzzleHttp\json_encode($block->getData());
+                    $blockData->style = \GuzzleHttp\json_encode($block->getStyle());
+                    $blockData->actions = \GuzzleHttp\json_encode($block->getActions());
                     $blockData->saveOrFail();
-
-                    $blockModel->saveOrFail();
                 }
             }
 

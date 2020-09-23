@@ -25,7 +25,7 @@ class SurveyFactory implements SurveyFactoryContract
     {
         $survey = new Survey();
         $survey->id = Uuid::uuid4()->toString();
-        $survey->title = __('New survey');
+        $survey->title = $template->getTitle();
         $survey->ownerId = $ownerId;
         $survey->createdAt = (string) Carbon::now('UTC');
         $survey->updatedAt = (string) Carbon::now('UTC');
@@ -37,8 +37,11 @@ class SurveyFactory implements SurveyFactoryContract
             $pageObject->step = $page->getStep();
             $pageObject->createdAt = (string) Carbon::now('UTC');
             $pageObject->updatedAt = (string) Carbon::now('UTC');
-
             $survey->pages[] = $pageObject;
+
+            foreach ($page->getBlocks() as $block) {
+                $pageObject->blocks[] = $block;
+            }
         }
 
         return $survey;

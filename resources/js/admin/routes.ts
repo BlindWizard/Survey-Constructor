@@ -4,6 +4,7 @@ import {TemplatesList} from "./components/TemplatesList";
 import {UserSettings} from "./components/UserSettings";
 import {StatisticsReport} from "./components/StatisticsReport";
 import {StatisticsSample} from "./components/StatisticsSample";
+import {SurveyDataset} from "./components/SurveyDataset";
 
 export const routes = [
 	{path: '/admin', component: SurveysList, name: 'main-page'},
@@ -11,5 +12,6 @@ export const routes = [
 	{path: '/admin/survey/:surveyId/edit', component: SurveyEdit, name: 'survey', props: true},
 	{path: '/admin/settings', component: UserSettings, name: 'settings'},
 	{path: '/admin/statistics/:surveyId', component: StatisticsReport, name: 'survey-statistics', props: true},
-	{path: '/admin/statistics/:surveyId/sample/:sampleId', component: StatisticsSample, name: 'statistics-sample', props: true}
+	{path: '/admin/statistics/:surveyId/sample/:sampleId', component: StatisticsSample, name: 'statistics-sample', props: true},
+	{path: '/admin/survey/:surveyId/dataset', component: SurveyDataset, name: 'survey-dataset', props: true}
 ];

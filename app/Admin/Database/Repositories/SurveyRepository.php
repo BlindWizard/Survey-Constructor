@@ -9,6 +9,7 @@ use App\Admin\Database\Models\Block;
 use App\Admin\Database\Models\BlockData;
 use App\Admin\Database\Models\Page;
 use App\Admin\Database\Models\Survey;
+use App\Admin\Database\Models\SurveyData;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -56,6 +57,11 @@ class SurveyRepository implements SurveyRepositoryContract
             $model->updated_at = $survey->getUpdatedAt();
 
             $model->saveOrFail();
+
+            $data = new SurveyData();
+            $data->id = $model->id;
+            $data->data = '{}';
+            $data->saveOrFail();
 
             foreach ($survey->getPages() as $page) {
                 $pageModel = new Page();
@@ -110,6 +116,7 @@ class SurveyRepository implements SurveyRepositoryContract
             $blockIds = array_column($blocks, Block::ATTR_ID);
 
             Survey::query()->where(Survey::ATTR_ID, '=', $id)->delete();
+            SurveyData::query()->where(SurveyData::ATTR_ID, '=', $id)->delete();
             Page::query()->whereIn(Page::ATTR_ID, $pageIds)->delete();
             Block::query()->whereIn(Block::ATTR_ID, $blockIds)->delete();
             BlockData::query()->whereIn(BlockData::ATTR_ID, $blockIds)->delete();

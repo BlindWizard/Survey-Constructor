@@ -3,6 +3,7 @@ import Vue from "vue";
 import "foundation-sites";
 import $ from "jquery";
 import {getters} from "../stores/types";
+import {SurveyContract} from "../contracts/SurveyContract";
 
 @Component({
 	template: `
@@ -17,7 +18,8 @@ import {getters} from "../stores/types";
                                 </div><!--
                              --><div :class="bem('top-menu').el('title').classes()">{{ appName }}</div>
                             </router-link><!--
-                         --><div v-if="null !== section" :class="bem('top-menu').el('section').classes()">{{ section }}</div>
+                         --><div v-if="null !== section" :class="bem('top-menu').el('section').classes()">{{ section }}</div><!--
+                         --><router-link v-if="section === 'Editor' && survey" :to="{name: 'survey-dataset', surveyId: survey.getId()}">Dataset</router-link>
                         </div>
                         <div class="top-bar-right">
                             <div>
@@ -67,5 +69,9 @@ export class AppHeader extends Vue
 	get section(): string|null
 	{
 		return this.$store.getters[getters.SECTION];
+	}
+
+	get survey(): SurveyContract|null {
+		return this.$store.getters[getters.SURVEY];
 	}
 }

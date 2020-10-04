@@ -20,6 +20,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin/survey/statistics/{id}', 'StatisticsController@getSurveyStatistics');
     Route::get('/admin/survey/statistics/{id}/sample/{sampleId}', 'StatisticsController@getStatisticsSample');
 
+    Route::get('/admin/survey/{id}/dataset', 'SurveyController@index');
+
     Route::post('/admin/page/add', 'PageController@add');
     Route::post('/admin/page/delete', 'PageController@delete');
 

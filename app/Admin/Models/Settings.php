@@ -22,6 +22,8 @@ class Settings implements \JsonSerializable
     public $actionsTypes;
     /** @var string[] */
     public $actionsHandles;
+    /** @var string[] */
+    public $dataTypes;
 
     /**
      * @return mixed[]
@@ -35,6 +37,7 @@ class Settings implements \JsonSerializable
             'defaultBlockData' => $this->defaultBlockData,
             'actionsTypes'     => $this->actionsTypes,
             'actionsHandles'   => $this->actionsHandles,
+            'dataTypes'        => $this->dataTypes,
         ];
     }
 

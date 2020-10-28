@@ -9,6 +9,7 @@ export interface Settings {
 	defaultBlockData: BlockContract[];
 	actionsTypes: any;
 	actionsHandles: any;
+	dataTypes: any;
 }
 
 let data: any = (<any> window).settings || null;
@@ -34,11 +35,17 @@ let actionsHandles: any = {};
 	actionsHandles[key] = data.actionsHandles[key];
 });
 
+let dataTypes: any = {};
+(<any> Object).keys(data.dataTypes).forEach((key: string) => {
+	dataTypes[key] = data.dataTypes[key];
+});
+
 export const settings: Settings = {
 	csrf: data.csrf,
 	token: data.token,
 	locale: data.locale,
 	defaultBlockData: defaultBlockData,
 	actionsTypes: actionsTypes,
-	actionsHandles: actionsHandles
+	actionsHandles: actionsHandles,
+	dataTypes: dataTypes,
 };

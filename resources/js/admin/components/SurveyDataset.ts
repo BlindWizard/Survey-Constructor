@@ -12,13 +12,15 @@ import {Sections} from "../contracts/Sections";
         <div class="grid-container fluid">
             <div class="grid-x grid-padding-x">
                 <div class="grid-y grid-padding-y medium-2 dark">
-                    <a v-if="token" :href="runUrl" target="_blank">
-                        <button :class="bem('button').is('run').classes()">
-                            <span :class="bem('button').el('label').classes()">Run Survey!</span>
-                        </button>
-                    </a>
+                    <select>
+                        <option value="null" disabled selected>Select data type</option>
+                        <option v-for="(label, type) in dataTypes" :value="type">{{ label }}</option>
+                    </select>
+                    <button :class="bem('button').is('run').classes()">
+                        <span :class="bem('button').el('label').classes()">Add</span>
+                    </button>
                 </div>
-                <div v-if="null !== survey" class="grid-y grid-padding-y medium-10">
+                <div class="grid-y grid-padding-y medium-10">
                     
                 </div>
             </div>
@@ -30,30 +32,8 @@ import {Sections} from "../contracts/Sections";
 export class SurveyDataset extends Vue {
 	@Prop(String) readonly surveyId: string;
 
-	public mounted() {
-		if (null === this.survey) {
-			let request = new GetSurvey();
-			request.surveyId = this.surveyId;
-
-			this.$store.dispatch(actions.LOAD_SURVEY, request);
-		}
-
-		this.$store.dispatch(actions.SET_SECTION, Sections.EDITOR);
-	}
-
-	get survey(): SurveyContract|null {
-		return this.$store.getters[getters.SURVEY];
-	}
-
-	get token(): string {
-		return this.$store.getters[getters.TOKEN];
-	}
-
-	get page(): PageContract|null {
-		return this.$store.getters[getters.CURRENT_PAGE];
-	}
-
-	get runUrl() {
-		return '/run/' + this.surveyId + '?token=' + this.token;
+	get dataTypes(): Object
+	{
+		return this.$store.getters[getters.DATA_TYPES];
 	}
 }

@@ -6,9 +6,11 @@ namespace App\Admin\Factories;
 use App\Admin\Contracts\Entities\ActionContract;
 use App\Admin\Contracts\Entities\ActionDataContract;
 use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\Contracts\Entities\DataContract;
 use App\Admin\Contracts\Factories\BlockFactoryContract;
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Contracts\Repositories\ApiTokenRepositoryContract;
+use App\Admin\Database\Models\BlockData;
 use App\Admin\Models\Locale;
 use App\Admin\Models\Settings;
 use Illuminate\Support\Arr;
@@ -67,6 +69,10 @@ class SettingsFactory implements SettingsFactoryContract
 
         foreach (ActionDataContract::HANDLES as $type => $label) {
             $settings->actionsHandles[$type] = __($label);
+        }
+
+        foreach (DataContract::TYPES as $type => $label) {
+            $settings->dataTypes[$type] = $label;
         }
 
         return $settings;

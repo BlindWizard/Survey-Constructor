@@ -63,6 +63,7 @@ const store = new Vuex.Store({
 		defaultBlockData: [],
 		actionsTypes: null as any,
 		actionsHandles: null as any,
+		dataTypes: null as any,
 		survey: null as any,
 		pageId: null as any,
 		surveys: null as any,
@@ -96,6 +97,9 @@ const store = new Vuex.Store({
 		[mutations.SET_ACTIONS_DATA](state, data) {
 			state.actionsTypes = data.types;
 			state.actionsHandles = data.handles;
+		},
+		[mutations.SET_DATA_DATA](state, data) {
+			state.dataTypes = data.types;
 		},
 		[mutations.SET_SURVEYS](state, surveys) {
 			state.surveys = surveys;
@@ -850,6 +854,7 @@ const store = new Vuex.Store({
 			commit(mutations.SET_TOKEN, setting.token);
 			commit(mutations.SET_DEFAULT_BLOCK_DATA, setting.defaultBlockData);
 			commit(mutations.SET_ACTIONS_DATA, {types: setting.actionsTypes, handles: setting.actionsHandles});
+			commit(mutations.SET_DATA_DATA, {types: setting.dataTypes});
 		},
 		async [actions.LOAD_SURVEYS]({commit}) {
 			commit(mutations.SET_SURVEYS, await SurveyApi.getAll());
@@ -1001,7 +1006,7 @@ const store = new Vuex.Store({
 
 			debounceSaveStyle = setTimeout(() => {
 				BlockApi.saveStyle(request);
-			}, 100);
+			}, 100) as Timeout;
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);
@@ -1139,6 +1144,9 @@ const store = new Vuex.Store({
 		},
 		[getters.ACTIONS_HANDLES](state): string[] {
 			return state.actionsHandles;
+		},
+		[getters.DATA_TYPES](state): string[] {
+			return state.dataTypes;
 		},
 		[getters.TOKENS](state): ApiToken[] {
 			return state.tokens;

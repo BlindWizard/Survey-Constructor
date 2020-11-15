@@ -8,6 +8,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {Page} from "../models/Page";
 import {SurveyStatistics} from "../models/SurveyStatistics";
 import {DeleteSurvey} from "./requests/DeleteSurvey";
+import {AddData} from "./requests/AddData";
 
 export class SurveyApi
 {
@@ -113,6 +114,10 @@ export class SurveyApi
 					});
 				});
 
+				for (let dataId in Object.keys(result.data.data)) {
+					survey.data[dataId] = result.data.data[dataId];
+				}
+
 				return survey;
 			});
 	}
@@ -124,5 +129,14 @@ export class SurveyApi
 				let result: AjaxHelper = response.data as AjaxHelper;
 				return result.result as boolean;
 		});
+	}
+
+	public static addData(request: AddData): Promise<any>
+	{
+		return axios.post('/admin/survey/addData', request).then(
+			(response) => {
+				let result: AjaxHelper = response.data as AjaxHelper;
+				return result.result as boolean;
+			});
 	}
 }

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
+use App\Admin\Contracts\Entities\DataContract;
 use App\Admin\Contracts\Entities\PageContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 
@@ -23,6 +24,9 @@ class Survey implements SurveyContract
 
     /** @var SurveyStatistic */
     public $statistics;
+
+    /** @var DataContract[] */
+    public $data;
 
     /**
      * @inheritDoc
@@ -70,5 +74,13 @@ class Survey implements SurveyContract
     public function getUpdatedAt(): string
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getData(): array
+    {
+        return $this->data;
     }
 }

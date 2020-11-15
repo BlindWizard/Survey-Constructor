@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Database\Repositories;
 
+use App\Admin\Contracts\Entities\DataContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Database\Models\Block;
@@ -138,5 +139,18 @@ class SurveyRepository implements SurveyRepositoryContract
         $surveys = Survey::query()->where(Survey::ATTR_OWNER_ID, '=', $ownerId)->get()->all();/** @var Survey[] $surveys */
 
         return $surveys;
+    }
+
+    public function addData(string $surveyId, DataContract $data): DataContract
+    {
+        $surveyData = SurveyData::query()->where(SurveyData::ATTR_ID, '=', $surveyId)->get()->first();/** @var SurveyData $surveyData */
+
+        $dataSet = $surveyData->getData();
+        $dataSet[$data->getId()] = $data;
+
+        $surveyData->data = \GuzzleHttp\json_encode($dataSet);
+        $surveyData->save();
+
+        return $surveyData;
     }
 }

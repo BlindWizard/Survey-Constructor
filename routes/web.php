@@ -14,6 +14,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::get('/admin/survey/get/{id}', 'SurveyController@get');
     Route::post('/admin/survey/create', 'SurveyController@create');
     Route::post('/admin/survey/delete', 'SurveyController@delete');
+    Route::post('/admin/survey/addData', 'SurveyController@addData');
 
     Route::get('/admin/statistics/{id}', 'StatisticsController@index');
     Route::get('/admin/statistics/{id}/sample/{sampleId}', 'StatisticsController@index');

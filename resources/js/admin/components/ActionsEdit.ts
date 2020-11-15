@@ -20,7 +20,7 @@ const uuidv4 = require('uuid/v4');
                         Actions
                     </div>
                 </div>
-                <div v-for="action of block.getActions()" :class="bem('block-style').classes()">
+                <div v-for="action of block.getActions()" :class="bem('block-style').el('size').classes()">
                     <div :class="bem('block-style').el('size-label').classes()">On: {{ action.type }}</div>
                     <div :class="bem('block-style').el('action-row').classes()">
                         <select @change="updateActionHandle(action, $event)" :value="action.handle">

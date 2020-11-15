@@ -31,6 +31,7 @@ export enum mutations
 	SET_TOKENS = 'setTokens',
 	SET_SURVEY_STATISTICS = 'setSurveyStatistics',
 	SET_STATISTICS_SAMPLE = 'setStatisticsSample',
+	ADD_SURVEY_DATA = 'addSurveyData',
 }
 
 export enum actions
@@ -63,6 +64,7 @@ export enum actions
 	ADD_ACTION = 'addAction',
 	DELETE_ACTION = 'deleteAction',
 	SAVE_ACTION_DATA = 'saveActionData',
+	ADD_DATA = 'addData',
 }
 
 export enum getters

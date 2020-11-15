@@ -44,10 +44,10 @@ import {AddBlockAction} from "../api/requests/AddBlockAction";
 import {BlockAction} from "../models/BlockAction";
 import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
 import {SaveActionData} from "../api/requests/SaveActionData";
-import Timeout = NodeJS.Timeout;
+import {AddData} from "../api/requests/AddData";
 const uuidv4 = require('uuid/v4');
 
-let debounceSaveStyle: Timeout|null = null;
+let debounceSaveStyle: number|null = null;
 
 Vue.use(Vuex);
 
@@ -839,7 +839,10 @@ const store = new Vuex.Store({
 
 				page.setBlocks(plain);
 			}
-		}
+		},
+		[mutations.ADD_SURVEY_DATA] (state, request: SaveActionData) {
+
+		},
 	},
 	actions: {
 		[actions.SET_EDITING]({commit}, editing: boolean) {
@@ -1006,7 +1009,7 @@ const store = new Vuex.Store({
 
 			debounceSaveStyle = setTimeout(() => {
 				BlockApi.saveStyle(request);
-			}, 100) as Timeout;
+			}, 100) as unknown as number;
 		},
 		async [actions.DELETE_ELEMENT]({commit, state}, blockId: string) {
 			commit(mutations.DELETE_ELEMENT, blockId);
@@ -1082,6 +1085,10 @@ const store = new Vuex.Store({
 		async [actions.SAVE_ACTION_DATA]({commit}, request: SaveActionData) {
 			commit(mutations.SAVE_ACTION_DATA, request);
 			await BlockApi.saveAction(request);
+		},
+		async [actions.ADD_DATA]({commit}, request: AddData) {
+			commit(mutations.ADD_SURVEY_DATA, request);
+			await SurveyApi.addData(request);
 		},
 	},
 	getters: {

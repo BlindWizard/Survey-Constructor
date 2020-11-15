@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Services;
 
+use App\Admin\Contracts\Entities\DataContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
@@ -83,5 +84,15 @@ class SurveyService implements SurveyServiceContract
         }
 
         return $this->canOperate($survey, $userId);
+    }
+
+    public function addData(string $surveyId, DataContract $data): DataContract
+    {
+        $survey = $this->surveyRepository->findById($surveyId);
+        if (null === $survey) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->surveyRepository->addData($surveyId, $data);
     }
 }

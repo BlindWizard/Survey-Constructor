@@ -4,22 +4,21 @@ declare(strict_types=1);
 namespace App\Admin\Commands;
 
 use App\Admin\Contracts\Command;
-use App\Admin\Contracts\Entities\ActionContract;
-use App\Admin\Contracts\Entities\BlockContract;
+use App\Admin\Contracts\Entities\DataContract;
+use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
-use App\Admin\Contracts\Services\PageServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
-use App\Admin\DTO\BlockAction;
-use App\Admin\DTO\BlockWrapper;
-use App\Http\Requests\AddBlockActionRequest;
+use App\Admin\DTO\SurveyData;
+use App\Http\Requests\AddSurveyDataRequest;
+use Ramsey\Uuid\Uuid;
 
-class AddBlockActionCommand implements Command
+class AddSurveyDataCommand implements Command
 {
     /** @var string */
     public $userId;
 
-    /** @var AddBlockActionRequest */
+    /** @var AddSurveyDataRequest */
     public $request;
 
     /** @var SurveyServiceContract */
@@ -31,8 +30,8 @@ class AddBlockActionCommand implements Command
     /** @var BlockServiceContract */
     protected $blockService;
 
-    /** @var BlockContract */
-    protected $block;
+    /** @var DataContract */
+    protected $surveyData;
 
     /**
      * @param SurveyServiceContract    $surveyService
@@ -48,23 +47,21 @@ class AddBlockActionCommand implements Command
 
     public function perform(): Command
     {
-        $survey = $this->surveyRepository->findByBlockId($this->request->getBlockId());
+        $survey = $this->surveyRepository->findById($this->request->getId());
         if (false === $this->surveyService->canOperate($survey, $this->userId)) {
             throw new AccessDeniedHttpException();
         }
 
-        $action = new BlockAction();
-        $action->id = $this->request->getId();
-        $action->type = $this->request->getType();
-
-        $block = $this->blockService->addAction($this->request->getBlockId(), $action);
-        $this->block = new BlockWrapper($block);
+        $data = new SurveyData();
+        $data->id = Uuid::uuid4()->toString();
+        $data->type = $this->request->getType();
+        $this->surveyData = $this->surveyService->addData($this->request->getId(), $data);
 
         return $this;
     }
 
-    public function getResult(): BlockContract
+    public function getResult(): DataContract
     {
-        return $this->block;
+        return $this->surveyData;
     }
 }

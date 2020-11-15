@@ -80,6 +80,8 @@ class FindSurveyById implements Command
             }
         }
 
+        $surveyObject->data = $survey->getData();
+
         $this->survey = $surveyObject;
 
         return $this;

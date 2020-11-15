@@ -14123,6 +14123,11 @@ select:invalid {
   z-index: 30;
 }
 
+.dataset__view {
+  padding: 1.875rem;
+  min-height: calc(100vh - 4rem);
+}
+
 .home-page__body {
   background-image: url(/images/sky-bg-1.jpg?459ebd03579e0bac258eb4dfa88bf424);
   background-repeat: no-repeat;

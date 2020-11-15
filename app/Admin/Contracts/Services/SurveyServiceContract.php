@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Admin\Contracts\Services;
 
+use App\Admin\Contracts\Entities\DataContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 
@@ -38,4 +39,12 @@ interface SurveyServiceContract
      * @return array
      */
     public function getAvailableSurveys(string $ownerId): array;
+
+    /**
+     * @param string       $surveyId
+     * @param DataContract $data
+     *
+     * @return DataContract
+     */
+    public function addData(string $surveyId, DataContract $data): DataContract;
 }

@@ -33,4 +33,9 @@ interface SurveyContract {
      * @return string
      */
     public function getUpdatedAt(): string;
+
+    /**
+     * @return DataContract[]
+     */
+    public function getData(): array;
 }

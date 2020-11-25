@@ -11999,6 +11999,8 @@ select:invalid {
   border: 0.18rem #fd5b15 dashed;
   min-width: 10rem !important;
   max-width: 20rem !important;
+  right: initial !important;
+  bottom: initial !important;
 }
 
 .drop-active.container__slot_empty h4 {

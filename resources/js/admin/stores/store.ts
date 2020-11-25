@@ -44,7 +44,9 @@ import {AddBlockAction} from "../api/requests/AddBlockAction";
 import {BlockAction} from "../models/BlockAction";
 import {DeleteBlockAction} from "../api/requests/DeleteBlockAction";
 import {SaveActionData} from "../api/requests/SaveActionData";
-import {AddData} from "../api/requests/AddData";
+import {AddSurveyData} from "../api/requests/AddSurveyData";
+import {SaveSurveyData} from "../api/requests/SaveSurveyData";
+import {SurveyData} from "../models/SurveyData";
 const uuidv4 = require('uuid/v4');
 
 let debounceSaveStyle: number|null = null;
@@ -840,8 +842,22 @@ const store = new Vuex.Store({
 				page.setBlocks(plain);
 			}
 		},
-		[mutations.ADD_SURVEY_DATA] (state, request: SaveActionData) {
+		[mutations.ADD_SURVEY_DATA] (state, request: AddSurveyData) {
+			let surveyData = new SurveyData();
+			surveyData.id = request.datasetId;
+			surveyData.type = request.dataType;
 
+			let survey = state.survey;
+			survey.setData(surveyData);
+		},
+		[mutations.SAVE_SURVEY_DATA] (state, request: SaveSurveyData) {
+			let surveyData = new SurveyData();
+			surveyData.id = request.datasetId;
+			surveyData.type = request.datasetType;
+			surveyData.data = request.data;
+
+			let survey = state.survey;
+			survey.setData(surveyData);
 		},
 	},
 	actions: {
@@ -875,7 +891,7 @@ const store = new Vuex.Store({
 		},
 		async [actions.DELETE_SURVEY]({commit}, request: DeleteSurvey) {
 			commit(mutations.DELETE_SURVEY, request);
-			await SurveyApi.deleteSurvey(request);
+			SurveyApi.deleteSurvey(request);
 		},
 		async [actions.LOAD_SURVEY]({commit}, request: GetSurvey) {
 			let survey: Survey = await SurveyApi.getSurvey(request);
@@ -919,11 +935,11 @@ const store = new Vuex.Store({
 			}
 
 			commit(mutations.CHANGE_ELEMENT_POSITION, request);
-			await BlockApi.reoderElement(request);
+			BlockApi.reoderElement(request);
 		},
 		async [actions.SAVE_ELEMENT_DATA]({commit, state}, request: SaveBlockData) {
 			commit(mutations.SAVE_ELEMENT_DATA, request);
-			await BlockApi.saveData(request);
+			BlockApi.saveData(request);
 		},
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {
 			commit(mutations.RESIZE_ELEMENT, request);
@@ -1038,7 +1054,7 @@ const store = new Vuex.Store({
 
 			commit(mutations.DELETE_PAGE, pageId);
 
-			await PageApi.delete(pageId);
+			PageApi.delete(pageId);
 		},
 		async [actions.SET_ACTIVE_PAGE]({commit, state}, pageId: string) {
 			if (-1 === Object.keys(state.survey.pages).indexOf(pageId)) {
@@ -1076,20 +1092,24 @@ const store = new Vuex.Store({
 		},
 		async [actions.ADD_ACTION]({commit}, request: AddBlockAction) {
 			commit(mutations.ADD_ELEMENT_ACTION, request);
-			await BlockApi.addAction(request);
+			BlockApi.addAction(request);
 		},
 		async [actions.DELETE_ACTION]({commit}, request: AddBlockAction) {
 			commit(mutations.DELETE_ELEMENT_ACTION, request);
-			await BlockApi.deleteAction(request);
+			BlockApi.deleteAction(request);
 		},
 		async [actions.SAVE_ACTION_DATA]({commit}, request: SaveActionData) {
 			commit(mutations.SAVE_ACTION_DATA, request);
-			await BlockApi.saveAction(request);
+			BlockApi.saveAction(request);
 		},
-		async [actions.ADD_DATA]({commit}, request: AddData) {
+		async [actions.ADD_SURVEY_DATA]({commit}, request: AddSurveyData) {
 			commit(mutations.ADD_SURVEY_DATA, request);
-			await SurveyApi.addData(request);
+			SurveyApi.addData(request);
 		},
+		async [actions.SAVE_SURVEY_DATA]({commit}, request: SaveSurveyData) {
+			commit(mutations.SAVE_SURVEY_DATA, request);
+			SurveyApi.saveData(request);
+		}
 	},
 	getters: {
 		[getters.CSRF](state): string {

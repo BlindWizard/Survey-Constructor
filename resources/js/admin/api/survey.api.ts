@@ -8,7 +8,10 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
 import {Page} from "../models/Page";
 import {SurveyStatistics} from "../models/SurveyStatistics";
 import {DeleteSurvey} from "./requests/DeleteSurvey";
-import {AddData} from "./requests/AddData";
+import {AddSurveyData} from "./requests/AddSurveyData";
+import {SurveyData} from "../models/SurveyData";
+import {VariableData} from "../models/VariableData";
+import {SaveSurveyData} from "./requests/SaveSurveyData";
 
 export class SurveyApi
 {
@@ -114,8 +117,28 @@ export class SurveyApi
 					});
 				});
 
-				for (let dataId in Object.keys(result.data.data)) {
-					survey.data[dataId] = result.data.data[dataId];
+				for (let dataId of Object.keys(result.data.data)) {
+					//@TODO-17.11.2020-Чучманский Aндрей Factory
+					let dataSet = new SurveyData();
+					dataSet.id = result.data.data[dataId].id;
+					dataSet.type = result.data.data[dataId].type;
+
+					let variables = null;
+					let variablesData = result.data.data[dataId].data;
+					if (null !== variablesData) {
+						variables = [];
+						for (let variableId of Object.keys(variablesData)) {
+							let variable = new VariableData();
+							variable.id = variablesData[variableId].id;
+							variable.name = variablesData[variableId].name;
+							variable.value = variablesData[variableId].value;
+							variables.push(variable);
+						}
+					}
+
+					dataSet.data = variables;
+
+					survey.data[dataId] = dataSet;
 				}
 
 				return survey;
@@ -131,9 +154,18 @@ export class SurveyApi
 		});
 	}
 
-	public static addData(request: AddData): Promise<any>
+	public static addData(request: AddSurveyData): Promise<any>
 	{
 		return axios.post('/admin/survey/addData', request).then(
+			(response) => {
+				let result: AjaxHelper = response.data as AjaxHelper;
+				return result.result as boolean;
+			});
+	}
+
+	public static saveData(request: SaveSurveyData): Promise<any>
+	{
+		return axios.post('/admin/survey/saveData', request).then(
 			(response) => {
 				let result: AjaxHelper = response.data as AjaxHelper;
 				return result.result as boolean;

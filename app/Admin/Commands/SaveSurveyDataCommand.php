@@ -9,15 +9,15 @@ use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Services\BlockServiceContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\SurveyData;
-use App\Http\Requests\AddSurveyDataRequest;
+use App\Http\Requests\SaveSurveyDataRequest;
 use Ramsey\Uuid\Uuid;
 
-class AddSurveyDataCommand implements Command
+class SaveSurveyDataCommand implements Command
 {
     /** @var string */
     public $userId;
 
-    /** @var AddSurveyDataRequest */
+    /** @var SaveSurveyDataRequest */
     public $request;
 
     /** @var SurveyServiceContract */
@@ -52,9 +52,11 @@ class AddSurveyDataCommand implements Command
         }
 
         $data = new SurveyData();
-        $data->id = $this->request->getDatasetId();
-        $data->type = $this->request->getType();
-        $this->surveyData = $this->surveyService->addData($this->request->getSurveyId(), $data);
+        $data->id = $this->request->getDataId();
+        $data->type = $this->request->getDataType();
+        $data->data = $this->request->getData();
+
+        $this->surveyData = $this->surveyService->saveData($this->request->getSurveyId(), $data);
 
         return $this;
     }

@@ -153,4 +153,17 @@ class SurveyRepository implements SurveyRepositoryContract
 
         return $surveyData;
     }
+
+    public function saveData(string $surveyId, DataContract $data): DataContract
+    {
+        $surveyData = SurveyData::query()->where(SurveyData::ATTR_ID, '=', $surveyId)->get()->first();/** @var SurveyData $surveyData */
+
+        $dataSet = $surveyData->getData();
+        $dataSet[$data->getId()] = $data;
+
+        $surveyData->data = \GuzzleHttp\json_encode($dataSet);
+        $surveyData->save();
+
+        return $surveyData;
+    }
 }

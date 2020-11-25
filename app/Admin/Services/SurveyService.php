@@ -95,4 +95,14 @@ class SurveyService implements SurveyServiceContract
 
         return $this->surveyRepository->addData($surveyId, $data);
     }
+
+    public function saveData(string $surveyId, DataContract $data): DataContract
+    {
+        $survey = $this->surveyRepository->findById($surveyId);
+        if (null === $survey) {
+            throw new NotFoundHttpException();
+        }
+
+        return $this->surveyRepository->saveData($surveyId, $data);
+    }
 }

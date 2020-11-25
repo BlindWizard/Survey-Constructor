@@ -4,14 +4,15 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AddSurveyDataRequest extends FormRequest
+class SaveSurveyDataRequest extends FormRequest
 {
     public function rules()
     {
         return [
             'surveyId' => 'required|uuid',
             'datasetId' => 'required|uuid',
-            'dataType' => 'required|string',
+            'datasetType' => 'required|string',
+            'data' => 'required',
         ];
     }
 
@@ -20,13 +21,18 @@ class AddSurveyDataRequest extends FormRequest
         return (string) $this->json('surveyId');
     }
 
-    public function getDatasetId(): string
+    public function getDataId(): string
     {
         return (string) $this->json('datasetId');
     }
 
-    public function getType(): string
+    public function getDataType(): string
     {
-        return (string) $this->json('dataType');
+        return (string) $this->json('datasetType');
+    }
+
+    public function getData(): array
+    {
+        return $this->json('data');
     }
 }

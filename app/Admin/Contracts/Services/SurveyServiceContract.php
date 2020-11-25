@@ -47,4 +47,12 @@ interface SurveyServiceContract
      * @return DataContract
      */
     public function addData(string $surveyId, DataContract $data): DataContract;
+
+    /**
+     * @param string       $surveyId
+     * @param DataContract $data
+     *
+     * @return DataContract
+     */
+    public function saveData(string $surveyId, DataContract $data): DataContract;
 }

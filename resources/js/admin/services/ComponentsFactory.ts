@@ -17,6 +17,8 @@ import {Button} from "../models/Button";
 import {Rectangle} from "../models/Rectangle";
 import {Delimiter} from "../models/Delimiter";
 import {BlockAction} from "../models/BlockAction";
+import {SurveyData} from "../models/SurveyData";
+import {VariableData} from "../models/VariableData";
 const uuidv4 = require('uuid/v4');
 
 export class ComponentsFactory {
@@ -271,5 +273,28 @@ export class ComponentsFactory {
 		action.data = original.data;
 
 		return action;
+	}
+
+	public static cloneDataset(original: SurveyData): SurveyData {
+		let data = new SurveyData();
+		data.id = original.id;
+		data.type = original.type;
+		data.data = null;
+
+		if (original.data) {
+			data.data = [];
+
+			for (let i of Object.keys(original.data)) {
+				let variable = original.data[i];
+				let newVariable = new VariableData();
+				newVariable.id = variable.id;
+				newVariable.name = variable.name;
+				newVariable.value = variable.value;
+
+				data.data.push(newVariable);
+			}
+		}
+
+		return data;
 	}
 }

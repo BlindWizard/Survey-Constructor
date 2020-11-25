@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Admin\Commands\AddSurveyDataCommand;
 use App\Admin\Commands\CreateSurveyCommand;
 use App\Admin\Commands\DeleteSurveyCommand;
+use App\Admin\Commands\SaveSurveyDataCommand;
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\FindSurveyById;
 use App\Admin\Queries\GetAllUsersSurveys;
@@ -13,6 +14,7 @@ use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\AddSurveyDataRequest;
 use App\Http\Requests\CreateSurveyRequest;
 use App\Http\Requests\DeleteSurveyRequest;
+use App\Http\Requests\SaveSurveyDataRequest;
 use Illuminate\Support\Facades\Auth;
 
 class SurveyController extends Controller
@@ -85,6 +87,17 @@ class SurveyController extends Controller
     }
 
     public function addData(AddSurveyDataRequest $request, AddSurveyDataCommand $command)
+    {
+        $command->request = $request;
+        $command->userId = Auth::user()->getAuthIdentifier();
+
+        $result = new AjaxResponse();
+        $result->data = $command->perform()->getResult();
+
+        return response()->json($result);
+    }
+
+    public function saveData(SaveSurveyDataRequest $request, SaveSurveyDataCommand $command)
     {
         $command->request = $request;
         $command->userId = Auth::user()->getAuthIdentifier();

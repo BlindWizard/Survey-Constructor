@@ -804,6 +804,7 @@ const store = new Vuex.Store({
 
 			action.handle = request.handle;
 			action.data = request.data;
+			action.conditions = request.conditions;
 
 			targetBlock.setActions(actions);
 

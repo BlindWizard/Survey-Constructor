@@ -49,6 +49,11 @@ const uuidv4 = require('uuid/v4');
                                             <td>
                                                 <input type="text" :name="variable.name" :id="variable.id" data-value :value="variable.value" @input="saveDataValue(dataset.id, $event)">
                                             </td>
+                                            <td>
+                                                <button :class="bem('button').add('secondary').classes()" v-on:click.stop="deleteData(dataset.id, variable.id)">
+                                                    <span :class="bem('button').el('label').classes()">Delete</span>
+                                                </button>
+                                            </td>
                                         </tr>
                                         <tr>
                                           <td>
@@ -57,6 +62,7 @@ const uuidv4 = require('uuid/v4');
                                           <td>
                                               <input type="text" @input="addVariableByValue(dataset.id, $event)">
                                           </td>
+                                          <td></td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -177,6 +183,35 @@ export class SurveyDatasetEdit extends Vue {
 
 		this.$store.dispatch(actions.SAVE_SURVEY_DATA, request);
 	}
+
+	public deleteData(dataId: string, variableId: string)
+	{
+		if (null === this.survey) {
+			return;
+		}
+
+		let dataset = this.survey.getDataset()[dataId] || null;
+		if (null === dataset) {
+			return;
+		}
+
+		dataset = ComponentsFactory.cloneDataset(dataset);
+
+		let data = (dataset.data || []) as VariableData[];
+
+		data = data.filter((variable: VariableData) => {
+			return variable.id !== variableId;
+		});
+
+		let request = new SaveSurveyData();
+		request.surveyId = this.survey.getId();
+		request.datasetId = dataId;
+		request.datasetType = dataset.type;
+		request.data = data;
+
+		this.$store.dispatch(actions.SAVE_SURVEY_DATA, request);
+	}
+
 
 	public addVariableByName(id: string, event: KeyboardEvent)
 	{

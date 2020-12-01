@@ -85,10 +85,11 @@ interface BlockRepositoryContract
      * @param string     $actionId
      * @param string     $handle
      * @param array|null $data
+     * @param array      $conditions
      *
      * @return BlockContract
      */
-    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null): BlockContract;
+    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null, array $conditions = []): BlockContract;
 
     /**
      * @param int[] $blockPosition

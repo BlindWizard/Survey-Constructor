@@ -182,7 +182,7 @@ class BlockRepository implements BlockRepositoryContract
     /**
      * @inheritDoc
      */
-    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null): BlockContract
+    public function saveAction(string $blockId, string $actionId, string $handle, ?array $data = null, array $conditions = []): BlockContract
     {
         $block = Block::query()->find($blockId);/** @var Block $block */
         $blockData = BlockData::query()->find($blockId);/** @var BlockData $blockData */
@@ -192,6 +192,7 @@ class BlockRepository implements BlockRepositoryContract
             if ($action->getId() === $actionId) {
                 $action->setHandle($handle);
                 $action->setData($data);
+                $action->setConditions($conditions);
                 break;
             }
         }

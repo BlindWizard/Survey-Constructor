@@ -52,7 +52,7 @@ class SaveBlockActionCommand implements Command
             throw new AccessDeniedHttpException();
         }
 
-        $block = $this->blockService->saveAction($this->request->getBlockId(), $this->request->getId(), $this->request->getHandle(), $this->request->getData());
+        $block = $this->blockService->saveAction($this->request->getBlockId(), $this->request->getId(), $this->request->getHandle(), $this->request->getData(), $this->request->getConditions());
         $this->block = new BlockWrapper($block);
 
         return $this;

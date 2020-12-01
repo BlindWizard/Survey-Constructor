@@ -29,6 +29,6 @@ export class ButtonBlock extends Vue {
 
 	public renderButtonStyle(): string
 	{
-		return styleRenderer.render(this.block.getStyle()['style']);
+		return styleRenderer.render(this.block.getStyle()['style']) + ';position: relative;';
 	}
 }

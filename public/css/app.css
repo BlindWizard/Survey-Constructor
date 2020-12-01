@@ -14285,6 +14285,7 @@ select:invalid {
 .survey-block {
   max-width: 1180px;
   margin: 0 auto;
+  background: #fefefe;
 }
 
 .survey-block__footer {

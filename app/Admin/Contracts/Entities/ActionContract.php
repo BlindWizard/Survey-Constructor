@@ -39,4 +39,9 @@ interface ActionContract
      * @param array|null $data
      */
     public function setData(array $data = null): void;
+
+    /**
+     * @param array $conditions
+     */
+    public function setConditions(array $conditions = []): void;
 }

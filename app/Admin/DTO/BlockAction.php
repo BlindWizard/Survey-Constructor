@@ -11,6 +11,7 @@ class BlockAction implements ActionContract
     public string $type;
     public ?string $handle = null;
     public ?array $data = null;
+    public array $conditions = [];
 
     /**
      * @inheritDoc
@@ -58,5 +59,13 @@ class BlockAction implements ActionContract
     public function setData(array $data = null): void
     {
         $this->data = $data;
+    }
+
+    /**
+     * @param array $conditions
+     */
+    public function setConditions(array $conditions = []): void
+    {
+        $this->conditions = $conditions;
     }
 }

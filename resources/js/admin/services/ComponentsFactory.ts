@@ -271,6 +271,7 @@ export class ComponentsFactory {
 		action.type = original.type;
 		action.handle = original.handle;
 		action.data = original.data;
+		action.conditions = original.conditions;
 
 		return action;
 	}

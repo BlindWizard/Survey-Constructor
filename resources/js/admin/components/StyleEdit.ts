@@ -16,6 +16,18 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
             <div :class="bem('block-style').classes()">
                 <div :class="bem('block-style').el('size').classes()">
                     <div :class="bem('block-style').el('size-label').classes()">
+                        Text align
+                    </div>
+                    <div :class="bem('block-style').el('size-setting').classes()">
+                        <div class="button-group primary">
+                            <a class="button" v-on:click.stop="setTextAlign('left')">Left</a>
+                            <a class="button" v-on:click.stop="setTextAlign('center')">Center</a>
+                            <a class="button" v-on:click.stop="setTextAlign('right')">Right</a>
+                        </div>
+                    </div>
+                </div>
+                <div :class="bem('block-style').el('size').classes()">
+                    <div :class="bem('block-style').el('size-label').classes()">
                         Size
                     </div>
                     <div :class="bem('block-style').el('size-value').classes()">
@@ -54,12 +66,24 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                 </div>
                 <div :class="bem('block-style').el('bg-color').classes()">
                     <div :class="bem('block-style').el('bg-color-label').classes()">
+                      Text Color
+                    </div>
+                    <div :class="bem('block-style').el('bg-color-value').classes()">
+                        {{ blockStyle.textColor }}
+                        <a class="button" v-on:click.stop="togglePickerText()"><span class="fi-paint-bucket"></span></a>
+                        <div v-if="showPickerText" :class="bem('block-style').el('bg-color-value-popup').classes()">
+                            <Sketch :value="blockStyle.backgroundColor" @input="setTextColor"/>
+                        </div>
+                    </div>
+                </div>
+                <div :class="bem('block-style').el('bg-color').classes()">
+                    <div :class="bem('block-style').el('bg-color-label').classes()">
                       Background Color
                     </div>
                     <div :class="bem('block-style').el('bg-color-value').classes()">
                         {{ blockStyle.backgroundColor }}
-                        <a class="button" v-on:click.stop="togglePicker()"><span class="fi-paint-bucket"></span></a>
-                        <div v-if="showPicker" :class="bem('block-style').el('bg-color-value-popup').classes()">
+                        <a class="button" v-on:click.stop="togglePickerBG()"><span class="fi-paint-bucket"></span></a>
+                        <div v-if="showPickerBG" :class="bem('block-style').el('bg-color-value-popup').classes()">
                             <Sketch :value="blockStyle.backgroundColor" @input="setBGColor"/>
                         </div>
                     </div>
@@ -75,11 +99,22 @@ export class StyleEdit extends Vue {
 	@Prop(Object) readonly block: BlockContract;
 	@Prop(BlockStyle) readonly blockStyle: BlockStyle;
 
-	private showPicker: boolean = false;
+	private showPickerText: boolean = false;
+	private showPickerBG: boolean = false;
 
 	get locale(): Locale
 	{
 		return this.$store.getters[getters.LOCALE];
+	}
+
+	public setTextAlign(align: string)
+	{
+		let styleRequest = new SaveBlockStyle();
+		styleRequest.blockId = this.block.getId();
+		styleRequest.style =  {style: ComponentsFactory.cloneStyle(this.block.getStyle()['style'])};
+		styleRequest.style['style'].textAlign = align;
+
+		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 	}
 
 	public setMeasure(measure: string)
@@ -96,9 +131,31 @@ export class StyleEdit extends Vue {
 		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 	}
 
-	public togglePicker()
+	public togglePickerText()
 	{
-		this.showPicker = !this.showPicker;
+		this.showPickerText = !this.showPickerText;
+		if (this.showPickerText) {
+			this.showPickerBG = false;
+		}
+	}
+
+	public togglePickerBG()
+	{
+		this.showPickerBG = !this.showPickerBG;
+		if (this.showPickerBG) {
+			this.showPickerText = false;
+		}
+	}
+
+	public setTextColor(color: any)
+	{
+		let colorString = 'rgba(' + color.rgba.r + ',' + color.rgba.g + ',' + color.rgba.b + ',' + color.rgba.a + ')';
+		let styleRequest = new SaveBlockStyle();
+		styleRequest.blockId = this.block.getId();
+		styleRequest.style = {style: ComponentsFactory.cloneStyle(this.block.getStyle()['style'])};
+		styleRequest.style['style'].textColor = colorString;
+
+		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 	}
 
 	public setBGColor(color: any)

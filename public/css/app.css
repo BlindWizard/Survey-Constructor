@@ -14098,6 +14098,7 @@ select:invalid {
 .block-style__bg-color-value-popup {
   position: absolute;
   top: 2rem;
+  z-index: 100;
 }
 
 .block-style .button-group {
@@ -14379,6 +14380,7 @@ body.dragging .container-wrapper .container__slot {
   line-height: 1.25rem;
   font-size: 1rem;
   margin: 1rem;
+  color: inherit;
 }
 
 .options-list__option:hover .options-list__radio:after {
@@ -14414,6 +14416,7 @@ body.dragging .container-wrapper .container__slot {
 
 .options-list__label {
   display: inline-block;
+  color: inherit;
 }
 
 .options-list__control {
@@ -14617,7 +14620,6 @@ body.dragging .container-wrapper .container__slot {
 
 .header__label {
   display: inline-block;
-  color: #fefefe;
   font-weight: bold;
   font-size: 1.5rem;
   line-height: 3rem;
@@ -14642,6 +14644,7 @@ body.dragging .container-wrapper .container__slot {
   position: relative;
   display: block;
   z-index: 20;
+  text-align: inherit;
 }
 
 .text-wrapper {
@@ -14663,7 +14666,6 @@ body.dragging .container-wrapper .container__slot {
 
 .text__value {
   display: inline-block;
-  color: #0a0a0a;
   font-size: 1rem;
   line-height: 1.25rem;
   margin: 1rem;
@@ -14684,7 +14686,6 @@ body.dragging .container-wrapper .container__slot {
 .text-field {
   display: inline-block;
   width: 100%;
-  color: #0a0a0a;
   font-size: 1rem;
   line-height: 1.25rem;
   padding: 1rem;

@@ -242,6 +242,7 @@ export class ComponentsFactory {
 		style.height = original.height;
 		style.textAlign = original.textAlign;
 		style.sizeMeasure = original.sizeMeasure;
+		style.textColor = original.textColor;
 		style.backgroundColor = original.backgroundColor;
 
 		style.inset = new Rectangle();

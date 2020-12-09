@@ -28,6 +28,7 @@
         line-height: 1.25rem;
         font-size: 1rem;
         margin: 1rem;
+        color: inherit;
 
         &:hover {
             .options-list__radio:after {
@@ -65,6 +66,7 @@
 
     &__label {
         display: inline-block;
+        color: inherit;
     }
 
     &__control {

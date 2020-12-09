@@ -3,6 +3,7 @@ import {BlockStyle} from "../models/BlockStyle";
 class StyleRenderer {
 	public render(style: BlockStyle) {
 		let string = ''
+			+ 'color:' + style.textColor + ';'
 			+ 'background-color:' + style.backgroundColor + ';'
 			+ (null !== style.width ? 'width:' + style.width + ('auto' !== style.width ? style.sizeMeasure + ';' : ';') : '')
 			+ (null !== style.height ? 'height:' + style.height + ('auto' !== style.height ? style.sizeMeasure + ';' : ';') : '')

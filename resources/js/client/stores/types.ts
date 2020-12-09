@@ -4,6 +4,7 @@ export enum mutations {
 	SET_TOKEN = 'setToken',
 	SET_SURVEY = 'setSurvey',
 	SET_PAGE = 'setPage',
+	CHANGE_DATA = 'changeData'
 }
 
 export enum actions {
@@ -13,10 +14,12 @@ export enum actions {
 	OPTION_SELECT = 'optionSelect',
 	ENTER_TEXT = 'enterText',
 	SET_PAGE = 'setPage',
+	CHANGE_DATA = 'changeData'
 }
 
 export enum getters
 {
+	SURVEY = 'activeSurvey',
 	CURRENT_PAGE = 'currentPage',
 	IS_LAST_PAGE = 'isLastPage',
 	IS_FIRST_PAGE = 'isFirstPage',

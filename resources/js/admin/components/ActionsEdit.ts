@@ -22,28 +22,40 @@ const uuidv4 = require('uuid/v4');
                     <div :class="bem('block-style').el('size-label').classes()">On: {{ action.type }}</div>
                     <div :class="bem('block-style').el('action-row').classes()">
                         <select @change="updateActionHandle(action, $event)" :value="action.handle">
-                            <option value="null" disabled selected>Select event type</option>
+                            <option value="" disabled selected>Select event type</option>
                             <option v-for="(label, type) in actionsHandles" :value="type">{{ label }}</option>
                         </select>
                     </div>
                     <div v-if="'go-to-page' === action.handle">
                         <select @change="updateActionPage(action, $event)" :value="action.data ? action.data.pageId : null">
-                            <option value="null" disabled selected>Select page</option>
+                            <option value="" disabled selected>Select page</option>
                             <option v-for="(step, pageId) in pagesSelector" :value="pageId">{{ step }}</option>
                         </select>
                     </div>
+                    <div v-if="'change-value' === action.handle">
+                        <select @change="updateChangeVariable(action, $event)" :value="action.data ? action.data.variable : null">
+                            <option value="" disabled selected>Select variable</option>
+                            <option v-for="(variable, id) of variables" :value="id">{{ variable }}</option>
+                        </select>                       
+                         <select @change="updateChangeType(action, $event)" :value="action.data ? action.data.change : null">
+                            <option value="" disabled selected>Select change</option>
+                            <option value="increment">Increment</option>
+                            <option value="decrement">Decrement</option>
+                        </select>
+                    </div>
+                    <div v-if="action.conditions" :class="bem('block-style').el('size-label').classes()">Conditions</div>
                     <div v-for="condition in action.conditions">
                         <select :value="condition.expected" @change="updateExpected(action, condition, $event)">
-                            <option value="null" disabled selected>Select variable</option>
-                            <option v-for="variable of variables" value="variable">{{ variable }}</option>
+                            <option value="" disabled selected>Select variable</option>
+                            <option v-for="(variable, id) of variables" :value="id">{{ variable }}</option>
                         </select>
                         <select :value="condition.comparison" @change="updateComparison(action, condition, $event)">
-                            <option value="null" disabled selected>Comparison</option>
-                            <option value="lt">Lower than</option>
-                            <option value="eq">Equal</option>
-                            <option value="gt">Greater than</option>
+                            <option value="" disabled selected>Comparison</option>
+                            <option value="lt">&lt;</option>
+                            <option value="eq">=</option>
+                            <option value="gt">&gt; </option>
                         </select>
-                        <input :value="condition.got" @change="updateGot(action, condition, $event)"/>
+                      <input type="text" :value="condition.got" @change="updateGot(action, condition, $event)"/>
                     </div>
                     <button :class="bem('button').add('primary').classes()" v-on:click.stop="addActionCondition(action)">
                         <span :class="bem('button').el('label').classes()">Add condition</span>
@@ -142,6 +154,36 @@ export class ActionsEdit extends Vue {
 		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
 	}
 
+	public updateChangeVariable(action: BlockAction, event: InputEvent)
+	{
+		let request = new SaveActionData();
+		request.id = action.id;
+		request.blockId = this.block.getId();
+		request.handle = action.handle;
+
+		let data = action.data || {};
+		data['variable'] = (event.target as HTMLInputElement).value;
+
+		request.data = data;
+
+		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
+	}
+
+	public updateChangeType(action: BlockAction, event: InputEvent)
+	{
+		let request = new SaveActionData();
+		request.id = action.id;
+		request.blockId = this.block.getId();
+		request.handle = action.handle;
+
+		let data = action.data || {};
+		data['change'] = (event.target as HTMLInputElement).value;
+
+		request.data = data;
+
+		this.$store.dispatch(actions.SAVE_ACTION_DATA, request);
+	}
+
 	public updateComparison(action: BlockAction, condition: ActionCondition, event: InputEvent)
 	{
 		let request = new SaveActionData();
@@ -202,13 +244,17 @@ export class ActionsEdit extends Vue {
 			return {};
 		}
 
-		let variables = [];
+		let variables = {};
 
 		for (let key of Object.keys(this.survey.getDataset())) {
 			let dataset = this.survey.getDataset()[key];
 
 			for (let data of dataset.data) {
-				variables.push(dataset.type + '.' + data.name);
+				if (!data.name) {
+					continue;
+				}
+
+				variables[data.id] =  dataset.type + '.' + data.name;
 			}
 		}
 

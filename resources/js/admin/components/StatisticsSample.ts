@@ -4,6 +4,7 @@ import {actions, getters} from "../stores/types";
 import {Prop} from "vue-property-decorator";
 import {GetStatisticsSample} from "../api/requests/GetStatisticsSample";
 import {Sections} from "../contracts/Sections";
+import {SectionsFactory} from "../services/SectionsFactory";
 
 @Component({
 	template: `
@@ -39,7 +40,7 @@ export class StatisticsSample extends Vue {
 			this.$store.dispatch(actions.LOAD_STATISTICS_SAMPLE, request);
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, Sections.STATISTICS_SAMPLE);
+		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.STATISTICS_SAMPLE));
 	}
 
 	get statisticsSample(): null {

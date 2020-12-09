@@ -9,6 +9,7 @@ import {AddSurveyData} from "../api/requests/AddSurveyData";
 import {SaveSurveyData} from "../api/requests/SaveSurveyData";
 import {VariableData} from "../models/VariableData";
 import {ComponentsFactory} from "../services/ComponentsFactory";
+import {SectionsFactory} from "../services/SectionsFactory";
 
 const uuidv4 = require('uuid/v4');
 
@@ -39,10 +40,11 @@ const uuidv4 = require('uuid/v4');
                                     <tr>
                                         <th>Variable</th>
                                         <th>Value</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="variable in dataset.getVariables()">
+                                        <tr v-for="variable in dataset.data">
                                             <td>
                                                 <input type="text" :name="variable.name" :id="variable.id" data-name :value="variable.name" @input="saveDataName(dataset.id, $event)">
                                             </td>
@@ -88,7 +90,7 @@ export class SurveyDatasetEdit extends Vue {
 			this.$store.dispatch(actions.LOAD_SURVEY, request);
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, Sections.EDITOR);
+		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.EDITOR));
 	}
 
 	public addData() {
@@ -208,7 +210,7 @@ export class SurveyDatasetEdit extends Vue {
 		request.datasetId = dataId;
 		request.datasetType = dataset.type;
 		request.data = data;
-
+2
 		this.$store.dispatch(actions.SAVE_SURVEY_DATA, request);
 	}
 

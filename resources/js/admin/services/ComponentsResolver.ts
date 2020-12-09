@@ -23,6 +23,9 @@ import {DelimiterBlock} from "../components/controls/DelimiterBlock";
 import {BlockAction} from "../models/BlockAction";
 import {ActionTypes} from "../contracts/ActionTypes";
 import {ActionHandles} from "../contracts/ActionHandles";
+import {getters} from "../stores/types";
+import {SurveyData} from "../models/SurveyData";
+import {VariableData} from "../models/VariableData";
 
 export class ComponentsResolver {
 	protected editable: boolean = false;
@@ -82,17 +85,105 @@ export class ComponentsResolver {
 					};
 
 					component.$store.dispatch(actions.ENTER_TEXT, data);
-				}
+				};
 			case BlockTypes.BUTTON:
-				return (component: BaseBlock, event: KeyboardEvent) => {
+				return (component: BaseBlock) => {
 					component.block.getActions().forEach((action: BlockAction) => {
-						if (action.type === ActionTypes.TYPE_CLICK) {
+						let allow = true;
+						for (let condition of action.conditions) {
+							if (condition.empty()) {
+								continue;
+							}
+
+							let survey = component.$store.getters[getters.SURVEY];
+							let value = null;
+							for (let dataId of Object.keys(survey.getDataset())) {
+								let dataset: SurveyData = survey.getDataset()[dataId];
+
+								if (dataset.data) {
+									for (let variable of dataset.data) {
+										if (variable.id === condition.expected) {
+											value = variable.value;
+											break;
+										}
+									}
+								}
+
+								if (null !== value) {
+									break;
+								}
+							}
+
+							if (null !== value) {
+								switch (condition.comparison) {
+									case 'eq':
+										if (condition.got !== value) {
+											allow = false;
+										}
+										break;
+									case 'lt':
+										if (condition.got < value) {
+											allow = false;
+										}
+										break;
+									case 'gt':
+										if (condition.got > value) {
+											allow = false;
+										}
+										break;
+									default:
+								}
+							}
+						}
+
+						if (allow && action.type === ActionTypes.TYPE_CLICK) {
 							if (action.handle === ActionHandles.TYPE_GO_TO_PAGE) {
 								component.$store.dispatch(actions.SET_PAGE, (action.data as any).pageId);
 							}
+
+							if (action.handle === ActionHandles.TYPE_CHANGE_VALUE) {
+								let survey = component.$store.getters[getters.SURVEY];
+								let value = null;
+								for (let dataId of Object.keys(survey.getDataset())) {
+									let dataset: SurveyData = survey.getDataset()[dataId];
+
+									if (dataset.data) {
+										for (let variable of dataset.data) {
+											if (variable.id === (action.data as any).variable) {
+												value = variable;
+												break;
+											}
+										}
+									}
+
+									if (null !== value) {
+										break;
+									}
+								}
+
+								if (null === value) {
+									return;
+								}
+
+								let newVariable = new VariableData();
+								newVariable.id = value.id;
+								newVariable.name = value.name;
+								switch ((action.data as any).change) {
+									case 'increment':
+										newVariable.value = Number(value.value) + 1;
+
+										break;
+									case 'decrement':
+										newVariable.value = Number(value.value) - 1;
+
+										break;
+								}
+
+								component.$store.dispatch(actions.CHANGE_DATA, newVariable);
+							}
 						}
 					});
-				}
+				};
 			case BlockTypes.CONTAINER:
 			case BlockTypes.HEADER:
 			case BlockTypes.TEXT:

@@ -47,6 +47,7 @@ import {SaveActionData} from "../api/requests/SaveActionData";
 import {AddSurveyData} from "../api/requests/AddSurveyData";
 import {SaveSurveyData} from "../api/requests/SaveSurveyData";
 import {SurveyData} from "../models/SurveyData";
+import {Section} from "../models/Section";
 const uuidv4 = require('uuid/v4');
 
 let debounceSaveStyle: number|null = null;
@@ -59,7 +60,7 @@ const store = new Vuex.Store({
 		csrf: '',
 		token: null as string|null,
 		locale: null as any,
-		section: null as string|null,
+		section: null as Section|null,
 		editing: false as boolean,
 		resizing: false as boolean,
 		defaultBlockData: [],
@@ -84,7 +85,7 @@ const store = new Vuex.Store({
 		[mutations.SET_TOKEN](state, token: string|null) {
 			state.token = token;
 		},
-		[mutations.SET_SECTION](state, section: string|null) {
+		[mutations.SET_SECTION](state, section: Section|null) {
 			state.section = section;
 		},
 		[mutations.SET_EDITING](state, editing: boolean) {
@@ -1088,7 +1089,7 @@ const store = new Vuex.Store({
 			let data = await StatisticsApi.getStatisticsSample(request);
 			commit(mutations.SET_STATISTICS_SAMPLE, data);
 		},
-		async [actions.SET_SECTION]({commit}, section: string|null) {
+		async [actions.SET_SECTION]({commit}, section: Section|null) {
 			commit(mutations.SET_SECTION, section);
 		},
 		async [actions.ADD_ACTION]({commit}, request: AddBlockAction) {
@@ -1122,7 +1123,7 @@ const store = new Vuex.Store({
 		[getters.LOCALE](state): Locale {
 			return state.locale;
 		},
-		[getters.SECTION](state): string|null {
+		[getters.SECTION](state): Section|null {
 			return state.section;
 		},
 		[getters.EDITING](state): boolean {

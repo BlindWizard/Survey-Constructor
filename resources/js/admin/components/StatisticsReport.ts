@@ -9,6 +9,7 @@ import {StatisticsFilter} from "./StatisticsFilter";
 import {OptionStatistics} from "../models/OptionStatistics";
 import {BlockStatistics} from "../models/BlockStatistics";
 import {Sections} from "../contracts/Sections";
+import {SectionsFactory} from "../services/SectionsFactory";
 
 @Component({
 	template: `
@@ -103,7 +104,7 @@ export class StatisticsReport extends Vue {
 			}
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, Sections.STATISTICS);
+		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.STATISTICS));
 	}
 
 	public selectToken(event: Event) {

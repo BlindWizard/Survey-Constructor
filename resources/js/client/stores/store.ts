@@ -5,9 +5,7 @@ import {actions, getters, mutations} from "./types";
 import {SurveyApi} from "../api/survey.api";
 import {SurveyContract} from "../../admin/contracts/SurveyContract";
 import {EventsApi} from "../api/events.api";
-import {NextPageRequest} from "../api/requests/NextPageRequest";
 import Cookies from 'js-cookie';
-import {PrevPageRequest} from "../api/requests/PrevPageRequest";
 import {OptionSelectRequest} from "../api/requests/OptionSelectRequest";
 import {OptionsListSelectRequest} from "../api/requests/OptionsListSelectRequest";
 import {RunRequest} from "../api/requests/RunRequest";
@@ -15,6 +13,8 @@ import {RunSettings} from "../models/RunSettings";
 import {GetSurveyRequest} from "../api/requests/GetSurveyRequest";
 import {EnterTextRequest} from "../api/requests/EnterTextRequest";
 import {PageSelectRequest} from "../api/requests/PageSelectRequest";
+import {Survey} from "../../admin/models/Survey";
+import {VariableData} from "../../admin/models/VariableData";
 
 Vue.use(Vuex);
 
@@ -44,7 +44,18 @@ const store = new Vuex.Store({
 		},
 		[mutations.SET_TOKEN](state, token: string) {
 			state.token = token;
-		}
+		},
+		[mutations.CHANGE_DATA](state, newVariable: VariableData) {
+			let dataSet = state.survey.getDataset();
+			for (let id of Object.keys(dataSet)) {
+				let data = dataSet[id].data;
+				for (let variable of data) {
+					if (variable.id === newVariable.id) {
+						variable.value = newVariable.value;
+					}
+				}
+			}
+		},
 	},
 	actions: {
 		async [actions.LOAD_SETTINGS]({commit}, settings: RunSettings) {
@@ -114,8 +125,14 @@ const store = new Vuex.Store({
 				}
 			}
 		},
+		async [actions.CHANGE_DATA]({commit, state}, newVariable: VariableData) {
+			commit(mutations.CHANGE_DATA, newVariable);
+		}
 	},
 	getters: {
+		[getters.SURVEY](state): Survey|null {
+			return state.survey;
+		},
 		[getters.CURRENT_PAGE](state): PageContract|null {
 			if (null === state.survey) {
 				return null;

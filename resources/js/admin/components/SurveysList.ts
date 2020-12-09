@@ -5,6 +5,7 @@ import {actions, getters} from "../stores/types";
 import {Survey} from "../models/Survey";
 import {SurveyPreview} from "./SurveyPreview";
 import {Sections} from "../contracts/Sections";
+import {SectionsFactory} from "../services/SectionsFactory";
 
 @Component({
 	template: `
@@ -32,7 +33,7 @@ export class SurveysList extends Vue {
 			this.$store.dispatch(actions.LOAD_SURVEYS);
 		}
 
-		this.$store.dispatch(actions.SET_SECTION, Sections.HOME);
+		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.HOME));
 	}
 
 	get surveys(): Survey[]|null {

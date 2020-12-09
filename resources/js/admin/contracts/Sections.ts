@@ -3,4 +3,5 @@ export enum Sections {
 	EDITOR = 'Editor',
 	STATISTICS = 'Statistics',
 	STATISTICS_SAMPLE = 'Statistics sample',
+	DATASET = 'Dataset',
 }

@@ -64,6 +64,9 @@ import {SectionsFactory} from "../services/SectionsFactory";
                                 </div>
                             </div>
                         </div>
+                        <div v-if="!tokenStatistics">
+                            <h3>There are no statistics yet</h3>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('header').classes()" :style="!resolver.isEditable() ? renderHeaderStyle() : ''">
+        <div :class="bem('header').classes()" :style="!resolver.isEditable() ? renderHeaderStyle() : 'background-color: inherit;'">
             <div :class="bem('header').el('image').classes()">
                 <div :class="bem('main-logo').classes()"></div>
             </div>

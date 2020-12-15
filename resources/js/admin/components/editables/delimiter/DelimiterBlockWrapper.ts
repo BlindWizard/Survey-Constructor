@@ -12,6 +12,7 @@ import {styleRenderer} from "../../../services/StyleRenderer";
 import {StyleEdit} from "../../StyleEdit";
 import {DelimiterBlockEdit} from "./DelimiterBlockEdit";
 import {DelimiterBlock} from "../../controls/DelimiterBlock";
+import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
 
 @Component({
 	template: `
@@ -21,6 +22,7 @@ import {DelimiterBlock} from "../../controls/DelimiterBlock";
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
         </div>
 	`,
@@ -29,6 +31,7 @@ import {DelimiterBlock} from "../../controls/DelimiterBlock";
 		DelimiterBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		BlockResizeFrameBackground,
 		BlockOriginalFrame,
 		StyleEdit
 	}

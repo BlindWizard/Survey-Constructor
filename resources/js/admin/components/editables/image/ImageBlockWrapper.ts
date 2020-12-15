@@ -11,6 +11,7 @@ import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {styleRenderer} from "../../../services/StyleRenderer";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 import {StyleEdit} from "../../StyleEdit";
+import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
 
 @Component({
 	template: `
@@ -20,6 +21,7 @@ import {StyleEdit} from "../../StyleEdit";
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']"/>
             <BlockEditMenu v-if="selected && block.getData()['imageId']" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
         </div>
 	`,
@@ -28,6 +30,7 @@ import {StyleEdit} from "../../StyleEdit";
 		ImageBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		BlockResizeFrameBackground,
 		BlockOriginalFrame,
 		StyleEdit
 	}

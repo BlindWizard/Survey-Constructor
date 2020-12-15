@@ -8,7 +8,7 @@ var debounce = require('debounce');
 
 @Component({
 	template: `
-        <div :style="!resolver.isEditable() ? renderTextStyle() : ''">
+        <div :style="!resolver.isEditable() ? renderTextStyle() : 'background-color: inherit;'">
             <div :class="bem('text-field').classes()">
               <label v-if="block.label">{{ block.label }}</label>
               <input v-if="!block.multiline" type="text" :class="bem('text-field').el('value').classes()" :placeholder="block.placeholder" @input="handle" />

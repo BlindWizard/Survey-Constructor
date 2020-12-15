@@ -4,7 +4,6 @@ import {HeaderBlockEdit} from "./HeaderBlockEdit";
 import {BaseBlock} from "../BaseBlock";
 import {HeaderBlock} from "../../controls/HeaderBlock";
 import {Draggable} from "../../../contracts/Draggable";
-import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
 import {selectService} from "../../../services/SelectService";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
@@ -12,6 +11,7 @@ import {ResizeModes} from "../../../contracts/ResizeModes";
 import {ResizeDirection} from "../../../contracts/ResizeDirection";
 import {StyleEdit} from "../../StyleEdit";
 import {styleRenderer} from "../../../services/StyleRenderer";
+import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
 
 @Component({
 	template: `
@@ -21,6 +21,7 @@ import {styleRenderer} from "../../../services/StyleRenderer";
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)" :block="block" :mode="resizeMode" />
         </div>
 	`,
@@ -29,6 +30,7 @@ import {styleRenderer} from "../../../services/StyleRenderer";
 		HeaderBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		BlockResizeFrameBackground,
 		BlockOriginalFrame,
 		StyleEdit
 	}

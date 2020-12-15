@@ -72,7 +72,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                         {{ blockStyle.textColor }}
                         <a class="button" v-on:click.stop="togglePickerText()"><span class="fi-paint-bucket"></span></a>
                         <div v-if="showPickerText" :class="bem('block-style').el('bg-color-value-popup').classes()">
-                            <Sketch :value="blockStyle.backgroundColor" @input="setTextColor"/>
+                            <Sketch :value="blockStyle.textColor" @input="setTextColor"/>
                         </div>
                     </div>
                 </div>

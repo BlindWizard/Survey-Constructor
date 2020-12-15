@@ -2,7 +2,6 @@ import Component from "vue-class-component";
 import {BlockEditMenu} from "../../BlockEditMenu";
 import {BaseBlock} from "../BaseBlock";
 import {Draggable} from "../../../contracts/Draggable";
-import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
 import {ContainerBlock} from "../../controls/ContainerBlock";
 import {ContainerBlockEdit} from "./ContainerBlockEdit";
@@ -31,6 +30,7 @@ import {ButtonBlockWrapper} from "../button/ButtonBlockWrapper";
 import {ButtonBlock} from "../../controls/ButtonBlock";
 import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 import {StyleEdit} from "../../StyleEdit";
+import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
 
 @Component({
 	template: `
@@ -53,6 +53,7 @@ import {StyleEdit} from "../../StyleEdit";
             <StyleEdit v-if="editing && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
             <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrameBackground v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" />
             <BlockOriginalFrame v-if="selected && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :mode="resizeMode" />
         </div>
 	`,
@@ -76,6 +77,7 @@ import {StyleEdit} from "../../StyleEdit";
 		ContainerBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		BlockResizeFrameBackground,
 		DelimiterBlock,
 		DelimiterBlockWrapper,
 		BlockOriginalFrame,

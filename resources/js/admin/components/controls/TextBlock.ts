@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('text').classes()" :style="!resolver.isEditable() ? renderTextStyle() : ''">
+        <div :class="bem('text').classes()" :style="!resolver.isEditable() ? renderTextStyle() : 'background-color: inherit;'">
             <span :class="bem('text').el('value').classes()">{{ block.text }}</span>
         </div>
 	`,

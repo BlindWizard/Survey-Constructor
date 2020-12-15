@@ -6,7 +6,8 @@
         outline: none;
     }
 
-    .button {
+    > .button {
+        color: inherit !important;
         background-color: inherit;
     }
 }

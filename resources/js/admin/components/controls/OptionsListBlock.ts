@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('options-list').classes()" :style="!resolver.isEditable() ? renderOptionsListStyle() : ''">
+        <div :class="bem('options-list').classes()" :style="!resolver.isEditable() ? renderOptionsListStyle() : 'background-color: inherit;'">
             <h4 :class="bem('options-list').el('header').classes()" v-if="block.text">{{ block.text }}</h4>
             <label :class="bem('options-list').el('option').classes()" :key="option.id" v-for="option in block.options">
                 <input :class="bem('options-list').el('control').classes()" :id="option.id" :name="block.id + '[]'" :value="option.id" type="radio" @input="handle"/>

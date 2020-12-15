@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('image').classes()" :style="!resolver.isEditable() ? renderImageStyle() : ''">
+        <div :class="bem('image').classes()" :style="!resolver.isEditable() ? renderImageStyle() : 'background-color: inherit;'">
             <img v-if="block.imageId" :src="block.imageUrl" :class="bem('image').el('value').classes()">
             <div v-if="!block.imageId" :class="bem('image').el('placeholder').classes()">
                 No image

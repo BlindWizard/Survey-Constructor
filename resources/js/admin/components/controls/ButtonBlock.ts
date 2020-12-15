@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :style="!resolver.isEditable() ? renderButtonStyle() : ''">
+        <div :style="!resolver.isEditable() ? renderButtonStyle() : 'background-color: inherit;'">
             <button :class="bem('button').is('primary').classes()" v-on:click.stop="handle">
                 <span :class="bem('button').el('label').classes()">{{ block.text }}</span>
             </button>

@@ -3,7 +3,6 @@ import {BlockEditMenu} from "../../BlockEditMenu";
 import {ButtonBlockEdit} from "./ButtonBlockEdit";
 import {BaseBlock} from "../BaseBlock";
 import {Draggable} from "../../../contracts/Draggable";
-import {bem} from "../../../../common/bem-helper";
 import {BlockResizeFrame} from "../../BlockResizeFrame";
 import {selectService} from "../../../services/SelectService";
 import {ButtonBlock} from "../../controls/ButtonBlock";
@@ -13,6 +12,7 @@ import {BlockOriginalFrame} from "../../BlockOriginalFrame";
 import {styleRenderer} from "../../../services/StyleRenderer";
 import {StyleEdit} from "../../StyleEdit";
 import {ActionsEdit} from "../../ActionsEdit";
+import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
 
 @Component({
 	template: `
@@ -25,6 +25,7 @@ import {ActionsEdit} from "../../ActionsEdit";
             <ActionsEdit v-if="selected" :block="block"/>
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
             <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
+            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" />
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
         </div>
     `,
@@ -33,6 +34,7 @@ import {ActionsEdit} from "../../ActionsEdit";
 		ButtonBlockEdit,
 		BlockEditMenu,
 		BlockResizeFrame,
+		BlockResizeFrameBackground,
 		BlockOriginalFrame,
 		StyleEdit,
 		ActionsEdit

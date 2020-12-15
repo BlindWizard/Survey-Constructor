@@ -9,7 +9,6 @@ import {BlockContract} from "../contracts/BlockContract";
 @Component({
 	template: `
         <div :class="bem('block-resize-frame').is(mode || 'select').classes()" :style="renderFrameStyle()">
-            <div :class="bem('block-resize-frame').el('background').classes()"></div>
             <span v-if="mode && (isDirectionAll || isDirectionVertical || isDirectionTop)"
                   :class="bem('block-resize-frame').el('pin').is('top').classes()"
                   v-on:mousedown.stop="handleDown($event, resizeTop)" v-on:click.prevent>

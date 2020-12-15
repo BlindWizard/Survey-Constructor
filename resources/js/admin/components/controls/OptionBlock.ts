@@ -7,7 +7,7 @@ import {ComponentsResolver} from "../../services/ComponentsResolver";
 
 @Component({
 	template: `
-        <div :class="bem('option').classes()" :style="!resolver.isEditable() ? renderOptionStyle() : ''">
+        <div :class="bem('option').classes()" :style="!resolver.isEditable() ? renderOptionStyle() : 'background-color: inherit;'">
             <input :class="bem('option').el('control').classes()" :id="block.id" :name="block.id + '[]'" :value="block.id" type="checkbox" @input="handle">
             <label :class="bem('option').el('checkbox').classes()" :for="block.id">
                 <span :class="bem('option').el('checkbox-inner').classes()">

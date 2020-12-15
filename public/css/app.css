@@ -13655,17 +13655,18 @@ select:invalid {
 
 .block-edit-menu {
   display: inline-block;
-  z-index: 20;
+  z-index: 50;
   white-space: nowrap;
   position: absolute;
   right: 0;
   top: -2rem;
 }
 
-.block-edit-menu .button {
+.block-edit-menu > .button {
   width: auto;
   height: auto;
   background-color: #fd5b15 !important;
+  color: #fefefe !important;
 }
 
 .block-resize-frame {
@@ -13753,49 +13754,47 @@ select:invalid {
 
 .block-resize-frame__background {
   position: absolute;
-  width: 100%;
-  height: 100%;
   z-index: -1;
+}
+
+.block-resize-frame__background_select {
+  background-color: transparent;
+}
+
+.block-resize-frame__background_margin {
+  background-color: #ffeec7;
+}
+
+.block-resize-frame__background_padding {
+  background-color: transparent;
+}
+
+.block-resize-frame__background_resize {
+  background-color: transparent;
+}
+
+.block-resize-frame__background_move {
+  background-color: transparent;
 }
 
 .block-resize-frame_select {
   z-index: 40;
 }
 
-.block-resize-frame_select .block-resize-frame__background {
-  background-color: transparent;
-}
-
 .block-resize-frame_margin {
-  z-index: 10;
-}
-
-.block-resize-frame_margin .block-resize-frame__background {
-  background-color: #ffeec7;
+  z-index: 40;
 }
 
 .block-resize-frame_padding {
   z-index: 40;
 }
 
-.block-resize-frame_padding .block-resize-frame__background {
-  background-color: transparent;
-}
-
 .block-resize-frame_resize {
   z-index: 40;
 }
 
-.block-resize-frame_resize .block-resize-frame__background {
-  background-color: transparent;
-}
-
 .block-resize-frame_move {
   z-index: 40;
-}
-
-.block-resize-frame_move .block-resize-frame__background {
-  background-color: transparent;
 }
 
 .block-original-frame {
@@ -14636,7 +14635,8 @@ body.dragging .container-wrapper .container__slot {
   outline: none;
 }
 
-.button-wrapper .button {
+.button-wrapper > .button {
+  color: inherit !important;
   background-color: inherit;
 }
 

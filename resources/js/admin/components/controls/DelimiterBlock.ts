@@ -7,7 +7,7 @@ import {Delimiter} from "../../models/Delimiter";
 
 @Component({
 	template: `
-      <hr :class="bem('delimiter').classes()" :style="!resolver.isEditable() ? renderDelimiterStyle() : ''" />
+      <hr :class="bem('delimiter').classes()" :style="!resolver.isEditable() ? renderDelimiterStyle() : 'background-color: inherit;'" />
 	`,
 })
 export class DelimiterBlock extends Vue {

@@ -1,6 +1,7 @@
 .container-wrapper {
     position: relative;
     max-width: 100%;
+    z-index: 20;
 
     &:focus {
         outline: none;
@@ -27,17 +28,17 @@
     }
 
     &.selected {
+        z-index: 100;
+
         &:after {
             background-color: $primary;
         }
     }
 
-    .container {
+    > .container {
         background-color: inherit !important;
-    }
-
-    .container {
-        background-color: inherit;
+        width: 100%;
+        height: 100%;
     }
 }
 

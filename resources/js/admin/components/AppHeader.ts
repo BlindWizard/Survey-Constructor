@@ -18,7 +18,11 @@ import {SurveyContract} from "../contracts/SurveyContract";
                                 </div><!--
                              --><div :class="bem('top-menu').el('title').classes()">{{ appName }}</div>
                             </router-link><!--
-                         --><div v-if="null !== section" :class="bem('top-menu').el('section').classes()">
+                         --><div :class="bem('top-menu').el('section').classes()">
+                                <router-link :to="{name: 'main-page'}">Home</router-link>
+                            </div> <!--
+                         --><div v-if="null !== section && section.label !== 'Home'" :class="bem('top-menu').el('section').classes()">
+                                >
                                 <router-link v-if="survey" :to="{name: section.path, surveyId: survey.getId()}">{{ section.label }}</router-link>
                                 <router-link v-if="section.label === 'Editor' && survey" :to="{name: 'survey-dataset', surveyId: survey.getId()}">Dataset</router-link>
                             </div>

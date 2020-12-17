@@ -1,12 +1,15 @@
 .options-list-wrapper {
     position: relative;
+    z-index: 20;
 
     &:focus {
         outline: none;
     }
 
-    .options-list {
+    > .options-list {
         background-color: inherit;
+        width: 100%;
+        height: 100%;
     }
 }
 

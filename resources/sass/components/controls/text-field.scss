@@ -1,12 +1,15 @@
 .text-field-wrapper {
     position: relative;
+    z-index: 20;
 
     &:focus {
         outline: none;
     }
 
-    .text-field {
+    > .text-field {
         background-color: inherit;
+        width: 100%;
+        height: 100%;
     }
 }
 

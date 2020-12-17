@@ -1,12 +1,15 @@
 .text-wrapper {
     position: relative;
+    z-index: 20;
 
     &:focus {
         outline: none;
     }
 
-    .text {
+    > .text {
         background-color: inherit;
+        width: 100%;
+        height: 100%;
     }
 }
 

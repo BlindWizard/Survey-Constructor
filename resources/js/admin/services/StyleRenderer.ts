@@ -9,8 +9,8 @@ class StyleRenderer {
 			+ (null !== style.height ? 'height:' + style.height + ('auto' !== style.height ? style.sizeMeasure + ';' : ';') : '')
 			+ (null !== style.textAlign ? 'text-align:' + style.textAlign + ';' : '')
 			+ 'top:' + (style.inset.top || 0) + 'px;right:' + (style.inset.right || 0) + 'px;bottom:' + (style.inset.bottom || 0) + 'px;left:' + (style.inset.left || 0) + 'px;'
-			+ 'margin:' + (style.margin.top || 0) + 'px ' + (style.margin.right || 0) + 'px ' + (style.margin.bottom || 0) + 'px ' + (style.margin.left || 0) + 'px;'
-			+ 'padding:' + (style.padding.top || 0) + 'px ' + (style.padding.right || 0) + 'px ' + (style.padding.bottom || 0) + 'px ' + (style.padding.left || 0) + 'px;'
+			+ 'margin:' + style.margin.top + ('auto' !== style.margin.top ? 'px ' : ' ') + style.margin.right + ('auto' !== style.margin.right ? 'px ' : ' ') + style.margin.bottom + ('auto' !== style.margin.bottom ? 'px ' : ' ') + style.margin.left + ('auto' !== style.margin.left ? 'px;' : ';')
+			+ 'padding:' + style.padding.top + ('auto' !== style.padding.top ? 'px ' : ' ') + style.padding.right + ('auto' !== style.padding.right ? 'px ' : ' ') + style.padding.bottom + ('auto' !== style.padding.bottom ? 'px ' : ' ') + style.padding.left + ('auto' !== style.padding.left ? 'px;' : ';')
 		;
 
 		return string;

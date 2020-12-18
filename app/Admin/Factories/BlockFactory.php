@@ -408,7 +408,7 @@ class BlockFactory implements BlockFactoryContract
 
         $block->style = new BlockStyle();
         $block->style->sizeMeasure = 'px';
-        $block->style->textColor = '#0a0a0a';
+        $block->style->textColor = '#fefefe';
         $block->style->backgroundColor = '#fd5b15';
 
         $block->style->width = 250;

@@ -1,6 +1,6 @@
 export class Rectangle {
-	public top: number = 0;
-	public right: number = 0;
-	public bottom: number = 0;
-	public left: number = 0;
+	public top: string|number = 0;
+	public right: string|number = 0;
+	public bottom: string|number = 0;
+	public left: string|number = 0;
 }

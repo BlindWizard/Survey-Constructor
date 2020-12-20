@@ -24,6 +24,7 @@ import {SurveyContract} from "../contracts/SurveyContract";
                          --><div v-if="null !== section && section.label !== 'Home'" :class="bem('top-menu').el('section').classes()">
                                 >
                                 <router-link v-if="survey" :to="{name: section.path, surveyId: survey.getId()}">{{ section.label }}</router-link>
+                                <router-link v-if="!survey" :to="{name: section.path}">{{ section.label }}</router-link>
                                 <router-link v-if="section.label === 'Editor' && survey" :to="{name: 'survey-dataset', surveyId: survey.getId()}">Dataset</router-link>
                             </div>
                         </div>
@@ -37,6 +38,11 @@ import {SurveyContract} from "../contracts/SurveyContract";
                                                 <router-link :to="{name: 'settings'}" :class="bem('settings-link').classes()">
                                                     <button :class="bem('button').add('dark').classes()">Settings</button>
                                                 </router-link>
+                                            </li>
+                                            <li>
+                                              <router-link :to="{name: 'limits'}" :class="bem('settings-link').classes()">
+                                                <button :class="bem('button').add('dark').classes()">Tariff</button>
+                                              </router-link>
                                             </li>
                                             <li>
                                                 <form action="/logout" method="post">

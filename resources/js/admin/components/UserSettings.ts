@@ -4,6 +4,8 @@ import {ApiToken} from "../models/ApiToken";
 import {actions, getters} from "../stores/types";
 import {CreateToken} from "../api/requests/CreateToken";
 import {DeleteToken} from "../api/requests/DeleteToken";
+import {SectionsFactory} from "../services/SectionsFactory";
+import {Sections} from "../contracts/Sections";
 
 @Component({
 	template: `
@@ -54,6 +56,8 @@ export class UserSettings extends Vue {
 		if (null === this.tokens) {
 			this.$store.dispatch(actions.LOAD_TOKENS);
 		}
+
+		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.SETTINGS));
 	}
 
 	get tokens(): ApiToken[]

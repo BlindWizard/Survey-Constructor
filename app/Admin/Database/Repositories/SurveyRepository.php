@@ -141,6 +141,16 @@ class SurveyRepository implements SurveyRepositoryContract
         return $surveys;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public function getSurveysCount(string $ownerId): int
+    {
+        $count = Survey::query()->where(Survey::ATTR_OWNER_ID, '=', $ownerId)->get()->count();/** @var int $count */
+
+        return $count;
+    }
+
     public function addData(string $surveyId, DataContract $data): DataContract
     {
         $surveyData = SurveyData::query()->where(SurveyData::ATTR_ID, '=', $surveyId)->get()->first();/** @var SurveyData $surveyData */

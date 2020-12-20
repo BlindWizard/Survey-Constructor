@@ -48,6 +48,8 @@ import {AddSurveyData} from "../api/requests/AddSurveyData";
 import {SaveSurveyData} from "../api/requests/SaveSurveyData";
 import {SurveyData} from "../models/SurveyData";
 import {Section} from "../models/Section";
+import {StatisticsSample} from "../components/StatisticsSample";
+import {Limits} from "../models/Limits";
 const uuidv4 = require('uuid/v4');
 
 let debounceSaveStyle: number|null = null;
@@ -74,6 +76,7 @@ const store = new Vuex.Store({
 		tokens: null as any,
 		statistics: null as any,
 		sample: null as any,
+		limits: null as any,
 	},
 	mutations: {
 		[mutations.SET_CSRF](state, token) {
@@ -671,6 +674,9 @@ const store = new Vuex.Store({
 		[mutations.SET_TOKENS](state, tokens: ApiToken[]) {
 			state.tokens = tokens;
 		},
+		[mutations.SET_LIMITS](state, limits: Limits) {
+			state.limits = limits;
+		},
 		[mutations.ADD_TOKEN](state, token: ApiToken) {
 			state.tokens.push(token);
 		},
@@ -1069,6 +1075,10 @@ const store = new Vuex.Store({
 			let tokens: ApiToken[] = await SettingsApi.getTokens();
 			commit(mutations.SET_TOKENS, tokens);
 		},
+		async [actions.LOAD_LIMITS]({commit}) {
+			let limits: Limits = await SettingsApi.getLimits();
+			commit(mutations.SET_LIMITS, limits);
+		},
 		async [actions.ADD_TOKEN]({commit, state}, request: CreateToken) {
 			let token:ApiToken = await SettingsApi.addToken(request);
 
@@ -1183,8 +1193,11 @@ const store = new Vuex.Store({
 		[getters.SURVEY_STATISTICS](state): BlocksStatistics[] {
 			return state.statistics;
 		},
-		[getters.STATISTICS_SAMPLE](state): null {
+		[getters.STATISTICS_SAMPLE](state): StatisticsSample|null {
 			return state.sample;
+		},
+		[getters.LIMITS](state): Limits|null {
+			return state.limits;
 		}
 	}
 });

@@ -1,5 +1,6 @@
 .settings-menu {
     background-color: transparent !important;
+    z-index: 50;
 
     & .submenu {
         background-color: $dark;

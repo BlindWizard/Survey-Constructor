@@ -6,6 +6,7 @@ use App\Admin\Commands\AddTokenCommand;
 use App\Admin\Commands\DeleteTokenCommand;
 use App\Admin\Contracts\Factories\SettingsFactoryContract;
 use App\Admin\Queries\GetAllUsersTokens;
+use App\Admin\Queries\GetUsersLimits;
 use App\Http\Controllers\Controller;
 use App\Http\Helpers\AjaxResponse;
 use App\Http\Requests\CreateTokenRequest;
@@ -54,6 +55,16 @@ class SettingsController extends Controller
     }
 
     public function getAvailableTokens(GetAllUsersTokens $query)
+    {
+        $query->userId = Auth::user()->getAuthIdentifier();
+
+        $response = new AjaxResponse();
+        $response->data = $query->perform()->getResult();
+
+        return response()->json($response);
+    }
+
+    public function getLimits(GetUsersLimits $query)
     {
         $query->userId = Auth::user()->getAuthIdentifier();
 

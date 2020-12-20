@@ -4,4 +4,6 @@ export enum Sections {
 	STATISTICS = 'Statistics',
 	STATISTICS_SAMPLE = 'Statistics sample',
 	DATASET = 'Dataset',
+	SETTINGS = 'settings',
+	LIMITS = 'limits',
 }

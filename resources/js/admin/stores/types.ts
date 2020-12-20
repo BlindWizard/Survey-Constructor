@@ -29,6 +29,7 @@ export enum mutations
 	SET_ACTIVE_PAGE = 'setActivePage',
 	ADD_TOKEN = 'addToken',
 	SET_TOKENS = 'setTokens',
+	SET_LIMITS = 'setLimits',
 	SET_SURVEY_STATISTICS = 'setSurveyStatistics',
 	SET_STATISTICS_SAMPLE = 'setStatisticsSample',
 	ADD_SURVEY_DATA = 'addSurveyData',
@@ -57,6 +58,7 @@ export enum actions
 	DELETE_PAGE = 'deletePage',
 	SET_ACTIVE_PAGE = 'setActivePage',
 	LOAD_TOKENS = 'loadTokens',
+	LOAD_LIMITS = 'loadLimits',
 	ADD_TOKEN = 'addToken',
 	DELETE_TOKEN = 'deleteToken',
 	LOAD_SURVEY_STATISTICS = 'getSurveyStatistics',
@@ -90,4 +92,5 @@ export enum getters
 	PAGE_BY_STEP = 'pageByStep',
 	PAGES = 'pages',
 	TOKENS = 'tokens',
+	LIMITS = 'limits',
 }

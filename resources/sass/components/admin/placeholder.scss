@@ -2,6 +2,8 @@
     background-color: $white;
     border: 0.18rem $primary dashed;
     text-align: center;
+    z-index: 20;
+    position: relative;
 
     &__label {
         font-size: 1rem;

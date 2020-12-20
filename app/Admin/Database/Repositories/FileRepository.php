@@ -6,6 +6,7 @@ namespace App\Admin\Database\Repositories;
 use App\Admin\Contracts\Entities\FileContract;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Database\Models\File;
+use App\Admin\Database\Models\Survey;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -15,7 +16,7 @@ class FileRepository implements FileRepositoryContract
     /**
      * @inheritDoc
      */
-    public function upload(UploadedFile $file): FileContract {
+    public function upload(string $ownerId, UploadedFile $file): FileContract {
         $id = Uuid::uuid4()->toString();
         $name = $id . '.' . $file->guessExtension();
         $content = file_get_contents($file->getFileInfo()->getPathname());
@@ -29,6 +30,7 @@ class FileRepository implements FileRepositoryContract
         $model->type = $file->getMimeType();
         $model->size = $file->getSize();
         $model->hash = md5($content);
+        $model->owner_id = $ownerId;
         $model->save();
 
         return $model;
@@ -52,5 +54,12 @@ class FileRepository implements FileRepositoryContract
         $data = getimagesize(Storage::disk('public')->path($file->getName()));
 
         return $data;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getTotalSize(string $ownerId): int {
+        return File::query()->where(File::ATTR_OWNER_ID, '=', $ownerId)->get()->sum(File::ATTR_SIZE);
     }
 }

@@ -20,6 +20,8 @@ class BlockStyle
     /** @var string */
     public $sizeMeasure;
     /** @var string */
+    public $marginMeasure;
+    /** @var string */
     public $textColor;
     /** @var string */
     public $backgroundColor;

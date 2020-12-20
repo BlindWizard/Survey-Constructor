@@ -122,7 +122,7 @@ class TemplatesFactory implements TemplatesFactoryContract
         $block->pageId = $finishPage->getId();
         $block->parentId = $finishPage->getId();
         $finishPage->blocks[] = $block;
-        
+
         $blank->pages[] = $mainPage;
         $blank->pages[] = $finishPage;
 

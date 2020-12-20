@@ -40,7 +40,9 @@ Route::group(['namespace' => 'Admin', 'middleware' => ['auth']], function () {
     Route::post('/admin/block/saveAction', 'BlockController@saveAction');
 
     Route::get('/admin/settings', 'SettingsController@index');
+    Route::get('/admin/limits', 'SettingsController@index');
     Route::get('/admin/settings/getAvailableTokens', 'SettingsController@getAvailableTokens');
+    Route::get('/admin/settings/getLimits', 'SettingsController@getLimits');
     Route::post('/admin/settings/addToken', 'SettingsController@addToken');
     Route::post('/admin/settings/deleteToken', 'SettingsController@deleteToken');
 

@@ -10,6 +10,9 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadCommand implements Command
 {
+    /** @var string */
+    public $userId;
+
     /** @var UploadedFile */
     public $file;
 
@@ -29,7 +32,7 @@ class FileUploadCommand implements Command
 
     public function perform(): Command
     {
-        $file = $this->fileRepository->upload($this->file);
+        $file = $this->fileRepository->upload($this->userId, $this->file);
 
         $dto = new File();
         $dto->id = $file->getId();

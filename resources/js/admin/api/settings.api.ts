@@ -3,6 +3,7 @@ import {AjaxHelper} from "../contracts/AjaxHelper";
 import {ApiToken} from "../models/ApiToken";
 import {CreateToken} from "./requests/CreateToken";
 import {DeleteToken} from "./requests/DeleteToken";
+import {Limits} from "../models/Limits";
 
 export class SettingsApi {
 	public static getTokens(): Promise<ApiToken[]>
@@ -22,6 +23,21 @@ export class SettingsApi {
 				});
 
 				return tokens;
+			});
+	}
+
+	public static getLimits(): Promise<Limits>
+	{
+		return axios.get('/admin/settings/getLimits')
+			.then((response) => {
+				let result:AjaxHelper = response.data as AjaxHelper;
+
+				let limits = new Limits();
+				limits.surveys = result.data.surveys;
+				limits.maxSurveys = result.data.maxSurveys;
+				limits.fileSize = result.data.fileSize;
+				limits.maxFilesSize = result.data.maxFilesSize;
+				return limits;
 			});
 	}
 

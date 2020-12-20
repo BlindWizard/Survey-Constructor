@@ -31,6 +31,11 @@ export class SectionsFactory {
 				section.path = 'survey-dataset';
 
 				return section;
+			case Sections.SETTINGS:
+				section.label = 'Settings';
+				section.path = 'settings';
+
+				return section;
 			default:
 				return null;
 		}

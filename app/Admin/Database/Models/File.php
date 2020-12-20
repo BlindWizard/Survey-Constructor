@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Storage;
  * @property string $type
  * @property int    $size
  * @property string $hash
+ * @property string $owner_id
  * @property string $created_at
  * @property string $updated_at
  */
@@ -25,6 +26,7 @@ class File extends Model implements FileContract
     public const ATTR_TYPE = 'type';
     public const ATTR_SIZE = 'size';
     public const ATTR_HASH = 'hash';
+    public const ATTR_OWNER_ID = 'owner_id';
     public const ATTR_CREATED_AT = 'created_at';
     public const ATTR_UPDATED_AT = 'updated_at';
 

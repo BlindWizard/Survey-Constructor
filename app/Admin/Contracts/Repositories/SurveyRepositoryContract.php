@@ -42,6 +42,13 @@ interface SurveyRepositoryContract
     public function getAvailableSurveys(string $ownerId): array;
 
     /**
+     * @param string $ownerId
+     *
+     * @return int
+     */
+    public function getSurveysCount(string $ownerId): int;
+
+    /**
      * @param string       $surveyId
      * @param DataContract $data
      *

@@ -152,7 +152,6 @@ export class ComponentsFactory {
 
 				block.style = ComponentsFactory.cloneStyle(blockData.style);
 
-
 				break;
 			case BlockTypes.BUTTON:
 				block = new Button();
@@ -226,11 +225,21 @@ export class ComponentsFactory {
 				throw new Error('Undefined block type');
 		}
 
+		let cloneStyle: any = {};
+		cloneStyle.style = ComponentsFactory.cloneStyle(blockData.getStyle()['style']);
+
+		if (blockData.getStyle()['slotsStyle']) {
+			cloneStyle.slotsStyle = {};
+			for (let slotId of blockData.getData()['slots']) {
+				cloneStyle.slotsStyle[slotId] = ComponentsFactory.cloneStyle(blockData.getStyle()['slotsStyle'][slotId]);
+			}
+		}
+
 		(block as any).id = blockData.getId();
 		block.setPosition(blockData.getPosition());
 		block.setParentId(blockData.getParentId());
 		block.setData(blockData.getData());
-		block.setStyle(blockData.getStyle());
+		block.setStyle(cloneStyle);
 		block.setActions(blockData.getActions());
 
 		return block;
@@ -242,6 +251,7 @@ export class ComponentsFactory {
 		style.height = original.height;
 		style.textAlign = original.textAlign;
 		style.sizeMeasure = original.sizeMeasure;
+		style.marginMeasure = original.marginMeasure;
 		style.textColor = original.textColor;
 		style.backgroundColor = original.backgroundColor;
 

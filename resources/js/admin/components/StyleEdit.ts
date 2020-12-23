@@ -35,8 +35,8 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                     </div>
                     <div :class="bem('block-style').el('size-setting').classes()">
                         <div class="button-group primary">
-                            <a class="button" v-on:click.stop="setMeasure('px')">Px</a>
-                            <a class="button" v-on:click.stop="setMeasure('%')">%</a>
+                            <a class="button" v-on:click.stop="setSizeMeasure('px')">Px</a>
+                            <a class="button" v-on:click.stop="setSizeMeasure('%')">%</a>
                         </div>
                     </div>
                 </div>
@@ -53,7 +53,13 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                         Margin
                     </div>
                     <div :class="bem('block-style').el('margin-value').classes()">
-                        {{ blockStyle.margin.top }}px × {{ blockStyle.margin.right }}px × {{ blockStyle.margin.bottom }}px × {{ blockStyle.margin.left }}px
+                        {{ marginString }}
+                    </div>
+                    <div :class="bem('block-style').el('size-setting').classes()">
+                        <div class="button-group primary">
+                            <a class="button" v-on:click.stop="setMarginMeasure('px')">Px</a>
+                            <a class="button" v-on:click.stop="setMarginMeasure('%')">%</a>
+                        </div>
                     </div>
                 </div>
                 <div :class="bem('block-style').el('padding').classes()">
@@ -117,13 +123,27 @@ export class StyleEdit extends Vue {
 		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 	}
 
-	public setMeasure(measure: string)
+	public setSizeMeasure(measure: string)
 	{
 		let data = new ChangeSizeMeasureData();
 		data.blockId = this.block.getId();
 		data.measure = measure;
 
 		this.$store.dispatch(actions.CHANGE_SIZE_MEASURE, data);
+
+		let styleRequest = new SaveBlockStyle();
+		styleRequest.blockId = this.block.getId();
+		styleRequest.style = this.block.getStyle();
+		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
+	}
+
+	public setMarginMeasure(measure: string)
+	{
+		let data = new ChangeSizeMeasureData();
+		data.blockId = this.block.getId();
+		data.measure = measure;
+
+		this.$store.dispatch(actions.CHANGE_MARGIN_MEASURE, data);
 
 		let styleRequest = new SaveBlockStyle();
 		styleRequest.blockId = this.block.getId();
@@ -173,5 +193,13 @@ export class StyleEdit extends Vue {
 	{
 		return ('auto' !== this.blockStyle.width ? Math.round(Number(this.blockStyle.width)) + this.blockStyle.sizeMeasure : this.blockStyle.width)
 		+ ' × ' + ('auto' !== this.blockStyle.height ? Math.round(Number(this.blockStyle.height)) +  this.blockStyle.sizeMeasure : this.blockStyle.height)
+	}
+
+	get marginString()
+	{
+		return Math.round(this.blockStyle.margin.top) + this.blockStyle.marginMeasure + ' × ' +
+			Math.round(this.blockStyle.margin.right) + this.blockStyle.marginMeasure + ' × ' +
+			Math.round(this.blockStyle.margin.bottom) + this.blockStyle.marginMeasure + ' × ' +
+			Math.round(this.blockStyle.margin.left) + this.blockStyle.marginMeasure;
 	}
 }

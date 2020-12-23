@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Admin\Services;
 
 use App\Admin\Contracts\Entities\DataContract;
+use App\Admin\Contracts\Entities\LimitsContract;
 use App\Admin\Contracts\Entities\SurveyContract;
 use App\Admin\Contracts\Entities\TemplateContract;
 use App\Admin\Contracts\Factories\SurveyFactoryContract;
@@ -11,6 +12,7 @@ use App\Admin\Contracts\Repositories\SurveyRepositoryContract;
 use App\Admin\Contracts\Repositories\SurveyStatisticRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
 use App\Admin\DTO\Survey;
+use App\Admin\Exceptions\TariffOverflowException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class SurveyService implements SurveyServiceContract
@@ -59,6 +61,12 @@ class SurveyService implements SurveyServiceContract
      */
     public function createFromTemplate(string $ownerId, TemplateContract $template): SurveyContract
     {
+        $count = $this->surveyRepository->getSurveysCount($ownerId);
+
+        if ($count >= LimitsContract::MAX_SURVEYS_COUNT) {
+            throw new TariffOverflowException();
+        }
+
         $survey = $this->surveyFactory->build($ownerId, $template);
         $this->surveyRepository->save($survey);
 

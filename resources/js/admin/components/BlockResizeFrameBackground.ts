@@ -31,10 +31,23 @@ export class BlockResizeFrameBackground extends Vue {
 		}
 
 		if (this.isFrameMargin) {
-			string += 'top:' + (-this.block.getStyle()['style'].margin.top) + 'px;';
-			string += 'right:' + (-this.block.getStyle()['style'].margin.right) + 'px;';
-			string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom) + 'px;';
-			string += 'left:' + (-this.block.getStyle()['style'].margin.left) + 'px;';
+			if ('px' ===  this.block.getStyle()['style'].marginMeasure) {
+				string += 'top:' + (-this.block.getStyle()['style'].margin.top) + 'px;';
+				string += 'right:' + (-this.block.getStyle()['style'].margin.right) + 'px;';
+				string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom) + 'px;';
+				string += 'left:' + (-this.block.getStyle()['style'].margin.left) + 'px;';
+			}
+			else if ('%' === this.block.getStyle()['style'].marginMeasure) {
+				let factor = 'px' === this.block.getStyle()['style'].sizeMeasure
+					? (this.$el.parentElement as HTMLElement).clientWidth / this.block.getStyle()['style'].width
+					: 100 / this.block.getStyle()['style'].width
+				;
+
+				string += 'top:' + (-this.block.getStyle()['style'].margin.top * factor) + '%;';
+				string += 'right:' + (-this.block.getStyle()['style'].margin.right * factor) + '%;';
+				string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom * factor) + '%;';
+				string += 'left:' + (-this.block.getStyle()['style'].margin.left * factor) + '%;';
+			}
 		}
 
 		return string;

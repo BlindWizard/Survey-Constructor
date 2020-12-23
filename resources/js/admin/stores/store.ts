@@ -535,28 +535,46 @@ const store = new Vuex.Store({
 					}
 					break;
 
-				case ResizeModes.MARGIN:
-					{
+				case ResizeModes.MARGIN: {
 						let targetStyle = targetBlock.getStyle()['style'];
 						let originalStyle = request.originalStyle['style'];
 
-						if (request.offset.top) {
-							targetStyle.margin.top = originalStyle.margin.top - request.offset.top;
-						}
+						if ('px' === targetStyle.marginMeasure) {
+							if (request.offset.top) {
+								targetStyle.margin.top = originalStyle.margin.top - request.offset.top;
+							}
 
-						if (request.offset.right) {
-							targetStyle.margin.right = originalStyle.margin.right + request.offset.right;
-						}
+							if (request.offset.right) {
+								targetStyle.margin.right = originalStyle.margin.right + request.offset.right;
+							}
 
-						if (request.offset.bottom) {
-							targetStyle.margin.bottom = originalStyle.margin.bottom + request.offset.bottom;
-						}
+							if (request.offset.bottom) {
+								targetStyle.margin.bottom = originalStyle.margin.bottom + request.offset.bottom;
+							}
 
-						if (request.offset.left) {
-							targetStyle.margin.left = originalStyle.margin.left - request.offset.left;
+							if (request.offset.left) {
+								targetStyle.margin.left = originalStyle.margin.left - request.offset.left;
+							}
+						}
+						else if ('%' === targetStyle.marginMeasure) {
+							let width = 0;
+							if ('%' === originalStyle.sizeMeasure) {
+								let parentWidth = (element.$el.parentElement as HTMLElement).clientWidth;
+								width = (parentWidth * originalStyle.width / 100);
+							}
+							else if ('px' === originalStyle.sizeMeasure) {
+								width = originalStyle.width;
+							}
+
+							if (request.offset.left) {
+								targetStyle.margin.left = originalStyle.margin.left - request.offset.left / width * 100;
+							}
+
+							if (request.offset.right) {
+								targetStyle.margin.right = originalStyle.margin.right + request.offset.right / width * 100;
+							}
 						}
 					}
-
 					break;
 
 				case ResizeModes.PADDING:
@@ -658,6 +676,20 @@ const store = new Vuex.Store({
 			}
 
 			targetBlock.getStyle()['style'].sizeMeasure = request.measure;
+		},
+		[mutations.CHANGE_MARGIN_MEASURE](state, request: ChangeSizeMeasureData) {
+			let pages = state.survey.pages;
+			let page = pages[state.pageId] as PageContract;
+			let targetBlock: BlockContract|null = page.getBlockById(request.blockId);
+			if (null === targetBlock) {
+				throw new Error('Block not found');
+			}
+
+			targetBlock.getStyle()['style'].margin.left = 0;
+			targetBlock.getStyle()['style'].margin.top = 0;
+			targetBlock.getStyle()['style'].margin.right = 0;
+			targetBlock.getStyle()['style'].margin.bottom = 0;
+			targetBlock.getStyle()['style'].marginMeasure = request.measure;
 		},
 		[mutations.ADD_PAGE](state, page: PageContract) {
 			let pages = state.survey.pages;
@@ -1023,6 +1055,9 @@ const store = new Vuex.Store({
 		},
 		async [actions.CHANGE_SIZE_MEASURE]({commit, state}, request: ChangeSizeMeasureData) {
 			commit(mutations.CHANGE_SIZE_MEASURE, request);
+		},
+		async [actions.CHANGE_MARGIN_MEASURE]({commit, state}, request: ChangeSizeMeasureData) {
+			commit(mutations.CHANGE_MARGIN_MEASURE, request);
 		},
 		async [actions.SAVE_STYLE]({commit, state}, request: SaveBlockStyle) {
 			commit(mutations.SAVE_ELEMENT_STYLE, request);

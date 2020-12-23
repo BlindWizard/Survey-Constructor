@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace App\Admin\DTO;
 
-class Limits
+use App\Admin\Contracts\Entities\LimitsContract;
+
+class Limits implements LimitsContract
 {
     public int $surveys;
 	public int $maxSurveys;

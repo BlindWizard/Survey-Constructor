@@ -6,6 +6,7 @@ namespace App\Admin\Commands;
 use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\DTO\File;
+use App\Admin\Exceptions\TariffOverflowException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class FileUploadCommand implements Command
@@ -16,11 +17,14 @@ class FileUploadCommand implements Command
     /** @var UploadedFile */
     public $file;
 
-    /** @var File */
-    public $result;
+    /** @var File|null */
+    public $result = null;
 
     /** @var FileRepositoryContract */
     protected $fileRepository;
+
+    /** @var string[] */
+    protected $errors = [];
 
     /**
      * @param FileRepositoryContract $fileRepository
@@ -32,19 +36,24 @@ class FileUploadCommand implements Command
 
     public function perform(): Command
     {
-        $file = $this->fileRepository->upload($this->userId, $this->file);
+        try {
+            $file = $this->fileRepository->upload($this->userId, $this->file);
 
-        $dto = new File();
-        $dto->id = $file->getId();
-        $dto->name = $file->getName();
-        $dto->url = $file->getUrl();
-        $this->result = $dto;
+            $dto          = new File();
+            $dto->id      = $file->getId();
+            $dto->name    = $file->getName();
+            $dto->url     = $file->getUrl();
+            $this->result = $dto;
+        }
+        catch (TariffOverflowException $e) {
+            $this->errors[] = __('Max surveys count reached');
+        }
 
         return $this;
     }
 
-    public function getResult()
+    public function getResult(): array
     {
-        return $this->result;
+        return [$this->result, $this->errors];
     }
 }

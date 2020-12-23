@@ -7,6 +7,7 @@ use App\Admin\Contracts\Command;
 use App\Admin\Contracts\Factories\TemplatesFactoryContract;
 use App\Admin\Contracts\Repositories\TemplateRepositoryContract;
 use App\Admin\Contracts\Services\SurveyServiceContract;
+use App\Admin\Exceptions\TariffOverflowException;
 use App\Admin\Exceptions\TemplateNotFoundException;
 use App\Admin\Rules\TemplateRules;
 use App\Http\Requests\CreateSurveyRequest;
@@ -63,6 +64,9 @@ class CreateSurveyCommand implements Command
             $this->surveyId = $survey->getId();
 
             $this->messages[] = __('Survey was successfully created');
+        }
+        catch (TariffOverflowException $e) {
+            $this->errors[] = __('Max surveys count reached');
         }
         catch (TemplateNotFoundException $e) {
             $this->errors[] = __('Template not found');

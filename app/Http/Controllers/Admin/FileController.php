@@ -16,7 +16,7 @@ class FileController extends Controller
 
         $command->userId = Auth::user()->getAuthIdentifier();
         $command->file = $request->getFile();
-        $result->data = $command->perform()->getResult();
+        [$result->data, $result->errors] = $command->perform()->getResult();
 
         return response()->json($result);
     }

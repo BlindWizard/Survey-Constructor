@@ -13434,7 +13434,7 @@ select:invalid {
   background-color: #2d1e45;
   color: #fefefe;
   position: relative;
-  z-index: 10;
+  z-index: 50;
 }
 
 .top-menu__inner {
@@ -14125,7 +14125,7 @@ select:invalid {
 }
 
 .selected {
-  z-index: 30;
+  z-index: 30 !important;
 }
 
 .dataset__view {

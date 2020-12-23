@@ -4,9 +4,11 @@ declare(strict_types=1);
 namespace App\Admin\Database\Repositories;
 
 use App\Admin\Contracts\Entities\FileContract;
+use App\Admin\Contracts\Entities\LimitsContract;
 use App\Admin\Contracts\Repositories\FileRepositoryContract;
 use App\Admin\Database\Models\File;
 use App\Admin\Database\Models\Survey;
+use App\Admin\Exceptions\TariffOverflowException;
 use Illuminate\Support\Facades\Storage;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -20,6 +22,11 @@ class FileRepository implements FileRepositoryContract
         $id = Uuid::uuid4()->toString();
         $name = $id . '.' . $file->guessExtension();
         $content = file_get_contents($file->getFileInfo()->getPathname());
+
+        $totalSize = $this->getTotalSize($ownerId);
+        if ($totalSize + $file->getSize() >= LimitsContract::MAX_FILES_SIZE) {
+            throw new TariffOverflowException();
+        }
 
         Storage::disk('public')->put($name, $content);
 

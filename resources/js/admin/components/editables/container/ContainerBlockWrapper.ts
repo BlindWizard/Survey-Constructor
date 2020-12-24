@@ -44,7 +44,7 @@ import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
                              v-component-drop="slotId"
                         >
                             <component :key="innerBlock.getId()" v-if="block.getBlocksInOrder(slotId).length > 0" v-for="innerBlock in block.getBlocksInOrder(slotId)" :is="resolver.resolveComponentClass(innerBlock.getType()).name" :block="innerBlock" :resolver="resolver" />
-                            <BlockResizeFrame v-if="selected && isFrameResize" :block="block" :slotId="slotId" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" />
+                            <BlockResizeFrame v-if="selected && isFrameResize" :block="block" :slotId="slotId" :mode="resizeMode" :direction="getSlotResizeDirection(slotId)" :parentElement="$el.parentElement"/>
                         </div>
                     </div>
                 </div>
@@ -52,8 +52,8 @@ import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
             <ContainerBlockEdit v-if="editing" :block="block" :onUpdate="changeData" :onSave="saveData" />
             <StyleEdit v-if="editing && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']" />
             <BlockEditMenu v-if="selected || editing" :onSelectMode="selectFrameMode" :onDelete="deleteElement" :mode="getMenuMode()" />
-            <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
-            <BlockResizeFrameBackground v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" />
+            <BlockResizeFrame v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :direction="getResizeDirection()" :parentElement="$el.parentElement"/>
+            <BlockResizeFrameBackground v-if="selected && !isFrameResize" :block="block" :mode="resizeMode" :parentElement="$el.parentElement"/>
             <BlockOriginalFrame v-if="selected && !isFrameResize && (isFrameMargin || isFramePadding || isFrameMove)" :block="block" :mode="resizeMode" />
         </div>
 	`,

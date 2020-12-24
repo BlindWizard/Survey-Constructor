@@ -479,7 +479,7 @@ const store = new Vuex.Store({
 						let prevSlotStyle = targetBlock.getStyle()['slotsStyle'][prevSlot];
 
 						let slotWidth = (parentWidth * originalStyle.width / 100);
-						let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / slotWidth);
+						let offset = originalStyle.width * ((-Number(request.offset.left) + Number(request.offset.right)) / slotWidth);
 
 						let slotNewWidth = originalStyle.width + offset;
 						let prevSlotNewWidth = request.originalStyle['slotsStyle'][prevSlot].width - offset;
@@ -493,7 +493,7 @@ const store = new Vuex.Store({
 						let targetStyle = targetBlock.getStyle()['style'];
 
 						if ('px' === targetStyle.sizeMeasure) {
-							targetStyle.width = ('auto' !== originalStyle.width ? originalStyle.width - request.offset.left + request.offset.right : 'auto');
+							targetStyle.width = ('auto' !== originalStyle.width ? originalStyle.width - Number(request.offset.left) + Number(request.offset.right) : 'auto');
 							targetStyle.height = ('auto' !== originalStyle.height ? originalStyle.height + request.offset.top + request.offset.bottom : 'auto');
 						}
 
@@ -501,7 +501,7 @@ const store = new Vuex.Store({
 							let parentWidth = (element.$el.parentElement as HTMLElement).clientWidth;
 
 							let width = (parentWidth * originalStyle.width / 100);
-							let offset = originalStyle.width * ((-request.offset.left + request.offset.right) / width);
+							let offset = originalStyle.width * ((-Number(request.offset.left) + Number(request.offset.right)) / width);
 
 							targetStyle.width = originalStyle.width + offset;
 							if (targetStyle.width > 100) {
@@ -541,19 +541,35 @@ const store = new Vuex.Store({
 
 						if ('px' === targetStyle.marginMeasure) {
 							if (request.offset.top) {
-								targetStyle.margin.top = originalStyle.margin.top - request.offset.top;
+								if ('auto' === originalStyle.margin.top) {
+									originalStyle.margin.top = 0;
+								}
+
+								targetStyle.margin.top = originalStyle.margin.top - Number(request.offset.top);
 							}
 
 							if (request.offset.right) {
-								targetStyle.margin.right = originalStyle.margin.right + request.offset.right;
+								if ('auto' === originalStyle.margin.right) {
+									originalStyle.margin.right = 0;
+								}
+
+								targetStyle.margin.right = originalStyle.margin.right + Number(request.offset.right);
 							}
 
 							if (request.offset.bottom) {
-								targetStyle.margin.bottom = originalStyle.margin.bottom + request.offset.bottom;
+								if ('auto' === originalStyle.margin.bottom) {
+									originalStyle.margin.bottom = 0;
+								}
+
+								targetStyle.margin.bottom = originalStyle.margin.bottom + Number(request.offset.bottom);
 							}
 
 							if (request.offset.left) {
-								targetStyle.margin.left = originalStyle.margin.left - request.offset.left;
+								if ('auto' === originalStyle.margin.left) {
+									originalStyle.margin.left = 0;
+								}
+
+								targetStyle.margin.left = originalStyle.margin.left - Number(request.offset.left);
 							}
 						}
 						else if ('%' === targetStyle.marginMeasure) {
@@ -567,11 +583,19 @@ const store = new Vuex.Store({
 							}
 
 							if (request.offset.left) {
-								targetStyle.margin.left = originalStyle.margin.left - request.offset.left / width * 100;
+								if ('auto' === originalStyle.margin.left) {
+									originalStyle.margin.left = 0;
+								}
+
+								targetStyle.margin.left = originalStyle.margin.left - Number(request.offset.left) / width * 100;
 							}
 
 							if (request.offset.right) {
-								targetStyle.margin.right = originalStyle.margin.right + request.offset.right / width * 100;
+								if ('auto' === originalStyle.margin.right) {
+									originalStyle.margin.right = 0;
+								}
+
+								targetStyle.margin.right = originalStyle.margin.right + Number(request.offset.right) / width * 100;
 							}
 						}
 					}
@@ -583,28 +607,28 @@ const store = new Vuex.Store({
 						let originalStyle = request.originalStyle['style'];
 
 						if (request.offset.top) {
-							targetStyle.padding.top = originalStyle.padding.top + request.offset.top;
+							targetStyle.padding.top = originalStyle.padding.top + Number(request.offset.top);
 							if (targetStyle.padding.top < 0) {
 								targetStyle.padding.top = 0;
 							}
 						}
 
 						if (request.offset.right) {
-							targetStyle.padding.right = originalStyle.padding.right - request.offset.right;
+							targetStyle.padding.right = originalStyle.padding.right - Number(request.offset.right);
 							if (targetStyle.padding.right < 0) {
 								targetStyle.padding.right = 0;
 							}
 						}
 
 						if (request.offset.bottom) {
-							targetStyle.padding.bottom = originalStyle.padding.bottom - request.offset.bottom;
+							targetStyle.padding.bottom = originalStyle.padding.bottom - Number(request.offset.bottom);
 							if (targetStyle.padding.bottom < 0) {
 								targetStyle.padding.bottom = 0;
 							}
 						}
 
 						if (request.offset.left) {
-							targetStyle.padding.left = originalStyle.padding.left + request.offset.left;
+							targetStyle.padding.left = originalStyle.padding.left + Number(request.offset.left);
 							if (targetStyle.padding.left < 0) {
 								targetStyle.padding.left = 0;
 							}

@@ -2,8 +2,6 @@ import Component from "vue-class-component";
 import Vue from "vue";
 import {Prop} from "vue-property-decorator";
 import {ResizeModes} from "../contracts/ResizeModes";
-import {ResizeDirection} from "../contracts/ResizeDirection";
-import {resizeService} from "../services/ResizeService";
 import {BlockContract} from "../contracts/BlockContract";
 
 @Component({
@@ -15,6 +13,7 @@ export class BlockResizeFrameBackground extends Vue {
 	@Prop(Object) block: BlockContract;
 	@Prop(String) slotId: string|null;
 	@Prop(String) mode: ResizeModes|null;
+	@Prop(HTMLElement) parentElement: HTMLElement;
 
 	public renderFrameStyle(): string {
 		let string = '';
@@ -31,22 +30,33 @@ export class BlockResizeFrameBackground extends Vue {
 		}
 
 		if (this.isFrameMargin) {
+			let margin = this.block.getStyle()['style'].margin;
 			if ('px' ===  this.block.getStyle()['style'].marginMeasure) {
-				string += 'top:' + (-this.block.getStyle()['style'].margin.top) + 'px;';
-				string += 'right:' + (-this.block.getStyle()['style'].margin.right) + 'px;';
-				string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom) + 'px;';
-				string += 'left:' + (-this.block.getStyle()['style'].margin.left) + 'px;';
+				let width = 'px' === this.block.getStyle()['style'].sizeMeasure
+					? this.block.getStyle()['style'].width
+					: (this.parentElement as HTMLElement).clientWidth * this.block.getStyle()['style'].width / 100;
+
+				let parentWidth = (this.parentElement as HTMLElement).clientWidth;
+
+				string += 'top:' + ('auto' !== margin.top ? -margin.top + 'px;' : '');
+				string += 'right:' + ('auto' !== margin.right ? -margin.right + 'px;' : -(parentWidth - width) / 2 + 'px;');
+				string += 'bottom:' + ('auto' !== margin.bottom ? -margin.bottom + 'px;' : '');
+				string += 'left:' + ('auto' !== margin.left ? -margin.left + 'px;' : -(parentWidth - width) / 2 + 'px;');
 			}
 			else if ('%' === this.block.getStyle()['style'].marginMeasure) {
 				let factor = 'px' === this.block.getStyle()['style'].sizeMeasure
-					? (this.$el.parentElement as HTMLElement).clientWidth / this.block.getStyle()['style'].width
+					? (this.parentElement as HTMLElement).clientWidth / this.block.getStyle()['style'].width
 					: 100 / this.block.getStyle()['style'].width
 				;
 
-				string += 'top:' + (-this.block.getStyle()['style'].margin.top * factor) + '%;';
-				string += 'right:' + (-this.block.getStyle()['style'].margin.right * factor) + '%;';
-				string += 'bottom:' + (-this.block.getStyle()['style'].margin.bottom * factor) + '%;';
-				string += 'left:' + (-this.block.getStyle()['style'].margin.left * factor) + '%;';
+				let width = 'px' === this.block.getStyle()['style'].sizeMeasure
+					? this.block.getStyle()['style'].width / (this.parentElement as HTMLElement).clientWidth * 100
+					: this.block.getStyle()['style'].width;
+
+				string += 'top:' + ('auto' !== margin.top ? -margin.top * factor + '%;' : '');
+				string += 'right:' + ('auto' !== margin.right ? -margin.right * factor + '%;' : -100 + width + '%;');
+				string += 'bottom:' + ('auto' !== margin.bottom ? -margin.bottom * factor + '%;' : '');
+				string += 'left:' + ('auto' !== margin.left ? -margin.left * factor + '%;' : -100 + width + '%;');
 			}
 		}
 

@@ -24,8 +24,8 @@ import {BlockResizeFrameBackground} from "../../BlockResizeFrameBackground";
             <StyleEdit v-if="editing && (isFrameResize || isFrameMargin || isFramePadding || isFrameMove)" :block="block" :blockStyle="block.getStyle()['style']"/>
             <ActionsEdit v-if="selected" :block="block"/>
             <BlockEditMenu v-if="selected" :onSelectMode="selectFrameMode" :onEdit="toggleEdit" :onDelete="deleteElement" :mode="getMenuMode()"/>
-            <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" />
-            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" />
+            <BlockResizeFrame v-if="selected" :block="block" :mode="resizeMode" :direction="getResizeDirection()" :parentElement="$el.parentElement"/>
+            <BlockResizeFrameBackground v-if="selected" :block="block" :mode="resizeMode" :parentElement="$el.parentElement"/>
             <BlockOriginalFrame v-if="selected && (isFrameMargin || isFramePadding)"  :block="block" :mode="resizeMode" />
         </div>
     `,

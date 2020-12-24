@@ -59,6 +59,7 @@ import {ComponentsFactory} from "../services/ComponentsFactory";
                         <div class="button-group primary">
                             <a class="button" v-on:click.stop="setMarginMeasure('px')">Px</a>
                             <a class="button" v-on:click.stop="setMarginMeasure('%')">%</a>
+                            <a class="button" v-on:click.stop="setMarginCenter()">Center</a>
                         </div>
                     </div>
                 </div>
@@ -151,6 +152,19 @@ export class StyleEdit extends Vue {
 		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
 	}
 
+	public setMarginCenter()
+	{
+		let styleRequest = new SaveBlockStyle();
+		styleRequest.blockId = this.block.getId();
+		styleRequest.style =  {style: ComponentsFactory.cloneStyle(this.block.getStyle()['style'])};
+		styleRequest.style['style'].margin.left = 'auto';
+		styleRequest.style['style'].margin.right = 'auto';
+		styleRequest.style['style'].margin.top = 0;
+		styleRequest.style['style'].margin.bottom = 0;
+
+		this.$store.dispatch(actions.SAVE_STYLE, styleRequest);
+	}
+
 	public togglePickerText()
 	{
 		this.showPickerText = !this.showPickerText;
@@ -191,15 +205,14 @@ export class StyleEdit extends Vue {
 
 	get sizeString()
 	{
-		return ('auto' !== this.blockStyle.width ? Math.round(Number(this.blockStyle.width)) + this.blockStyle.sizeMeasure : this.blockStyle.width)
-		+ ' × ' + ('auto' !== this.blockStyle.height ? Math.round(Number(this.blockStyle.height)) +  this.blockStyle.sizeMeasure : this.blockStyle.height)
+		return ('auto' !== this.blockStyle.width ? Math.round(Number(this.blockStyle.width)) + this.blockStyle.sizeMeasure : 'auto')
+		+ ' × ' + ('auto' !== this.blockStyle.height ? Math.round(Number(this.blockStyle.height)) +  this.blockStyle.sizeMeasure : 'auto')
 	}
 
-	get marginString()
-	{
-		return Math.round(this.blockStyle.margin.top) + this.blockStyle.marginMeasure + ' × ' +
-			Math.round(this.blockStyle.margin.right) + this.blockStyle.marginMeasure + ' × ' +
-			Math.round(this.blockStyle.margin.bottom) + this.blockStyle.marginMeasure + ' × ' +
-			Math.round(this.blockStyle.margin.left) + this.blockStyle.marginMeasure;
+	get marginString() {
+		return ('auto' !== this.blockStyle.margin.top ? Math.round(Number(this.blockStyle.margin.top)) + this.blockStyle.marginMeasure : 'auto') + ' × ' +
+			('auto' !== this.blockStyle.margin.right ? Math.round(Number(this.blockStyle.margin.right)) + this.blockStyle.marginMeasure : 'auto') + ' × ' +
+			('auto' !== this.blockStyle.margin.bottom ? Math.round(Number(this.blockStyle.margin.bottom)) + this.blockStyle.marginMeasure : 'auto') + ' × ' +
+			('auto' !== this.blockStyle.margin.left ? Math.round(Number(this.blockStyle.margin.left)) + this.blockStyle.marginMeasure : 'auto');
 	}
 }

@@ -130,6 +130,9 @@ const store = new Vuex.Store({
 		}
 	},
 	getters: {
+		[getters.SURVEY_ID](state): string|null {
+			return state.surveyId;
+		},
 		[getters.SURVEY](state): Survey|null {
 			return state.survey;
 		},

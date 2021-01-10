@@ -19,7 +19,7 @@ import {SectionsFactory} from "../services/SectionsFactory";
                 <div class="grid-y grid-padding-y medium-2 dark">
                     <ComponentsMenu v-if="!editing" />
                     <portal-target v-if="editing && !resizing" name="edit-block"></portal-target>
-                    <portal-target v-if="resizing" name="resize-block"></portal-target>
+                    <portal-target v-if="editing && resizing" name="resize-block"></portal-target>
                     <portal-target v-if="editing && !resizing" name="actions-block"></portal-target>
                     <a v-if="token && !editing" :href="runUrl" target="_blank">
                         <button :class="bem('button').is('run').classes()">
@@ -47,7 +47,7 @@ export class SurveyEdit extends Vue {
 	@Prop(String) readonly surveyId: string;
 
 	public mounted() {
-		if (null === this.survey) {
+		if (null === this.survey || this.surveyId !== this.survey.getId()) {
 			let request = new GetSurvey();
 			request.surveyId = this.surveyId;
 

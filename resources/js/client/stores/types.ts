@@ -20,6 +20,7 @@ export enum actions {
 export enum getters
 {
 	SURVEY = 'activeSurvey',
+	SURVEY_ID = 'activeSurveyId',
 	CURRENT_PAGE = 'currentPage',
 	IS_LAST_PAGE = 'isLastPage',
 	IS_FIRST_PAGE = 'isFirstPage',

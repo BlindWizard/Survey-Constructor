@@ -1003,6 +1003,7 @@ const store = new Vuex.Store({
 		},
 		async [actions.SAVE_ELEMENT_DATA]({commit, state}, request: SaveBlockData) {
 			commit(mutations.SAVE_ELEMENT_DATA, request);
+			delete request.data['slotsStyle'];
 			BlockApi.saveData(request);
 		},
 		async [actions.RESIZE_ELEMENT]({commit, state}, request: ResizeBlockData) {

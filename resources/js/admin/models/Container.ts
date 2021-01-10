@@ -29,6 +29,7 @@ export class Container implements BlockContract {
 	setData(data: Object): void {
 		this.slots = data['slots'].slice(0);
 		this.children = {};
+		this.slotsStyle = {};
 		for(let slotId of Object.keys(data['children'])) {
 			this.children[slotId] = {};
 			for (let blockId of Object.keys(data['children'][slotId])) {
@@ -37,6 +38,8 @@ export class Container implements BlockContract {
 
 				this.children[slotId][blockId] = block;
 			}
+
+			this.slotsStyle[slotId] = ComponentsFactory.cloneStyle(data['slotsStyle'][slotId]);
 		}
 	}
 
@@ -56,6 +59,7 @@ export class Container implements BlockContract {
 		return {
 			'slots': this.slots,
 			'children': this.children,
+			'slotsStyle': this.slotsStyle,
 		};
 	}
 

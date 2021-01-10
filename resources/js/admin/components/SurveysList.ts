@@ -29,10 +29,7 @@ import {SectionsFactory} from "../services/SectionsFactory";
 })
 export class SurveysList extends Vue {
 	public mounted() {
-		if (null === this.surveys) {
-			this.$store.dispatch(actions.LOAD_SURVEYS);
-		}
-
+		this.$store.dispatch(actions.LOAD_SURVEYS);
 		this.$store.dispatch(actions.SET_SECTION, SectionsFactory.get(Sections.HOME));
 	}
 

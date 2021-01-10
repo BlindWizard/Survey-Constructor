@@ -50,7 +50,6 @@ class SelectService {
 					if (this.selected && element !== this.selected) {
 						element.toggleSelect(false);
 						element.toggleEdit(false);
-						element.$store.dispatch(actions.SET_RESIZING, false);
 					}
 
 					var clickOnThis = (el === element.$refs.selectable);
@@ -58,7 +57,6 @@ class SelectService {
 						this.selected = element;
 						element.toggleSelect(true);
 						element.toggleEdit(true);
-						element.resizeMode = null;
 
 						break targets;
 					}

@@ -40,14 +40,18 @@ export class ComponentsFactory {
 		let block: any = this.createElementFromData(type, blockData);
 		block.id = uuidv4();
 		if (block.getType() === BlockTypes.CONTAINER) {
-			let oldSlots = Object.keys(block.getData()['slots']);
+			let oldSlots = block.getData()['slots'];
+			let slotsStyle = block.getStyle()['slotsStyle'];
 
 			block.slots = [];
 			block.children = {};
+			block.slotsStyle = {};
+
 			for (let i of oldSlots) {
 				let slotId: string = uuidv4();
 				block.slots.push(slotId);
 				block.children[slotId] = {};
+				block.slotsStyle[slotId] = this.cloneStyle(slotsStyle[i]);
 			}
 		}
 
@@ -229,9 +233,10 @@ export class ComponentsFactory {
 		cloneStyle.style = ComponentsFactory.cloneStyle(blockData.getStyle()['style']);
 
 		if (blockData.getStyle()['slotsStyle']) {
+			let originalStyle = blockData.getStyle()['slotsStyle'];
 			cloneStyle.slotsStyle = {};
 			for (let slotId of blockData.getData()['slots']) {
-				cloneStyle.slotsStyle[slotId] = ComponentsFactory.cloneStyle(blockData.getStyle()['slotsStyle'][slotId]);
+				cloneStyle.slotsStyle[slotId] = ComponentsFactory.cloneStyle(originalStyle[slotId]);
 			}
 		}
 
